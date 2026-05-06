@@ -1,0 +1,30 @@
+{
+  "event_id": "synthetic.event.m1a.001",
+  "synthetic_line_id": "synthetic.m1a.001",
+  "speaker": "Synthetic Clerk",
+  "speaker_type": "npc",
+  "raw_english_text": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+  "scene_id": "synthetic.scene.harbor-office",
+  "conversation_id": "synthetic.conv.infrastructure",
+  "nearby_context": [
+    {
+      "synthetic_line_id": "synthetic.m1a.000",
+      "raw_english_text": "A memo says the office has no leaks, only morale.",
+      "speaker": "Synthetic Clerk",
+      "relation": "previous_visible"
+    },
+    {
+      "synthetic_line_id": "synthetic.m1a.option.001",
+      "raw_english_text": "Ask whether the pipe signed the paperwork.",
+      "speaker": "Player",
+      "relation": "player_option"
+    }
+  ],
+  "skill_voice": {
+    "skill": "Composure",
+    "voice": "dry bureaucratic witness",
+    "tone": "deadpan municipal irony",
+    "audio_ref": null
+  },
+  "timestamp": "2026-05-06T10:00:00Z"
+}

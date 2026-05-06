@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/revachol/fake-game-event.schema.json",
+  "title": "FakeGameEvent",
+  "type": "object",
+  "required": [
+    "event_id",
+    "synthetic_line_id",
+    "speaker",
+    "raw_english_text",
+    "scene_id",
+    "conversation_id",
+    "nearby_context",
+    "timestamp"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "line_id": {
+      "type": "string"
+    },
+    "synthetic_line_id": {
+      "type": "string"
+    },
+    "speaker": {
+      "type": "string"
+    },
+    "speaker_type": {
+      "enum": [
+        "npc",
+        "player",
+        "skill",
+        "object",
+        "narrator",
+        "unknown"
+      ]
+    },
+    "raw_english_text": {
+      "type": "string"
+    },
+    "scene_id": {
+      "type": "string"
+    },
+    "conversation_id": {
+      "type": "string"
+    },
+    "nearby_context": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nearbyLine"
+      }
+    },
+    "skill_voice": {
+      "type": "object",
+      "properties": {
+        "skill": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "voice": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "audio_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "nearbyLine": {
+      "type": "object",
+      "required": [
+        "synthetic_line_id",
+        "raw_english_text",
+        "relation"
+      ],
+      "properties": {
+        "line_id": {
+          "type": "string"
+        },
+        "synthetic_line_id": {
+          "type": "string"
+        },
+        "raw_english_text": {
+          "type": "string"
+        },
+        "speaker": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relation": {
+          "enum": [
+            "previous_visible",
+            "nearby_branch",
+            "player_option"
+          ]
+        }
+      }
+    }
+  }
+}

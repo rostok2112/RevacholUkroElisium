@@ -18,6 +18,16 @@ def main() -> int:
             "example config validation",
             [sys.executable, "scripts/validate_config.py", "--example", "config/revachol.example.toml"],
         ),
+        (
+            "synthetic slice CLI smoke",
+            [
+                sys.executable,
+                "scripts/run_synthetic_slice.py",
+                "--output",
+                "workspace/synthetic-slice/check-output.json",
+                "--quiet",
+            ],
+        ),
     ]
 
     for label, command in steps:

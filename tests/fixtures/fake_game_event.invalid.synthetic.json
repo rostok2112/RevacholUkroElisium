@@ -1,0 +1,15 @@
+{
+  "event_id": "synthetic.event.invalid",
+  "speaker": "Synthetic Clerk",
+  "raw_english_text": "This event is missing the synthetic line id and has a bad nearby relation.",
+  "scene_id": "synthetic.scene.invalid",
+  "conversation_id": "synthetic.conv.invalid",
+  "nearby_context": [
+    {
+      "synthetic_line_id": "synthetic.invalid.nearby",
+      "raw_english_text": "Bad relation.",
+      "relation": "future_spoiler"
+    }
+  ],
+  "timestamp": "2026-05-06T10:00:00Z"
+}

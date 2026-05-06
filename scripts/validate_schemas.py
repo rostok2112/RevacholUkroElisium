@@ -48,6 +48,16 @@ FIXTURE_CASES = [
         ROOT / "tests/fixtures/glossary_entry.invalid.synthetic.json",
         False,
     ),
+    FixtureCase(
+        ROOT / "specs/fake-game-event.schema.json",
+        ROOT / "tests/fixtures/fake_game_event.synthetic.json",
+        True,
+    ),
+    FixtureCase(
+        ROOT / "specs/fake-game-event.schema.json",
+        ROOT / "tests/fixtures/fake_game_event.invalid.synthetic.json",
+        False,
+    ),
 ]
 
 
