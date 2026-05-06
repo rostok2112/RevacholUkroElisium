@@ -27,6 +27,8 @@ class CompanionServerTests(unittest.TestCase):
         self.assertTrue(payload["ok"])
         data = payload["data"]
         self.assertEqual("ok", data["status"])
+        self.assertIn("invalid_fake_event", data["stable_error_codes"])
+        self.assertIn("method_not_allowed", data["stable_error_codes"])
         self.assertTrue(data["mode"]["offline"])
         self.assertTrue(data["mode"]["mock"])
         self.assertTrue(data["mode"]["synthetic_only"])
@@ -70,7 +72,7 @@ class CompanionServerTests(unittest.TestCase):
 
         self.assertEqual(400, status)
         self.assertFalse(payload["ok"])
-        self.assertEqual("invalid_synthetic_event", payload["error"]["code"])
+        self.assertEqual("invalid_fake_event", payload["error"]["code"])
         self.assertIn("missing required property", payload["error"]["message"])
 
     def test_latest_context_annotation_and_overlay_after_event(self) -> None:
@@ -118,10 +120,10 @@ class CompanionServerTests(unittest.TestCase):
         with ServerHarness() as server:
             status, headers, payload = server.get_json("/review/latest.html")
 
-        self.assertEqual(404, status)
+        self.assertEqual(409, status)
         self.assertIn("application/json", headers["Content-Type"])
         self.assertFalse(payload["ok"])
-        self.assertEqual("no_latest_overlay_demo", payload["error"]["code"])
+        self.assertEqual("invalid_request", payload["error"]["code"])
 
     def test_review_latest_returns_html_after_event(self) -> None:
         event = load_json(VALID_EVENT)
@@ -143,6 +145,16 @@ class CompanionServerTests(unittest.TestCase):
         self.assertEqual(404, status)
         self.assertFalse(payload["ok"])
         self.assertEqual("not_found", payload["error"]["code"])
+
+    def test_method_not_allowed_returns_standard_error_envelope(self) -> None:
+        with ServerHarness() as server:
+            status, headers, body = server.request("PUT", "/health")
+
+        payload = json.loads(body)
+        self.assertEqual(405, status)
+        self.assertIn("GET, POST", headers["Allow"])
+        self.assertFalse(payload["ok"])
+        self.assertEqual("method_not_allowed", payload["error"]["code"])
 
     def test_tests_bind_only_to_localhost(self) -> None:
         with ServerHarness() as server:
@@ -176,6 +188,9 @@ class ServerHarness(AbstractContextManager["ServerHarness"]):
 
     def get_text(self, path: str) -> tuple[int, dict[str, str], str]:
         return self._request(path, method="GET")
+
+    def request(self, method: str, path: str) -> tuple[int, dict[str, str], str]:
+        return self._request(path, method=method)
 
     def post_json(
         self, path: str, payload: dict[str, Any]

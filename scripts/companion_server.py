@@ -34,6 +34,15 @@ ENDPOINTS = [
     "POST /synthetic/eval",
 ]
 
+STABLE_ERROR_CODES = [
+    "not_found",
+    "invalid_json",
+    "invalid_request",
+    "invalid_fake_event",
+    "method_not_allowed",
+    "internal_error",
+]
+
 
 @dataclass
 class CompanionState:
@@ -73,6 +82,30 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
         protocol_version = "HTTP/1.1"
 
         def do_GET(self) -> None:
+            self._dispatch_safely(self._handle_get)
+
+        def do_POST(self) -> None:
+            self._dispatch_safely(self._handle_post)
+
+        def do_HEAD(self) -> None:
+            self._handle_method_not_allowed()
+
+        def do_PUT(self) -> None:
+            self._handle_method_not_allowed()
+
+        def do_PATCH(self) -> None:
+            self._handle_method_not_allowed()
+
+        def do_DELETE(self) -> None:
+            self._handle_method_not_allowed()
+
+        def do_OPTIONS(self) -> None:
+            self._handle_method_not_allowed()
+
+        def log_message(self, format: str, *args: Any) -> None:
+            return
+
+        def _handle_get(self) -> None:
             path = urlparse(self.path).path
 
             if path == "/health":
@@ -90,7 +123,7 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
             else:
                 self._send_error_json(404, "not_found", f"Unknown endpoint: {path}")
 
-        def do_POST(self) -> None:
+        def _handle_post(self) -> None:
             path = urlparse(self.path).path
 
             if path == "/synthetic/event":
@@ -99,9 +132,6 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
                 self._handle_synthetic_eval()
             else:
                 self._send_error_json(404, "not_found", f"Unknown endpoint: {path}")
-
-        def log_message(self, format: str, *args: Any) -> None:
-            return
 
         def _handle_synthetic_event(self) -> None:
             try:
@@ -112,14 +142,14 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
 
             if not isinstance(event, dict):
                 self._send_error_json(
-                    400, "invalid_synthetic_event", "Synthetic event must be a JSON object."
+                    400, "invalid_fake_event", "Synthetic event must be a JSON object."
                 )
                 return
 
             try:
                 result = run_synthetic_slice(event)
             except SchemaValidationError as exc:
-                self._send_error_json(400, "invalid_synthetic_event", str(exc))
+                self._send_error_json(400, "invalid_fake_event", str(exc))
                 return
 
             state.latest_slice_result = result
@@ -142,14 +172,35 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
         def _handle_latest_review(self) -> None:
             if state.latest_slice_result is None:
                 self._send_error_json(
-                    404,
-                    "no_latest_overlay_demo",
+                    409,
+                    "invalid_request",
                     "No latest synthetic overlay demo is available. POST /synthetic/event first.",
                 )
                 return
 
             html = render_review_html(state.latest_slice_result)
             self._send_text(200, html, "text/html; charset=utf-8")
+
+        def _handle_method_not_allowed(self) -> None:
+            self.send_response(405)
+            self.send_header("Allow", "GET, POST")
+            payload = json.dumps(
+                _error("method_not_allowed", f"Method {self.command} is not allowed."),
+                ensure_ascii=False,
+                indent=2,
+            )
+            body = (payload + "\n").encode("utf-8")
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+
+        def _dispatch_safely(self, handler: Any) -> None:
+            try:
+                handler()
+            except Exception:
+                self._send_error_json(500, "internal_error", "Internal server error.")
 
         def _read_json_body(self) -> Any:
             content_length_raw = self.headers.get("Content-Length", "0")
@@ -210,7 +261,10 @@ def _health_payload(state: CompanionState) -> dict[str, Any]:
         "binding": {
             "default_host": DEFAULT_HOST,
             "localhost_only_by_default": True,
-            "note": "Milestone 1D binds to 127.0.0.1 by default; other hosts require explicit CLI input.",
+            "note": (
+                "Milestone 1D binds to 127.0.0.1 by default; "
+                "other hosts require explicit CLI input."
+            ),
         },
         "latest_state": {
             "has_latest_context": state.latest_context_packet() is not None,
@@ -219,6 +273,7 @@ def _health_payload(state: CompanionState) -> dict[str, Any]:
             "has_latest_eval_summary": state.latest_eval_summary is not None,
         },
         "endpoints": ENDPOINTS,
+        "stable_error_codes": STABLE_ERROR_CODES,
     }
 
 

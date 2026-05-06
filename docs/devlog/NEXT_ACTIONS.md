@@ -1,14 +1,14 @@
 # Next Actions
 
-After Milestone 1D:
+After Milestone 1E:
 
-1. Implement Milestone 1E as a local synthetic client/contract hardening slice.
-2. Add a tiny stdlib polling client or CLI demo that reads the companion server endpoints and prints an overlay-facing compact/deep state.
-3. Add contract docs for companion server clients: request/response envelopes, error codes, state endpoints, and localhost/offline/mock limitations.
-4. Add tests for client behavior using an in-process localhost server; do not require a long-running server.
-5. Keep server state in memory unless a future milestone explicitly adds ignored local persistence.
-6. Keep paid APIs, web retrieval, extraction, BepInEx, OCR, production overlay work, frontend frameworks, and real game assets out of tests and out of the public repo.
+1. Implement Milestone 2A: provider abstraction and prompt pipeline skeleton.
+2. Keep all provider calls mocked by default; do not call real LLMs, paid APIs, or web APIs in tests.
+3. Add a provider interface that can later support cloud APIs and local models behind explicit config.
+4. Add prompt/input/output contract scaffolding for synthetic context packets only.
+5. Add deterministic mock provider outputs that still validate against annotation-card schema and existing quality/eval checks.
+6. Keep real extraction, BepInEx, OCR, production overlay work, frontend frameworks, and real game assets out of tests and out of the public repo.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 1D. Read AGENTS.md and docs/devlog/*.md, then implement Milestone 1E: a stdlib-only local companion client/contract hardening slice. Reuse the existing companion server in-process for tests, add a tiny polling client or CLI demo that reads /health, /state/latest-context, /state/latest-annotation, /state/latest-overlay-demo, and /review/latest.html, and document the server envelope/error contract for future overlay and BepInEx clients. Keep everything synthetic/offline/mock-only, bind tests to 127.0.0.1, do not use real game content, BepInEx, OCR, extraction, web calls, paid APIs, LLM calls, frontend frameworks, production overlay work, auth, TLS, or new dependencies. Run python scripts/check_all.py, python scripts/validate_schemas.py, python -m unittest discover -s tests -p "test_*.py", npm run check, and python scripts/run_companion_server.py --smoke-test.`
+`Continue in revachol-ukro-elisium after Milestone 1E. Read AGENTS.md, docs/devlog/*.md, docs/04-architecture.md, docs/05-quality-model.md, specs/llm-output-contract.md, specs/context-packet.schema.json, and specs/annotation-card.schema.json, then implement Milestone 2A: provider abstraction and prompt pipeline skeleton. Add a stdlib-only or dependency-light provider interface with a deterministic mock provider, prompt/input/output contract helpers for synthetic context packets, and tests proving no real LLMs, paid APIs, web APIs, extraction, OCR, BepInEx, or real game content are required. Keep runtime paid API/local model support as opt-in config only; tests must remain offline and synthetic. Ensure annotation output validates against existing schemas, synthetic evals still run, and python scripts/check_all.py, python scripts/validate_schemas.py, python -m unittest discover -s tests -p "test_*.py", npm run check, python scripts/run_companion_server.py --smoke-test, and python scripts/run_companion_client.py smoke-test pass.`

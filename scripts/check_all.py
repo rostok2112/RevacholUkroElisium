@@ -59,6 +59,10 @@ def main() -> int:
             "companion server smoke",
             [sys.executable, "scripts/run_companion_server.py", "--smoke-test"],
         ),
+        (
+            "companion client smoke",
+            [sys.executable, "scripts/run_companion_client.py", "smoke-test"],
+        ),
     ]
 
     for label, command in steps:

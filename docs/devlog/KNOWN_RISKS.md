@@ -12,5 +12,8 @@
 - The Milestone 1D server stores latest context/annotation/overlay/eval state in memory only; state disappears on restart.
 - The Milestone 1D default bind is `127.0.0.1`, but the CLI allows an explicit different host. Do not expose it beyond localhost without a later security review.
 - The Milestone 1D HTTP API has no auth, TLS, persistence, rate limiting, CORS policy, or multi-client session model yet.
+- The Milestone 1E companion client is a local contract helper only, not a production SDK.
+- The Milestone 1E API contract is still synthetic/offline/mock-only and may need versioning before real overlay or bridge clients depend on it.
+- Server/client tests cover localhost behavior only and intentionally do not exercise non-localhost networking.
 - Unsafe review output paths are rejected rather than normalized. Future tools should keep this explicit behavior unless there is a documented reason to change it.
 - The annotation-card schema was not changed for Milestone 1A. Optional helper fields validate because the schema does not forbid additional properties.

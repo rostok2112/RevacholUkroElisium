@@ -1,16 +1,36 @@
 # Session Summary
 
-Milestone 1D companion server skeleton is implemented on top of the Milestone 1A/1B/1C synthetic pipeline.
+Milestone 1E local companion client and API contract hardening is implemented on top of the Milestone 1D server.
 
 Completed in the latest session:
+- Added `scripts/companion_client.py`, a tiny stdlib-only local contract helper for the companion server.
+- Added `scripts/run_companion_client.py` with commands for health, synthetic event posting, latest state reads, review HTML, synthetic eval, and a clean in-process `smoke-test`.
+- Hardened server error codes into a small stable set:
+  - `not_found`
+  - `invalid_json`
+  - `invalid_request`
+  - `invalid_fake_event`
+  - `method_not_allowed`
+  - `internal_error`
+- Kept the envelope contract unchanged:
+  - success: `{"ok": true, "data": ...}`
+  - error: `{"ok": false, "error": {"code": "...", "message": "..."}}`
+- Kept `latest-review-html` as raw escaped HTML, not JSON.
+- Added `docs/api/companion-server-contract.md` with synthetic-only endpoint and envelope examples.
+- Added client tests for health, event posting, latest context/annotation/overlay, synthetic eval, raw review HTML, server error envelopes, unavailable server handling, invalid JSON responses, CLI smoke, and synthetic-only contract docs.
+- Added server tests for stable error codes and method-not-allowed behavior.
+- Integrated `python scripts/run_companion_client.py smoke-test` into `scripts/check_all.py`.
+- Did not add dependencies or use real game data, BepInEx, OCR, extraction, web calls, paid APIs, LLM calls, frontend frameworks, auth, TLS, persistence, or CORS work.
+
+Milestone 1D remains in place:
 - Added `scripts/companion_server.py`, a stdlib-only `http.server` companion skeleton with in-memory state.
 - Added `scripts/run_companion_server.py` with default `--host 127.0.0.1`, default `--port 8765`, and `--smoke-test`.
 - Added local JSON endpoints using a consistent envelope:
   - success: `{"ok": true, "data": ...}`
   - error: `{"ok": false, "error": {"code": "...", "message": "..."}}`
 - Implemented `GET /health`, latest context/annotation/overlay/eval state endpoints, `POST /synthetic/event`, `POST /synthetic/eval`, and `GET /review/latest.html`.
-- Kept `/review/latest.html` generated from the existing escaped static review renderer; before an event exists it returns a 404 JSON error envelope.
-- Added endpoint tests for health, valid synthetic event ingestion, invalid JSON, invalid fake event validation, latest state, synthetic eval, review HTML, review 404, unknown routes, and localhost-only test binding.
+- Kept `/review/latest.html` generated from the existing escaped static review renderer; before an event exists it returns a `409 invalid_request` JSON error envelope.
+- Added endpoint tests for health, valid synthetic event ingestion, invalid JSON, invalid fake event validation, latest state, synthetic eval, review HTML, missing-review errors, unknown routes, and localhost-only test binding.
 - Integrated a clean companion server smoke test into `scripts/check_all.py` without leaving a long-running process.
 - Did not change schemas or add dependencies.
 - Did not rename the repository path. `revachol-ukro-elisium` matches the actual directory; naming cleanup remains a future decision.
@@ -63,14 +83,15 @@ Milestone 0 foundation still in place:
 - Updated the LLM output contract and legal/data safety docs with runtime paid API and opt-in web enrichment policy.
 
 Latest validation run:
-- `python -m unittest tests.test_companion_server -v` passed with 11 tests.
-- `python scripts/check_all.py` passed, including 43 unit tests and the new companion server smoke.
+- `python -m unittest tests.test_companion_server tests.test_companion_client -v` passed with 21 tests.
+- `python scripts/check_all.py` passed, including 53 unit tests, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
 - `python scripts/validate_schemas.py` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 43 tests.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 53 tests.
 - `npm run check` passed.
 - `python scripts/run_companion_server.py --smoke-test` passed.
+- `python scripts/run_companion_client.py smoke-test` passed.
 
 Notes:
-- `ruff` is optional and was skipped because it is not installed locally.
+- `ruff` is installed locally and passed both check and format-check in this session.
 - No real extraction, scraping, paid API call, web API call, BepInEx integration, OCR, or copyrighted game content was used.
 - `docs/00-project-vision.md` is absent; `docs/00-start-here.md` remains the current vision entrypoint.

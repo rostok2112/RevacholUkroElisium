@@ -11,4 +11,6 @@
 - Which synthetic eval dimensions should graduate from Milestone 1C checks into the long-term eval framework.
 - Milestone 1D chose a stdlib `http.server` skeleton first; decide later whether to keep it, wrap it, or replace it with a production service framework.
 - How soon to split deterministic mocks from future provider-backed translation/annotation adapters.
-- Whether Milestone 1E should focus on a local client/contract hardening slice or move directly to Milestone 2A.
+- Milestone 1E chose a tiny stdlib local client and API contract doc before provider work.
+- Whether Milestone 2A provider abstractions should live under `scripts/` initially or move toward a package layout.
+- How to version provider prompt contracts before real paid API or local model adapters are enabled.
