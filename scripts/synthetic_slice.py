@@ -186,6 +186,9 @@ def build_overlay_demo_model(
             "packet_id": context_packet["packet_id"],
             "retrieval_strategy": context_packet["retrieval"]["strategy"],
             "mock_pipeline": True,
+            "provider": annotation_card.get("provider", {}),
+            "provider_debug": annotation_card.get("provider_debug", {}),
+            "prompt_pack": annotation_card.get("prompt_pack", {}),
         },
     }
 

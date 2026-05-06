@@ -22,6 +22,9 @@
 - The Milestone 2B prompt pack is policy scaffolding only; it does not prove real Ukrainian translation quality by itself.
 - Milestone 2B tests now catch shallow structural rewrites of `synthetic_examples.md`, but they still cannot judge the real literary quality of every example.
 - Prompt pack text is included in provider requests, which is useful for contract tests but may need trimming or references-only mode before real provider calls.
+- Milestone 2C proves prompt-pack policy wiring through the mock provider and eval harness, but it still does not measure semantic translation quality or real player comprehension.
+- Milestone 2C stores provider/debug/prompt-pack metadata as permissive additional annotation-card fields; decide later whether to formalize them in the schema.
+- Companion server/client provider endpoints remain deferred. Until Milestone 2D, the prompt-pack-aware provider pipeline is available through CLI/tests, not HTTP.
 - Existing legacy `prompts/few-shot/synthetic-examples.md` appears mojibaked and was left untouched; the new pack has fresh UTF-8 synthetic examples.
 - Unsafe review output paths are rejected rather than normalized. Future tools should keep this explicit behavior unless there is a documented reason to change it.
 - The annotation-card schema was not changed for Milestone 1A. Optional helper fields validate because the schema does not forbid additional properties.

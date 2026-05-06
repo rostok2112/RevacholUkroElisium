@@ -3,10 +3,15 @@ import subprocess
 import sys
 import unittest
 
+from scripts.provider_pipeline import run_provider_pipeline
 from scripts.run_synthetic_slice import ROOT, _resolve_output
 from scripts.schema_validator import load_json
 from scripts.synthetic_review_renderer import render_review_html
-from scripts.synthetic_slice import run_synthetic_slice
+from scripts.synthetic_slice import (
+    build_context_packet,
+    build_overlay_demo_model,
+    run_synthetic_slice,
+)
 
 
 VALID_EVENT = ROOT / "tests/fixtures/fake_game_event.synthetic.json"
@@ -53,11 +58,31 @@ class SyntheticReviewRendererTests(unittest.TestCase):
         result["overlay_demo"]["source"]["original_english"] = unsafe
         result["overlay_demo"]["modes"]["deep_explanation"]["sections"][0]["text"] = unsafe
         result["annotation_card"]["quality"][unsafe] = unsafe
+        result["overlay_demo"]["debug"]["provider_debug"] = {"provider_name": unsafe}
 
         html = render_review_html(result)
 
         self.assertNotIn(unsafe, html)
         self.assertIn("&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;", html)
+
+    def test_review_html_includes_provider_and_prompt_pack_debug_metadata(self) -> None:
+        result = _provider_slice_result()
+
+        html = render_review_html(result)
+
+        self.assertIn("Provider", html)
+        self.assertIn("mock", html)
+        self.assertIn("Provider role", html)
+        self.assertIn("deterministic_mock", html)
+        self.assertIn("Prompt pack", html)
+        self.assertIn("ukrainian_annotation_v1", html)
+        self.assertIn("Prompt pack version", html)
+        self.assertIn("1.0.0", html)
+        self.assertIn("Player-facing language default", html)
+        self.assertIn("uk", html)
+        self.assertIn("spoiler_policy", html)
+        self.assertIn("anti_overlocalization_policy", html)
+        self.assertIn("russianism_avoidance", html)
 
     def test_output_path_allows_workspace_synthetic_slice(self) -> None:
         output = _resolve_output(Path("workspace/synthetic-slice/test-review.html"))
@@ -121,6 +146,19 @@ def _is_relative_to(path: Path, base: Path) -> bool:
     except ValueError:
         return False
     return True
+
+
+def _provider_slice_result() -> dict[str, object]:
+    event = load_json(VALID_EVENT)
+    context_packet = build_context_packet(event)
+    annotation_card = run_provider_pipeline(context_packet)
+    overlay_demo = build_overlay_demo_model(context_packet, annotation_card)
+    return {
+        "fake_game_event": event,
+        "context_packet": context_packet,
+        "annotation_card": annotation_card,
+        "overlay_demo": overlay_demo,
+    }
 
 
 if __name__ == "__main__":

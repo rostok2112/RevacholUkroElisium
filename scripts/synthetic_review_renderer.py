@@ -141,6 +141,19 @@ def _render_quality(annotation: dict[str, Any]) -> str:
 
 def _render_debug(context: dict[str, Any], overlay: dict[str, Any]) -> str:
     debug = overlay.get("debug", {})
+    provider = _as_dict(debug.get("provider"))
+    provider_debug = _as_dict(debug.get("provider_debug"))
+    prompt_pack = _as_dict(debug.get("prompt_pack"))
+    provider_name = provider_debug.get("provider_name") or provider.get("provider_name")
+    provider_role = provider_debug.get("provider_role") or provider.get("provider_kind")
+    pack_id = prompt_pack.get("pack_id") or provider_debug.get("prompt_pack_id")
+    pack_version = prompt_pack.get("version") or provider_debug.get("prompt_pack_version")
+    language_default = prompt_pack.get("player_facing_language_default") or provider_debug.get(
+        "player_facing_language_default"
+    )
+    policy_keys = (
+        prompt_pack.get("policy_note_keys") or provider_debug.get("policy_note_keys") or []
+    )
     return "\n".join(
         [
             '  <section id="debug">',
@@ -148,9 +161,25 @@ def _render_debug(context: dict[str, Any], overlay: dict[str, Any]) -> str:
             f"    <p><strong>Packet:</strong> {_text(context.get('packet_id'))}</p>",
             f"    <p><strong>Retrieval strategy:</strong> {_text(debug.get('retrieval_strategy'))}</p>",
             f"    <p><strong>Mock pipeline:</strong> {_text(debug.get('mock_pipeline'))}</p>",
+            f"    <p><strong>Provider:</strong> {_text(provider_name)}</p>",
+            f"    <p><strong>Provider role:</strong> {_text(provider_role)}</p>",
+            f"    <p><strong>Prompt pack:</strong> {_text(pack_id)}</p>",
+            f"    <p><strong>Prompt pack version:</strong> {_text(pack_version)}</p>",
+            f"    <p><strong>Player-facing language default:</strong> {_text(language_default)}</p>",
+            f"    <p><strong>Policy note keys:</strong> {_flags(policy_keys)}</p>",
             "  </section>",
         ]
     )
+
+
+def _as_dict(value: Any) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
+
+
+def _flags(values: Any) -> str:
+    if not isinstance(values, list):
+        return ""
+    return "".join(f'<span class="flag">{_text(value)}</span> ' for value in values)
 
 
 def _text(value: Any) -> str:

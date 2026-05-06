@@ -1,8 +1,31 @@
 # Session Summary
 
-Milestone 2B prompt quality pack and Ukrainian annotation style guide is implemented on top of the Milestone 2A provider pipeline.
+Milestone 2C prompt-pack-aware mock provider and structural eval wiring is implemented.
 
 Completed in the latest session:
+- Extended provider requests with explicit prompt-pack policy wiring:
+  - player-facing language default: `uk`
+  - internal guidance language marker: `english_allowed_for_provider_guidance`
+  - focused policy refs/sections for spoiler discipline, anti-hallucination, anti-overlocalization, and Russianism/calque avoidance.
+- Updated the deterministic mock provider so output includes prompt-pack-guided risk/debug metadata:
+  - `synthetic_fixture`
+  - `mock_provider`
+  - `deterministic_mock_provider`
+  - `needs_human_review_before_real_use`
+  - `prompt_pack_guided`
+- Added provider/debug metadata to normalized annotation cards through permissive additional fields:
+  - `provider`
+  - `provider_debug`
+  - `prompt_pack`
+- Hardened provider normalization so it still preserves original English from the context packet, rejects line ID mismatches, requires `provider_debug`, requires focused policy keys, and rejects missing required mock risk flags.
+- Switched the synthetic eval harness to run fake event -> context packet -> provider pipeline -> annotation card -> overlay demo -> review HTML.
+- Added structural eval score keys for prompt-pack metadata, required output fields, quality priorities, policy coverage, and provider debug coverage.
+- Updated the static review renderer debug section to show escaped provider name/role, prompt pack id/version, player-facing language default, and policy note keys.
+- Added tests for provider request policy fields, mock provider metadata, normalized prompt-pack metadata, provider debug failure modes, provider-backed eval policy coverage, score degradation when metadata is removed, and review debug rendering.
+- Kept companion server/client provider endpoints deferred to Milestone 2D.
+- Did not change schemas, prompt pack text, config, companion server endpoints, or add dependencies.
+
+Milestone 2B remains in place:
 - Added `prompts/packs/ukrainian_annotation_v1/`, a versioned synthetic-only prompt/style pack.
 - Added pack files for system/developer guidance, output contract, style guide, glossary policy, uncertainty policy, spoiler policy, anti-hallucination, anti-overlocalization, Russianism avoidance, and synthetic examples.
 - Revised `synthetic_examples.md` into ten richer synthetic quality references covering bureaucratic irony, institutional metaphor, deadpan official voice, idiom/subtext, reference-like phrasing, sarcasm, uncertainty, spoiler safety, Russianism/calque avoidance, and explicit-only Ukrainian cultural adaptation proposals.
@@ -112,10 +135,12 @@ Milestone 0 foundation still in place:
 - Updated the LLM output contract and legal/data safety docs with runtime paid API and opt-in web enrichment policy.
 
 Latest validation run:
-- `python -m unittest tests.test_prompt_pack -v` passed with 9 tests.
-- `python scripts/check_all.py` passed, including 73 unit tests, provider pipeline smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
+- `python -m unittest tests.test_provider_pipeline -v` passed with 13 tests.
+- `python -m unittest tests.test_synthetic_eval -v` passed with 11 tests.
+- `python -m unittest tests.test_synthetic_review_renderer -v` passed with 9 tests.
+- `python scripts/check_all.py` passed, including 77 unit tests, provider pipeline smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
 - `python scripts/validate_schemas.py` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 73 tests.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 77 tests.
 - `npm run check` passed.
 - `python scripts/run_companion_server.py --smoke-test` passed.
 - `python scripts/run_companion_client.py smoke-test` passed.

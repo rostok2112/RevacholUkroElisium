@@ -14,7 +14,6 @@ from scripts.synthetic_eval import (
     validate_eval_case,
 )
 from scripts.synthetic_review_renderer import render_review_html
-from scripts.synthetic_slice import run_synthetic_slice
 
 
 class SyntheticEvalTests(unittest.TestCase):
@@ -65,10 +64,15 @@ class SyntheticEvalTests(unittest.TestCase):
                 self.assertEqual(set(SCORE_KEYS), set(result["scores"]))
                 self.assertEqual(1.0, result["scores"]["section_coverage"])
                 self.assertEqual(1.0, result["scores"]["spoiler_safety"])
+                self.assertEqual(1.0, result["scores"]["prompt_pack_metadata"])
+                self.assertEqual(1.0, result["scores"]["required_output_field_coverage"])
+                self.assertEqual(1.0, result["scores"]["quality_priority_coverage"])
+                self.assertEqual(1.0, result["scores"]["policy_coverage"])
+                self.assertEqual(1.0, result["scores"]["provider_debug_coverage"])
 
     def test_missing_sections_and_glossary_reduce_scores(self) -> None:
         case = get_synthetic_eval_cases()[0]
-        slice_result = run_synthetic_slice(case.fake_event)
+        slice_result = run_eval_case(case).slice_result
         slice_result["overlay_demo"]["modes"]["deep_explanation"]["sections"] = []
         slice_result["overlay_demo"]["modes"]["deep_explanation"]["glossary_terms"] = []
         slice_result["annotation_card"]["glossary_terms"] = []
@@ -81,6 +85,32 @@ class SyntheticEvalTests(unittest.TestCase):
         self.assertLess(result.scores["glossary_coverage"], 1.0)
         self.assertTrue(any("section_coverage" in failure for failure in result.failures))
         self.assertTrue(any("glossary_coverage" in failure for failure in result.failures))
+
+    def test_missing_prompt_pack_metadata_reduces_policy_scores(self) -> None:
+        case = get_synthetic_eval_cases()[0]
+        slice_result = run_eval_case(case).slice_result
+        slice_result["annotation_card"]["prompt_pack"]["pack_id"] = ""
+        slice_result["annotation_card"]["prompt_pack"]["player_facing_language_default"] = ""
+        slice_result["annotation_card"]["prompt_pack"]["policy_note_keys"] = []
+        slice_result["annotation_card"]["prompt_pack"]["required_output_fields"] = []
+        slice_result["annotation_card"]["provider_debug"]["prompt_pack_id"] = ""
+        slice_result["annotation_card"]["provider_debug"]["policy_note_keys"] = []
+        slice_result["overlay_demo"]["debug"]["prompt_pack"] = slice_result["annotation_card"][
+            "prompt_pack"
+        ]
+        slice_result["overlay_demo"]["debug"]["provider_debug"] = slice_result["annotation_card"][
+            "provider_debug"
+        ]
+        review_html = render_review_html(slice_result)
+
+        result = score_slice_result(case, slice_result, review_html)
+
+        self.assertFalse(result.passed)
+        self.assertLess(result.scores["prompt_pack_metadata"], 1.0)
+        self.assertLess(result.scores["required_output_field_coverage"], 1.0)
+        self.assertLess(result.scores["policy_coverage"], 1.0)
+        self.assertLess(result.scores["provider_debug_coverage"], 1.0)
+        self.assertTrue(any("policy_coverage" in failure for failure in result.failures))
 
     def test_each_case_generates_review_html(self) -> None:
         for case in get_synthetic_eval_cases():

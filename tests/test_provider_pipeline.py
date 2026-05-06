@@ -7,7 +7,9 @@ import sys
 import unittest
 
 from scripts.provider_pipeline import (
-    MOCK_PROVIDER_METADATA,
+    INTERNAL_GUIDANCE_LANGUAGE,
+    PLAYER_FACING_LANGUAGE_DEFAULT,
+    POLICY_FOCUS_KEYS,
     QUALITY_PRIORITIES,
     REQUESTED_OUTPUT_FIELDS,
     MockAnnotationProvider,
@@ -48,6 +50,13 @@ class ProviderPipelineTests(unittest.TestCase):
         self.assertIn("style_guide.md", request.prompt_pack_policy_refs)
         self.assertIn("style_guide", request.prompt_pack_sections)
         self.assertIn("synthetic_examples", request.prompt_pack_sections)
+        self.assertEqual(PLAYER_FACING_LANGUAGE_DEFAULT, request.player_facing_language_default)
+        self.assertEqual(INTERNAL_GUIDANCE_LANGUAGE, request.internal_guidance_language)
+        self.assertEqual(set(POLICY_FOCUS_KEYS), set(request.prompt_pack_focus_sections))
+        self.assertIn("spoiler_policy.md", request.prompt_pack_focus_policy_refs)
+        self.assertIn("anti_hallucination_policy.md", request.prompt_pack_focus_policy_refs)
+        self.assertIn("anti_overlocalization_policy.md", request.prompt_pack_focus_policy_refs)
+        self.assertIn("russianism_avoidance.md", request.prompt_pack_focus_policy_refs)
         self.assertEqual(1, len(request.visible_history))
         self.assertEqual(1, len(request.player_options))
 
@@ -62,7 +71,21 @@ class ProviderPipelineTests(unittest.TestCase):
         self.assertTrue(first.metadata.offline)
         self.assertFalse(first.metadata.requires_api_key)
         self.assertEqual(request.line_id, first.line_id)
+        self.assertIn("mock_provider", first.output["risk_flags"])
         self.assertIn("deterministic_mock_provider", first.output["risk_flags"])
+        self.assertIn("prompt_pack_guided", first.output["risk_flags"])
+        self.assertEqual(
+            "ukrainian_annotation_v1",
+            first.output["provider_debug"]["prompt_pack_id"],
+        )
+        self.assertEqual(
+            PLAYER_FACING_LANGUAGE_DEFAULT,
+            first.output["provider_debug"]["player_facing_language_default"],
+        )
+        self.assertEqual(
+            set(POLICY_FOCUS_KEYS),
+            set(first.output["provider_debug"]["policy_note_keys"]),
+        )
 
     def test_output_parser_produces_valid_annotation_card(self) -> None:
         context_packet = _context_packet()
@@ -82,7 +105,18 @@ class ProviderPipelineTests(unittest.TestCase):
         self.assertIn("explanation_uk", card)
         self.assertIn("character_voice_note_uk", card)
         self.assertIn("committee", card["glossary_terms"])
+        self.assertIn("mock_provider", card["risk_flags"])
         self.assertIn("deterministic_mock_provider", card["risk_flags"])
+        self.assertIn("prompt_pack_guided", card["risk_flags"])
+        self.assertEqual("mock", card["provider"]["provider_name"])
+        self.assertEqual("mock", card["provider_debug"]["provider_name"])
+        self.assertEqual("ukrainian_annotation_v1", card["prompt_pack"]["pack_id"])
+        self.assertEqual("1.0.0", card["prompt_pack"]["version"])
+        self.assertEqual(
+            PLAYER_FACING_LANGUAGE_DEFAULT,
+            card["prompt_pack"]["player_facing_language_default"],
+        )
+        self.assertEqual(set(POLICY_FOCUS_KEYS), set(card["prompt_pack"]["policy_note_keys"]))
         self.assertEqual([], collect_errors(card, load_json(ANNOTATION_CARD_SCHEMA)))
 
     def test_normalizer_preserves_original_even_if_provider_echo_differs(self) -> None:
@@ -101,14 +135,28 @@ class ProviderPipelineTests(unittest.TestCase):
     def test_malformed_provider_output_fails_clearly(self) -> None:
         context_packet = _context_packet()
         request = build_provider_request(context_packet)
-        response = ProviderResponse(
-            metadata=MOCK_PROVIDER_METADATA,
-            request_id=request.request_id,
-            line_id=request.line_id,
-            output={"line_id": request.line_id},
-        )
+        response = MockAnnotationProvider().annotate(request)
+        response.output.pop("translation_uk")
 
         with self.assertRaisesRegex(ProviderPipelineError, "translation_uk"):
+            normalize_provider_response(context_packet, response)
+
+    def test_missing_provider_debug_fails_clearly(self) -> None:
+        context_packet = _context_packet()
+        request = build_provider_request(context_packet)
+        response = MockAnnotationProvider().annotate(request)
+        response.output.pop("provider_debug")
+
+        with self.assertRaisesRegex(ProviderPipelineError, "provider_debug"):
+            normalize_provider_response(context_packet, response)
+
+    def test_malformed_prompt_pack_provider_debug_fails_clearly(self) -> None:
+        context_packet = _context_packet()
+        request = build_provider_request(context_packet)
+        response = MockAnnotationProvider().annotate(request)
+        response.output["provider_debug"]["policy_note_keys"] = ["spoiler_policy"]
+
+        with self.assertRaisesRegex(ProviderPipelineError, "missing policy note keys"):
             normalize_provider_response(context_packet, response)
 
     def test_line_id_mismatch_fails_clearly(self) -> None:
@@ -189,6 +237,9 @@ class ProviderPipelineTests(unittest.TestCase):
             _context_packet()["current_line"]["source_text"],
             written["original_english"],
         )
+        self.assertEqual("mock", written["provider_debug"]["provider_name"])
+        self.assertEqual("ukrainian_annotation_v1", written["prompt_pack"]["pack_id"])
+        self.assertIn("prompt_pack_guided", written["risk_flags"])
         output.unlink()
 
     def test_cli_rejects_unsafe_output_path(self) -> None:

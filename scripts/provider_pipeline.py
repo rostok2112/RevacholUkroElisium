@@ -64,6 +64,22 @@ SAFETY_RULES = (
     "use_synthetic_fixture_data_only_in_tests",
 )
 
+PLAYER_FACING_LANGUAGE_DEFAULT = "uk"
+INTERNAL_GUIDANCE_LANGUAGE = "english_allowed_for_provider_guidance"
+POLICY_FOCUS_KEYS = (
+    "spoiler_policy",
+    "anti_hallucination_policy",
+    "anti_overlocalization_policy",
+    "russianism_avoidance",
+)
+REQUIRED_MOCK_RISK_FLAGS = (
+    "synthetic_fixture",
+    "mock_provider",
+    "deterministic_mock_provider",
+    "needs_human_review_before_real_use",
+    "prompt_pack_guided",
+)
+
 
 class ProviderPipelineError(ValueError):
     """Raised when provider request, response, or normalization fails."""
@@ -109,6 +125,10 @@ class ProviderRequest:
     prompt_pack_version: str
     prompt_pack_policy_refs: tuple[str, ...]
     prompt_pack_sections: dict[str, str]
+    player_facing_language_default: str
+    internal_guidance_language: str
+    prompt_pack_focus_policy_refs: tuple[str, ...]
+    prompt_pack_focus_sections: dict[str, str]
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
@@ -121,6 +141,7 @@ class ProviderRequest:
             "quality_priorities",
             "safety_rules",
             "prompt_pack_policy_refs",
+            "prompt_pack_focus_policy_refs",
         ):
             data[key] = list(data[key])
         return data
@@ -189,6 +210,10 @@ def build_provider_request(
         prompt_pack_version=selected_pack.metadata.version,
         prompt_pack_policy_refs=selected_pack.policy_refs(),
         prompt_pack_sections=selected_pack.sections_for_provider(),
+        player_facing_language_default=PLAYER_FACING_LANGUAGE_DEFAULT,
+        internal_guidance_language=INTERNAL_GUIDANCE_LANGUAGE,
+        prompt_pack_focus_policy_refs=_focus_policy_refs(selected_pack),
+        prompt_pack_focus_sections=_focus_policy_sections(selected_pack),
     )
 
 
@@ -199,6 +224,19 @@ class MockAnnotationProvider:
         if request.provider_name != "mock":
             raise ProviderPipelineError("Only the deterministic mock provider is implemented.")
 
+        provider_debug = {
+            "provider_name": self.metadata.provider_name,
+            "provider_role": self.metadata.provider_kind,
+            "provider_version": self.metadata.version,
+            "prompt_pack_id": request.prompt_pack_id,
+            "prompt_pack_version": request.prompt_pack_version,
+            "required_output_fields_seen": list(request.requested_output_fields),
+            "quality_priorities_seen": list(request.quality_priorities),
+            "player_facing_language_default": request.player_facing_language_default,
+            "internal_guidance_language": request.internal_guidance_language,
+            "policy_note_keys": list(request.prompt_pack_focus_sections),
+            "policy_refs_seen": list(request.prompt_pack_focus_policy_refs),
+        }
         output = {
             "line_id": request.line_id,
             "original_english": request.original_english,
@@ -228,15 +266,18 @@ class MockAnnotationProvider:
                     "kind": "translation_choice",
                     "text": "The mock keeps the civic absurdity and avoids silent localization.",
                 },
+                {
+                    "kind": "tone",
+                    "text": (
+                        "Prompt-pack policy keeps player-facing annotation Ukrainian by default, "
+                        "prefers uncertainty over invention, and avoids Russian-style calque."
+                    ),
+                },
             ],
             "ukrainian_cultural_equivalents": [],
             "glossary_terms": list(request.glossary_hints),
             "confidence": 0.77,
-            "risk_flags": [
-                "synthetic_fixture",
-                "deterministic_mock_provider",
-                "needs_human_review_before_real_use",
-            ],
+            "risk_flags": list(REQUIRED_MOCK_RISK_FLAGS),
             "quality": {
                 "semantic_accuracy": 4,
                 "voice_preservation": 4,
@@ -244,6 +285,7 @@ class MockAnnotationProvider:
                 "spoiler_safety": 5,
                 "needs_human_review": False,
             },
+            "provider_debug": provider_debug,
         }
         return ProviderResponse(
             metadata=self.metadata,
@@ -271,6 +313,12 @@ def normalize_provider_response(
     if output_line_id is not None and output_line_id != current_line["line_id"]:
         raise ProviderPipelineError("Provider output line_id does not match context packet.")
 
+    provider_debug = _required_object(output, "provider_debug")
+    _validate_provider_debug(provider_debug, provider_response.metadata)
+    risk_flags = _required_list(output, "risk_flags")
+    _require_risk_flags(risk_flags, REQUIRED_MOCK_RISK_FLAGS)
+    prompt_pack_metadata = _prompt_pack_metadata_from_debug(provider_debug)
+
     card = {
         "line_id": current_line["line_id"],
         "source_text": current_line["source_text"],
@@ -287,9 +335,11 @@ def normalize_provider_response(
         "glossary_terms": _optional_list(output, "glossary_terms")
         or list(context_packet.get("glossary_hits", [])),
         "confidence": _required_number(output, "confidence"),
-        "risk_flags": _required_list(output, "risk_flags"),
+        "risk_flags": risk_flags,
         "quality": _required_object(output, "quality"),
         "provider": provider_response.metadata.to_dict(),
+        "provider_debug": provider_debug,
+        "prompt_pack": prompt_pack_metadata,
     }
 
     try:
@@ -315,6 +365,14 @@ def _line_refs(lines: Any) -> tuple[dict[str, Any], ...]:
     if not isinstance(lines, list):
         return ()
     return tuple(dict(line) for line in lines if isinstance(line, dict))
+
+
+def _focus_policy_refs(prompt_pack: PromptPack) -> tuple[str, ...]:
+    return tuple(prompt_pack.metadata.policy_files[key] for key in POLICY_FOCUS_KEYS)
+
+
+def _focus_policy_sections(prompt_pack: PromptPack) -> dict[str, str]:
+    return {key: prompt_pack.policy_texts[key] for key in POLICY_FOCUS_KEYS}
 
 
 def _required_string(output: dict[str, Any], key: str) -> str:
@@ -350,3 +408,64 @@ def _required_object(output: dict[str, Any], key: str) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ProviderPipelineError(f"Provider output missing required object: {key}")
     return value
+
+
+def _validate_provider_debug(
+    provider_debug: dict[str, Any],
+    metadata: ProviderMetadata,
+) -> None:
+    required_strings = (
+        "provider_name",
+        "provider_role",
+        "provider_version",
+        "prompt_pack_id",
+        "prompt_pack_version",
+        "player_facing_language_default",
+        "internal_guidance_language",
+    )
+    for key in required_strings:
+        _required_string(provider_debug, key)
+
+    required_lists = (
+        "required_output_fields_seen",
+        "quality_priorities_seen",
+        "policy_note_keys",
+        "policy_refs_seen",
+    )
+    for key in required_lists:
+        _required_list(provider_debug, key)
+
+    if provider_debug["provider_name"] != metadata.provider_name:
+        raise ProviderPipelineError("provider_debug provider_name does not match metadata.")
+    if provider_debug["provider_role"] != metadata.provider_kind:
+        raise ProviderPipelineError("provider_debug provider_role does not match metadata.")
+    if provider_debug["prompt_pack_id"] != "ukrainian_annotation_v1":
+        raise ProviderPipelineError("provider_debug prompt_pack_id is unsupported.")
+    if provider_debug["player_facing_language_default"] != PLAYER_FACING_LANGUAGE_DEFAULT:
+        raise ProviderPipelineError("provider_debug player-facing language default must be uk.")
+    missing_policy_keys = [
+        key for key in POLICY_FOCUS_KEYS if key not in provider_debug["policy_note_keys"]
+    ]
+    if missing_policy_keys:
+        joined = ", ".join(missing_policy_keys)
+        raise ProviderPipelineError(f"provider_debug missing policy note keys: {joined}")
+
+
+def _require_risk_flags(risk_flags: list[Any], required_flags: tuple[str, ...]) -> None:
+    missing = [flag for flag in required_flags if flag not in risk_flags]
+    if missing:
+        joined = ", ".join(missing)
+        raise ProviderPipelineError(f"Provider output missing required risk flags: {joined}")
+
+
+def _prompt_pack_metadata_from_debug(provider_debug: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "pack_id": provider_debug["prompt_pack_id"],
+        "version": provider_debug["prompt_pack_version"],
+        "required_output_fields": list(provider_debug["required_output_fields_seen"]),
+        "quality_priorities": list(provider_debug["quality_priorities_seen"]),
+        "policy_note_keys": list(provider_debug["policy_note_keys"]),
+        "policy_refs": list(provider_debug["policy_refs_seen"]),
+        "player_facing_language_default": provider_debug["player_facing_language_default"],
+        "internal_guidance_language": provider_debug["internal_guidance_language"],
+    }

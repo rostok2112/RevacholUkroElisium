@@ -4,17 +4,37 @@ from dataclasses import dataclass, field
 from typing import Any
 
 try:
+    from scripts.provider_pipeline import (
+        PLAYER_FACING_LANGUAGE_DEFAULT,
+        POLICY_FOCUS_KEYS,
+        QUALITY_PRIORITIES,
+        REQUESTED_OUTPUT_FIELDS,
+        run_provider_pipeline,
+    )
     from scripts.schema_validator import assert_valid, load_json
     from scripts.synthetic_review_renderer import render_review_html
     from scripts.synthetic_slice import (
         ANNOTATION_CARD_SCHEMA,
         CONTEXT_PACKET_SCHEMA,
-        run_synthetic_slice,
+        build_context_packet,
+        build_overlay_demo_model,
     )
 except ModuleNotFoundError:  # pragma: no cover - used when run as a script dependency.
+    from provider_pipeline import (
+        PLAYER_FACING_LANGUAGE_DEFAULT,
+        POLICY_FOCUS_KEYS,
+        QUALITY_PRIORITIES,
+        REQUESTED_OUTPUT_FIELDS,
+        run_provider_pipeline,
+    )
     from schema_validator import assert_valid, load_json
     from synthetic_review_renderer import render_review_html
-    from synthetic_slice import ANNOTATION_CARD_SCHEMA, CONTEXT_PACKET_SCHEMA, run_synthetic_slice
+    from synthetic_slice import (
+        ANNOTATION_CARD_SCHEMA,
+        CONTEXT_PACKET_SCHEMA,
+        build_context_packet,
+        build_overlay_demo_model,
+    )
 
 
 SCORE_KEYS = (
@@ -24,12 +44,18 @@ SCORE_KEYS = (
     "glossary_coverage",
     "risk_flag_coverage",
     "spoiler_safety",
+    "prompt_pack_metadata",
+    "required_output_field_coverage",
+    "quality_priority_coverage",
+    "policy_coverage",
+    "provider_debug_coverage",
     "renderer_completeness",
 )
 
 STRUCTURAL_EVAL_DISCLAIMER = (
     "Synthetic evals are deterministic structural/coverage checks only. "
-    "They are not semantic translation quality, not an LLM judge, and not production evaluation."
+    "They verify prompt-pack policy wiring but are not semantic translation quality, "
+    "not an LLM judge, and not production evaluation."
 )
 
 FORBIDDEN_SYNTHETIC_MARKERS = (
@@ -107,8 +133,10 @@ def get_synthetic_eval_cases() -> list[SyntheticEvalCase]:
     sections = ("idiom", "reference", "skill_voice", "translation_choice")
     risk_flags = (
         "synthetic_fixture",
-        "deterministic_mock_pipeline",
+        "mock_provider",
+        "deterministic_mock_provider",
         "needs_human_review_before_real_use",
+        "prompt_pack_guided",
     )
     return [
         SyntheticEvalCase(
@@ -272,7 +300,15 @@ def run_synthetic_eval(cases: list[SyntheticEvalCase] | None = None) -> dict[str
 
 def run_eval_case(case: SyntheticEvalCase) -> SyntheticEvalResult:
     validate_eval_case(case)
-    slice_result = run_synthetic_slice(case.fake_event)
+    context_packet = build_context_packet(case.fake_event)
+    annotation_card = run_provider_pipeline(context_packet)
+    overlay_demo = build_overlay_demo_model(context_packet, annotation_card)
+    slice_result = {
+        "fake_game_event": case.fake_event,
+        "context_packet": context_packet,
+        "annotation_card": annotation_card,
+        "overlay_demo": overlay_demo,
+    }
     assert_valid(slice_result["context_packet"], load_json(CONTEXT_PACKET_SCHEMA))
     assert_valid(slice_result["annotation_card"], load_json(ANNOTATION_CARD_SCHEMA))
     review_html = render_review_html(slice_result)
@@ -296,6 +332,11 @@ def score_slice_result(
         "glossary_coverage": _glossary_coverage(case, packet, card),
         "risk_flag_coverage": _risk_flag_coverage(case, card),
         "spoiler_safety": _spoiler_safety(case, packet),
+        "prompt_pack_metadata": _prompt_pack_metadata(card),
+        "required_output_field_coverage": _required_output_field_coverage(card),
+        "quality_priority_coverage": _quality_priority_coverage(card),
+        "policy_coverage": _policy_coverage(card),
+        "provider_debug_coverage": _provider_debug_coverage(card),
         "renderer_completeness": _renderer_completeness(case, slice_result, review),
     }
     failures = [f"{key}={value}" for key, value in scores.items() if value < 1.0]
@@ -373,6 +414,9 @@ def _renderer_completeness(
         card.get("concise_meaning_uk", ""),
         card.get("literary_rendering_uk", ""),
         "Risk flags",
+        "Provider",
+        "Prompt pack",
+        "Player-facing language default",
     ]
     for term in case.expected_glossary_terms:
         required_fragments.append(term)
@@ -380,11 +424,65 @@ def _renderer_completeness(
     return round(sum(1 for check in checks if check) / len(checks), 3)
 
 
+def _prompt_pack_metadata(card: dict[str, Any]) -> float:
+    prompt_pack = _as_dict(card.get("prompt_pack"))
+    checks = [
+        prompt_pack.get("pack_id") == "ukrainian_annotation_v1",
+        bool(prompt_pack.get("version")),
+        prompt_pack.get("player_facing_language_default") == PLAYER_FACING_LANGUAGE_DEFAULT,
+        prompt_pack.get("internal_guidance_language") == "english_allowed_for_provider_guidance",
+    ]
+    return _checks_ratio(checks)
+
+
+def _required_output_field_coverage(card: dict[str, Any]) -> float:
+    prompt_pack = _as_dict(card.get("prompt_pack"))
+    return _ratio(REQUESTED_OUTPUT_FIELDS, set(prompt_pack.get("required_output_fields", [])))
+
+
+def _quality_priority_coverage(card: dict[str, Any]) -> float:
+    prompt_pack = _as_dict(card.get("prompt_pack"))
+    return _ratio(QUALITY_PRIORITIES, set(prompt_pack.get("quality_priorities", [])))
+
+
+def _policy_coverage(card: dict[str, Any]) -> float:
+    prompt_pack = _as_dict(card.get("prompt_pack"))
+    provider_debug = _as_dict(card.get("provider_debug"))
+    pack_keys = set(prompt_pack.get("policy_note_keys", []))
+    debug_keys = set(provider_debug.get("policy_note_keys", []))
+    return _ratio(POLICY_FOCUS_KEYS, pack_keys.intersection(debug_keys))
+
+
+def _provider_debug_coverage(card: dict[str, Any]) -> float:
+    provider_debug = _as_dict(card.get("provider_debug"))
+    checks = [
+        provider_debug.get("provider_name") == "mock",
+        provider_debug.get("provider_role") == "deterministic_mock",
+        provider_debug.get("prompt_pack_id") == "ukrainian_annotation_v1",
+        bool(provider_debug.get("prompt_pack_version")),
+        provider_debug.get("player_facing_language_default") == PLAYER_FACING_LANGUAGE_DEFAULT,
+        set(POLICY_FOCUS_KEYS).issubset(set(provider_debug.get("policy_note_keys", []))),
+        set(REQUESTED_OUTPUT_FIELDS).issubset(
+            set(provider_debug.get("required_output_fields_seen", []))
+        ),
+        set(QUALITY_PRIORITIES).issubset(set(provider_debug.get("quality_priorities_seen", []))),
+    ]
+    return _checks_ratio(checks)
+
+
 def _ratio(expected: tuple[str, ...], actual: set[str]) -> float:
     if not expected:
         return 1.0
     hits = sum(1 for item in expected if item in actual)
     return round(hits / len(expected), 3)
+
+
+def _checks_ratio(checks: list[bool]) -> float:
+    return round(sum(1 for check in checks if check) / len(checks), 3)
+
+
+def _as_dict(value: Any) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
 
 
 def _event(
