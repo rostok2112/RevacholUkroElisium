@@ -1,8 +1,20 @@
 # Session Summary
 
-Milestone 1E local companion client and API contract hardening is implemented on top of the Milestone 1D server.
+Milestone 2A provider abstraction and prompt pipeline skeleton is implemented on top of the existing synthetic context and annotation contracts.
 
 Completed in the latest session:
+- Added `scripts/provider_pipeline.py`, a stdlib-only provider/prompt scaffold with dataclass request/response/metadata shapes.
+- Added deterministic mock provider support only; no real LLM, paid API, DeepL, web, or local model runtime calls exist.
+- Added provider request creation from validated context packets, including original text, speaker, scene/conversation metadata, nearby context, spoiler budget, glossary hints, requested output fields, quality priorities, and safety rules.
+- Added provider response normalization into schema-valid annotation cards while preserving the English original from the context packet.
+- Added clear `ProviderPipelineError` failures for malformed provider output and line ID mismatch.
+- Added `scripts/run_provider_pipeline.py` with default synthetic fixture input, optional context packet input, `--provider mock`, workspace-only output, and unsafe path rejection.
+- Added provider pipeline tests for request shape, deterministic mock response, annotation-card validation, original preservation, malformed output failures, no private/network/API-key markers, CLI success, and unsafe output rejection.
+- Integrated a provider pipeline smoke command into `scripts/check_all.py`.
+- Left companion server/client provider endpoints out of Milestone 2A; server exposure should happen after one stable provider CLI/test cycle.
+- Did not change schemas, config, or add dependencies.
+
+Milestone 1E remains in place:
 - Added `scripts/companion_client.py`, a tiny stdlib-only local contract helper for the companion server.
 - Added `scripts/run_companion_client.py` with commands for health, synthetic event posting, latest state reads, review HTML, synthetic eval, and a clean in-process `smoke-test`.
 - Hardened server error codes into a small stable set:
@@ -83,13 +95,14 @@ Milestone 0 foundation still in place:
 - Updated the LLM output contract and legal/data safety docs with runtime paid API and opt-in web enrichment policy.
 
 Latest validation run:
-- `python -m unittest tests.test_companion_server tests.test_companion_client -v` passed with 21 tests.
-- `python scripts/check_all.py` passed, including 53 unit tests, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
+- `python -m unittest tests.test_provider_pipeline -v` passed with 11 tests.
+- `python scripts/check_all.py` passed, including 64 unit tests, provider pipeline smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
 - `python scripts/validate_schemas.py` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 53 tests.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 64 tests.
 - `npm run check` passed.
 - `python scripts/run_companion_server.py --smoke-test` passed.
 - `python scripts/run_companion_client.py smoke-test` passed.
+- `python scripts/run_provider_pipeline.py --output workspace/synthetic-slice/provider-output.json --quiet` passed.
 
 Notes:
 - `ruff` is installed locally and passed both check and format-check in this session.

@@ -12,5 +12,7 @@
 - Milestone 1D chose a stdlib `http.server` skeleton first; decide later whether to keep it, wrap it, or replace it with a production service framework.
 - How soon to split deterministic mocks from future provider-backed translation/annotation adapters.
 - Milestone 1E chose a tiny stdlib local client and API contract doc before provider work.
-- Whether Milestone 2A provider abstractions should live under `scripts/` initially or move toward a package layout.
+- Milestone 2A provider abstractions live under `scripts/` initially; decide later when to move toward a package layout.
 - How to version provider prompt contracts before real paid API or local model adapters are enabled.
+- Whether Milestone 2B should introduce a dedicated prompt/style pack manifest or keep prompt loading as simple file reads.
+- Whether provider annotation should be exposed through companion server/client in Milestone 2B or wait until a richer mock/eval pass exists.

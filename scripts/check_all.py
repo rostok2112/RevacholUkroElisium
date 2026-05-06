@@ -63,6 +63,16 @@ def main() -> int:
             "companion client smoke",
             [sys.executable, "scripts/run_companion_client.py", "smoke-test"],
         ),
+        (
+            "provider pipeline smoke",
+            [
+                sys.executable,
+                "scripts/run_provider_pipeline.py",
+                "--output",
+                "workspace/synthetic-slice/provider-output.json",
+                "--quiet",
+            ],
+        ),
     ]
 
     for label, command in steps:

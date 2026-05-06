@@ -15,5 +15,9 @@
 - The Milestone 1E companion client is a local contract helper only, not a production SDK.
 - The Milestone 1E API contract is still synthetic/offline/mock-only and may need versioning before real overlay or bridge clients depend on it.
 - Server/client tests cover localhost behavior only and intentionally do not exercise non-localhost networking.
+- The Milestone 2A provider abstraction proves provider contract shape only; the mock provider is not a translation quality engine.
+- Milestone 2A provider output intentionally overlaps earlier deterministic mock annotation behavior until Milestone 2B adds richer prompt/style guidance.
+- Companion server/client provider endpoints are not exposed yet; adding them before the prompt/style pack stabilizes could lock in weak API assumptions.
+- Future real providers need cache/privacy enforcement and explicit opt-in config before any runtime calls are enabled.
 - Unsafe review output paths are rejected rather than normalized. Future tools should keep this explicit behavior unless there is a documented reason to change it.
 - The annotation-card schema was not changed for Milestone 1A. Optional helper fields validate because the schema does not forbid additional properties.
