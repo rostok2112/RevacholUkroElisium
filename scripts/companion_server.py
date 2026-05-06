@@ -1,0 +1,230 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import json
+from typing import Any
+from urllib.parse import urlparse
+
+try:
+    from scripts.schema_validator import SchemaValidationError
+    from scripts.synthetic_eval import run_synthetic_eval
+    from scripts.synthetic_review_renderer import render_review_html
+    from scripts.synthetic_slice import run_synthetic_slice
+except ModuleNotFoundError:  # pragma: no cover - used when run as a script dependency.
+    from schema_validator import SchemaValidationError
+    from synthetic_eval import run_synthetic_eval
+    from synthetic_review_renderer import render_review_html
+    from synthetic_slice import run_synthetic_slice
+
+
+DEFAULT_HOST = "127.0.0.1"
+DEFAULT_PORT = 8765
+SERVER_VERSION = "companion-server.synthetic.v1"
+MAX_JSON_BODY_BYTES = 1_000_000
+
+ENDPOINTS = [
+    "GET /health",
+    "GET /state/latest-context",
+    "GET /state/latest-annotation",
+    "GET /state/latest-overlay-demo",
+    "GET /state/latest-eval-summary",
+    "GET /review/latest.html",
+    "POST /synthetic/event",
+    "POST /synthetic/eval",
+]
+
+
+@dataclass
+class CompanionState:
+    latest_slice_result: dict[str, Any] | None = None
+    latest_eval_summary: dict[str, Any] | None = None
+
+    def latest_context_packet(self) -> dict[str, Any] | None:
+        if self.latest_slice_result is None:
+            return None
+        return self.latest_slice_result["context_packet"]
+
+    def latest_annotation_card(self) -> dict[str, Any] | None:
+        if self.latest_slice_result is None:
+            return None
+        return self.latest_slice_result["annotation_card"]
+
+    def latest_overlay_demo(self) -> dict[str, Any] | None:
+        if self.latest_slice_result is None:
+            return None
+        return self.latest_slice_result["overlay_demo"]
+
+
+def make_server(
+    host: str = DEFAULT_HOST,
+    port: int = DEFAULT_PORT,
+    state: CompanionState | None = None,
+) -> ThreadingHTTPServer:
+    companion_state = state or CompanionState()
+    server = ThreadingHTTPServer((host, port), make_handler(companion_state))
+    server.companion_state = companion_state  # type: ignore[attr-defined]
+    return server
+
+
+def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
+    class CompanionRequestHandler(BaseHTTPRequestHandler):
+        server_version = "RevacholCompanionSynthetic/0.1"
+        protocol_version = "HTTP/1.1"
+
+        def do_GET(self) -> None:
+            path = urlparse(self.path).path
+
+            if path == "/health":
+                self._send_json(200, _ok(_health_payload(state)))
+            elif path == "/state/latest-context":
+                self._send_json(200, _ok(state.latest_context_packet()))
+            elif path == "/state/latest-annotation":
+                self._send_json(200, _ok(state.latest_annotation_card()))
+            elif path == "/state/latest-overlay-demo":
+                self._send_json(200, _ok(state.latest_overlay_demo()))
+            elif path == "/state/latest-eval-summary":
+                self._send_json(200, _ok(state.latest_eval_summary))
+            elif path == "/review/latest.html":
+                self._handle_latest_review()
+            else:
+                self._send_error_json(404, "not_found", f"Unknown endpoint: {path}")
+
+        def do_POST(self) -> None:
+            path = urlparse(self.path).path
+
+            if path == "/synthetic/event":
+                self._handle_synthetic_event()
+            elif path == "/synthetic/eval":
+                self._handle_synthetic_eval()
+            else:
+                self._send_error_json(404, "not_found", f"Unknown endpoint: {path}")
+
+        def log_message(self, format: str, *args: Any) -> None:
+            return
+
+        def _handle_synthetic_event(self) -> None:
+            try:
+                event = self._read_json_body()
+            except _InvalidJson as exc:
+                self._send_error_json(400, "invalid_json", str(exc))
+                return
+
+            if not isinstance(event, dict):
+                self._send_error_json(400, "invalid_synthetic_event", "Synthetic event must be a JSON object.")
+                return
+
+            try:
+                result = run_synthetic_slice(event)
+            except SchemaValidationError as exc:
+                self._send_error_json(400, "invalid_synthetic_event", str(exc))
+                return
+
+            state.latest_slice_result = result
+            self._send_json(
+                200,
+                _ok(
+                    {
+                        "context_packet": result["context_packet"],
+                        "annotation_card": result["annotation_card"],
+                        "overlay_demo": result["overlay_demo"],
+                    }
+                ),
+            )
+
+        def _handle_synthetic_eval(self) -> None:
+            summary = run_synthetic_eval()
+            state.latest_eval_summary = summary
+            self._send_json(200, _ok(summary))
+
+        def _handle_latest_review(self) -> None:
+            if state.latest_slice_result is None:
+                self._send_error_json(
+                    404,
+                    "no_latest_overlay_demo",
+                    "No latest synthetic overlay demo is available. POST /synthetic/event first.",
+                )
+                return
+
+            html = render_review_html(state.latest_slice_result)
+            self._send_text(200, html, "text/html; charset=utf-8")
+
+        def _read_json_body(self) -> Any:
+            content_length_raw = self.headers.get("Content-Length", "0")
+            try:
+                content_length = int(content_length_raw)
+            except ValueError as exc:
+                raise _InvalidJson("Content-Length must be an integer.") from exc
+
+            if content_length < 1:
+                raise _InvalidJson("Request body must contain JSON.")
+            if content_length > MAX_JSON_BODY_BYTES:
+                raise _InvalidJson(f"JSON body exceeds {MAX_JSON_BODY_BYTES} bytes.")
+
+            body = self.rfile.read(content_length)
+            try:
+                text = body.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise _InvalidJson("Request body must be UTF-8 JSON.") from exc
+
+            try:
+                return json.loads(text)
+            except json.JSONDecodeError as exc:
+                raise _InvalidJson(f"Invalid JSON: {exc.msg} at line {exc.lineno} column {exc.colno}.") from exc
+
+        def _send_json(self, status: int, payload: dict[str, Any]) -> None:
+            rendered = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+            self._send_text(status, rendered, "application/json; charset=utf-8")
+
+        def _send_error_json(self, status: int, code: str, message: str) -> None:
+            self._send_json(status, _error(code, message))
+
+        def _send_text(self, status: int, text: str, content_type: str) -> None:
+            body = text.encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+
+    return CompanionRequestHandler
+
+
+def _health_payload(state: CompanionState) -> dict[str, Any]:
+    return {
+        "status": "ok",
+        "version": SERVER_VERSION,
+        "schema_version": "companion-server-health.v1",
+        "mode": {
+            "offline": True,
+            "mock": True,
+            "synthetic_only": True,
+            "external_services": False,
+            "requires_api_keys": False,
+        },
+        "binding": {
+            "default_host": DEFAULT_HOST,
+            "localhost_only_by_default": True,
+            "note": "Milestone 1D binds to 127.0.0.1 by default; other hosts require explicit CLI input.",
+        },
+        "latest_state": {
+            "has_latest_context": state.latest_context_packet() is not None,
+            "has_latest_annotation": state.latest_annotation_card() is not None,
+            "has_latest_overlay_demo": state.latest_overlay_demo() is not None,
+            "has_latest_eval_summary": state.latest_eval_summary is not None,
+        },
+        "endpoints": ENDPOINTS,
+    }
+
+
+def _ok(data: Any) -> dict[str, Any]:
+    return {"ok": True, "data": data}
+
+
+def _error(code: str, message: str) -> dict[str, Any]:
+    return {"ok": False, "error": {"code": code, "message": message}}
+
+
+class _InvalidJson(ValueError):
+    pass

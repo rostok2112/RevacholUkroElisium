@@ -1,13 +1,14 @@
 # Next Actions
 
-After Milestone 1C:
+After Milestone 1D:
 
-1. Implement Milestone 1D as a minimal companion server skeleton using only synthetic events and deterministic mocks.
-2. Reuse the existing fake event schema, synthetic slice, review renderer, and eval harness.
-3. Add a local stdlib HTTP server or equivalent tiny server module with endpoints for health, synthetic event ingestion, latest context/annotation/overlay model, and synthetic eval summary.
-4. Keep all server state in memory by default; optional outputs must stay under ignored `workspace/synthetic-slice/`.
-5. Keep paid APIs, web retrieval, extraction, BepInEx, OCR, production overlay work, frontend frameworks, and real game assets out of tests and out of the public repo.
+1. Implement Milestone 1E as a local synthetic client/contract hardening slice.
+2. Add a tiny stdlib polling client or CLI demo that reads the companion server endpoints and prints an overlay-facing compact/deep state.
+3. Add contract docs for companion server clients: request/response envelopes, error codes, state endpoints, and localhost/offline/mock limitations.
+4. Add tests for client behavior using an in-process localhost server; do not require a long-running server.
+5. Keep server state in memory unless a future milestone explicitly adds ignored local persistence.
+6. Keep paid APIs, web retrieval, extraction, BepInEx, OCR, production overlay work, frontend frameworks, and real game assets out of tests and out of the public repo.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 1C. Read AGENTS.md and docs/devlog/*.md, then implement Milestone 1D: a stdlib-only companion server skeleton that accepts synthetic fake game events, runs the existing synthetic slice, exposes health/latest context/latest annotation/latest overlay demo/latest synthetic eval summary endpoints, and uses in-memory state by default. Do not call APIs, web services, LLMs, BepInEx, OCR, extraction, or use real game content. Do not add frontend frameworks or production overlay work. Add tests for endpoints and run python scripts/check_all.py plus npm run check.`
+`Continue in revachol-ukro-elisium after Milestone 1D. Read AGENTS.md and docs/devlog/*.md, then implement Milestone 1E: a stdlib-only local companion client/contract hardening slice. Reuse the existing companion server in-process for tests, add a tiny polling client or CLI demo that reads /health, /state/latest-context, /state/latest-annotation, /state/latest-overlay-demo, and /review/latest.html, and document the server envelope/error contract for future overlay and BepInEx clients. Keep everything synthetic/offline/mock-only, bind tests to 127.0.0.1, do not use real game content, BepInEx, OCR, extraction, web calls, paid APIs, LLM calls, frontend frameworks, production overlay work, auth, TLS, or new dependencies. Run python scripts/check_all.py, python scripts/validate_schemas.py, python -m unittest discover -s tests -p "test_*.py", npm run check, and python scripts/run_companion_server.py --smoke-test.`

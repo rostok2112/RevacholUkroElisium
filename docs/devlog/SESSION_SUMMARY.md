@@ -1,8 +1,28 @@
 # Session Summary
 
-Milestone 1C synthetic quality/eval harness is implemented on top of the Milestone 1A/1B slice.
+Milestone 1D companion server skeleton is implemented on top of the Milestone 1A/1B/1C synthetic pipeline.
 
 Completed in the latest session:
+- Added `scripts/companion_server.py`, a stdlib-only `http.server` companion skeleton with in-memory state.
+- Added `scripts/run_companion_server.py` with default `--host 127.0.0.1`, default `--port 8765`, and `--smoke-test`.
+- Added local JSON endpoints using a consistent envelope:
+  - success: `{"ok": true, "data": ...}`
+  - error: `{"ok": false, "error": {"code": "...", "message": "..."}}`
+- Implemented `GET /health`, latest context/annotation/overlay/eval state endpoints, `POST /synthetic/event`, `POST /synthetic/eval`, and `GET /review/latest.html`.
+- Kept `/review/latest.html` generated from the existing escaped static review renderer; before an event exists it returns a 404 JSON error envelope.
+- Added endpoint tests for health, valid synthetic event ingestion, invalid JSON, invalid fake event validation, latest state, synthetic eval, review HTML, review 404, unknown routes, and localhost-only test binding.
+- Integrated a clean companion server smoke test into `scripts/check_all.py` without leaving a long-running process.
+- Did not change schemas or add dependencies.
+- Did not rename the repository path. `revachol-ukro-elisium` matches the actual directory; naming cleanup remains a future decision.
+
+Milestone 1D server posture:
+- Local/offline/mock-only for now.
+- Binds to `127.0.0.1` by default.
+- Uses in-memory state only; restarting the server loses latest context/annotation/eval state.
+- Is not production security hardened: no auth, TLS, persistence, rate limiting, CORS policy, or multi-client session model yet.
+- Future paid API, web retrieval, local extraction, and provider-backed annotation support must remain opt-in and must keep caches/private data under ignored local paths.
+
+Milestone 1C remains in place:
 - Added a stdlib-only deterministic structural eval harness for the existing synthetic slice and review renderer.
 - Added six invented synthetic eval cases covering bureaucratic irony, idiom/subtext, character voice, reference-like political phrasing, Ukrainian field presence, spoiler safety defaults, glossary presence, and compact/deep usefulness.
 - Added `scripts/run_synthetic_eval.py`, which prints a JSON summary by default and rejects unsafe output paths outside `workspace/synthetic-slice/`.
@@ -43,15 +63,12 @@ Milestone 0 foundation still in place:
 - Updated the LLM output contract and legal/data safety docs with runtime paid API and opt-in web enrichment policy.
 
 Latest validation run:
-- `python scripts/check_all.py` passed.
+- `python -m unittest tests.test_companion_server -v` passed with 11 tests.
+- `python scripts/check_all.py` passed, including 43 unit tests and the new companion server smoke.
 - `python scripts/validate_schemas.py` passed.
-- `python scripts/validate_config.py --example config/revachol.example.toml` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 32 tests.
-- `python scripts/run_synthetic_slice.py --quiet` passed.
-- `python scripts/run_synthetic_slice.py --render-review --output workspace/synthetic-slice/review.html --quiet` passed.
-- `python scripts/run_synthetic_eval.py --output workspace/synthetic-slice/eval-summary.json --write-reviews --quiet` passed.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 43 tests.
 - `npm run check` passed.
-- `python scripts/bootstrap_workspace.py` passed and created ignored local folders only.
+- `python scripts/run_companion_server.py --smoke-test` passed.
 
 Notes:
 - `ruff` is optional and was skipped because it is not installed locally.
