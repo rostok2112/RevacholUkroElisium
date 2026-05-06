@@ -1,0 +1,28 @@
+{
+  "packet_id": "synthetic-packet-001",
+  "game": {
+    "title": "Disco Elysium: The Final Cut",
+    "version": "synthetic"
+  },
+  "current_line": {
+    "line_id": "synthetic.001",
+    "source_text": "A city like this doesn't forgive men who remember too much.",
+    "speaker": "Narrator",
+    "speaker_type": "narrator",
+    "conversation_id": "synthetic.conv",
+    "location": "Synthetic location",
+    "skill": null,
+    "audio_ref": null
+  },
+  "visible_history": [],
+  "nearby_tree": [],
+  "player_options": [],
+  "glossary_hits": [],
+  "spoiler_budget": "none",
+  "retrieval": {
+    "strategy": "synthetic",
+    "sources": [
+      "tests/fixtures"
+    ]
+  }
+}

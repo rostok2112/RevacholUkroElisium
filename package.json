@@ -1,0 +1,14 @@
+{
+  "name": "revachol-ukrainian-companion",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Context-first Ukrainian companion layer for Disco Elysium.",
+  "scripts": {
+    "check": "python scripts/check_repo.py",
+    "schemas": "python scripts/validate_schemas.py",
+    "test": "echo \"No tests yet. Add package-level tests.\""
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

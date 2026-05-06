@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GlossaryEntry",
+  "type": "object",
+  "required": [
+    "source",
+    "target_uk",
+    "category",
+    "policy"
+  ],
+  "properties": {
+    "source": {
+      "type": "string"
+    },
+    "target_uk": {
+      "type": "string"
+    },
+    "category": {
+      "enum": [
+        "name",
+        "skill",
+        "faction",
+        "place",
+        "political_term",
+        "idiom",
+        "recurring_joke",
+        "ui",
+        "other"
+      ]
+    },
+    "policy": {
+      "enum": [
+        "always_translate",
+        "usually_translate",
+        "keep_english",
+        "annotate_only",
+        "case_by_case"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "forbidden_variants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

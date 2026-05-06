@@ -1,0 +1,28 @@
+product:
+  goal: "Context-first Ukrainian companion layer for Disco Elysium"
+  primary_user: "Ukrainian player comfortable with technical setup but unwilling to ruin gameplay flow"
+  core_tradeoff: "accept expensive/complex setup for maximum contextual quality and seamless play"
+
+must_have:
+  - "English original remains visible or recoverable"
+  - "Ukrainian translation appears without alt-tab"
+  - "Click/hover deep explanations"
+  - "Game-specific context packets"
+  - "No committed copyrighted content"
+  - "Glossary and translation memory"
+  - "Eval pipeline"
+  - "Spoiler-aware retrieval"
+  - "Voice/audio metadata support"
+
+should_have:
+  - "DeepL glossary baseline"
+  - "LLM ensemble mode"
+  - "Local model fallback"
+  - "Scribe-like browser generated from local extraction"
+  - "Human review studio"
+  - "Debug overlay"
+
+wont_have_initially:
+  - "Full public distribution of translated game script"
+  - "Mobile-phone OCR workflow"
+  - "Russian translation dependency"

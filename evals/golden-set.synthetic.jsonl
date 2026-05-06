@@ -1,0 +1,2 @@
+{"id":"synthetic.001","source":"A city like this doesn't forgive men who remember too much.","speaker":"Narrator","expected_properties":["bleak","poetic","trauma_subtext"],"forbidden":["comic tone","future spoilers"]}
+{"id":"synthetic.002","source":"Congratulations, detective. You have successfully investigated the floor.","speaker":"Partner","expected_properties":["dry sarcasm","affectionate mockery"],"forbidden":["literal sincere praise"]}

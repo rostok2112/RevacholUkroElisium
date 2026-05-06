@@ -1,0 +1,8 @@
+source,target_uk,category,policy,notes,forbidden_variants
+Revachol,Ревашоль,place,case_by_case,Keep stable once chosen,
+Disco Elysium,Disco Elysium,name,keep_english,Title stays original,
+Rhetoric,Риторика,skill,always_translate,Skill name,
+Empathy,Емпатія,skill,always_translate,Skill name,
+Authority,Авторитет,skill,always_translate,Skill name,
+Inland Empire,Внутрішня імперія,skill,case_by_case,Needs voice/style review,
+cop,коп,other,case_by_case,Depends on speaker register,

@@ -1,0 +1,13 @@
+# Example local Codex config notes.
+# Keep actual secrets and personal settings outside the repo.
+
+[project]
+name = "revachol-ukrainian-companion"
+
+[workflow]
+preferred_mode = "auto-edit"
+run_checks_before_finish = true
+
+[notes]
+# Use AGENTS.md as the source of truth.
+# Install project skills from .agents/skills into your Codex skills directory if your Codex build does not auto-discover workspace skills.

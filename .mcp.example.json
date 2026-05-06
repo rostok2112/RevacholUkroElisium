@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "sqlite-readonly": {
+      "command": "uvx",
+      "args": ["mcp-server-sqlite", "--db-path", ".local-game/context.sqlite"]
+    },
+    "filesystem-project": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
+    }
+  }
+}

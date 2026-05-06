@@ -1,0 +1,6 @@
+---
+description: Project rules for Revachol Ukrainian Companion
+alwaysApply: true
+---
+
+Follow `AGENTS.md`. Do not commit extracted Disco Elysium content. Prefer context-first Ukrainian translation and typed contracts.

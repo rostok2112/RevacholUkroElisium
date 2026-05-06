@@ -1,0 +1,11 @@
+[project]
+name = "revachol-ukrainian-companion-tools"
+version = "0.1.0"
+requires-python = ">=3.11"
+description = "Developer tooling for Revachol Ukrainian Companion"
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

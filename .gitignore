@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Build output
+dist/
+build/
+target/
+bin/
+obj/
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Local game content - never commit
+.local-game/
+extracted/
+game-data/
+private-data/
+*.assets
+*.bundle
+*.wav
+*.ogg
+*.mp3
+*.png
+*.jpg
+*.po
+*.pot
+database.json
+
+# Eval outputs
+eval-runs/
+translation-memory/private/
+.cache/

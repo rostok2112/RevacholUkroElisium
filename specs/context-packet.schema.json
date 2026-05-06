@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/revachol/context-packet.schema.json",
+  "title": "ContextPacket",
+  "type": "object",
+  "required": [
+    "packet_id",
+    "game",
+    "current_line",
+    "spoiler_budget",
+    "retrieval"
+  ],
+  "properties": {
+    "packet_id": {
+      "type": "string"
+    },
+    "game": {
+      "type": "object",
+      "required": [
+        "title",
+        "version"
+      ],
+      "properties": {
+        "title": {
+          "const": "Disco Elysium: The Final Cut"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "current_line": {
+      "type": "object",
+      "required": [
+        "line_id",
+        "source_text"
+      ],
+      "properties": {
+        "line_id": {
+          "type": "string"
+        },
+        "source_text": {
+          "type": "string"
+        },
+        "speaker": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "speaker_type": {
+          "enum": [
+            "npc",
+            "player",
+            "skill",
+            "object",
+            "narrator",
+            "unknown"
+          ]
+        },
+        "conversation_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "skill": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "audio_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "visible_history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lineRef"
+      }
+    },
+    "nearby_tree": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lineRef"
+      }
+    },
+    "player_options": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lineRef"
+      }
+    },
+    "glossary_hits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "spoiler_budget": {
+      "enum": [
+        "none",
+        "local_tree",
+        "quest_known",
+        "full_game"
+      ]
+    },
+    "retrieval": {
+      "type": "object",
+      "required": [
+        "strategy",
+        "sources"
+      ],
+      "properties": {
+        "strategy": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "lineRef": {
+      "type": "object",
+      "required": [
+        "line_id",
+        "source_text"
+      ],
+      "properties": {
+        "line_id": {
+          "type": "string"
+        },
+        "source_text": {
+          "type": "string"
+        },
+        "speaker": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relation": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
