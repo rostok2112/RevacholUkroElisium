@@ -1,13 +1,13 @@
 # Next Actions
 
-After Milestone 1B:
+After Milestone 1C:
 
-1. Implement Milestone 1C as a small synthetic quality/eval harness for the existing fake-event -> context -> annotation -> review flow.
-2. Reuse `scripts/synthetic_slice.py` and `scripts/synthetic_review_renderer.py`; do not restart or replace them.
-3. Add a tiny synthetic scenario pack or inline cases that exercise overlay brevity, glossary presence, risk flags, spoiler safety defaults, and annotation section coverage.
-4. Emit deterministic eval output to stdout by default, with optional writes only under ignored `workspace/synthetic-slice/`.
-5. Keep paid APIs, web retrieval, extraction, BepInEx, OCR, production overlay work, and real game assets out of tests and out of the public repo.
+1. Implement Milestone 1D as a minimal companion server skeleton using only synthetic events and deterministic mocks.
+2. Reuse the existing fake event schema, synthetic slice, review renderer, and eval harness.
+3. Add a local stdlib HTTP server or equivalent tiny server module with endpoints for health, synthetic event ingestion, latest context/annotation/overlay model, and synthetic eval summary.
+4. Keep all server state in memory by default; optional outputs must stay under ignored `workspace/synthetic-slice/`.
+5. Keep paid APIs, web retrieval, extraction, BepInEx, OCR, production overlay work, frontend frameworks, and real game assets out of tests and out of the public repo.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 1B. Read AGENTS.md and docs/devlog/*.md, then implement Milestone 1C: a stdlib-only synthetic quality/eval harness for the existing synthetic slice and review renderer. It should run multiple invented synthetic cases or checks, score overlay brevity/section coverage/glossary presence/risk flags/spoiler safety defaults, write optional outputs only under workspace/synthetic-slice/, add tests, and run python scripts/check_all.py plus npm run check. Do not call APIs, web services, LLMs, BepInEx, OCR, extraction, or use real game content.`
+`Continue in revachol-ukro-elisium after Milestone 1C. Read AGENTS.md and docs/devlog/*.md, then implement Milestone 1D: a stdlib-only companion server skeleton that accepts synthetic fake game events, runs the existing synthetic slice, exposes health/latest context/latest annotation/latest overlay demo/latest synthetic eval summary endpoints, and uses in-memory state by default. Do not call APIs, web services, LLMs, BepInEx, OCR, extraction, or use real game content. Do not add frontend frameworks or production overlay work. Add tests for endpoints and run python scripts/check_all.py plus npm run check.`

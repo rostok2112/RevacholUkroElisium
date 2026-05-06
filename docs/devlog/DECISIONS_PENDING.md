@@ -8,3 +8,5 @@
 - Whether future annotation-card helper fields should remain permissive additional properties or become explicit optional schema properties.
 - Whether future review artifacts should stay static HTML, add Markdown output, or wait for a real overlay prototype.
 - Which synthetic eval dimensions should graduate from Milestone 1C checks into the long-term eval framework.
+- Whether the Milestone 1D companion server skeleton should use `http.server` endpoints first or a CLI/in-process service object with HTTP added later.
+- How soon to split deterministic mocks from future provider-backed translation/annotation adapters.

@@ -39,6 +39,17 @@ def main() -> int:
                 "--quiet",
             ],
         ),
+        (
+            "synthetic eval smoke",
+            [
+                sys.executable,
+                "scripts/run_synthetic_eval.py",
+                "--output",
+                "workspace/synthetic-slice/eval-summary.json",
+                "--write-reviews",
+                "--quiet",
+            ],
+        ),
     ]
 
     for label, command in steps:
