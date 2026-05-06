@@ -1,0 +1,83 @@
+{
+  "input": {
+    "line_id": "synthetic.e2e.001",
+    "source_text": "The committee buried the clock, then blamed time for being late.",
+    "speaker": "Synthetic Clerk"
+  },
+  "context_packet": {
+    "packet_id": "synthetic-packet-e2e-001",
+    "game": {
+      "title": "Disco Elysium: The Final Cut",
+      "version": "synthetic"
+    },
+    "current_line": {
+      "line_id": "synthetic.e2e.001",
+      "source_text": "The committee buried the clock, then blamed time for being late.",
+      "speaker": "Synthetic Clerk",
+      "speaker_type": "npc",
+      "conversation_id": "synthetic.conv.e2e",
+      "location": "Synthetic municipal office",
+      "skill": null,
+      "audio_ref": null
+    },
+    "visible_history": [
+      {
+        "line_id": "synthetic.e2e.000",
+        "source_text": "The meeting has been delayed by a motion about delays.",
+        "speaker": "Synthetic Clerk",
+        "relation": "previous_visible"
+      }
+    ],
+    "nearby_tree": [],
+    "player_options": [
+      {
+        "line_id": "synthetic.e2e.option.001",
+        "source_text": "Ask who had the shovel.",
+        "speaker": "Player",
+        "relation": "visible_option"
+      }
+    ],
+    "glossary_hits": [
+      "committee"
+    ],
+    "spoiler_budget": "none",
+    "retrieval": {
+      "strategy": "synthetic_fixture",
+      "sources": [
+        "tests/fixtures/synthetic_e2e_example.json"
+      ]
+    }
+  },
+  "annotation_card": {
+    "line_id": "synthetic.e2e.001",
+    "translation_uk": "\u041a\u043e\u043c\u0456\u0442\u0435\u0442 \u043f\u043e\u0445\u043e\u0432\u0430\u0432 \u0433\u043e\u0434\u0438\u043d\u043d\u0438\u043a, \u0430 \u043f\u043e\u0442\u0456\u043c \u0437\u0432\u0438\u043d\u0443\u0432\u0430\u0442\u0438\u0432 \u0447\u0430\u0441, \u0449\u043e \u0442\u043e\u0439 \u0441\u043f\u0456\u0437\u043d\u0438\u0432\u0441\u044f.",
+    "literal_gloss": "The committee hid the clock and blamed time for lateness.",
+    "quick_note": "\u041e\u0440\u0438\u0433\u0456\u043d\u0430\u043b \u0437\u0431\u0435\u0440\u0435\u0436\u0435\u043d\u043e \u0432 \u043f\u0430\u043a\u0435\u0442\u0456 \u043a\u043e\u043d\u0442\u0435\u043a\u0441\u0442\u0443; \u043a\u0430\u0440\u0442\u043a\u0430 \u0434\u0430\u0454 \u0443\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0435 \u0442\u043b\u0443\u043c\u0430\u0447\u0435\u043d\u043d\u044f \u0441\u0443\u0445\u043e\u0457 \u0431\u044e\u0440\u043e\u043a\u0440\u0430\u0442\u0438\u0447\u043d\u043e\u0457 \u0456\u0440\u043e\u043d\u0456\u0457.",
+    "deep_notes": [
+      {
+        "kind": "idiom",
+        "text": "\u041e\u0431\u0440\u0430\u0437 \u043f\u0440\u0430\u0446\u044e\u0454 \u044f\u043a \u0436\u0430\u0440\u0442 \u043f\u0440\u043e \u0441\u0438\u0441\u0442\u0435\u043c\u0443, \u044f\u043a\u0430 \u0445\u043e\u0432\u0430\u0454 \u0434\u043e\u043a\u0430\u0437\u0438 \u0456 \u0437\u0432\u0438\u043d\u0443\u0432\u0430\u0447\u0443\u0454 \u0440\u0435\u0430\u043b\u044c\u043d\u0456\u0441\u0442\u044c."
+      },
+      {
+        "kind": "reference",
+        "text": "\u0421\u0438\u043d\u0442\u0435\u0442\u0438\u0447\u043d\u0430 \u0431\u044e\u0440\u043e\u043a\u0440\u0430\u0442\u0438\u0447\u043d\u0430 \u0430\u043b\u044e\u0437\u0456\u044f; \u043d\u0435 \u0446\u0438\u0442\u0430\u0442\u0430 \u0437 \u0433\u0440\u0438 \u0456 \u043d\u0435 \u0432\u0438\u0442\u044f\u0433 \u0437 \u0434\u0456\u0430\u043b\u043e\u0433\u043e\u0432\u043e\u0457 \u0431\u0430\u0437\u0438."
+      }
+    ],
+    "ukrainian_cultural_equivalents": [],
+    "glossary_terms": [
+      "committee"
+    ],
+    "confidence": 0.82,
+    "risk_flags": [
+      "synthetic_low_context",
+      "needs_future_voice_calibration"
+    ],
+    "quality": {
+      "semantic_accuracy": 4,
+      "voice_preservation": 4,
+      "ukrainian_naturalness": 4,
+      "spoiler_safety": 5,
+      "needs_human_review": false
+    }
+  }
+}

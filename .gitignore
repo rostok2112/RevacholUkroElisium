@@ -1,4 +1,4 @@
-# Dependencies
+# Dependencies and local tool environments
 node_modules/
 .venv/
 venv/
@@ -17,11 +17,23 @@ obj/
 .env.*
 !.env.example
 
-# Local game content - never commit
+# Local game content and user-owned extraction output - never commit.
+# These paths may contain copyrighted dialogue, indexes, generated translations,
+# audio references, screenshots, prompt payloads, or private caches.
 .local-game/
+data/local/
+data/extracted/
+data/generated/
 extracted/
 game-data/
 private-data/
+workspace/
+vector-store/
+llm-cache/
+translation-memory/private/
+audio-index/private/
+screenshots/private/
+.cache/
 *.assets
 *.bundle
 *.wav
@@ -33,7 +45,5 @@ private-data/
 *.pot
 database.json
 
-# Eval outputs
+# Eval outputs and review artifacts can include prompt/model traces.
 eval-runs/
-translation-memory/private/
-.cache/

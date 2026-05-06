@@ -1,0 +1,17 @@
+{
+  "packet_id": "synthetic-packet-invalid",
+  "game": {
+    "title": "Disco Elysium: The Final Cut",
+    "version": "synthetic"
+  },
+  "current_line": {
+    "line_id": "synthetic.invalid"
+  },
+  "spoiler_budget": "future_tree",
+  "retrieval": {
+    "strategy": "synthetic",
+    "sources": [
+      "tests/fixtures"
+    ]
+  }
+}

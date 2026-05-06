@@ -1,0 +1,61 @@
+# Example configuration for Revachol Ukrainian Companion.
+# Copy to a private path before adding real local paths. Do not add secrets here.
+
+[paths]
+# Leave empty in the example. A real config must point outside this repository.
+game_install_path = ""
+
+# Repo-local private paths are allowed only because they are ignored by git.
+local_workspace_path = "workspace"
+local_data_path = "data/local"
+extracted_data_path = "data/extracted"
+generated_data_path = "data/generated"
+llm_cache_path = "llm-cache"
+vector_store_path = "vector-store"
+translation_memory_private_path = "translation-memory/private"
+audio_index_private_path = "audio-index/private"
+screenshots_private_path = "screenshots/private"
+
+[translation]
+quality_mode = "maximum_quality"
+local_model_fallback_enabled = false
+
+[overlay]
+default_mode = "minimal_hint"
+
+[llm]
+# Paid providers are allowed only for explicitly configured runtime use.
+# Tests and CI must use deterministic mocks.
+paid_runtime_allowed = true
+default_provider = "mock"
+
+[llm.providers.mock]
+enabled = true
+
+[llm.providers.openai]
+enabled = false
+api_key_env = "OPENAI_API_KEY"
+model = ""
+
+[llm.providers.anthropic]
+enabled = false
+api_key_env = "ANTHROPIC_API_KEY"
+model = ""
+
+[llm.providers.deepl]
+enabled = false
+api_key_env = "DEEPL_API_KEY"
+
+[llm.providers.local_openai_compatible]
+enabled = false
+base_url_env = "LOCAL_LLM_BASE_URL"
+model_env = "LOCAL_LLM_MODEL"
+
+[network_enrichment]
+# Future opt-in runtime feature for lawful enrichment sources only.
+# Do not use this for game script mirrors, fan dialogue databases, audio, images,
+# screenshots, or localization tables.
+enabled = false
+lawful_opt_in_required = true
+cache_path = "workspace/network-cache"
+allowed_domains = []

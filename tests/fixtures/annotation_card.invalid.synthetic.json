@@ -1,0 +1,16 @@
+{
+  "line_id": "synthetic.invalid",
+  "translation_uk": "\u0425\u0438\u0431\u043d\u0438\u0439 \u043f\u0440\u0438\u043a\u043b\u0430\u0434.",
+  "quick_note": "\u0426\u0435 \u0441\u0438\u043d\u0442\u0435\u0442\u0438\u0447\u043d\u0438\u0439 \u043f\u0440\u0438\u043a\u043b\u0430\u0434.",
+  "deep_notes": [
+    {
+      "kind": "unsupported_kind",
+      "text": "This note kind should be rejected."
+    }
+  ],
+  "confidence": 1.5,
+  "quality": {
+    "semantic_accuracy": 6,
+    "needs_human_review": false
+  }
+}

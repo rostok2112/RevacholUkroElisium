@@ -1,10 +1,11 @@
-set shell := ["bash", "-cu"]
-
 check:
-    python scripts/check_repo.py
+    python scripts/check_all.py
 
 schemas:
     python scripts/validate_schemas.py
 
+config:
+    python scripts/validate_config.py --example config/revachol.example.toml
+
 tree:
-    find . -maxdepth 3 -type f | sort
+    python -c "from pathlib import Path; [print(p.as_posix()) for p in sorted(Path('.').rglob('*')) if p.is_file() and '.git' not in p.parts]"
