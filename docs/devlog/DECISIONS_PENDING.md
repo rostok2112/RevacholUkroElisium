@@ -14,5 +14,7 @@
 - Milestone 1E chose a tiny stdlib local client and API contract doc before provider work.
 - Milestone 2A provider abstractions live under `scripts/` initially; decide later when to move toward a package layout.
 - How to version provider prompt contracts before real paid API or local model adapters are enabled.
-- Whether Milestone 2B should introduce a dedicated prompt/style pack manifest or keep prompt loading as simple file reads.
-- Whether provider annotation should be exposed through companion server/client in Milestone 2B or wait until a richer mock/eval pass exists.
+- Milestone 2B introduced a dedicated prompt/style pack manifest at `prompts/packs/ukrainian_annotation_v1/pack.json`.
+- Whether provider annotation should be exposed through companion server/client in Milestone 2C or wait until a richer mock/eval pass exists.
+- Whether provider requests should carry full prompt pack text or only stable prompt pack references for real runtime providers.
+- How debug/developer mode should expose internal English provider guidance without leaking it into default player-facing Ukrainian annotation.

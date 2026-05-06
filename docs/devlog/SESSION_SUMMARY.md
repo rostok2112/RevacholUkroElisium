@@ -1,8 +1,25 @@
 # Session Summary
 
-Milestone 2A provider abstraction and prompt pipeline skeleton is implemented on top of the existing synthetic context and annotation contracts.
+Milestone 2B prompt quality pack and Ukrainian annotation style guide is implemented on top of the Milestone 2A provider pipeline.
 
 Completed in the latest session:
+- Added `prompts/packs/ukrainian_annotation_v1/`, a versioned synthetic-only prompt/style pack.
+- Added pack files for system/developer guidance, output contract, style guide, glossary policy, uncertainty policy, spoiler policy, anti-hallucination, anti-overlocalization, Russianism avoidance, and synthetic examples.
+- Revised `synthetic_examples.md` into ten richer synthetic quality references covering bureaucratic irony, institutional metaphor, deadpan official voice, idiom/subtext, reference-like phrasing, sarcasm, uncertainty, spoiler safety, Russianism/calque avoidance, and explicit-only Ukrainian cultural adaptation proposals.
+- Each numbered synthetic example now carries the same review structure: source, difficulty, bad rendering, concise Ukrainian meaning, literary Ukrainian rendering, deep annotation, tone/voice note, risk flags, and why the improved version is better.
+- Added a reviewer checklist for meaning preservation, Ukrainian naturalness, tone, idioms/jokes, uncertainty, spoiler budget, over-localization, and clearly marked cultural proposals.
+- Added prompt-pack tests that enforce the numbered example structure, non-empty field bodies, and Ukrainian script in concise/literary Ukrainian fields so shallow rewrites fail loudly.
+- Confirmed developer policy that internal provider guidance may be English, but player-facing annotation fields default to Ukrainian unless debug or developer mode is explicitly enabled.
+- Added `pack.json` with prompt pack metadata, required output fields, quality priorities, policy file references, synthetic examples reference, and provider pipeline compatibility notes.
+- Added `scripts/prompt_pack.py`, a stdlib-only deterministic prompt pack loader with clear `PromptPackError` failures for missing files and malformed metadata.
+- Added `scripts/run_prompt_pack.py --summary` for local metadata inspection without provider calls.
+- Updated provider requests to include `prompt_pack_id`, `prompt_pack_version`, `prompt_pack_policy_refs`, and `prompt_pack_sections`.
+- Provider requests now source required output fields and quality priorities from the loaded prompt pack while keeping mock annotation output deterministic.
+- Added tests for prompt pack metadata, markdown loading, missing/malformed pack failures, deterministic loading, synthetic-only safety, CLI summary, and provider request compatibility.
+- Integrated a prompt pack smoke command into `scripts/check_all.py`.
+- Did not change schemas, config, companion server endpoints, or add dependencies.
+
+Milestone 2A remains in place:
 - Added `scripts/provider_pipeline.py`, a stdlib-only provider/prompt scaffold with dataclass request/response/metadata shapes.
 - Added deterministic mock provider support only; no real LLM, paid API, DeepL, web, or local model runtime calls exist.
 - Added provider request creation from validated context packets, including original text, speaker, scene/conversation metadata, nearby context, spoiler budget, glossary hints, requested output fields, quality priorities, and safety rules.
@@ -95,13 +112,14 @@ Milestone 0 foundation still in place:
 - Updated the LLM output contract and legal/data safety docs with runtime paid API and opt-in web enrichment policy.
 
 Latest validation run:
-- `python -m unittest tests.test_provider_pipeline -v` passed with 11 tests.
-- `python scripts/check_all.py` passed, including 64 unit tests, provider pipeline smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
+- `python -m unittest tests.test_prompt_pack -v` passed with 9 tests.
+- `python scripts/check_all.py` passed, including 73 unit tests, provider pipeline smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
 - `python scripts/validate_schemas.py` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 64 tests.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 73 tests.
 - `npm run check` passed.
 - `python scripts/run_companion_server.py --smoke-test` passed.
 - `python scripts/run_companion_client.py smoke-test` passed.
+- `python scripts/run_prompt_pack.py --summary` passed.
 - `python scripts/run_provider_pipeline.py --output workspace/synthetic-slice/provider-output.json --quiet` passed.
 
 Notes:

@@ -1,0 +1,62 @@
+{
+  "pack_id": "ukrainian_annotation_v1",
+  "version": "1.0.0",
+  "language": "uk",
+  "purpose": "Synthetic-only Ukrainian annotation guidance for context-first literary comprehension.",
+  "required_output_fields": [
+    "original_english",
+    "concise_meaning_uk",
+    "literary_rendering_uk",
+    "translation_uk",
+    "literal_gloss",
+    "quick_note",
+    "explanation_uk",
+    "deep_notes",
+    "character_voice_note_uk",
+    "ukrainian_cultural_equivalents",
+    "glossary_terms",
+    "confidence",
+    "risk_flags",
+    "quality"
+  ],
+  "quality_priorities": [
+    "preserve_original_english",
+    "produce_ukrainian_concise_meaning",
+    "produce_literary_ukrainian_rendering",
+    "explain_idioms_references_subtext",
+    "preserve_character_voice",
+    "include_uncertainty_and_risk_flags",
+    "avoid_hallucination",
+    "avoid_russianisms",
+    "do_not_silently_overlocalize_ukrainian_cultural_adaptations",
+    "keep_compact_mode_playable"
+  ],
+  "policy_files": {
+    "pack": "PACK.md",
+    "system": "system.md",
+    "developer": "developer.md",
+    "output_contract": "output_contract.md",
+    "style_guide": "style_guide.md",
+    "glossary_policy": "glossary_policy.md",
+    "uncertainty_policy": "uncertainty_policy.md",
+    "spoiler_policy": "spoiler_policy.md",
+    "anti_hallucination_policy": "anti_hallucination_policy.md",
+    "anti_overlocalization_policy": "anti_overlocalization_policy.md",
+    "russianism_avoidance": "russianism_avoidance.md"
+  },
+  "synthetic_examples_file": "synthetic_examples.md",
+  "provider_pipeline_compatibility": {
+    "target_module": "scripts/provider_pipeline.py",
+    "request_fields": [
+      "prompt_pack_id",
+      "prompt_pack_version",
+      "prompt_pack_policy_refs",
+      "prompt_pack_sections"
+    ],
+    "notes": [
+      "The pack is offline and deterministic.",
+      "The mock provider may receive policy text but must not call external services.",
+      "Real providers remain future opt-in runtime work."
+    ]
+  }
+}

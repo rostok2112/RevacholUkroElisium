@@ -19,5 +19,9 @@
 - Milestone 2A provider output intentionally overlaps earlier deterministic mock annotation behavior until Milestone 2B adds richer prompt/style guidance.
 - Companion server/client provider endpoints are not exposed yet; adding them before the prompt/style pack stabilizes could lock in weak API assumptions.
 - Future real providers need cache/privacy enforcement and explicit opt-in config before any runtime calls are enabled.
+- The Milestone 2B prompt pack is policy scaffolding only; it does not prove real Ukrainian translation quality by itself.
+- Milestone 2B tests now catch shallow structural rewrites of `synthetic_examples.md`, but they still cannot judge the real literary quality of every example.
+- Prompt pack text is included in provider requests, which is useful for contract tests but may need trimming or references-only mode before real provider calls.
+- Existing legacy `prompts/few-shot/synthetic-examples.md` appears mojibaked and was left untouched; the new pack has fresh UTF-8 synthetic examples.
 - Unsafe review output paths are rejected rather than normalized. Future tools should keep this explicit behavior unless there is a documented reason to change it.
 - The annotation-card schema was not changed for Milestone 1A. Optional helper fields validate because the schema does not forbid additional properties.

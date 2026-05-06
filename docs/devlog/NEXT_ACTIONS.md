@@ -1,14 +1,14 @@
 # Next Actions
 
-After Milestone 2A:
+After Milestone 2B:
 
-1. Implement Milestone 2B: prompt quality pack and Ukrainian annotation style guide.
-2. Add versioned prompt/style guidance for synthetic provider requests, preserving English canonical text and Ukrainian literary nuance.
-3. Add synthetic prompt fixtures or golden prompt snapshots that do not contain real game content.
-4. Add tests for prompt-pack loading, style guide safety rules, and provider request compatibility.
-5. Decide whether to expose provider annotation through companion server/client after the style pack stabilizes.
-6. Keep real extraction, BepInEx, OCR, paid APIs, web calls, real LLM calls, DeepL calls, local model runtime calls, production overlay work, frontend frameworks, and real game assets out of tests and the public repo.
+1. Implement Milestone 2C: provider pipeline uses prompt pack in mock annotation flow and structural evals.
+2. Make the deterministic mock provider derive more of its response metadata/risk flags from the loaded prompt pack.
+3. Add provider-pipeline structural eval checks without real model calls.
+4. Consider a low-risk companion server/client provider endpoint only if the provider contract remains stable.
+5. Keep the richer `synthetic_examples.md` structure intact; tests now require all numbered examples to include the full review field set with non-empty bodies and Ukrainian concise/literary fields.
+6. Keep all tests offline, deterministic, synthetic-only, and free of real game content or provider calls.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 2A. Read AGENTS.md, docs/devlog/*.md, docs/05-quality-model.md, docs/08-overlay-ux.md, specs/llm-output-contract.md, scripts/provider_pipeline.py, and prompts/system/*.md, then implement Milestone 2B: prompt quality pack and Ukrainian annotation style guide. Add versioned prompt/style guidance for the provider pipeline using synthetic-only examples, covering Ukrainian concise meaning, literary rendering, idiom/reference/subtext explanation, character voice, uncertainty/risk flags, spoiler discipline, anti-hallucination, Russianism avoidance, and no silent over-localization. Add tests that prompt-pack loading and provider request compatibility are deterministic, offline, and synthetic-only. Do not call real LLMs, paid APIs, web APIs, DeepL, local model runtimes, OCR, extraction, BepInEx, or use real game content. Run python scripts/check_all.py, python scripts/validate_schemas.py, python -m unittest discover -s tests -p "test_*.py", npm run check, python scripts/run_companion_server.py --smoke-test, python scripts/run_companion_client.py smoke-test, and python scripts/run_provider_pipeline.py --output workspace/synthetic-slice/provider-output.json --quiet.`
+`Continue in revachol-ukro-elisium after Milestone 2B. Read AGENTS.md, docs/devlog/*.md, docs/05-quality-model.md, specs/llm-output-contract.md, scripts/prompt_pack.py, scripts/provider_pipeline.py, prompts/packs/ukrainian_annotation_v1/pack.json, and tests/test_prompt_pack.py, then implement Milestone 2C: provider pipeline uses prompt pack in mock annotation flow and structural evals. Make the deterministic mock provider consume prompt-pack metadata/policies for risk flags, quality priorities, and debug/provider metadata; add structural eval checks proving prompt-pack compatibility, policy presence, spoiler discipline, Russianism/overlocalization rules, and annotation-card validity. Do not call real LLMs, paid APIs, web APIs, DeepL, local model runtimes, OCR, extraction, BepInEx, or use real game content. Keep all examples synthetic. Run python scripts/check_all.py, python scripts/validate_schemas.py, python -m unittest discover -s tests -p "test_*.py", npm run check, python scripts/run_companion_server.py --smoke-test, python scripts/run_companion_client.py smoke-test, python scripts/run_prompt_pack.py --summary, and python scripts/run_provider_pipeline.py --output workspace/synthetic-slice/provider-output.json --quiet.`

@@ -22,8 +22,8 @@ DEFAULT_EVENT = ROOT / "tests/fixtures/fake_game_event.synthetic.json"
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Run the synthetic provider pipeline. Milestone 2A implements only the "
-            "offline deterministic mock provider; real providers are future opt-in."
+            "Run the synthetic provider pipeline. Only the offline deterministic mock "
+            "provider is implemented; real providers are future opt-in."
         )
     )
     source_group = parser.add_mutually_exclusive_group()
@@ -42,7 +42,7 @@ def main() -> int:
         "--provider",
         default="mock",
         choices=["mock"],
-        help="Provider to run. Only 'mock' is implemented in Milestone 2A.",
+        help="Provider to run. Only 'mock' is implemented.",
     )
     parser.add_argument(
         "--output",

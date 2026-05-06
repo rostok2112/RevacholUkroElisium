@@ -4,6 +4,7 @@ from dataclasses import asdict, dataclass
 from typing import Any
 
 try:
+    from scripts.prompt_pack import PromptPack, load_prompt_pack
     from scripts.schema_validator import SchemaValidationError, assert_valid, load_json
     from scripts.synthetic_slice import (
         ANNOTATION_CARD_SCHEMA,
@@ -14,6 +15,7 @@ try:
         MOCK_LITERARY_RENDERING_UK,
     )
 except ModuleNotFoundError:  # pragma: no cover - used when run as a script dependency.
+    from prompt_pack import PromptPack, load_prompt_pack
     from schema_validator import SchemaValidationError, assert_valid, load_json
     from synthetic_slice import (
         ANNOTATION_CARD_SCHEMA,
@@ -50,7 +52,9 @@ QUALITY_PRIORITIES = (
     "preserve_character_voice",
     "include_uncertainty_and_risk_flags",
     "avoid_hallucination",
+    "avoid_russianisms",
     "do_not_silently_overlocalize_ukrainian_cultural_adaptations",
+    "keep_compact_mode_playable",
 )
 
 SAFETY_RULES = (
@@ -101,6 +105,10 @@ class ProviderRequest:
     requested_output_fields: tuple[str, ...]
     quality_priorities: tuple[str, ...]
     safety_rules: tuple[str, ...]
+    prompt_pack_id: str
+    prompt_pack_version: str
+    prompt_pack_policy_refs: tuple[str, ...]
+    prompt_pack_sections: dict[str, str]
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
@@ -112,6 +120,7 @@ class ProviderRequest:
             "requested_output_fields",
             "quality_priorities",
             "safety_rules",
+            "prompt_pack_policy_refs",
         ):
             data[key] = list(data[key])
         return data
@@ -152,8 +161,10 @@ MOCK_PROVIDER_METADATA = ProviderMetadata(
 def build_provider_request(
     context_packet: dict[str, Any],
     provider_name: str = "mock",
+    prompt_pack: PromptPack | None = None,
 ) -> ProviderRequest:
     assert_valid(context_packet, load_json(CONTEXT_PACKET_SCHEMA))
+    selected_pack = prompt_pack or load_prompt_pack()
     current_line = context_packet["current_line"]
     return ProviderRequest(
         request_id=f"provider-request.{context_packet['packet_id']}",
@@ -171,9 +182,13 @@ def build_provider_request(
         player_options=_line_refs(context_packet.get("player_options", [])),
         spoiler_budget=context_packet["spoiler_budget"],
         glossary_hints=tuple(context_packet.get("glossary_hits", [])),
-        requested_output_fields=REQUESTED_OUTPUT_FIELDS,
-        quality_priorities=QUALITY_PRIORITIES,
+        requested_output_fields=selected_pack.metadata.required_output_fields,
+        quality_priorities=selected_pack.metadata.quality_priorities,
         safety_rules=SAFETY_RULES,
+        prompt_pack_id=selected_pack.metadata.pack_id,
+        prompt_pack_version=selected_pack.metadata.version,
+        prompt_pack_policy_refs=selected_pack.policy_refs(),
+        prompt_pack_sections=selected_pack.sections_for_provider(),
     )
 
 
@@ -287,10 +302,11 @@ def normalize_provider_response(
 def run_provider_pipeline(
     context_packet: dict[str, Any],
     provider_name: str = "mock",
+    prompt_pack: PromptPack | None = None,
 ) -> dict[str, Any]:
     if provider_name != "mock":
-        raise ProviderPipelineError("Only provider 'mock' is implemented in Milestone 2A.")
-    request = build_provider_request(context_packet, provider_name)
+        raise ProviderPipelineError("Only provider 'mock' is implemented.")
+    request = build_provider_request(context_packet, provider_name, prompt_pack)
     response = MockAnnotationProvider().annotate(request)
     return normalize_provider_response(context_packet, response)
 

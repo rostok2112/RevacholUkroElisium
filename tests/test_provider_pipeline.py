@@ -43,6 +43,11 @@ class ProviderPipelineTests(unittest.TestCase):
         self.assertIn("translation_uk", request.requested_output_fields)
         self.assertEqual(REQUESTED_OUTPUT_FIELDS, request.requested_output_fields)
         self.assertEqual(QUALITY_PRIORITIES, request.quality_priorities)
+        self.assertEqual("ukrainian_annotation_v1", request.prompt_pack_id)
+        self.assertEqual("1.0.0", request.prompt_pack_version)
+        self.assertIn("style_guide.md", request.prompt_pack_policy_refs)
+        self.assertIn("style_guide", request.prompt_pack_sections)
+        self.assertIn("synthetic_examples", request.prompt_pack_sections)
         self.assertEqual(1, len(request.visible_history))
         self.assertEqual(1, len(request.player_options))
 

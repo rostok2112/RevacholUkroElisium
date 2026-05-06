@@ -73,6 +73,10 @@ def main() -> int:
                 "--quiet",
             ],
         ),
+        (
+            "prompt pack smoke",
+            [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
+        ),
     ]
 
     for label, command in steps:
