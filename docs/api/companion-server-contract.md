@@ -237,6 +237,11 @@ service markers must not appear in these fixtures.
 Provider annotation request bodies must always be wrapped with `input_type`. Unwrapped fake events or
 context packets are not accepted and should not be documented as valid request shapes.
 
+The fixture-backed regression runner `python scripts/run_provider_contract_regression.py` posts both
+request fixtures to an in-process localhost server and compares stable response fields against the
+success fixture. Fixture changes should be intentional, reviewed with the API contract, and covered by
+that runner.
+
 ## Provider Metadata
 
 Provider annotation cards include three explicit optional metadata objects in

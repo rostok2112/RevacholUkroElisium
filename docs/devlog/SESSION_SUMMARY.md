@@ -1,5 +1,24 @@
 # Session Summary
 
+Milestone 2F provider contract regression runner and local review handoff is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_provider_contract_regression.py`, a stdlib-only runner that starts an in-process `127.0.0.1` companion server on an ephemeral port and shuts it down cleanly.
+- The runner posts the raw Milestone 2E request fixtures to `POST /synthetic/provider-annotate`:
+  - `tests/fixtures/provider_annotate.fake_event_request.synthetic.json`
+  - `tests/fixtures/provider_annotate.context_packet_request.synthetic.json`
+- The runner validates the companion envelope, nested `context_packet`, and nested `annotation_card` payloads against the existing schemas.
+- The runner compares stable deterministic fields against `tests/fixtures/provider_annotate.success_response.synthetic.json`, including context identity/current-line data, provider metadata, prompt pack metadata, provider debug metadata, risk flags, and English source/original preservation.
+- Added optional local handoff artifacts under ignored `workspace/synthetic-slice/provider-contract/`:
+  - JSON summary via `--output`
+  - Markdown summary via `--markdown`
+  - escaped review HTML via `--write-review-html`
+- Unsafe output paths outside `workspace/synthetic-slice/provider-contract/` are rejected.
+- Added `tests/test_provider_contract_regression.py` covering passing fixtures, both request shapes, stable metadata drift, schema failure reporting, safe/unsafe output paths, review HTML writing, deterministic Markdown, no forbidden markers, and clean localhost-only operation.
+- Added `python scripts/run_provider_contract_regression.py --quiet` to `scripts/check_all.py`.
+- Updated `docs/api/companion-server-contract.md` to document the regression runner and fixture update expectations.
+- Did not change schemas, fixtures, companion server endpoints, companion client APIs, provider pipeline behavior, or add dependencies.
+
 Milestone 2E provider contract fixtures and schema hardening is implemented.
 
 Completed in the latest session:
@@ -175,11 +194,12 @@ Milestone 0 foundation still in place:
 - Updated the LLM output contract and legal/data safety docs with runtime paid API and opt-in web enrichment policy.
 
 Latest validation run:
-- `python -m unittest tests.test_provider_contract_fixtures tests.test_provider_pipeline -v` passed with 22 tests.
-- `python scripts/check_all.py` passed, including 97 unit tests, provider fixture validation, provider pipeline smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
+- `python -m unittest tests.test_provider_contract_regression -v` passed with 11 tests.
+- `python scripts/check_all.py` passed, including 108 unit tests, provider fixture validation, provider pipeline smoke, provider contract regression smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
 - `python scripts/validate_schemas.py` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 97 tests.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 108 tests.
 - `npm run check` passed.
+- `python scripts/run_provider_contract_regression.py --quiet` passed.
 - `python scripts/run_companion_server.py --smoke-test` passed.
 - `python scripts/run_companion_client.py smoke-test` passed.
 - `python scripts/run_prompt_pack.py --summary` passed.

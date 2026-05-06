@@ -28,6 +28,8 @@
 - Milestone 2D latest provider context/annotation state is in-memory only and disappears on server restart.
 - The provider endpoint accepts only explicit `input_type` wrappers. Future clients must not rely on unwrapped payload guessing.
 - Provider contract fixtures are intentionally thin and synthetic; they lock the local HTTP shape, not translation quality.
+- The Milestone 2F provider contract regression runner catches local HTTP shape drift, but it still compares deterministic mock-provider behavior only.
+- Milestone 2F review handoff HTML is generated output under ignored workspace paths; it must not be committed as a production overlay artifact.
 - The provider success fixture includes the schema-required `game.title` constant inside context-packet `game.title`; keep that exception narrow and do not allow real game title strings in free-text fixture fields.
 - Public annotation-card `provider` metadata omits future provider role lists to keep committed fixtures free of external-service markers.
 - Existing legacy `prompts/few-shot/synthetic-examples.md` appears mojibaked and was left untouched; the new pack has fresh UTF-8 synthetic examples.

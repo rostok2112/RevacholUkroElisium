@@ -74,6 +74,14 @@ def main() -> int:
             ],
         ),
         (
+            "provider contract regression smoke",
+            [
+                sys.executable,
+                "scripts/run_provider_contract_regression.py",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

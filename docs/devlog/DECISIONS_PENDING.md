@@ -21,3 +21,4 @@
 - Milestone 2D kept stable error codes unchanged and maps invalid context packets to `invalid_request`; decide later whether a dedicated `invalid_context_packet` code is worth the contract churn.
 - Milestone 2E made `provider`, `provider_debug`, and `prompt_pack` explicit optional annotation-card schema fields.
 - Milestone 2E removed `future_roles` from public annotation-card/server response provider metadata; decide later how future provider capabilities should be documented without leaking external-service markers into synthetic fixtures.
+- Milestone 2F added a fixture-backed provider contract regression runner; decide later how fixture update approval should work once real provider adapters are introduced.
