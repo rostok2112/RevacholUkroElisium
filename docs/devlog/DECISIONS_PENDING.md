@@ -6,7 +6,6 @@
 - How to structure lawful opt-in web enrichment and source attribution.
 - Whether to rename or alias `docs/00-start-here.md` as `docs/00-project-vision.md`.
 - Whether to keep the actual repository spelling `revachol-ukro-elisium` long-term or introduce a documented `elysium` alias later.
-- Whether future annotation-card helper fields should remain permissive additional properties or become explicit optional schema properties.
 - Whether future review artifacts should stay static HTML, add Markdown output, or wait for a real overlay prototype.
 - Which synthetic eval dimensions should graduate from Milestone 1C checks into the long-term eval framework.
 - Milestone 1D chose a stdlib `http.server` skeleton first; decide later whether to keep it, wrap it, or replace it with a production service framework.
@@ -19,5 +18,6 @@
 - Whether provider requests should carry full prompt pack text or only stable prompt pack references for real runtime providers.
 - How debug/developer mode should expose internal English provider guidance without leaking it into default player-facing Ukrainian annotation.
 - Milestone 2C deferred companion server/client provider exposure to Milestone 2D after the provider/eval wiring passed one stable CLI/test cycle.
-- Whether `provider`, `provider_debug`, and `prompt_pack` should become explicit optional annotation-card schema fields before real providers are enabled.
 - Milestone 2D kept stable error codes unchanged and maps invalid context packets to `invalid_request`; decide later whether a dedicated `invalid_context_packet` code is worth the contract churn.
+- Milestone 2E made `provider`, `provider_debug`, and `prompt_pack` explicit optional annotation-card schema fields.
+- Milestone 2E removed `future_roles` from public annotation-card/server response provider metadata; decide later how future provider capabilities should be documented without leaking external-service markers into synthetic fixtures.

@@ -100,6 +100,15 @@ class ProviderMetadata:
         data["future_roles"] = list(self.future_roles)
         return data
 
+    def to_public_dict(self) -> dict[str, Any]:
+        return {
+            "provider_name": self.provider_name,
+            "provider_kind": self.provider_kind,
+            "version": self.version,
+            "offline": self.offline,
+            "deterministic": self.deterministic,
+        }
+
 
 @dataclass(frozen=True)
 class ProviderRequest:
@@ -337,7 +346,7 @@ def normalize_provider_response(
         "confidence": _required_number(output, "confidence"),
         "risk_flags": risk_flags,
         "quality": _required_object(output, "quality"),
-        "provider": provider_response.metadata.to_dict(),
+        "provider": provider_response.metadata.to_public_dict(),
         "provider_debug": provider_debug,
         "prompt_pack": prompt_pack_metadata,
     }

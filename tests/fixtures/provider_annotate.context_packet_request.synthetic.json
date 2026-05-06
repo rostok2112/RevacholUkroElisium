@@ -1,0 +1,35 @@
+{
+  "input_type": "context_packet",
+  "context_packet": {
+    "packet_id": "context.synthetic.event.provider_contract.001",
+    "game": {
+      "title": "Disco Elysium: The Final Cut",
+      "version": "synthetic"
+    },
+    "current_line": {
+      "line_id": "synthetic.provider_contract.001",
+      "source_text": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+      "speaker": "Synthetic Clerk",
+      "speaker_type": "npc",
+      "conversation_id": "synthetic.conv.provider-contract",
+      "location": "synthetic.scene.provider-contract-office",
+      "skill": null,
+      "audio_ref": null
+    },
+    "visible_history": [],
+    "nearby_tree": [],
+    "player_options": [],
+    "glossary_hits": [
+      "committee",
+      "infrastructure",
+      "pipe"
+    ],
+    "spoiler_budget": "none",
+    "retrieval": {
+      "strategy": "synthetic_event_adapter_v1",
+      "sources": [
+        "synthetic_fake_game_event"
+      ]
+    }
+  }
+}

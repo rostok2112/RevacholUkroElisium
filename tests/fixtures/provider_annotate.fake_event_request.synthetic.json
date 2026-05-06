@@ -1,0 +1,14 @@
+{
+  "input_type": "fake_event",
+  "event": {
+    "event_id": "synthetic.event.provider_contract.001",
+    "synthetic_line_id": "synthetic.provider_contract.001",
+    "speaker": "Synthetic Clerk",
+    "speaker_type": "npc",
+    "raw_english_text": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+    "scene_id": "synthetic.scene.provider-contract-office",
+    "conversation_id": "synthetic.conv.provider-contract",
+    "nearby_context": [],
+    "timestamp": "2026-05-06T10:00:00Z"
+  }
+}

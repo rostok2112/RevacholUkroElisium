@@ -1,6 +1,6 @@
 # Companion Server Contract
 
-Milestone 2D defines a small local HTTP contract for synthetic clients. It is intended for future
+Milestone 2E defines a small local HTTP contract for synthetic clients. It is intended for future
 overlay, BepInEx bridge, and annotation pipeline clients, but it is not production networking.
 
 Default base URL:
@@ -37,7 +37,7 @@ JSON error responses use:
 }
 ```
 
-Stable error codes for Milestone 2D:
+Stable error codes for Milestone 2E:
 
 - `not_found`
 - `invalid_json`
@@ -222,6 +222,37 @@ Provider annotation response shape:
   }
 }
 ```
+
+Committed provider contract fixtures:
+
+- `tests/fixtures/provider_annotate.fake_event_request.synthetic.json`
+- `tests/fixtures/provider_annotate.context_packet_request.synthetic.json`
+- `tests/fixtures/provider_annotate.success_response.synthetic.json`
+
+These fixtures are intentionally tiny and synthetic. The only real game-title string allowed in
+these fixtures is the schema-required `game.title` constant inside a context packet. Exact playable
+dialogue, extracted game data, screenshots, audio, URLs, private paths, API keys, and future provider
+service markers must not appear in these fixtures.
+
+Provider annotation request bodies must always be wrapped with `input_type`. Unwrapped fake events or
+context packets are not accepted and should not be documented as valid request shapes.
+
+## Provider Metadata
+
+Provider annotation cards include three explicit optional metadata objects in
+`specs/annotation-card.schema.json`:
+
+- `provider`: public provider identity and runtime posture, currently `mock`,
+  `deterministic_mock`, `offline`, and `deterministic`.
+- `provider_debug`: developer/debug contract evidence, including prompt pack id/version, output
+  fields observed, quality priorities observed, player-facing language default, internal guidance
+  language marker, and focused policy keys.
+- `prompt_pack`: prompt pack metadata carried into the annotation card, including pack id/version,
+  required output fields, quality priorities, policy refs, focused policy keys, and language defaults.
+
+The public `provider` metadata intentionally omits future provider role lists. Future runtime
+provider support remains opt-in work and should be documented through config/runtime policy when it is
+implemented, not leaked into committed public response fixtures.
 
 Provider annotation request errors:
 

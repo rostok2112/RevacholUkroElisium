@@ -1,0 +1,194 @@
+{
+  "ok": true,
+  "data": {
+    "context_packet": {
+      "packet_id": "context.synthetic.event.provider_contract.001",
+      "game": {
+        "title": "Disco Elysium: The Final Cut",
+        "version": "synthetic"
+      },
+      "current_line": {
+        "line_id": "synthetic.provider_contract.001",
+        "source_text": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+        "speaker": "Synthetic Clerk",
+        "speaker_type": "npc",
+        "conversation_id": "synthetic.conv.provider-contract",
+        "location": "synthetic.scene.provider-contract-office",
+        "skill": null,
+        "audio_ref": null
+      },
+      "visible_history": [],
+      "nearby_tree": [],
+      "player_options": [],
+      "glossary_hits": [
+        "committee",
+        "infrastructure",
+        "pipe"
+      ],
+      "spoiler_budget": "none",
+      "retrieval": {
+        "strategy": "synthetic_event_adapter_v1",
+        "sources": [
+          "synthetic_fake_game_event"
+        ]
+      }
+    },
+    "annotation_card": {
+      "line_id": "synthetic.provider_contract.001",
+      "source_text": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+      "original_english": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+      "translation_uk": "Комітет причепив медаль до труби, що протікала, і назвав це інфраструктурою.",
+      "concise_meaning_uk": "Установа нагороджує власну поломку й удає, що це успіх.",
+      "literary_rendering_uk": "Комітет причепив медаль до труби, що протікала, і назвав це інфраструктурою.",
+      "literal_gloss": "The synthetic line frames cosmetic recognition as a substitute for repair.",
+      "quick_note": "Це синтетична бюрократична іронія: проблему не лагодять, а перейменовують на досягнення.",
+      "explanation_uk": "Це синтетична бюрократична іронія: проблему не лагодять, а перейменовують на досягнення.",
+      "character_voice_note_uk": "Голос сухий і канцелярський, ніби свідок звітує про абсурд без підвищення тону.",
+      "deep_notes": [
+        {
+          "kind": "idiom",
+          "text": "The image treats praise for a broken object as a deadpan joke."
+        },
+        {
+          "kind": "reference",
+          "text": "Synthetic bureaucracy reference only; no game dialogue is sourced."
+        },
+        {
+          "kind": "skill_voice",
+          "text": "Голос сухий і канцелярський, ніби свідок звітує про абсурд без підвищення тону."
+        },
+        {
+          "kind": "translation_choice",
+          "text": "The mock keeps the civic absurdity and avoids silent localization."
+        },
+        {
+          "kind": "tone",
+          "text": "Prompt-pack policy keeps player-facing annotation Ukrainian by default, prefers uncertainty over invention, and avoids Russian-style calque."
+        }
+      ],
+      "ukrainian_cultural_equivalents": [],
+      "glossary_terms": [
+        "committee",
+        "infrastructure",
+        "pipe"
+      ],
+      "confidence": 0.77,
+      "risk_flags": [
+        "synthetic_fixture",
+        "mock_provider",
+        "deterministic_mock_provider",
+        "needs_human_review_before_real_use",
+        "prompt_pack_guided"
+      ],
+      "quality": {
+        "semantic_accuracy": 4,
+        "voice_preservation": 4,
+        "ukrainian_naturalness": 3,
+        "spoiler_safety": 5,
+        "needs_human_review": false
+      },
+      "provider": {
+        "provider_name": "mock",
+        "provider_kind": "deterministic_mock",
+        "version": "provider-pipeline.mock.v1",
+        "offline": true,
+        "deterministic": true
+      },
+      "provider_debug": {
+        "provider_name": "mock",
+        "provider_role": "deterministic_mock",
+        "provider_version": "provider-pipeline.mock.v1",
+        "prompt_pack_id": "ukrainian_annotation_v1",
+        "prompt_pack_version": "1.0.0",
+        "required_output_fields_seen": [
+          "original_english",
+          "concise_meaning_uk",
+          "literary_rendering_uk",
+          "translation_uk",
+          "literal_gloss",
+          "quick_note",
+          "explanation_uk",
+          "deep_notes",
+          "character_voice_note_uk",
+          "ukrainian_cultural_equivalents",
+          "glossary_terms",
+          "confidence",
+          "risk_flags",
+          "quality"
+        ],
+        "quality_priorities_seen": [
+          "preserve_original_english",
+          "produce_ukrainian_concise_meaning",
+          "produce_literary_ukrainian_rendering",
+          "explain_idioms_references_subtext",
+          "preserve_character_voice",
+          "include_uncertainty_and_risk_flags",
+          "avoid_hallucination",
+          "avoid_russianisms",
+          "do_not_silently_overlocalize_ukrainian_cultural_adaptations",
+          "keep_compact_mode_playable"
+        ],
+        "player_facing_language_default": "uk",
+        "internal_guidance_language": "english_allowed_for_provider_guidance",
+        "policy_note_keys": [
+          "spoiler_policy",
+          "anti_hallucination_policy",
+          "anti_overlocalization_policy",
+          "russianism_avoidance"
+        ],
+        "policy_refs_seen": [
+          "spoiler_policy.md",
+          "anti_hallucination_policy.md",
+          "anti_overlocalization_policy.md",
+          "russianism_avoidance.md"
+        ]
+      },
+      "prompt_pack": {
+        "pack_id": "ukrainian_annotation_v1",
+        "version": "1.0.0",
+        "required_output_fields": [
+          "original_english",
+          "concise_meaning_uk",
+          "literary_rendering_uk",
+          "translation_uk",
+          "literal_gloss",
+          "quick_note",
+          "explanation_uk",
+          "deep_notes",
+          "character_voice_note_uk",
+          "ukrainian_cultural_equivalents",
+          "glossary_terms",
+          "confidence",
+          "risk_flags",
+          "quality"
+        ],
+        "quality_priorities": [
+          "preserve_original_english",
+          "produce_ukrainian_concise_meaning",
+          "produce_literary_ukrainian_rendering",
+          "explain_idioms_references_subtext",
+          "preserve_character_voice",
+          "include_uncertainty_and_risk_flags",
+          "avoid_hallucination",
+          "avoid_russianisms",
+          "do_not_silently_overlocalize_ukrainian_cultural_adaptations",
+          "keep_compact_mode_playable"
+        ],
+        "policy_note_keys": [
+          "spoiler_policy",
+          "anti_hallucination_policy",
+          "anti_overlocalization_policy",
+          "russianism_avoidance"
+        ],
+        "policy_refs": [
+          "spoiler_policy.md",
+          "anti_hallucination_policy.md",
+          "anti_overlocalization_policy.md",
+          "russianism_avoidance.md"
+        ],
+        "player_facing_language_default": "uk",
+        "internal_guidance_language": "english_allowed_for_provider_guidance"
+      }
+    }
+  }
+}

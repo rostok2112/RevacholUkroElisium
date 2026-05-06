@@ -102,6 +102,117 @@
           "type": "boolean"
         }
       }
+    },
+    "provider": {
+      "type": "object",
+      "properties": {
+        "provider_name": {
+          "type": "string"
+        },
+        "provider_kind": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "offline": {
+          "type": "boolean"
+        },
+        "deterministic": {
+          "type": "boolean"
+        }
+      }
+    },
+    "provider_debug": {
+      "type": "object",
+      "properties": {
+        "provider_name": {
+          "type": "string"
+        },
+        "provider_role": {
+          "type": "string"
+        },
+        "provider_version": {
+          "type": "string"
+        },
+        "prompt_pack_id": {
+          "type": "string"
+        },
+        "prompt_pack_version": {
+          "type": "string"
+        },
+        "required_output_fields_seen": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "quality_priorities_seen": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "player_facing_language_default": {
+          "type": "string"
+        },
+        "internal_guidance_language": {
+          "type": "string"
+        },
+        "policy_note_keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "policy_refs_seen": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "prompt_pack": {
+      "type": "object",
+      "properties": {
+        "pack_id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "required_output_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "quality_priorities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "policy_note_keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "policy_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "player_facing_language_default": {
+          "type": "string"
+        },
+        "internal_guidance_language": {
+          "type": "string"
+        }
+      }
     }
   }
 }

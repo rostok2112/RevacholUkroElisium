@@ -109,6 +109,7 @@ class ProviderPipelineTests(unittest.TestCase):
         self.assertIn("deterministic_mock_provider", card["risk_flags"])
         self.assertIn("prompt_pack_guided", card["risk_flags"])
         self.assertEqual("mock", card["provider"]["provider_name"])
+        self.assertNotIn("future_roles", card["provider"])
         self.assertEqual("mock", card["provider_debug"]["provider_name"])
         self.assertEqual("ukrainian_annotation_v1", card["prompt_pack"]["pack_id"])
         self.assertEqual("1.0.0", card["prompt_pack"]["version"])

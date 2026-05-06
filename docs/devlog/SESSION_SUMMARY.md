@@ -1,5 +1,26 @@
 # Session Summary
 
+Milestone 2E provider contract fixtures and schema hardening is implemented.
+
+Completed in the latest session:
+- Added committed synthetic provider contract fixtures:
+  - `tests/fixtures/provider_annotate.fake_event_request.synthetic.json`
+  - `tests/fixtures/provider_annotate.context_packet_request.synthetic.json`
+  - `tests/fixtures/provider_annotate.success_response.synthetic.json`
+- The fixture pair uses one invented synthetic line consistently across fake-event input, context-packet input, and success response.
+- The success fixture validates as the standard companion envelope with nested `context_packet` and `annotation_card` payloads.
+- Made `provider`, `provider_debug`, and `prompt_pack` explicit optional properties in `specs/annotation-card.schema.json`.
+- Kept the schema additive and permissive: no new top-level required fields and no `additionalProperties: false`.
+- Removed `future_roles` from public annotation-card provider metadata so committed server/fixture responses do not contain future external-service markers.
+- Kept internal provider metadata capable of describing future roles, but public normalized annotation cards now expose only current mock provider posture.
+- Added fixture/contract tests proving the fake-event and context-packet request fixtures are accepted by the server and match the committed success response.
+- Added drift tests proving the client unwraps the provider response shape, provider metadata is present, `prompt_pack_guided` is present, and unwrapped provider payloads are rejected.
+- Added fixture safety checks for URLs, private paths, API-key markers, future external-service markers, and real game title leakage outside schema-required context-packet `game.title`.
+- Extended `scripts/validate_schemas.py` so provider contract fixtures are validated by the normal schema validation path and therefore by `check_all`.
+- Updated `docs/api/companion-server-contract.md` to document the new fixtures and provider metadata as explicit optional schema fields.
+- Resolved the previous pending decision about whether provider metadata should remain permissive-only: it is now explicit optional schema metadata.
+- Did not add dependencies, change endpoint shapes, call providers, or use real game dialogue/assets/extracted data.
+
 Milestone 2D companion provider annotation endpoint is implemented.
 
 Completed in the latest session:
@@ -154,11 +175,10 @@ Milestone 0 foundation still in place:
 - Updated the LLM output contract and legal/data safety docs with runtime paid API and opt-in web enrichment policy.
 
 Latest validation run:
-- `python -m unittest tests.test_companion_server -v` passed with 20 tests.
-- `python -m unittest tests.test_companion_client -v` passed with 12 tests.
-- `python scripts/check_all.py` passed, including 88 unit tests, provider pipeline smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
+- `python -m unittest tests.test_provider_contract_fixtures tests.test_provider_pipeline -v` passed with 22 tests.
+- `python scripts/check_all.py` passed, including 97 unit tests, provider fixture validation, provider pipeline smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
 - `python scripts/validate_schemas.py` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 88 tests.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 97 tests.
 - `npm run check` passed.
 - `python scripts/run_companion_server.py --smoke-test` passed.
 - `python scripts/run_companion_client.py smoke-test` passed.

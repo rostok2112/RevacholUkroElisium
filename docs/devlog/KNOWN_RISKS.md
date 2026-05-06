@@ -23,11 +23,13 @@
 - Milestone 2B tests now catch shallow structural rewrites of `synthetic_examples.md`, but they still cannot judge the real literary quality of every example.
 - Prompt pack text is included in provider requests, which is useful for contract tests but may need trimming or references-only mode before real provider calls.
 - Milestone 2C proves prompt-pack policy wiring through the mock provider and eval harness, but it still does not measure semantic translation quality or real player comprehension.
-- Milestone 2C stores provider/debug/prompt-pack metadata as permissive additional annotation-card fields; decide later whether to formalize them in the schema.
+- Milestone 2E formalized `provider`, `provider_debug`, and `prompt_pack` as explicit optional annotation-card schema fields; future metadata shape changes should update schema, fixtures, docs, and tests together.
 - Milestone 2D exposes provider annotation over localhost HTTP, but it is still deterministic mock-only and not a real provider integration.
 - Milestone 2D latest provider context/annotation state is in-memory only and disappears on server restart.
 - The provider endpoint accepts only explicit `input_type` wrappers. Future clients must not rely on unwrapped payload guessing.
-- Provider contract fixtures are still thin; Milestone 2E should add representative synthetic request/response fixtures and drift tests.
+- Provider contract fixtures are intentionally thin and synthetic; they lock the local HTTP shape, not translation quality.
+- The provider success fixture includes the schema-required `game.title` constant inside context-packet `game.title`; keep that exception narrow and do not allow real game title strings in free-text fixture fields.
+- Public annotation-card `provider` metadata omits future provider role lists to keep committed fixtures free of external-service markers.
 - Existing legacy `prompts/few-shot/synthetic-examples.md` appears mojibaked and was left untouched; the new pack has fresh UTF-8 synthetic examples.
 - Unsafe review output paths are rejected rather than normalized. Future tools should keep this explicit behavior unless there is a documented reason to change it.
 - The annotation-card schema was not changed for Milestone 1A. Optional helper fields validate because the schema does not forbid additional properties.
