@@ -69,7 +69,9 @@ class SyntheticSliceTests(unittest.TestCase):
         overlay = build_overlay_demo_model(packet, card)
 
         self.assertEqual("overlay-demo.v1", overlay["schema_version"])
-        self.assertEqual(packet["current_line"]["source_text"], overlay["source"]["original_english"])
+        self.assertEqual(
+            packet["current_line"]["source_text"], overlay["source"]["original_english"]
+        )
         self.assertTrue(overlay["toggles"]["show_original"])
         self.assertTrue(overlay["toggles"]["show_translation"])
         self.assertIn("compact", overlay["modes"])

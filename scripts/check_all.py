@@ -16,7 +16,12 @@ def main() -> int:
         ("schema and fixture validation", [sys.executable, "scripts/validate_schemas.py"]),
         (
             "example config validation",
-            [sys.executable, "scripts/validate_config.py", "--example", "config/revachol.example.toml"],
+            [
+                sys.executable,
+                "scripts/validate_config.py",
+                "--example",
+                "config/revachol.example.toml",
+            ],
         ),
         (
             "synthetic slice CLI smoke",

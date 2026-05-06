@@ -28,7 +28,7 @@ def render_review_html(slice_result: dict[str, Any]) -> str:
             "</head>",
             "<body>",
             "  <h1>Revachol Synthetic Review</h1>",
-            f"  <p class=\"muted\">Line: {_text(overlay['line_id'])}</p>",
+            f'  <p class="muted">Line: {_text(overlay["line_id"])}</p>',
             _render_source(overlay),
             _render_visibility(overlay),
             _render_compact(compact),
@@ -45,7 +45,7 @@ def _render_source(overlay: dict[str, Any]) -> str:
     source = overlay["source"]
     return "\n".join(
         [
-            "  <section id=\"source\">",
+            '  <section id="source">',
             "    <h2>Original</h2>",
             f"    <p><strong>Speaker:</strong> {_text(source.get('speaker'))}</p>",
             f"    <p><strong>English:</strong> {_text(source.get('original_english'))}</p>",
@@ -61,7 +61,7 @@ def _render_visibility(overlay: dict[str, Any]) -> str:
     sections = ", ".join(_text(section) for section in toggles.get("available_sections", []))
     return "\n".join(
         [
-            "  <section id=\"visibility\">",
+            '  <section id="visibility">',
             "    <h2>Visibility States</h2>",
             f"    <p><strong>Original visible:</strong> {_text(toggles.get('show_original'))}</p>",
             f"    <p><strong>Translation visible:</strong> {_text(toggles.get('show_translation'))}</p>",
@@ -74,7 +74,7 @@ def _render_visibility(overlay: dict[str, Any]) -> str:
 def _render_compact(compact: dict[str, Any]) -> str:
     return "\n".join(
         [
-            "  <section id=\"compact-mode\">",
+            '  <section id="compact-mode">',
             "    <h2>Compact Mode</h2>",
             f"    <p><strong>Compact Ukrainian meaning:</strong> {_text(compact.get('concise_meaning_uk'))}</p>",
             f"    <p><strong>Literary Ukrainian rendering:</strong> {_text(compact.get('translation_uk'))}</p>",
@@ -95,11 +95,15 @@ def _render_deep(deep: dict[str, Any]) -> str:
             for section in deep.get("sections", [])
         ]
     )
-    glossary = "".join(f"<span class=\"flag\">{_text(term)}</span> " for term in deep.get("glossary_terms", []))
-    risks = "".join(f"<span class=\"flag\">{_text(flag)}</span> " for flag in deep.get("risk_flags", []))
+    glossary = "".join(
+        f'<span class="flag">{_text(term)}</span> ' for term in deep.get("glossary_terms", [])
+    )
+    risks = "".join(
+        f'<span class="flag">{_text(flag)}</span> ' for flag in deep.get("risk_flags", [])
+    )
     return "\n".join(
         [
-            "  <section id=\"deep-explanation-mode\">",
+            '  <section id="deep-explanation-mode">',
             "    <h2>Deep Explanation Mode</h2>",
             f"    <p><strong>Original English:</strong> {_text(deep.get('original_english'))}</p>",
             f"    <p><strong>Literary Ukrainian rendering:</strong> {_text(deep.get('literary_rendering_uk'))}</p>",
@@ -124,7 +128,7 @@ def _render_quality(annotation: dict[str, Any]) -> str:
     )
     return "\n".join(
         [
-            "  <section id=\"quality\">",
+            '  <section id="quality">',
             "    <h2>Quality Snapshot</h2>",
             f"    <p><strong>Confidence:</strong> {_text(annotation.get('confidence'))}</p>",
             "    <ul>",
@@ -139,7 +143,7 @@ def _render_debug(context: dict[str, Any], overlay: dict[str, Any]) -> str:
     debug = overlay.get("debug", {})
     return "\n".join(
         [
-            "  <section id=\"debug\">",
+            '  <section id="debug">',
             "    <h2>Debug</h2>",
             f"    <p><strong>Packet:</strong> {_text(context.get('packet_id'))}</p>",
             f"    <p><strong>Retrieval strategy:</strong> {_text(debug.get('retrieval_strategy'))}</p>",

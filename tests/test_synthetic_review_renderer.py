@@ -109,7 +109,9 @@ class SyntheticReviewRendererTests(unittest.TestCase):
 
         self.assertEqual(0, completed.returncode, completed.stderr)
         self.assertTrue(output.exists())
-        self.assertTrue(_is_relative_to(output.resolve(strict=False), ROOT / "workspace/synthetic-slice"))
+        self.assertTrue(
+            _is_relative_to(output.resolve(strict=False), ROOT / "workspace/synthetic-slice")
+        )
         output.unlink()
 
 

@@ -32,6 +32,7 @@ def is_under(path: Path, base: Path) -> bool:
         return False
     return True
 
+
 errors = []
 for path in ROOT.rglob("*"):
     rel = path.relative_to(ROOT)

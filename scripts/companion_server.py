@@ -111,7 +111,9 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
                 return
 
             if not isinstance(event, dict):
-                self._send_error_json(400, "invalid_synthetic_event", "Synthetic event must be a JSON object.")
+                self._send_error_json(
+                    400, "invalid_synthetic_event", "Synthetic event must be a JSON object."
+                )
                 return
 
             try:
@@ -170,7 +172,9 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
             try:
                 return json.loads(text)
             except json.JSONDecodeError as exc:
-                raise _InvalidJson(f"Invalid JSON: {exc.msg} at line {exc.lineno} column {exc.colno}.") from exc
+                raise _InvalidJson(
+                    f"Invalid JSON: {exc.msg} at line {exc.lineno} column {exc.colno}."
+                ) from exc
 
         def _send_json(self, status: int, payload: dict[str, Any]) -> None:
             rendered = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"

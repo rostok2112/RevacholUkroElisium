@@ -122,7 +122,9 @@ def _validate_e2e_fixture(schemas: dict[Path, dict]) -> list[str]:
     if context_errors:
         errors.append(f"{fixture_path.relative_to(ROOT)} context_packet invalid: {context_errors}")
     if annotation_errors:
-        errors.append(f"{fixture_path.relative_to(ROOT)} annotation_card invalid: {annotation_errors}")
+        errors.append(
+            f"{fixture_path.relative_to(ROOT)} annotation_card invalid: {annotation_errors}"
+        )
 
     if not errors:
         print(f"OK e2e fixture {fixture_path.relative_to(ROOT)}")

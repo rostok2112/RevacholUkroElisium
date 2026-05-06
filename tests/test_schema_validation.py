@@ -16,18 +16,31 @@ class SchemaValidationTests(unittest.TestCase):
         ]
         for schema_path, fixture_path in cases:
             with self.subTest(fixture=fixture_path):
-                errors = collect_errors(load_json(ROOT / fixture_path), load_json(ROOT / schema_path))
+                errors = collect_errors(
+                    load_json(ROOT / fixture_path), load_json(ROOT / schema_path)
+                )
                 self.assertEqual([], errors)
 
     def test_bad_fixtures_reject(self) -> None:
         cases = [
-            ("specs/context-packet.schema.json", "tests/fixtures/context_packet.invalid.synthetic.json"),
-            ("specs/annotation-card.schema.json", "tests/fixtures/annotation_card.invalid.synthetic.json"),
-            ("specs/glossary-entry.schema.json", "tests/fixtures/glossary_entry.invalid.synthetic.json"),
+            (
+                "specs/context-packet.schema.json",
+                "tests/fixtures/context_packet.invalid.synthetic.json",
+            ),
+            (
+                "specs/annotation-card.schema.json",
+                "tests/fixtures/annotation_card.invalid.synthetic.json",
+            ),
+            (
+                "specs/glossary-entry.schema.json",
+                "tests/fixtures/glossary_entry.invalid.synthetic.json",
+            ),
         ]
         for schema_path, fixture_path in cases:
             with self.subTest(fixture=fixture_path):
-                errors = collect_errors(load_json(ROOT / fixture_path), load_json(ROOT / schema_path))
+                errors = collect_errors(
+                    load_json(ROOT / fixture_path), load_json(ROOT / schema_path)
+                )
                 self.assertTrue(errors)
 
     def test_synthetic_e2e_parts_validate(self) -> None:

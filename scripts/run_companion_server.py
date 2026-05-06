@@ -27,7 +27,9 @@ def main() -> int:
             "choice to bind beyond localhost."
         ),
     )
-    parser.add_argument("--port", type=int, default=DEFAULT_PORT, help="Port to bind. Default: 8765.")
+    parser.add_argument(
+        "--port", type=int, default=DEFAULT_PORT, help="Port to bind. Default: 8765."
+    )
     parser.add_argument(
         "--smoke-test",
         action="store_true",

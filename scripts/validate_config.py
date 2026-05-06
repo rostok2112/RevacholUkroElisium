@@ -92,15 +92,13 @@ def _validate_modes(
     quality_mode = translation.get("quality_mode")
     if quality_mode not in QUALITY_MODES:
         errors.append(
-            f"translation.quality_mode must be one of {sorted(QUALITY_MODES)}, "
-            f"got {quality_mode!r}"
+            f"translation.quality_mode must be one of {sorted(QUALITY_MODES)}, got {quality_mode!r}"
         )
 
     overlay_mode = overlay.get("default_mode")
     if overlay_mode not in OVERLAY_MODES:
         errors.append(
-            f"overlay.default_mode must be one of {sorted(OVERLAY_MODES)}, "
-            f"got {overlay_mode!r}"
+            f"overlay.default_mode must be one of {sorted(OVERLAY_MODES)}, got {overlay_mode!r}"
         )
 
 
@@ -138,8 +136,12 @@ def _validate_private_path(label: str, value: Any, errors: list[str]) -> None:
     if not _is_inside_repo(resolved):
         return
 
-    if not any(_is_relative_to(resolved, _resolve_repo_relative(root)) for root in APPROVED_PRIVATE_ROOTS):
-        errors.append(f"{label} points inside the repo but not under an approved ignored private root")
+    if not any(
+        _is_relative_to(resolved, _resolve_repo_relative(root)) for root in APPROVED_PRIVATE_ROOTS
+    ):
+        errors.append(
+            f"{label} points inside the repo but not under an approved ignored private root"
+        )
 
 
 def _validate_no_inline_secrets(value: Any, errors: list[str], path: str = "$") -> None:
@@ -151,7 +153,9 @@ def _validate_no_inline_secrets(value: Any, errors: list[str], path: str = "$") 
                 marker in lower_key for marker in ("api_key", "secret", "token", "password")
             )
             if looks_secret_key and not lower_key.endswith("_env"):
-                errors.append(f"{child_path} looks like an inline secret; use an *_env setting instead")
+                errors.append(
+                    f"{child_path} looks like an inline secret; use an *_env setting instead"
+                )
             _validate_no_inline_secrets(child, errors, child_path)
     elif isinstance(value, list):
         for index, child in enumerate(value):
@@ -159,7 +163,9 @@ def _validate_no_inline_secrets(value: Any, errors: list[str], path: str = "$") 
     elif isinstance(value, str):
         lowered = value.lower()
         if value.startswith(("sk-", "sk_", "pk-")) or "api_key=" in lowered:
-            errors.append(f"{path} looks like a secret value; use an environment variable name instead")
+            errors.append(
+                f"{path} looks like a secret value; use an environment variable name instead"
+            )
 
 
 def _as_table(value: Any, label: str, errors: list[str]) -> dict[str, Any]:

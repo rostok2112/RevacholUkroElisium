@@ -45,9 +45,13 @@ class CompanionServerTests(unittest.TestCase):
         self.assertEqual(200, status)
         self.assertTrue(payload["ok"])
         data = payload["data"]
-        self.assertEqual(event["raw_english_text"], data["context_packet"]["current_line"]["source_text"])
+        self.assertEqual(
+            event["raw_english_text"], data["context_packet"]["current_line"]["source_text"]
+        )
         self.assertEqual(event["raw_english_text"], data["annotation_card"]["original_english"])
-        self.assertEqual(event["raw_english_text"], data["overlay_demo"]["source"]["original_english"])
+        self.assertEqual(
+            event["raw_english_text"], data["overlay_demo"]["source"]["original_english"]
+        )
 
     def test_invalid_json_is_clear_error(self) -> None:
         with ServerHarness() as server:
@@ -60,7 +64,9 @@ class CompanionServerTests(unittest.TestCase):
 
     def test_invalid_fake_event_is_clear_error(self) -> None:
         with ServerHarness() as server:
-            status, _headers, payload = server.post_json("/synthetic/event", load_json(INVALID_EVENT))
+            status, _headers, payload = server.post_json(
+                "/synthetic/event", load_json(INVALID_EVENT)
+            )
 
         self.assertEqual(400, status)
         self.assertFalse(payload["ok"])
@@ -171,7 +177,9 @@ class ServerHarness(AbstractContextManager["ServerHarness"]):
     def get_text(self, path: str) -> tuple[int, dict[str, str], str]:
         return self._request(path, method="GET")
 
-    def post_json(self, path: str, payload: dict[str, Any]) -> tuple[int, dict[str, str], dict[str, Any]]:
+    def post_json(
+        self, path: str, payload: dict[str, Any]
+    ) -> tuple[int, dict[str, str], dict[str, Any]]:
         body = json.dumps(payload).encode("utf-8")
         status, headers, text = self._request(path, method="POST", body=body)
         return status, headers, json.loads(text)

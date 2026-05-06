@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import Any
 
 try:
@@ -10,13 +9,12 @@ try:
     from scripts.synthetic_slice import (
         ANNOTATION_CARD_SCHEMA,
         CONTEXT_PACKET_SCHEMA,
-        ROOT,
         run_synthetic_slice,
     )
 except ModuleNotFoundError:  # pragma: no cover - used when run as a script dependency.
     from schema_validator import assert_valid, load_json
     from synthetic_review_renderer import render_review_html
-    from synthetic_slice import ANNOTATION_CARD_SCHEMA, CONTEXT_PACKET_SCHEMA, ROOT, run_synthetic_slice
+    from synthetic_slice import ANNOTATION_CARD_SCHEMA, CONTEXT_PACKET_SCHEMA, run_synthetic_slice
 
 
 SCORE_KEYS = (
@@ -314,8 +312,7 @@ def score_slice_result(
 
 def _section_coverage(case: SyntheticEvalCase, overlay: dict[str, Any]) -> float:
     sections = {
-        section.get("kind")
-        for section in overlay["modes"]["deep_explanation"].get("sections", [])
+        section.get("kind") for section in overlay["modes"]["deep_explanation"].get("sections", [])
     }
     return _ratio(case.required_sections, sections)
 

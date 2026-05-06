@@ -66,7 +66,9 @@ def main() -> int:
 
 def resolve_output_path(output: Path) -> Path:
     raw = output.expanduser()
-    resolved = raw.resolve(strict=False) if raw.is_absolute() else (ROOT / raw).resolve(strict=False)
+    resolved = (
+        raw.resolve(strict=False) if raw.is_absolute() else (ROOT / raw).resolve(strict=False)
+    )
     output_root = DEFAULT_OUTPUT_ROOT.resolve(strict=False)
     if not _is_relative_to(resolved, output_root):
         raise ValueError(
