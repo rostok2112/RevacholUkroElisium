@@ -1,8 +1,18 @@
 # Session Summary
 
-Milestone 1A synthetic end-to-end vertical slice is implemented on top of the Milestone 0 foundation.
+Milestone 1B synthetic review renderer is implemented on top of the Milestone 1A slice.
 
 Completed in the latest session:
+- Added a deliberately boring stdlib-only static HTML review renderer for the existing `overlay_demo` model.
+- Extended `scripts/run_synthetic_slice.py` with `--render-review`.
+- Kept default output behavior deterministic: review HTML prints to stdout unless `--output` is provided.
+- Restricted written generated artifacts to `workspace/synthetic-slice/`; unsafe output paths are rejected with a clear CLI error instead of being normalized.
+- Added mandatory HTML escaping coverage, including a test with unsafe synthetic `<script>` text.
+- Added tests for compact mode, deep explanation mode, original/translation visibility, Ukrainian fields, idiom/reference/voice sections, glossary terms, confidence, risk flags, and output path safety.
+- Integrated the review-renderer smoke command into `scripts/check_all.py`.
+- Did not change any schemas.
+
+Milestone 1A remains in place:
 - Added `FakeGameEvent` schema plus valid/invalid synthetic fixtures.
 - Added a pure stdlib synthetic slice module that validates a fake event, builds a context packet, creates a deterministic mock annotation card, and produces an overlay-facing demo model.
 - Added `scripts/run_synthetic_slice.py` to run the full synthetic flow from fixture or supplied synthetic event.
@@ -22,8 +32,9 @@ Latest validation run:
 - `python scripts/check_all.py` passed.
 - `python scripts/validate_schemas.py` passed.
 - `python scripts/validate_config.py --example config/revachol.example.toml` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 14 tests.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 22 tests.
 - `python scripts/run_synthetic_slice.py --quiet` passed.
+- `python scripts/run_synthetic_slice.py --render-review --output workspace/synthetic-slice/review.html --quiet` passed.
 - `npm run check` passed.
 - `python scripts/bootstrap_workspace.py` passed and created ignored local folders only.
 

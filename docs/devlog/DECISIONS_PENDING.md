@@ -6,4 +6,5 @@
 - How to structure lawful opt-in web enrichment and source attribution.
 - Whether to rename or alias `docs/00-start-here.md` as `docs/00-project-vision.md`.
 - Whether future annotation-card helper fields should remain permissive additional properties or become explicit optional schema properties.
-- Whether Milestone 1B should prioritize static demo HTML, a local CLI review view, or a tiny service-like JSON endpoint.
+- Whether future review artifacts should stay static HTML, add Markdown output, or wait for a real overlay prototype.
+- Which synthetic eval dimensions should graduate from Milestone 1C checks into the long-term eval framework.

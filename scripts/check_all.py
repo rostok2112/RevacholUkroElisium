@@ -28,6 +28,17 @@ def main() -> int:
                 "--quiet",
             ],
         ),
+        (
+            "synthetic review renderer smoke",
+            [
+                sys.executable,
+                "scripts/run_synthetic_slice.py",
+                "--render-review",
+                "--output",
+                "workspace/synthetic-slice/review.html",
+                "--quiet",
+            ],
+        ),
     ]
 
     for label, command in steps:
