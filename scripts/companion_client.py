@@ -46,6 +46,12 @@ class CompanionClient:
     def latest_eval_summary(self) -> dict[str, Any] | None:
         return self._request_json("GET", "/state/latest-eval-summary")
 
+    def latest_provider_context(self) -> dict[str, Any] | None:
+        return self._request_json("GET", "/state/latest-provider-context")
+
+    def latest_provider_annotation(self) -> dict[str, Any] | None:
+        return self._request_json("GET", "/state/latest-provider-annotation")
+
     def latest_review_html(self) -> str:
         return self._request_text("GET", "/review/latest.html")
 
@@ -54,6 +60,26 @@ class CompanionClient:
 
     def run_synthetic_eval(self) -> dict[str, Any]:
         return self._request_json("POST", "/synthetic/eval", {})
+
+    def provider_annotate_fake_event(self, event: dict[str, Any]) -> dict[str, Any]:
+        return self._request_json(
+            "POST",
+            "/synthetic/provider-annotate",
+            {
+                "input_type": "fake_event",
+                "event": event,
+            },
+        )
+
+    def provider_annotate_context_packet(self, context_packet: dict[str, Any]) -> dict[str, Any]:
+        return self._request_json(
+            "POST",
+            "/synthetic/provider-annotate",
+            {
+                "input_type": "context_packet",
+                "context_packet": context_packet,
+            },
+        )
 
     def _request_json(self, method: str, path: str, payload: dict[str, Any] | None = None) -> Any:
         status, body = self._request(method, path, payload)

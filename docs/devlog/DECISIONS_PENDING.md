@@ -15,8 +15,9 @@
 - Milestone 2A provider abstractions live under `scripts/` initially; decide later when to move toward a package layout.
 - How to version provider prompt contracts before real paid API or local model adapters are enabled.
 - Milestone 2B introduced a dedicated prompt/style pack manifest at `prompts/packs/ukrainian_annotation_v1/pack.json`.
-- Whether provider annotation should be exposed through companion server/client in Milestone 2D or wait for a broader API versioning pass.
+- Whether the companion provider annotation endpoint needs explicit API versioning before real overlay or bridge clients depend on it.
 - Whether provider requests should carry full prompt pack text or only stable prompt pack references for real runtime providers.
 - How debug/developer mode should expose internal English provider guidance without leaking it into default player-facing Ukrainian annotation.
 - Milestone 2C deferred companion server/client provider exposure to Milestone 2D after the provider/eval wiring passed one stable CLI/test cycle.
 - Whether `provider`, `provider_debug`, and `prompt_pack` should become explicit optional annotation-card schema fields before real providers are enabled.
+- Milestone 2D kept stable error codes unchanged and maps invalid context packets to `invalid_request`; decide later whether a dedicated `invalid_context_packet` code is worth the contract churn.

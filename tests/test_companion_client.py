@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from contextlib import AbstractContextManager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import json
 from pathlib import Path
 import socket
 import subprocess
 import sys
+import tempfile
 import threading
 from typing import Any
 import unittest
@@ -18,6 +20,7 @@ from scripts.companion_client import (
 )
 from scripts.companion_server import DEFAULT_HOST, CompanionState, make_server
 from scripts.schema_validator import load_json
+from scripts.synthetic_slice import build_context_packet
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,6 +62,33 @@ class CompanionClientTests(unittest.TestCase):
         self.assertTrue(summary["passed"])
         self.assertGreaterEqual(summary["case_count"], 6)
         self.assertEqual(summary, latest)
+
+    def test_client_provider_annotate_fake_event_and_latest_state(self) -> None:
+        event = load_json(VALID_EVENT)
+
+        with ServerHarness() as server:
+            result = server.client.provider_annotate_fake_event(event)
+            context = server.client.latest_provider_context()
+            annotation = server.client.latest_provider_annotation()
+
+        self.assertEqual(
+            event["raw_english_text"],
+            result["context_packet"]["current_line"]["source_text"],
+        )
+        self.assertEqual(result["context_packet"], context)
+        self.assertEqual(result["annotation_card"], annotation)
+        self.assertIn("prompt_pack_guided", annotation["risk_flags"])
+        self.assertEqual("ukrainian_annotation_v1", annotation["prompt_pack"]["pack_id"])
+
+    def test_client_provider_annotate_context_packet(self) -> None:
+        context_packet = build_context_packet(load_json(VALID_EVENT))
+
+        with ServerHarness() as server:
+            result = server.client.provider_annotate_context_packet(context_packet)
+
+        self.assertEqual(context_packet, result["context_packet"])
+        self.assertIn("prompt_pack_guided", result["annotation_card"]["risk_flags"])
+        self.assertEqual("mock", result["annotation_card"]["provider_debug"]["provider_name"])
 
     def test_client_latest_review_html_is_raw_html(self) -> None:
         with ServerHarness() as server:
@@ -103,13 +133,78 @@ class CompanionClientTests(unittest.TestCase):
         self.assertEqual(0, completed.returncode, completed.stderr)
         self.assertIn("Companion client smoke test passed", completed.stdout)
 
+    def test_cli_provider_commands_use_existing_server(self) -> None:
+        context_packet = build_context_packet(load_json(VALID_EVENT))
+        with tempfile.TemporaryDirectory() as temp_dir:
+            context_path = Path(temp_dir) / "context.synthetic.json"
+            context_path.write_text(json.dumps(context_packet), encoding="utf-8")
+
+            with ServerHarness() as server:
+                event_completed = subprocess.run(
+                    [
+                        sys.executable,
+                        "scripts/run_companion_client.py",
+                        "--base-url",
+                        server.url,
+                        "provider-annotate-event",
+                        "--event",
+                        str(VALID_EVENT),
+                    ],
+                    cwd=ROOT,
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+                latest_completed = subprocess.run(
+                    [
+                        sys.executable,
+                        "scripts/run_companion_client.py",
+                        "--base-url",
+                        server.url,
+                        "latest-provider-annotation",
+                    ],
+                    cwd=ROOT,
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+                context_completed = subprocess.run(
+                    [
+                        sys.executable,
+                        "scripts/run_companion_client.py",
+                        "--base-url",
+                        server.url,
+                        "provider-annotate-context",
+                        "--context-packet",
+                        str(context_path),
+                    ],
+                    cwd=ROOT,
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+
+        self.assertEqual(0, event_completed.returncode, event_completed.stderr)
+        event_payload = json.loads(event_completed.stdout)
+        self.assertIn("prompt_pack_guided", event_payload["annotation_card"]["risk_flags"])
+        self.assertEqual(0, latest_completed.returncode, latest_completed.stderr)
+        latest_payload = json.loads(latest_completed.stdout)
+        self.assertIn("prompt_pack_guided", latest_payload["risk_flags"])
+        self.assertEqual(0, context_completed.returncode, context_completed.stderr)
+        context_payload = json.loads(context_completed.stdout)
+        self.assertEqual(
+            context_packet["packet_id"], context_payload["context_packet"]["packet_id"]
+        )
+
     def test_api_contract_doc_examples_are_synthetic_only(self) -> None:
         text = CONTRACT_DOC.read_text(encoding="utf-8")
         lowered = text.lower()
 
         self.assertIn("synthetic.event", text)
+        self.assertIn("/synthetic/provider-annotate", text)
         self.assertIn('"ok": true', text)
         self.assertIn("invalid_fake_event", text)
+        self.assertIn("deterministic mock provider", lowered)
         for forbidden in (
             "data/extracted",
             "data/local",

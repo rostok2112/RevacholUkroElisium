@@ -7,15 +7,21 @@ from typing import Any
 from urllib.parse import urlparse
 
 try:
-    from scripts.schema_validator import SchemaValidationError
+    from scripts.provider_pipeline import ProviderPipelineError, run_provider_pipeline
+    from scripts.schema_validator import SchemaValidationError, assert_valid, load_json
     from scripts.synthetic_eval import run_synthetic_eval
     from scripts.synthetic_review_renderer import render_review_html
-    from scripts.synthetic_slice import run_synthetic_slice
+    from scripts.synthetic_slice import (
+        CONTEXT_PACKET_SCHEMA,
+        build_context_packet,
+        run_synthetic_slice,
+    )
 except ModuleNotFoundError:  # pragma: no cover - used when run as a script dependency.
-    from schema_validator import SchemaValidationError
+    from provider_pipeline import ProviderPipelineError, run_provider_pipeline
+    from schema_validator import SchemaValidationError, assert_valid, load_json
     from synthetic_eval import run_synthetic_eval
     from synthetic_review_renderer import render_review_html
-    from synthetic_slice import run_synthetic_slice
+    from synthetic_slice import CONTEXT_PACKET_SCHEMA, build_context_packet, run_synthetic_slice
 
 
 DEFAULT_HOST = "127.0.0.1"
@@ -29,9 +35,12 @@ ENDPOINTS = [
     "GET /state/latest-annotation",
     "GET /state/latest-overlay-demo",
     "GET /state/latest-eval-summary",
+    "GET /state/latest-provider-context",
+    "GET /state/latest-provider-annotation",
     "GET /review/latest.html",
     "POST /synthetic/event",
     "POST /synthetic/eval",
+    "POST /synthetic/provider-annotate",
 ]
 
 STABLE_ERROR_CODES = [
@@ -48,6 +57,8 @@ STABLE_ERROR_CODES = [
 class CompanionState:
     latest_slice_result: dict[str, Any] | None = None
     latest_eval_summary: dict[str, Any] | None = None
+    latest_provider_context_packet: dict[str, Any] | None = None
+    latest_provider_annotation_card: dict[str, Any] | None = None
 
     def latest_context_packet(self) -> dict[str, Any] | None:
         if self.latest_slice_result is None:
@@ -63,6 +74,12 @@ class CompanionState:
         if self.latest_slice_result is None:
             return None
         return self.latest_slice_result["overlay_demo"]
+
+    def latest_provider_context(self) -> dict[str, Any] | None:
+        return self.latest_provider_context_packet
+
+    def latest_provider_annotation(self) -> dict[str, Any] | None:
+        return self.latest_provider_annotation_card
 
 
 def make_server(
@@ -118,6 +135,10 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
                 self._send_json(200, _ok(state.latest_overlay_demo()))
             elif path == "/state/latest-eval-summary":
                 self._send_json(200, _ok(state.latest_eval_summary))
+            elif path == "/state/latest-provider-context":
+                self._send_json(200, _ok(state.latest_provider_context()))
+            elif path == "/state/latest-provider-annotation":
+                self._send_json(200, _ok(state.latest_provider_annotation()))
             elif path == "/review/latest.html":
                 self._handle_latest_review()
             else:
@@ -130,6 +151,8 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
                 self._handle_synthetic_event()
             elif path == "/synthetic/eval":
                 self._handle_synthetic_eval()
+            elif path == "/synthetic/provider-annotate":
+                self._handle_provider_annotate()
             else:
                 self._send_error_json(404, "not_found", f"Unknown endpoint: {path}")
 
@@ -168,6 +191,97 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
             summary = run_synthetic_eval()
             state.latest_eval_summary = summary
             self._send_json(200, _ok(summary))
+
+        def _handle_provider_annotate(self) -> None:
+            try:
+                payload = self._read_json_body()
+            except _InvalidJson as exc:
+                self._send_error_json(400, "invalid_json", str(exc))
+                return
+
+            if not isinstance(payload, dict):
+                self._send_error_json(
+                    400,
+                    "invalid_request",
+                    "Provider annotation request must be a JSON object.",
+                )
+                return
+
+            input_type = payload.get("input_type")
+            if input_type is None:
+                self._send_error_json(
+                    400,
+                    "invalid_request",
+                    "Provider annotation request requires input_type.",
+                )
+                return
+            if input_type == "fake_event":
+                context_packet = self._context_from_fake_event_payload(payload)
+            elif input_type == "context_packet":
+                context_packet = self._context_from_context_packet_payload(payload)
+            else:
+                self._send_error_json(
+                    400,
+                    "invalid_request",
+                    "input_type must be 'fake_event' or 'context_packet'.",
+                )
+                return
+
+            if context_packet is None:
+                return
+
+            try:
+                annotation_card = run_provider_pipeline(context_packet, provider_name="mock")
+            except (ProviderPipelineError, SchemaValidationError) as exc:
+                self._send_error_json(400, "invalid_request", str(exc))
+                return
+
+            state.latest_provider_context_packet = context_packet
+            state.latest_provider_annotation_card = annotation_card
+            self._send_json(
+                200,
+                _ok(
+                    {
+                        "context_packet": context_packet,
+                        "annotation_card": annotation_card,
+                    }
+                ),
+            )
+
+        def _context_from_fake_event_payload(
+            self, payload: dict[str, Any]
+        ) -> dict[str, Any] | None:
+            event = payload.get("event")
+            if not isinstance(event, dict):
+                self._send_error_json(
+                    400,
+                    "invalid_request",
+                    "event must be a JSON object when input_type is 'fake_event'.",
+                )
+                return None
+            try:
+                return build_context_packet(event)
+            except SchemaValidationError as exc:
+                self._send_error_json(400, "invalid_fake_event", str(exc))
+                return None
+
+        def _context_from_context_packet_payload(
+            self, payload: dict[str, Any]
+        ) -> dict[str, Any] | None:
+            context_packet = payload.get("context_packet")
+            if not isinstance(context_packet, dict):
+                self._send_error_json(
+                    400,
+                    "invalid_request",
+                    "context_packet must be a JSON object when input_type is 'context_packet'.",
+                )
+                return None
+            try:
+                assert_valid(context_packet, load_json(CONTEXT_PACKET_SCHEMA))
+            except SchemaValidationError as exc:
+                self._send_error_json(400, "invalid_request", str(exc))
+                return None
+            return context_packet
 
         def _handle_latest_review(self) -> None:
             if state.latest_slice_result is None:
@@ -271,6 +385,8 @@ def _health_payload(state: CompanionState) -> dict[str, Any]:
             "has_latest_annotation": state.latest_annotation_card() is not None,
             "has_latest_overlay_demo": state.latest_overlay_demo() is not None,
             "has_latest_eval_summary": state.latest_eval_summary is not None,
+            "has_latest_provider_context": state.latest_provider_context() is not None,
+            "has_latest_provider_annotation": state.latest_provider_annotation() is not None,
         },
         "endpoints": ENDPOINTS,
         "stable_error_codes": STABLE_ERROR_CODES,

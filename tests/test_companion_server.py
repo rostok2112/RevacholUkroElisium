@@ -11,11 +11,13 @@ import unittest
 
 from scripts.companion_server import DEFAULT_HOST, CompanionState, make_server
 from scripts.schema_validator import load_json
+from scripts.synthetic_slice import build_context_packet
 
 
 ROOT = Path(__file__).resolve().parents[1]
 VALID_EVENT = ROOT / "tests/fixtures/fake_game_event.synthetic.json"
 INVALID_EVENT = ROOT / "tests/fixtures/fake_game_event.invalid.synthetic.json"
+INVALID_CONTEXT_PACKET = ROOT / "tests/fixtures/context_packet.invalid.synthetic.json"
 
 
 class CompanionServerTests(unittest.TestCase):
@@ -35,7 +37,10 @@ class CompanionServerTests(unittest.TestCase):
         self.assertFalse(data["mode"]["external_services"])
         self.assertEqual(DEFAULT_HOST, data["binding"]["default_host"])
         self.assertFalse(data["latest_state"]["has_latest_context"])
+        self.assertFalse(data["latest_state"]["has_latest_provider_context"])
+        self.assertFalse(data["latest_state"]["has_latest_provider_annotation"])
         self.assertIn("GET /health", data["endpoints"])
+        self.assertIn("POST /synthetic/provider-annotate", data["endpoints"])
         self.assertIn("application/json", headers["Content-Type"])
 
     def test_valid_synthetic_event_returns_slice_outputs(self) -> None:
@@ -96,6 +101,12 @@ class CompanionServerTests(unittest.TestCase):
             context_status, _headers, context = server.get_json("/state/latest-context")
             annotation_status, _headers, annotation = server.get_json("/state/latest-annotation")
             overlay_status, _headers, overlay = server.get_json("/state/latest-overlay-demo")
+            provider_context_status, _headers, provider_context = server.get_json(
+                "/state/latest-provider-context"
+            )
+            provider_annotation_status, _headers, provider_annotation = server.get_json(
+                "/state/latest-provider-annotation"
+            )
 
         self.assertEqual(200, context_status)
         self.assertIsNone(context["data"])
@@ -103,6 +114,10 @@ class CompanionServerTests(unittest.TestCase):
         self.assertIsNone(annotation["data"])
         self.assertEqual(200, overlay_status)
         self.assertIsNone(overlay["data"])
+        self.assertEqual(200, provider_context_status)
+        self.assertIsNone(provider_context["data"])
+        self.assertEqual(200, provider_annotation_status)
+        self.assertIsNone(provider_annotation["data"])
 
     def test_synthetic_eval_post_and_latest_eval_summary(self) -> None:
         with ServerHarness() as server:
@@ -115,6 +130,137 @@ class CompanionServerTests(unittest.TestCase):
         self.assertGreaterEqual(payload["data"]["case_count"], 6)
         self.assertEqual(200, latest_status)
         self.assertEqual(payload["data"], latest["data"])
+
+    def test_provider_annotate_accepts_fake_event(self) -> None:
+        event = load_json(VALID_EVENT)
+
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json(
+                "/synthetic/provider-annotate",
+                {
+                    "input_type": "fake_event",
+                    "event": event,
+                },
+            )
+
+        self.assertEqual(200, status)
+        self.assertTrue(payload["ok"])
+        data = payload["data"]
+        self.assertEqual(
+            event["raw_english_text"], data["context_packet"]["current_line"]["source_text"]
+        )
+        self.assertEqual(event["raw_english_text"], data["annotation_card"]["original_english"])
+        self.assertIn("prompt_pack_guided", data["annotation_card"]["risk_flags"])
+        self.assertEqual("mock", data["annotation_card"]["provider_debug"]["provider_name"])
+        self.assertEqual(
+            "ukrainian_annotation_v1", data["annotation_card"]["prompt_pack"]["pack_id"]
+        )
+
+    def test_provider_annotate_accepts_context_packet(self) -> None:
+        context_packet = build_context_packet(load_json(VALID_EVENT))
+
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json(
+                "/synthetic/provider-annotate",
+                {
+                    "input_type": "context_packet",
+                    "context_packet": context_packet,
+                },
+            )
+
+        self.assertEqual(200, status)
+        self.assertTrue(payload["ok"])
+        self.assertEqual(context_packet, payload["data"]["context_packet"])
+        self.assertIn("prompt_pack_guided", payload["data"]["annotation_card"]["risk_flags"])
+
+    def test_provider_annotate_rejects_missing_input_type(self) -> None:
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json(
+                "/synthetic/provider-annotate",
+                {"event": load_json(VALID_EVENT)},
+            )
+
+        self.assertEqual(400, status)
+        self.assertFalse(payload["ok"])
+        self.assertEqual("invalid_request", payload["error"]["code"])
+        self.assertIn("input_type", payload["error"]["message"])
+
+    def test_provider_annotate_rejects_unknown_input_type(self) -> None:
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json(
+                "/synthetic/provider-annotate",
+                {
+                    "input_type": "surprise",
+                    "event": load_json(VALID_EVENT),
+                },
+            )
+
+        self.assertEqual(400, status)
+        self.assertFalse(payload["ok"])
+        self.assertEqual("invalid_request", payload["error"]["code"])
+        self.assertIn("input_type", payload["error"]["message"])
+
+    def test_provider_annotate_rejects_missing_payload_object(self) -> None:
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json(
+                "/synthetic/provider-annotate",
+                {"input_type": "fake_event"},
+            )
+
+        self.assertEqual(400, status)
+        self.assertFalse(payload["ok"])
+        self.assertEqual("invalid_request", payload["error"]["code"])
+        self.assertIn("event", payload["error"]["message"])
+
+    def test_provider_annotate_rejects_invalid_fake_event(self) -> None:
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json(
+                "/synthetic/provider-annotate",
+                {
+                    "input_type": "fake_event",
+                    "event": load_json(INVALID_EVENT),
+                },
+            )
+
+        self.assertEqual(400, status)
+        self.assertFalse(payload["ok"])
+        self.assertEqual("invalid_fake_event", payload["error"]["code"])
+
+    def test_provider_annotate_rejects_invalid_context_packet(self) -> None:
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json(
+                "/synthetic/provider-annotate",
+                {
+                    "input_type": "context_packet",
+                    "context_packet": load_json(INVALID_CONTEXT_PACKET),
+                },
+            )
+
+        self.assertEqual(400, status)
+        self.assertFalse(payload["ok"])
+        self.assertEqual("invalid_request", payload["error"]["code"])
+
+    def test_latest_provider_state_after_provider_annotation(self) -> None:
+        event = load_json(VALID_EVENT)
+
+        with ServerHarness() as server:
+            posted_status, _headers, posted = server.post_json(
+                "/synthetic/provider-annotate",
+                {
+                    "input_type": "fake_event",
+                    "event": event,
+                },
+            )
+            context_status, _headers, context = server.get_json("/state/latest-provider-context")
+            annotation_status, _headers, annotation = server.get_json(
+                "/state/latest-provider-annotation"
+            )
+
+        self.assertEqual(200, posted_status)
+        self.assertEqual(200, context_status)
+        self.assertEqual(posted["data"]["context_packet"], context["data"])
+        self.assertEqual(200, annotation_status)
+        self.assertEqual(posted["data"]["annotation_card"], annotation["data"])
 
     def test_review_latest_returns_json_404_before_event(self) -> None:
         with ServerHarness() as server:

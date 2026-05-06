@@ -1,8 +1,27 @@
 # Session Summary
 
-Milestone 2C prompt-pack-aware mock provider and structural eval wiring is implemented.
+Milestone 2D companion provider annotation endpoint is implemented.
 
 Completed in the latest session:
+- Exposed the prompt-pack-aware deterministic mock provider pipeline through the companion server.
+- Added `POST /synthetic/provider-annotate` with explicit wrapper inputs:
+  - `{ "input_type": "fake_event", "event": { ... } }`
+  - `{ "input_type": "context_packet", "context_packet": { ... } }`
+- The provider endpoint does not guess when `input_type` is missing or unknown; it returns `400 invalid_request`.
+- Fake-event input is validated and converted with existing synthetic slice helpers before provider annotation.
+- Context-packet input is validated against `specs/context-packet.schema.json` before provider annotation.
+- Provider annotation returns the existing success envelope with `context_packet` and prompt-pack-aware `annotation_card`.
+- Added in-memory latest provider state:
+  - `GET /state/latest-provider-context`
+  - `GET /state/latest-provider-annotation`
+- Added companion client methods and CLI commands for provider annotation and latest provider state.
+- Updated `docs/api/companion-server-contract.md` with the new endpoint, accepted request shapes, latest state endpoints, synthetic examples, and deterministic mock-provider policy.
+- Extended companion server/client tests for valid fake-event and context-packet provider annotation, missing/unknown `input_type`, missing payloads, invalid fake events, invalid context packets, latest provider state, client methods, and CLI commands.
+- Extended the companion client smoke test so `scripts/check_all.py` exercises provider annotation without leaving a long-running server.
+- Kept `/synthetic/event`, `/synthetic/eval`, and `/review/latest.html` behavior unchanged.
+- Did not change schemas, provider pipeline internals, prompt pack text, config, stable error code names, or add dependencies.
+
+Milestone 2C remains in place:
 - Extended provider requests with explicit prompt-pack policy wiring:
   - player-facing language default: `uk`
   - internal guidance language marker: `english_allowed_for_provider_guidance`
@@ -135,12 +154,11 @@ Milestone 0 foundation still in place:
 - Updated the LLM output contract and legal/data safety docs with runtime paid API and opt-in web enrichment policy.
 
 Latest validation run:
-- `python -m unittest tests.test_provider_pipeline -v` passed with 13 tests.
-- `python -m unittest tests.test_synthetic_eval -v` passed with 11 tests.
-- `python -m unittest tests.test_synthetic_review_renderer -v` passed with 9 tests.
-- `python scripts/check_all.py` passed, including 77 unit tests, provider pipeline smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
+- `python -m unittest tests.test_companion_server -v` passed with 20 tests.
+- `python -m unittest tests.test_companion_client -v` passed with 12 tests.
+- `python scripts/check_all.py` passed, including 88 unit tests, provider pipeline smoke, prompt pack smoke, companion server smoke, companion client smoke, Ruff check, and Ruff format check.
 - `python scripts/validate_schemas.py` passed.
-- `python -m unittest discover -s tests -p "test_*.py"` passed with 77 tests.
+- `python -m unittest discover -s tests -p "test_*.py"` passed with 88 tests.
 - `npm run check` passed.
 - `python scripts/run_companion_server.py --smoke-test` passed.
 - `python scripts/run_companion_client.py smoke-test` passed.
