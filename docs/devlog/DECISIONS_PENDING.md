@@ -24,3 +24,5 @@
 - Milestone 2F added a fixture-backed provider contract regression runner; decide later how fixture update approval should work once real provider adapters are introduced.
 - When real provider adapters are introduced, decide the exact opt-in UX for `allow_external_providers`, cache roots, provider-specific credentials, and any paid API warning surfaces.
 - Decide whether `paid_runtime_allowed` should remain separate from `allow_external_providers` or be folded into a clearer provider safety policy before real integrations.
+- Decide whether future real provider cache roots must be repo-local ignored paths only, or whether absolute outside-repo private paths should remain allowed.
+- Decide the long-term redaction policy for provider request payloads, cache keys, and debug logs before storing real prompt/model traces.

@@ -1,5 +1,27 @@
 # Session Summary
 
+Milestone 2H provider runtime safety preflight is implemented.
+
+Completed in the latest session:
+- Added `scripts/provider_runtime_safety.py`, a stdlib-only dry-run safety layer for future provider execution.
+- The preflight builds a redacted provider execution plan with active provider, enabled/implemented state, provider mode, network/secrets/runtime flags, cache-root privacy status, prompt pack id/version, warnings, and blocked reasons.
+- `mock` preflight passes with `workspace/provider-cache`, `dry_run = true`, `calls_external_services = false`, no network, no secrets, and no local runtime requirement.
+- Future provider ids produce blocked plans before any provider adapter, network, paid API, DeepL, or local runtime path can run.
+- Added deterministic redaction for secret-like keys, secret-like values, and absolute/private-looking paths in summaries.
+- Added `scripts/run_provider_preflight.py`, defaulting to `config/revachol.example.toml`, printing JSON by default, supporting `--quiet`, and writing only under ignored `workspace/synthetic-slice/provider-preflight/`.
+- Added `docs/provider-runtime-safety.md` documenting cache-root policy, redacted summaries, mock default, future-provider opt-in, and offline tests.
+- Added `tests/test_provider_runtime_safety.py` covering mock pass, unknown/disabled/unimplemented future provider blocking, external opt-in blocking, cache-root safety, output-path safety, redaction, fixture metadata isolation, and CLI behavior.
+- Added `python scripts/run_provider_preflight.py --quiet` to `scripts/check_all.py`.
+- Did not change schemas, fixtures, companion server/client HTTP contract, provider execution behavior, or add dependencies.
+- Validation completed after formatting the new safety module:
+  - `python scripts/check_all.py` passed, including 149 unit tests, provider preflight smoke, provider registry smoke, provider contract regression smoke, companion smokes, Ruff check, and Ruff format check.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 149 tests.
+  - `npm run check` passed.
+  - `python scripts/run_provider_contract_regression.py --quiet` passed.
+  - `python scripts/run_provider_preflight.py --quiet` passed.
+  - `python scripts/run_provider_pipeline.py --output workspace/synthetic-slice/provider-output.json --quiet` passed.
+
 Milestone 2G provider registry and runtime safety gates is implemented.
 
 Completed in the latest session:

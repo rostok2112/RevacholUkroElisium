@@ -33,6 +33,9 @@
 - Milestone 2G registry roadmap provider ids exist in config/CLI metadata, but they are disabled and unimplemented; they must not leak into public runtime annotation responses or provider contract fixtures.
 - Milestone 2G config validation is stricter around provider ids and cache paths; private user configs may need migration from older provider table names.
 - Provider selection gates prevent accidental real-provider fallback now, but future real adapters will still need cache privacy, prompt redaction, retry policy, and legal/safety review before use.
+- Milestone 2H preflight redaction protects logs and summaries only; it does not replace future real provider request-payload privacy, retention, or audit policy.
+- Milestone 2H allows absolute cache roots outside the repo as assumed-private user paths and redacts them in summaries; review this before real provider writes are enabled.
+- Milestone 2H preflight can list roadmap provider ids in planning output, but runtime annotation-card metadata and committed provider response fixtures must remain mock-only.
 - The provider success fixture includes the schema-required `game.title` constant inside context-packet `game.title`; keep that exception narrow and do not allow real game title strings in free-text fixture fields.
 - Public annotation-card `provider` metadata omits future provider role lists to keep committed fixtures free of external-service markers.
 - Existing legacy `prompts/few-shot/synthetic-examples.md` appears mojibaked and was left untouched; the new pack has fresh UTF-8 synthetic examples.
