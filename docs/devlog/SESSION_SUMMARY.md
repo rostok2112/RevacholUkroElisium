@@ -1,5 +1,28 @@
 # Session Summary
 
+Milestone 2I provider request privacy envelope and cache write dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/provider_privacy.py`, a stdlib-only privacy/cache planning layer for existing synthetic `ProviderRequest` objects.
+- Added deterministic cache keys using SHA-256 over canonical request metadata, text lengths, and text digests without exposing raw source text or full prompt text in printed summaries.
+- Added redacted provider privacy envelopes with provider id/mode, prompt pack id/version, context and line ids, synthetic/mock flags, request field presence, text metadata, redacted config summary, cache root, and dry-run cache write plan.
+- Added cache write dry-run plans under `workspace/provider-cache/<provider>/<pack>/<cache_key>.json` with `dry_run = true`, `would_write = false`, and `writes_raw_payload = false`.
+- Added `scripts/run_provider_privacy_check.py`, defaulting to the synthetic fixture and writing redacted summaries only under ignored `workspace/synthetic-slice/provider-privacy/`.
+- Added privacy availability fields to provider preflight plans without changing preflight pass/block behavior.
+- Added `docs/provider-privacy-cache-policy.md` documenting what may be logged, what must never be logged, cache key computation, and why raw payload persistence remains deferred.
+- Added `tests/test_provider_privacy.py` covering raw text/prompt omission, cache key stability, cache dry-run safety, redaction, blocked future providers, output path safety, fixture metadata isolation, and CLI behavior.
+- Added `python scripts/run_provider_privacy_check.py --quiet` to `scripts/check_all.py`.
+- Did not change schemas, fixtures, companion server/client HTTP contract, provider execution behavior, or add dependencies.
+- Validation completed after formatting the new privacy files:
+  - `python scripts/check_all.py` passed, including 165 unit tests, provider preflight smoke, provider privacy smoke, provider contract regression smoke, companion smokes, Ruff check, and Ruff format check.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 165 tests.
+  - `npm run check` passed.
+  - `python scripts/run_provider_contract_regression.py --quiet` passed.
+  - `python scripts/run_provider_preflight.py --quiet` passed.
+  - `python scripts/run_provider_privacy_check.py --quiet` passed.
+  - `python scripts/run_provider_pipeline.py --output workspace/synthetic-slice/provider-output.json --quiet` passed.
+
 Milestone 2H provider runtime safety preflight is implemented.
 
 Completed in the latest session:

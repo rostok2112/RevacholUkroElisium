@@ -82,6 +82,10 @@ def main() -> int:
             [sys.executable, "scripts/run_provider_preflight.py", "--quiet"],
         ),
         (
+            "provider privacy smoke",
+            [sys.executable, "scripts/run_provider_privacy_check.py", "--quiet"],
+        ),
+        (
             "provider contract regression smoke",
             [
                 sys.executable,

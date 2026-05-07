@@ -26,3 +26,5 @@
 - Decide whether `paid_runtime_allowed` should remain separate from `allow_external_providers` or be folded into a clearer provider safety policy before real integrations.
 - Decide whether future real provider cache roots must be repo-local ignored paths only, or whether absolute outside-repo private paths should remain allowed.
 - Decide the long-term redaction policy for provider request payloads, cache keys, and debug logs before storing real prompt/model traces.
+- Decide whether future provider cache entries should store raw payloads, encrypted payloads, structured redacted payloads, or hashes-only records.
+- Decide cache retention/deletion/audit rules before enabling real provider persistence.

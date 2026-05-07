@@ -36,6 +36,9 @@
 - Milestone 2H preflight redaction protects logs and summaries only; it does not replace future real provider request-payload privacy, retention, or audit policy.
 - Milestone 2H allows absolute cache roots outside the repo as assumed-private user paths and redacts them in summaries; review this before real provider writes are enabled.
 - Milestone 2H preflight can list roadmap provider ids in planning output, but runtime annotation-card metadata and committed provider response fixtures must remain mock-only.
+- Milestone 2I cache keys are derived from request metadata and text digests. They avoid raw text exposure but should still be treated as local cache identifiers, not public analytics.
+- Milestone 2I privacy envelopes are logging/cache summaries only; they do not implement real payload encryption, deletion, retention, or audit guarantees.
+- Milestone 2I cache write plans remain dry-run only. Do not add raw provider request/response persistence without a new privacy review.
 - The provider success fixture includes the schema-required `game.title` constant inside context-packet `game.title`; keep that exception narrow and do not allow real game title strings in free-text fixture fields.
 - Public annotation-card `provider` metadata omits future provider role lists to keep committed fixtures free of external-service markers.
 - Existing legacy `prompts/few-shot/synthetic-examples.md` appears mojibaked and was left untouched; the new pack has fresh UTF-8 synthetic examples.
