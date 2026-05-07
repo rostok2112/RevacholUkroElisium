@@ -74,6 +74,10 @@ def main() -> int:
             ],
         ),
         (
+            "provider registry smoke",
+            [sys.executable, "scripts/run_provider_registry.py", "--summary", "--quiet"],
+        ),
+        (
             "provider contract regression smoke",
             [
                 sys.executable,

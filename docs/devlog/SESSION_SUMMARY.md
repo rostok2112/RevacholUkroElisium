@@ -1,5 +1,40 @@
 # Session Summary
 
+Milestone 2G provider registry and runtime safety gates is implemented.
+
+Completed in the latest session:
+- Added `scripts/provider_registry.py`, a stdlib-only registry for provider ids:
+  - `mock`
+  - `openai_compatible`
+  - `deepl_glossary`
+  - `local_model`
+  - `ensemble_reviewer`
+- The only implemented/enabled/default provider is `mock`; all roadmap providers are disabled and unimplemented.
+- Added `scripts/run_provider_registry.py --summary` for local registry inspection without provider calls, secrets, network, or runtime adapters.
+- Routed `scripts/provider_pipeline.py` provider selection through the registry so unknown, disabled, external-disallowed, and unimplemented providers fail before any adapter can run.
+- Removed the redundant future-role list from internal mock provider metadata; public annotation-card metadata and provider contract fixtures remain mock-only.
+- Updated `scripts/run_provider_pipeline.py --provider` so registry ids can be passed and disabled roadmap providers fail through runtime safety gates rather than argparse-only choices.
+- Updated `config/revachol.example.toml` with explicit mock-only provider settings:
+  - `active_provider = "mock"`
+  - `allow_external_providers = false`
+  - `provider_cache_dir = "workspace/provider-cache"`
+  - disabled `[llm.providers.<id>]` roadmap placeholders without inline keys, fake secrets, base URLs, or required env vars.
+- Hardened `scripts/validate_config.py` to validate registry ids, active provider selectability, external-provider opt-in, provider cache path safety, and secret-looking inline values.
+- Added provider registry, provider pipeline, and config validation tests covering disabled/unimplemented providers, unknown providers, external opt-in, unsafe cache paths, inline secrets, and no fallback to real providers.
+- Added the provider registry smoke to `scripts/check_all.py`.
+- Updated `docs/api/companion-server-contract.md` to clarify that the HTTP provider endpoint remains mock-only and registry roadmap ids are not part of current runtime responses.
+- Did not change schemas, fixtures, companion server endpoints, companion client APIs, or add dependencies.
+- Validation completed after formatting the new registry test file:
+  - `python scripts/check_all.py` passed, including 132 unit tests, provider registry smoke, provider contract regression smoke, companion smokes, Ruff check, and Ruff format check.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 132 tests.
+  - `npm run check` passed.
+  - `python scripts/run_provider_contract_regression.py --quiet` passed.
+  - `python scripts/run_companion_server.py --smoke-test` passed.
+  - `python scripts/run_companion_client.py smoke-test` passed.
+  - `python scripts/run_prompt_pack.py --summary` passed.
+  - `python scripts/run_provider_pipeline.py --output workspace/synthetic-slice/provider-output.json --quiet` passed.
+
 Milestone 2F provider contract regression runner and local review handoff is implemented.
 
 Completed in the latest session:

@@ -259,6 +259,10 @@ The public `provider` metadata intentionally omits future provider role lists. F
 provider support remains opt-in work and should be documented through config/runtime policy when it is
 implemented, not leaked into committed public response fixtures.
 
+Milestone 2G adds a local provider registry for disabled roadmap providers, but this HTTP contract
+remains mock-only. Registry roadmap ids are not part of current runtime annotation responses or
+committed provider response fixtures.
+
 Provider annotation request errors:
 
 ```json

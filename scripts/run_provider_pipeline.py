@@ -7,10 +7,12 @@ import sys
 
 try:
     from scripts.provider_pipeline import ProviderPipelineError, run_provider_pipeline
+    from scripts.provider_registry import provider_ids
     from scripts.schema_validator import load_json
     from scripts.synthetic_slice import ROOT, build_context_packet
 except ModuleNotFoundError:  # pragma: no cover - used when run as a script path.
     from provider_pipeline import ProviderPipelineError, run_provider_pipeline
+    from provider_registry import provider_ids
     from schema_validator import load_json
     from synthetic_slice import ROOT, build_context_packet
 
@@ -41,8 +43,11 @@ def main() -> int:
     parser.add_argument(
         "--provider",
         default="mock",
-        choices=["mock"],
-        help="Provider to run. Only 'mock' is implemented.",
+        help=(
+            "Provider registry id to run. Available ids: "
+            f"{', '.join(provider_ids())}. Only 'mock' is implemented; disabled "
+            "roadmap providers fail before any external call."
+        ),
     )
     parser.add_argument(
         "--output",

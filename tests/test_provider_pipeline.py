@@ -203,6 +203,14 @@ class ProviderPipelineTests(unittest.TestCase):
             with self.subTest(marker=marker):
                 self.assertNotIn(marker, payload)
 
+    def test_future_provider_selection_fails_before_adapter_runs(self) -> None:
+        with self.assertRaisesRegex(ProviderPipelineError, "disabled"):
+            run_provider_pipeline(_context_packet(), provider_name="openai_compatible")
+
+    def test_unknown_provider_selection_fails_without_mock_fallback(self) -> None:
+        with self.assertRaisesRegex(ProviderPipelineError, "Unknown provider"):
+            build_provider_request(_context_packet(), provider_name="missing_provider")
+
     def test_output_path_allows_workspace_synthetic_slice(self) -> None:
         output = resolve_output_path(Path("workspace/synthetic-slice/provider-output-test.json"))
 
@@ -242,6 +250,24 @@ class ProviderPipelineTests(unittest.TestCase):
         self.assertEqual("ukrainian_annotation_v1", written["prompt_pack"]["pack_id"])
         self.assertIn("prompt_pack_guided", written["risk_flags"])
         output.unlink()
+
+    def test_cli_future_provider_fails_clearly(self) -> None:
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "scripts/run_provider_pipeline.py",
+                "--provider",
+                "openai_compatible",
+                "--quiet",
+            ],
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertNotEqual(0, completed.returncode)
+        self.assertIn("disabled", completed.stderr)
 
     def test_cli_rejects_unsafe_output_path(self) -> None:
         completed = subprocess.run(

@@ -5,6 +5,7 @@ from typing import Any
 
 try:
     from scripts.prompt_pack import PromptPack, load_prompt_pack
+    from scripts.provider_registry import ProviderRegistryError, resolve_provider_selection
     from scripts.schema_validator import SchemaValidationError, assert_valid, load_json
     from scripts.synthetic_slice import (
         ANNOTATION_CARD_SCHEMA,
@@ -16,6 +17,7 @@ try:
     )
 except ModuleNotFoundError:  # pragma: no cover - used when run as a script dependency.
     from prompt_pack import PromptPack, load_prompt_pack
+    from provider_registry import ProviderRegistryError, resolve_provider_selection
     from schema_validator import SchemaValidationError, assert_valid, load_json
     from synthetic_slice import (
         ANNOTATION_CARD_SCHEMA,
@@ -93,12 +95,9 @@ class ProviderMetadata:
     offline: bool
     deterministic: bool
     requires_api_key: bool
-    future_roles: tuple[str, ...]
 
     def to_dict(self) -> dict[str, Any]:
-        data = asdict(self)
-        data["future_roles"] = list(self.future_roles)
-        return data
+        return asdict(self)
 
     def to_public_dict(self) -> dict[str, Any]:
         return {
@@ -179,12 +178,6 @@ MOCK_PROVIDER_METADATA = ProviderMetadata(
     offline=True,
     deterministic=True,
     requires_api_key=False,
-    future_roles=(
-        "openai_compatible_api",
-        "deepl_glossary_helper",
-        "local_model",
-        "ensemble_reviewer",
-    ),
 )
 
 
@@ -193,12 +186,13 @@ def build_provider_request(
     provider_name: str = "mock",
     prompt_pack: PromptPack | None = None,
 ) -> ProviderRequest:
+    provider_definition = _resolve_provider_for_pipeline(provider_name)
     assert_valid(context_packet, load_json(CONTEXT_PACKET_SCHEMA))
     selected_pack = prompt_pack or load_prompt_pack()
     current_line = context_packet["current_line"]
     return ProviderRequest(
         request_id=f"provider-request.{context_packet['packet_id']}",
-        provider_name=provider_name,
+        provider_name=provider_definition.provider_id,
         context_packet_id=context_packet["packet_id"],
         line_id=current_line["line_id"],
         original_english=current_line["source_text"],
@@ -363,11 +357,16 @@ def run_provider_pipeline(
     provider_name: str = "mock",
     prompt_pack: PromptPack | None = None,
 ) -> dict[str, Any]:
-    if provider_name != "mock":
-        raise ProviderPipelineError("Only provider 'mock' is implemented.")
     request = build_provider_request(context_packet, provider_name, prompt_pack)
     response = MockAnnotationProvider().annotate(request)
     return normalize_provider_response(context_packet, response)
+
+
+def _resolve_provider_for_pipeline(provider_name: str) -> Any:
+    try:
+        return resolve_provider_selection(provider_name)
+    except ProviderRegistryError as exc:
+        raise ProviderPipelineError(str(exc)) from exc
 
 
 def _line_refs(lines: Any) -> tuple[dict[str, Any], ...]:

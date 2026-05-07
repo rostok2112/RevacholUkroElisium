@@ -24,32 +24,27 @@ local_model_fallback_enabled = false
 default_mode = "minimal_hint"
 
 [llm]
-# Paid providers are allowed only for explicitly configured runtime use.
-# Tests and CI must use deterministic mocks.
-paid_runtime_allowed = true
-default_provider = "mock"
+# Runtime remains mock-only by default. Future external providers must be
+# explicitly enabled in a private config and are still unimplemented in 2G.
+paid_runtime_allowed = false
+active_provider = "mock"
+allow_external_providers = false
+provider_cache_dir = "workspace/provider-cache"
 
 [llm.providers.mock]
 enabled = true
 
-[llm.providers.openai]
+[llm.providers.openai_compatible]
 enabled = false
-api_key_env = "OPENAI_API_KEY"
-model = ""
 
-[llm.providers.anthropic]
+[llm.providers.deepl_glossary]
 enabled = false
-api_key_env = "ANTHROPIC_API_KEY"
-model = ""
 
-[llm.providers.deepl]
+[llm.providers.local_model]
 enabled = false
-api_key_env = "DEEPL_API_KEY"
 
-[llm.providers.local_openai_compatible]
+[llm.providers.ensemble_reviewer]
 enabled = false
-base_url_env = "LOCAL_LLM_BASE_URL"
-model_env = "LOCAL_LLM_MODEL"
 
 [network_enrichment]
 # Future opt-in runtime feature for lawful enrichment sources only.

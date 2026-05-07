@@ -6,6 +6,19 @@ import sys
 import tomllib
 from typing import Any
 
+try:
+    from scripts.provider_registry import (
+        ProviderRegistryError,
+        get_provider_definition,
+        resolve_provider_selection,
+    )
+except ModuleNotFoundError:  # pragma: no cover - used when run as a script path.
+    from provider_registry import (
+        ProviderRegistryError,
+        get_provider_definition,
+        resolve_provider_selection,
+    )
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -107,24 +120,61 @@ def _validate_runtime_policy(
     network: dict[str, Any],
     errors: list[str],
 ) -> None:
-    providers = llm.get("providers", {})
-    if providers and not isinstance(providers, dict):
-        errors.append("llm.providers must be a table")
-        return
-
-    for provider_name, provider in providers.items():
-        if not isinstance(provider, dict):
-            errors.append(f"llm.providers.{provider_name} must be a table")
-            continue
-        if provider.get("enabled") and provider_name != "mock":
-            has_env_pointer = any(key.endswith("_env") and provider.get(key) for key in provider)
-            if not has_env_pointer:
-                errors.append(f"llm.providers.{provider_name} is enabled but has no *_env setting")
+    _validate_provider_policy(llm, errors)
 
     if network.get("enabled") and not network.get("lawful_opt_in_required"):
         errors.append("network_enrichment.enabled requires lawful_opt_in_required = true")
     if "cache_path" in network:
         _validate_private_path("network_enrichment.cache_path", network["cache_path"], errors)
+
+
+def _validate_provider_policy(llm: dict[str, Any], errors: list[str]) -> None:
+    providers = llm.get("providers", {})
+    if providers is None:
+        providers = {}
+    if not isinstance(providers, dict):
+        errors.append("llm.providers must be a table")
+        return
+
+    active_provider = llm.get("active_provider", llm.get("default_provider", "mock"))
+    if not isinstance(active_provider, str) or not active_provider.strip():
+        errors.append("llm.active_provider must be a non-empty string")
+        active_provider = "mock"
+
+    allow_external_providers = llm.get("allow_external_providers", False)
+    if not isinstance(allow_external_providers, bool):
+        errors.append("llm.allow_external_providers must be a boolean")
+        allow_external_providers = False
+
+    if "provider_cache_dir" in llm:
+        _validate_private_path("llm.provider_cache_dir", llm["provider_cache_dir"], errors)
+
+    enabled_overrides: dict[str, bool] = {}
+    for provider_name, provider in providers.items():
+        try:
+            get_provider_definition(str(provider_name))
+        except ProviderRegistryError as exc:
+            errors.append(f"llm.providers.{provider_name}: {exc}")
+
+        if not isinstance(provider, dict):
+            errors.append(f"llm.providers.{provider_name} must be a table")
+            continue
+        enabled = provider.get("enabled")
+        if enabled is None:
+            continue
+        if not isinstance(enabled, bool):
+            errors.append(f"llm.providers.{provider_name}.enabled must be a boolean")
+            continue
+        enabled_overrides[str(provider_name)] = enabled
+
+    try:
+        resolve_provider_selection(
+            active_provider,
+            enabled_overrides=enabled_overrides,
+            allow_external_providers=allow_external_providers,
+        )
+    except ProviderRegistryError as exc:
+        errors.append(f"llm.active_provider is not selectable: {exc}")
 
 
 def _validate_private_path(label: str, value: Any, errors: list[str]) -> None:

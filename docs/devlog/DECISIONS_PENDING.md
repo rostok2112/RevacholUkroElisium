@@ -20,5 +20,7 @@
 - Milestone 2C deferred companion server/client provider exposure to Milestone 2D after the provider/eval wiring passed one stable CLI/test cycle.
 - Milestone 2D kept stable error codes unchanged and maps invalid context packets to `invalid_request`; decide later whether a dedicated `invalid_context_packet` code is worth the contract churn.
 - Milestone 2E made `provider`, `provider_debug`, and `prompt_pack` explicit optional annotation-card schema fields.
-- Milestone 2E removed `future_roles` from public annotation-card/server response provider metadata; decide later how future provider capabilities should be documented without leaking external-service markers into synthetic fixtures.
+- Milestone 2E removed `future_roles` from public annotation-card/server response provider metadata; Milestone 2G moved future provider capability planning into the registry. Decide later which registry fields become stable user-facing config.
 - Milestone 2F added a fixture-backed provider contract regression runner; decide later how fixture update approval should work once real provider adapters are introduced.
+- When real provider adapters are introduced, decide the exact opt-in UX for `allow_external_providers`, cache roots, provider-specific credentials, and any paid API warning surfaces.
+- Decide whether `paid_runtime_allowed` should remain separate from `allow_external_providers` or be folded into a clearer provider safety policy before real integrations.
