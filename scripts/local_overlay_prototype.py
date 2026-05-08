@@ -36,8 +36,35 @@ NOTE_TITLES = {
     "translation_choice": "Translation Choice",
 }
 
+UKRAINIAN_NOTE_TITLES = {
+    "idiom": "Ідіома / образ",
+    "reference": "Референс",
+    "subtext": "Підтекст",
+    "skill_voice": "Голос персонажа",
+    "tone": "Тон",
+    "translation_choice": "Вибір перекладу",
+}
+
+PLAYER_NOTE_FALLBACKS_UK = {
+    "idiom": ("Образ працює як іронія: зовнішня відзнака підміняє справжнє виправлення проблеми."),
+    "reference": ("Можливий натяк на бюрократичну риторику; точне джерело не стверджується."),
+    "subtext": "Підтекст у тому, що офіційна мова прикриває очевидну несправність.",
+    "skill_voice": "Голос сухий і стриманий: абсурд подано як буденний звіт.",
+    "tone": "Тон сухий і стриманий; іронія тримається на буденному викладі абсурду.",
+    "translation_choice": (
+        "Переклад зберігає суху абсурдність замість прихованої культурної підміни."
+    ),
+}
+
 IDIOM_REFERENCE_KINDS = {"idiom", "reference", "subtext", "translation_choice"}
 TONE_VOICE_KINDS = {"skill_voice", "tone"}
+INTERNAL_RISK_FLAGS = {
+    "synthetic_fixture",
+    "mock_provider",
+    "deterministic_mock_provider",
+    "deterministic_mock_pipeline",
+    "prompt_pack_guided",
+}
 
 
 class LocalOverlayPrototypeError(ValueError):
@@ -59,7 +86,7 @@ def build_overlay_view_model(
     assert_valid(annotation_card, load_json(ANNOTATION_CARD_SCHEMA))
 
     current_line = context_packet["current_line"]
-    notes = _notes(annotation_card)
+    raw_notes = _notes(annotation_card)
     source = {
         "original_english": current_line["source_text"],
         "speaker": current_line.get("speaker"),
@@ -69,11 +96,18 @@ def build_overlay_view_model(
     }
     risk_flags = list(annotation_card.get("risk_flags", []))
     glossary_terms = list(annotation_card.get("glossary_terms", []))
+    confidence = annotation_card.get("confidence")
+    risk_summary_uk = _risk_summary_uk(risk_flags)
+    confidence_summary_uk = _confidence_summary_uk(confidence)
+    deep_notes_label_uk = _deep_notes_label_uk(bool(raw_notes))
 
     debug = {
         "packet_id": context_packet["packet_id"],
         "line_id": current_line["line_id"],
         "retrieval_strategy": context_packet["retrieval"]["strategy"],
+        "raw_risk_flags": risk_flags,
+        "raw_deep_notes": raw_notes,
+        "confidence_raw": confidence,
         "provider": annotation_card.get("provider", {}),
         "provider_debug": annotation_card.get("provider_debug", {}),
         "prompt_pack": annotation_card.get("prompt_pack", {}),
@@ -93,10 +127,12 @@ def build_overlay_view_model(
             "original_english": source["original_english"],
             "speaker": source["speaker"],
             "concise_meaning_uk": annotation_card.get("concise_meaning_uk"),
-            "confidence": annotation_card.get("confidence"),
-            "risk_flags": risk_flags,
-            "has_deep_notes": bool(notes),
-            "deep_note_count": len(notes),
+            "confidence": confidence,
+            "confidence_summary_uk": confidence_summary_uk,
+            "risk_summary_uk": risk_summary_uk,
+            "deep_notes_label_uk": deep_notes_label_uk,
+            "has_deep_notes": bool(raw_notes),
+            "deep_note_count": len(raw_notes),
         },
         "deep": {
             "mode": "deep",
@@ -104,15 +140,17 @@ def build_overlay_view_model(
             "speaker": source["speaker"],
             "literary_rendering_uk": annotation_card.get("literary_rendering_uk"),
             "explanation_uk": annotation_card.get("explanation_uk"),
-            "idiom_reference_subtext_notes": [
-                note for note in notes if note["kind"] in IDIOM_REFERENCE_KINDS
-            ],
-            "character_tone_notes": [note for note in notes if note["kind"] in TONE_VOICE_KINDS],
+            "idiom_reference_subtext_notes": _player_notes(raw_notes, IDIOM_REFERENCE_KINDS),
+            "character_tone_notes": _player_notes(raw_notes, TONE_VOICE_KINDS),
             "character_voice_note_uk": annotation_card.get("character_voice_note_uk"),
             "glossary_terms": glossary_terms,
-            "confidence": annotation_card.get("confidence"),
-            "risk_flags": risk_flags,
+            "confidence": confidence,
+            "confidence_summary_uk": confidence_summary_uk,
+            "risk_summary_uk": risk_summary_uk,
             "spoiler_budget": context_packet.get("spoiler_budget"),
+            "spoiler_budget_summary_uk": _spoiler_budget_summary_uk(
+                context_packet.get("spoiler_budget")
+            ),
         },
         "debug": debug,
     }
@@ -216,8 +254,8 @@ def render_overlay_html(view_model: dict[str, Any]) -> str:
             "</head>",
             "<body>",
             "  <main>",
-            f"    <h1>{_text('Local Overlay Prototype')}</h1>",
-            f'    <p class="label">{_text("Mode")}: {_text(mode)}</p>',
+            f"    <h1>{_text('Локальний прототип оверлею')}</h1>",
+            f'    <p class="label">{_text("Режим")}: {_text(_mode_label_uk(mode))}</p>',
             body,
             "  </main>",
             "</body>",
@@ -231,14 +269,14 @@ def _render_compact_mode(view_model: dict[str, Any]) -> str:
     return "\n".join(
         [
             '    <section class="overlay" id="compact-mode">',
-            f'      <p class="label">{_text("Original English")}</p>',
+            f'      <p class="label">{_text("Оригінал")}</p>',
             f'      <p class="source">{_text(compact.get("original_english"))}</p>',
-            f'      <p class="label">{_text("Ukrainian concise meaning")}</p>',
+            f'      <p class="label">{_text("Коротко українською")}</p>',
             f'      <p class="uk">{_text(compact.get("concise_meaning_uk"))}</p>',
             "      <section>",
-            f"        <p><strong>{_text('Confidence')}:</strong> {_text(compact.get('confidence'))}</p>",
-            f"        <p><strong>{_text('Risk flags')}:</strong> {_flags(compact.get('risk_flags'))}</p>",
-            f"        <p><strong>{_text('Deep notes available')}:</strong> {_text(compact.get('has_deep_notes'))}</p>",
+            f"        <p><strong>{_text('Впевненість')}:</strong> {_text(compact.get('confidence_summary_uk'))}</p>",
+            f"        <p><strong>{_text('Ризики / невпевненість')}:</strong> {_text(compact.get('risk_summary_uk'))}</p>",
+            f"        <p><strong>{_text(compact.get('deep_notes_label_uk'))}</strong></p>",
             "      </section>",
             "    </section>",
         ]
@@ -250,20 +288,23 @@ def _render_deep_mode(view_model: dict[str, Any]) -> str:
     return "\n".join(
         [
             '    <section class="overlay" id="deep-mode">',
-            f'      <p class="label">{_text("Original English")}</p>',
+            f"      <h2>{_text('Оригінал')}</h2>",
             f'      <p class="source">{_text(deep.get("original_english"))}</p>',
-            f"      <h2>{_text('Literary Ukrainian Rendering')}</h2>",
+            f"      <h2>{_text('Літературний український варіант')}</h2>",
             f'      <p class="uk">{_text(deep.get("literary_rendering_uk"))}</p>',
-            f"      <h2>{_text('Deep Explanation')}</h2>",
+            f"      <h2>{_text('Що тут відбувається')}</h2>",
             f"      <p>{_text(deep.get('explanation_uk'))}</p>",
-            f"      <h3>{_text('Idiom / Reference / Subtext Notes')}</h3>",
-            _note_list(deep.get("idiom_reference_subtext_notes")),
-            f"      <h3>{_text('Tone / Character Voice')}</h3>",
+            f"      <h3>{_text('Підтекст / іронія / референс')}</h3>",
+            _player_note_list(deep.get("idiom_reference_subtext_notes")),
+            f"      <h3>{_text('Тон / голос')}</h3>",
             f"      <p>{_text(deep.get('character_voice_note_uk'))}</p>",
-            _note_list(deep.get("character_tone_notes")),
-            f"      <p><strong>{_text('Glossary terms')}:</strong> {_flags(deep.get('glossary_terms'))}</p>",
-            f"      <p><strong>{_text('Spoiler budget')}:</strong> {_text(deep.get('spoiler_budget'))}</p>",
-            f"      <p><strong>{_text('Risk flags')}:</strong> {_flags(deep.get('risk_flags'))}</p>",
+            _player_note_list(deep.get("character_tone_notes")),
+            f"      <h3>{_text('Глосарій')}</h3>",
+            f"      <p>{_flags(deep.get('glossary_terms'))}</p>",
+            f"      <h3>{_text('Ризики / невпевненість')}</h3>",
+            f"      <p>{_text(deep.get('risk_summary_uk'))}</p>",
+            f"      <p>{_text(deep.get('confidence_summary_uk'))}</p>",
+            f"      <p>{_text(deep.get('spoiler_budget_summary_uk'))}</p>",
             "    </section>",
         ]
     )
@@ -284,6 +325,10 @@ def _render_debug_mode(view_model: dict[str, Any]) -> str:
             f"      <p><strong>{_text('Packet')}:</strong> {_text(debug.get('packet_id'))}</p>",
             f"      <p><strong>{_text('Line')}:</strong> {_text(debug.get('line_id'))}</p>",
             f"      <p><strong>{_text('Retrieval')}:</strong> {_text(debug.get('retrieval_strategy'))}</p>",
+            f"      <p><strong>{_text('Raw confidence')}:</strong> {_text(debug.get('confidence_raw'))}</p>",
+            f"      <p><strong>{_text('Raw risk flags')}:</strong> {_flags(debug.get('raw_risk_flags'))}</p>",
+            f"      <h3>{_text('Raw Deep Notes')}</h3>",
+            _raw_note_list(debug.get("raw_deep_notes")),
             f"      <h3>{_text('Provider')}</h3>",
             f"      <p><strong>{_text('Name')}:</strong> {_text(provider_debug.get('provider_name') or provider.get('provider_name'))}</p>",
             f"      <p><strong>{_text('Role')}:</strong> {_text(provider_debug.get('provider_role') or provider.get('provider_kind'))}</p>",
@@ -323,7 +368,45 @@ def _notes(annotation_card: dict[str, Any]) -> list[dict[str, str]]:
     return notes
 
 
-def _note_list(notes: Any) -> str:
+def _player_notes(raw_notes: list[dict[str, str]], allowed_kinds: set[str]) -> list[dict[str, str]]:
+    notes = []
+    for note in raw_notes:
+        kind = note["kind"]
+        if kind not in allowed_kinds:
+            continue
+        text = (
+            note["text"]
+            if _contains_ukrainian(note["text"])
+            else PLAYER_NOTE_FALLBACKS_UK.get(
+                kind, "Нотатку приховано в режимі гравця; деталі доступні в debug-режимі."
+            )
+        )
+        notes.append(
+            {
+                "kind": kind,
+                "title": UKRAINIAN_NOTE_TITLES.get(kind, "Нотатка"),
+                "text": text,
+            }
+        )
+    return notes
+
+
+def _player_note_list(notes: Any) -> str:
+    if not isinstance(notes, list) or not notes:
+        return "      <p></p>"
+    items = "\n".join(
+        [
+            "        <li>"
+            f"<strong>{_text(note.get('title'))}</strong>: {_text(note.get('text'))}"
+            "</li>"
+            for note in notes
+            if isinstance(note, dict)
+        ]
+    )
+    return "\n".join(["      <ul>", items, "      </ul>"])
+
+
+def _raw_note_list(notes: Any) -> str:
     if not isinstance(notes, list) or not notes:
         return "      <p></p>"
     items = "\n".join(
@@ -337,6 +420,53 @@ def _note_list(notes: Any) -> str:
         ]
     )
     return "\n".join(["      <ul>", items, "      </ul>"])
+
+
+def _mode_label_uk(mode: Any) -> str:
+    return {
+        "compact": "компактний",
+        "deep": "глибоке пояснення",
+        "debug": "debug",
+    }.get(str(mode), str(mode))
+
+
+def _confidence_summary_uk(confidence: Any) -> str:
+    if not isinstance(confidence, (int, float)) or isinstance(confidence, bool):
+        return "Впевненість не вказана."
+    if confidence >= 0.85:
+        label = "висока"
+    elif confidence >= 0.65:
+        label = "середня"
+    else:
+        label = "низька"
+    return f"Впевненість: {label}."
+
+
+def _risk_summary_uk(risk_flags: list[Any]) -> str:
+    visible_flags = [flag for flag in risk_flags if flag not in INTERNAL_RISK_FLAGS]
+    if "needs_human_review_before_real_use" in visible_flags:
+        return "Демонстраційний результат: перед реальним використанням потрібна людська перевірка."
+    if visible_flags:
+        return "Є позначки невпевненості; деталі доступні в debug-режимі."
+    if risk_flags:
+        return "Синтетичний демонстраційний результат; технічні позначки приховано."
+    return "Помітних ризиків не позначено."
+
+
+def _deep_notes_label_uk(has_deep_notes: bool) -> str:
+    return "Є глибше пояснення" if has_deep_notes else "Глибших нотаток немає"
+
+
+def _spoiler_budget_summary_uk(spoiler_budget: Any) -> str:
+    if spoiler_budget == "none":
+        return "Спойлерів немає."
+    if spoiler_budget:
+        return f"Бюджет спойлерів: {spoiler_budget}."
+    return "Бюджет спойлерів не вказано."
+
+
+def _contains_ukrainian(value: str) -> bool:
+    return any("А" <= character <= "я" or character in "ЄєІіЇїҐґ" for character in value)
 
 
 def _flags(values: Any) -> str:

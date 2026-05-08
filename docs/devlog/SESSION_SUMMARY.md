@@ -1,5 +1,31 @@
 # Session Summary
 
+Milestone 3B overlay UX polish and player/debug separation is implemented.
+
+Completed in the latest session:
+- Updated `scripts/local_overlay_prototype.py` so compact and deep modes render player-facing Ukrainian labels and summaries instead of raw internal flags or Python-looking booleans.
+- Compact mode now hides raw flags such as `synthetic_fixture`, `mock_provider`, and `prompt_pack_guided`, converts confidence into Ukrainian text, and renders deeper-note availability as `Є глибше пояснення`.
+- Deep mode now uses Ukrainian section headings:
+  - `Оригінал`
+  - `Літературний український варіант`
+  - `Що тут відбувається`
+  - `Підтекст / іронія / референс`
+  - `Тон / голос`
+  - `Глосарій`
+  - `Ризики / невпевненість`
+- English provider/policy notes are suppressed from compact/deep modes and exposed only in debug mode; deterministic Ukrainian fallback text is used for player-facing note groups when the mock provider note text is English/debug-like.
+- Debug mode now explicitly carries raw risk flags and raw deep notes while keeping provider metadata, prompt-pack metadata, and privacy/cache dry-run summary redacted.
+- Confirmed `context_packet.game.title` is not rendered in compact, deep, or debug HTML.
+- Updated `tests/test_local_overlay_prototype.py` to cover raw-flag hiding, Ukrainian player labels, Ukrainian deep grouping, English policy-note suppression, debug raw metadata, escaping, and game-title exclusion.
+- Updated `docs/overlay-prototype.md` with the player/debug separation policy.
+- Did not change schemas, companion server/client HTTP contracts, provider pipeline output, frontend stack, extraction, BepInEx, OCR, real provider calls, web/API/LLM calls, or production overlay behavior.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including the local overlay prototype smoke and 177 unit tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 177 tests.
+  - `npm run check` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+
 Milestone 3A local overlay prototype consuming the companion server is implemented.
 
 Completed in the latest session:

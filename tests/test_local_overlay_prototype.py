@@ -41,7 +41,7 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
         )
         self.assertEqual("mock", view_model["debug"]["provider_debug"]["provider_name"])
 
-    def test_compact_mode_contains_original_concise_confidence_and_risks(self) -> None:
+    def test_compact_mode_contains_original_concise_confidence_and_human_status(self) -> None:
         context_packet, annotation_card = _provider_context_and_annotation()
         view_model = build_overlay_view_model(context_packet, annotation_card, mode="compact")
 
@@ -50,11 +50,15 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
         self.assertIn("compact-mode", html)
         self.assertIn(context_packet["current_line"]["source_text"], html)
         self.assertIn(annotation_card["concise_meaning_uk"], html)
-        self.assertIn("Confidence", html)
-        self.assertIn("prompt_pack_guided", html)
-        self.assertIn("Deep notes available", html)
+        self.assertIn("Коротко українською", html)
+        self.assertIn("Впевненість", html)
+        self.assertIn("Ризики / невпевненість", html)
+        self.assertIn("Є глибше пояснення", html)
+        for raw_flag in ("synthetic_fixture", "mock_provider", "prompt_pack_guided"):
+            with self.subTest(raw_flag=raw_flag):
+                self.assertNotIn(raw_flag, html)
 
-    def test_deep_mode_contains_literary_rendering_annotations_and_glossary(self) -> None:
+    def test_deep_mode_contains_ukrainian_structure_annotations_and_glossary(self) -> None:
         _context_packet, annotation_card = _provider_context_and_annotation()
         view_model = build_overlay_view_model(
             *_provider_context_and_annotation(),
@@ -64,12 +68,26 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
         html = render_overlay_html(view_model)
 
         self.assertIn("deep-mode", html)
+        for heading in (
+            "Оригінал",
+            "Літературний український варіант",
+            "Що тут відбувається",
+            "Підтекст / іронія / референс",
+            "Тон / голос",
+            "Глосарій",
+            "Ризики / невпевненість",
+        ):
+            with self.subTest(heading=heading):
+                self.assertIn(heading, html)
         self.assertIn(annotation_card["literary_rendering_uk"], html)
         self.assertIn(annotation_card["explanation_uk"], html)
-        self.assertIn("Idiom / Reference / Subtext Notes", html)
-        self.assertIn("Tone / Character Voice", html)
+        self.assertIn("Образ працює як іронія", html)
         self.assertIn("committee", html)
         self.assertIn("infrastructure", html)
+        self.assertNotIn("Prompt-pack policy keeps", html)
+        for raw_flag in ("synthetic_fixture", "mock_provider", "prompt_pack_guided"):
+            with self.subTest(raw_flag=raw_flag):
+                self.assertNotIn(raw_flag, html)
 
     def test_debug_mode_contains_safe_metadata_without_prompt_or_private_paths(self) -> None:
         context_packet, annotation_card = _provider_context_and_annotation()
@@ -80,6 +98,12 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
         self.assertIn("debug-mode", html)
         self.assertIn("mock", html)
         self.assertIn("ukrainian_annotation_v1", html)
+        self.assertIn("Raw risk flags", html)
+        self.assertIn("synthetic_fixture", html)
+        self.assertIn("mock_provider", html)
+        self.assertIn("prompt_pack_guided", html)
+        self.assertIn("Raw Deep Notes", html)
+        self.assertIn("Prompt-pack policy keeps", html)
         self.assertIn("provider-cache-v1.", html)
         self.assertIn("workspace/provider-cache", html)
         self.assertIn("Writes raw payload", html)
@@ -90,13 +114,14 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
         self.assertNotIn("D:\\", html)
         self.assertNotIn("api_key", html.lower())
 
-    def test_debug_mode_does_not_render_schema_required_game_title(self) -> None:
+    def test_modes_do_not_render_schema_required_game_title(self) -> None:
         context_packet, annotation_card = _provider_context_and_annotation()
-        view_model = build_overlay_view_model(context_packet, annotation_card, mode="debug")
 
-        html = render_overlay_html(view_model)
-
-        self.assertNotIn(context_packet["game"]["title"], html)
+        for mode in ("compact", "deep", "debug"):
+            with self.subTest(mode=mode):
+                view_model = build_overlay_view_model(context_packet, annotation_card, mode=mode)
+                html = render_overlay_html(view_model)
+                self.assertNotIn(context_packet["game"]["title"], html)
 
     def test_renderer_escapes_unsafe_text(self) -> None:
         context_packet, annotation_card = _provider_context_and_annotation()
@@ -201,7 +226,7 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
 
         self.assertEqual(0, completed.returncode, completed.stderr)
         self.assertIn("Local Overlay Prototype", completed.stdout)
-        self.assertIn("Ukrainian concise meaning", completed.stdout)
+        self.assertIn("Коротко українською", completed.stdout)
 
     def test_cli_writes_html_and_json_only_under_workspace(self) -> None:
         html_output = DEFAULT_OUTPUT_ROOT / "overlay-test.html"

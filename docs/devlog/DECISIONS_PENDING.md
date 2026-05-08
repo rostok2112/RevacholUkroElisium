@@ -30,3 +30,4 @@
 - Decide cache retention/deletion/audit rules before enabling real provider persistence.
 - Milestone 3A chose a stdlib static HTML overlay prototype first; decide later whether the real overlay shell should be native, webview, game-adjacent, or another UI stack.
 - Decide which Milestone 3A overlay view-model fields should become a stable public overlay contract before real overlay/BepInEx clients consume them.
+- Decide whether Milestone 3B Ukrainian fallback note text should remain overlay-owned or move into the provider/prompt-pack contract once real providers exist.

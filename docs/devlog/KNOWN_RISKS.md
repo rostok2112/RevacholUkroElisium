@@ -1,5 +1,8 @@
 # Known Risks
 
+- Milestone 3B improves player/debug separation, but the overlay prototype is still static HTML and not representative of real in-game placement, timing, accessibility, focus, or hotkey behavior.
+- Milestone 3B uses deterministic Ukrainian fallback text when mock provider notes are English/debug-like. Real provider output will need stricter language-contract validation before player-facing use.
+- Compact/deep modes now hide raw internal flags; future debugging work must avoid reintroducing those flags into player-facing UI.
 - The Milestone 3A overlay prototype is static HTML for local review only. It is not an always-on-top window, production overlay, game integration, or accessibility-reviewed player UI.
 - Milestone 3A debug mode intentionally shows only provider/prompt-pack metadata and a redacted privacy/cache dry-run summary. It must not grow into raw prompt, full provider request, secret, private path, or raw cache payload logging.
 - The Milestone 3A CLI depends on a running localhost companion server for normal latest-state rendering unless `--self-test` or `--post-synthetic-event` is used.
