@@ -85,6 +85,35 @@ Generated HTML remains a local review artifact and is not committed. The fixture
 that the committed JSON view models do not contain generated HTML, raw prompt text, secrets, private
 absolute paths, future provider markers, or `context_packet.game.title`.
 
+## HTML Review Workflow
+
+Milestone 3D adds a fixture-backed HTML review workflow:
+
+```text
+python scripts/render_overlay_review.py --quiet
+```
+
+This renders the committed JSON view-model fixtures into local review files under:
+
+```text
+workspace/synthetic-slice/overlay-prototype/review/
+```
+
+Default output files:
+
+- `compact.html`
+- `deep.html`
+- `debug.html`
+- `index.html`
+
+The review renderer is intentionally fixture-based. It does not start the companion server, call the
+mock provider pipeline, regenerate fixtures, contact a network service, or read local game data. Its
+purpose is human inspection of the current committed overlay UX contract.
+
+The review HTML is generated output and must stay uncommitted. The compact and deep pages are
+player-facing snapshots and must hide raw internal flags. The debug page is developer-facing and may
+show raw provider metadata only in redacted form.
+
 ## Current Limits
 
 - Synthetic-only public data.

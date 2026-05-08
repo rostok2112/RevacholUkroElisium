@@ -34,3 +34,5 @@
 - Milestone 3C uses committed JSON fixtures, not a JSON Schema, as the overlay view-model contract. Decide when the overlay view model needs a formal schema.
 - Milestone 3C made overlay view models mode-specific. Decide whether a future overlay client also needs an aggregate all-modes payload.
 - Decide the review/approval process for intentional overlay fixture rewrites once visual review and real overlay shell work begin.
+- Milestone 3D keeps generated HTML review artifacts out of git. Decide later whether any browser screenshot baselines are worth adding once a real overlay shell exists.
+- Decide whether the Milestone 3D review index should stay static HTML or become part of a richer local review dashboard after schema hardening.

@@ -111,6 +111,14 @@ def main() -> int:
             ],
         ),
         (
+            "overlay review HTML render smoke",
+            [
+                sys.executable,
+                "scripts/render_overlay_review.py",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

@@ -1,5 +1,8 @@
 # Known Risks
 
+- Milestone 3D HTML review files are generated local artifacts for human inspection only. They are not visual golden snapshots, browser-compatibility tests, or production overlay assets.
+- Milestone 3D renders from committed JSON fixtures, so stale fixtures will produce stale review HTML until `scripts/check_overlay_viewmodel_fixtures.py` is run and fixture changes are reviewed.
+- The Milestone 3D review index is static and deliberately boring; it does not represent final navigation, hotkeys, focus management, or in-game placement.
 - Milestone 3C view-model fixtures lock overlay structure and player/debug separation, but they do not prove real overlay placement, timing, readability, accessibility, or in-game interaction quality.
 - Milestone 3C makes `build_overlay_view_model(..., mode=...)` mode-specific. Any future caller that expects compact, deep, and debug sections in one payload must be updated deliberately.
 - Overlay fixture updates are now contract changes. Use `scripts/check_overlay_viewmodel_fixtures.py --write` only when the JSON diff is intended and reviewed.

@@ -1,5 +1,31 @@
 # Session Summary
 
+Milestone 3D overlay prototype HTML snapshot review workflow is implemented.
+
+Completed in the latest session:
+- Added `scripts/render_overlay_review.py`, a stdlib-only fixture-backed renderer for local overlay review HTML.
+- The renderer loads only the committed overlay view-model fixtures and renders them with the existing `render_overlay_html()` helper.
+- Default generated outputs are written under ignored `workspace/synthetic-slice/overlay-prototype/review/`:
+  - `compact.html`
+  - `deep.html`
+  - `debug.html`
+  - `index.html`
+- The renderer supports `--output-root`, `--mode all|compact|deep|debug`, and `--quiet`.
+- Unsafe output roots outside `workspace/synthetic-slice/overlay-prototype/review/` are rejected.
+- Added HTML safety validation so compact/deep review pages hide raw internal flags and debug review pages remain redacted while still exposing developer metadata.
+- Added `tests/test_overlay_review_renderer.py` covering fixture loading, HTML generation, index generation, output path safety, player/debug separation, escaping, game-title exclusion, and no generated HTML under `tests/fixtures`.
+- Added `python scripts/render_overlay_review.py --quiet` to `scripts/check_all.py`.
+- Updated `docs/overlay-prototype.md` with the manual review command and generated artifact policy.
+- Did not change schemas, companion HTTP contracts, provider execution behavior, frontend stack, extraction, BepInEx, OCR, real provider calls, web/API/LLM calls, or production overlay behavior.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including the new overlay review HTML render smoke and 194 unit tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 194 tests.
+  - `npm run check` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+  - `python scripts/check_overlay_viewmodel_fixtures.py --quiet` passed.
+  - `python scripts/render_overlay_review.py --quiet` passed.
+
 Milestone 3C overlay view-model fixture regression pack is implemented.
 
 Completed in the latest session:
