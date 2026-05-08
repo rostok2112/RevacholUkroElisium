@@ -10,11 +10,21 @@ from typing import Any
 try:
     from scripts import check_overlay_viewmodel_fixtures as fixture_check
     from scripts.local_overlay_prototype import LocalOverlayPrototypeError, render_overlay_html
+    from scripts.overlay_viewmodel_validator import (
+        COMMON_FORBIDDEN_MARKERS,
+        OverlayViewModelValidationError,
+        assert_valid_overlay_view_model,
+    )
     from scripts.schema_validator import load_json
     from scripts.synthetic_slice import ROOT
 except ImportError:  # pragma: no cover - used when run as a script path.
     import check_overlay_viewmodel_fixtures as fixture_check
     from local_overlay_prototype import LocalOverlayPrototypeError, render_overlay_html
+    from overlay_viewmodel_validator import (
+        COMMON_FORBIDDEN_MARKERS,
+        OverlayViewModelValidationError,
+        assert_valid_overlay_view_model,
+    )
     from schema_validator import load_json
     from synthetic_slice import ROOT
 
@@ -37,9 +47,7 @@ PLAYER_MODE_FORBIDDEN_MARKERS = (
 )
 
 REVIEW_HTML_FORBIDDEN_MARKERS = tuple(
-    marker
-    for marker in fixture_check.FORBIDDEN_ALL_FIXTURE_MARKERS
-    if marker not in {"<!doctype html>", "<html"}
+    marker for marker in COMMON_FORBIDDEN_MARKERS if marker not in {"<!doctype html>", "<html"}
 )
 
 
@@ -123,7 +131,10 @@ def load_view_model_fixture(mode: str) -> dict[str, Any]:
         raise OverlayReviewError(f"Unsupported overlay review mode: {mode}")
     fixture_path = fixture_check.FIXTURE_PATHS[mode]
     payload = load_json(fixture_path)
-    fixture_check.validate_view_model_fixture(mode, payload)
+    try:
+        assert_valid_overlay_view_model(payload, expected_mode=mode)
+    except OverlayViewModelValidationError as exc:
+        raise OverlayReviewError(f"{mode} fixture contract validation failed: {exc}") from exc
     return payload
 
 

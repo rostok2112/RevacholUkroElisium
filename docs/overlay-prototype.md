@@ -51,7 +51,9 @@ be committed.
 
 ## View-Model Fixtures
 
-Milestone 3C adds committed JSON view-model fixtures as the current overlay UX contract:
+Milestone 3C adds committed JSON view-model fixtures. Milestone 3E hardens those fixtures with a
+stdlib-only Python validator in `scripts/overlay_viewmodel_validator.py`. Together, the fixtures and
+validator are the current overlay view-model contract:
 
 ```text
 tests/fixtures/overlay_prototype.compact.viewmodel.synthetic.json
@@ -64,6 +66,16 @@ The fixtures are mode-specific:
 - Compact fixtures contain only `schema_version`, `mode`, `source`, and `compact`.
 - Deep fixtures contain only `schema_version`, `mode`, `source`, and `deep`.
 - Debug fixtures contain only `schema_version`, `mode`, `source`, and `debug`.
+
+Common stable fields:
+
+- `schema_version`
+- `mode`
+- `source.original_english`
+- `source.speaker`
+- `source.scene_id`
+- `source.conversation_id`
+- `source.line_id`
 
 This keeps player-facing modes free of raw internal flags and provider internals. Debug mode is the
 only committed view model that carries raw flags, provider metadata, prompt-pack metadata, and the
@@ -84,6 +96,9 @@ python scripts/check_overlay_viewmodel_fixtures.py --write
 Generated HTML remains a local review artifact and is not committed. The fixture checker validates
 that the committed JSON view models do not contain generated HTML, raw prompt text, secrets, private
 absolute paths, future provider markers, or `context_packet.game.title`.
+
+Future overlay clients should consume the JSON view models. They should not parse generated review
+HTML, which is only a local human-inspection artifact.
 
 ## HTML Review Workflow
 

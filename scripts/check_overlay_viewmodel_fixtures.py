@@ -9,11 +9,19 @@ from typing import Any
 
 try:
     from scripts.local_overlay_prototype import build_overlay_view_model
+    from scripts.overlay_viewmodel_validator import (
+        OverlayViewModelValidationError,
+        assert_valid_overlay_view_model,
+    )
     from scripts.provider_pipeline import run_provider_pipeline
     from scripts.schema_validator import load_json
     from scripts.synthetic_slice import ROOT, build_context_packet
-except ModuleNotFoundError:  # pragma: no cover - used when run as a script path.
+except ImportError:  # pragma: no cover - used when run as a script path.
     from local_overlay_prototype import build_overlay_view_model
+    from overlay_viewmodel_validator import (
+        OverlayViewModelValidationError,
+        assert_valid_overlay_view_model,
+    )
     from provider_pipeline import run_provider_pipeline
     from schema_validator import load_json
     from synthetic_slice import ROOT, build_context_packet
@@ -165,69 +173,14 @@ def build_current_view_models() -> dict[str, dict[str, Any]]:
 
 
 def validate_view_model_fixture(mode: str, view_model: dict[str, Any]) -> None:
-    if mode not in MODES:
-        raise OverlayFixtureError(f"Unknown overlay mode: {mode}")
-    if not isinstance(view_model, dict):
-        raise OverlayFixtureError("View model must be a JSON object.")
-    expected_keys = {"schema_version", "mode", "source", mode}
-    actual_keys = set(view_model)
-    if actual_keys != expected_keys:
-        raise OverlayFixtureError(
-            f"{mode} fixture keys must be {sorted(expected_keys)}, got {sorted(actual_keys)}"
-        )
-    if view_model.get("schema_version") != "local-overlay-prototype.v1":
-        raise OverlayFixtureError("Unexpected overlay schema_version.")
-    if view_model.get("mode") != mode:
-        raise OverlayFixtureError(f"Fixture mode must be {mode!r}.")
-    source = view_model.get("source")
-    if not isinstance(source, dict) or "original_english" not in source:
-        raise OverlayFixtureError("Fixture source must include original_english.")
-
-    rendered = canonical_json(view_model)
-    _assert_markers_absent(rendered, FORBIDDEN_ALL_FIXTURE_MARKERS, f"{mode} fixture")
-    if mode in {"compact", "deep"}:
-        _assert_markers_absent(rendered, RAW_INTERNAL_FLAGS, f"{mode} player fixture")
-        if "Prompt-pack policy keeps" in rendered:
-            raise OverlayFixtureError(f"{mode} fixture exposes English provider policy notes.")
-    else:
-        for flag in ("synthetic_fixture", "mock_provider", "prompt_pack_guided"):
-            if flag not in rendered:
-                raise OverlayFixtureError(f"debug fixture is missing raw flag: {flag}")
-        for required in ("provider", "provider_debug", "prompt_pack", "privacy"):
-            if required not in view_model["debug"]:
-                raise OverlayFixtureError(f"debug fixture is missing {required}.")
-
-    if mode == "compact":
-        compact = view_model["compact"]
-        for required in (
-            "labels_uk",
-            "confidence_summary_uk",
-            "risk_summary_uk",
-            "deep_notes_label_uk",
-        ):
-            if required not in compact:
-                raise OverlayFixtureError(f"compact fixture is missing {required}.")
-    if mode == "deep":
-        deep = view_model["deep"]
-        for required in (
-            "section_order_uk",
-            "idiom_reference_subtext_notes",
-            "character_tone_notes",
-            "spoiler_budget_summary_uk",
-        ):
-            if required not in deep:
-                raise OverlayFixtureError(f"deep fixture is missing {required}.")
+    try:
+        assert_valid_overlay_view_model(view_model, expected_mode=mode)
+    except OverlayViewModelValidationError as exc:
+        raise OverlayFixtureError(f"contract validation failed: {exc}") from exc
 
 
 def canonical_json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True)
-
-
-def _assert_markers_absent(text: str, markers: tuple[str, ...], label: str) -> None:
-    lowered = text.lower()
-    for marker in markers:
-        if marker.lower() in lowered:
-            raise OverlayFixtureError(f"{label} contains forbidden marker: {marker}")
 
 
 def _display_path(path: Path) -> str:

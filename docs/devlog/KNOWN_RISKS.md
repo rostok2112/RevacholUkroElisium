@@ -1,5 +1,8 @@
 # Known Risks
 
+- Milestone 3E hardens the overlay contract structurally, but it still does not prove production UI quality, accessibility, timing, or in-game placement.
+- The Milestone 3E Python validator is intentionally stricter than the old fixture checker. Any deliberate view-model contract change must update validator rules, fixtures, tests, and docs together.
+- The Milestone 3E contract is Python-enforced, not a portable JSON Schema yet. Future non-Python overlay clients may need generated schema docs or a formal schema once the shape stabilizes further.
 - Milestone 3D HTML review files are generated local artifacts for human inspection only. They are not visual golden snapshots, browser-compatibility tests, or production overlay assets.
 - Milestone 3D renders from committed JSON fixtures, so stale fixtures will produce stale review HTML until `scripts/check_overlay_viewmodel_fixtures.py` is run and fixture changes are reviewed.
 - The Milestone 3D review index is static and deliberately boring; it does not represent final navigation, hotkeys, focus management, or in-game placement.

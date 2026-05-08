@@ -1,5 +1,28 @@
 # Session Summary
 
+Milestone 3E overlay view-model schema and contract hardening is implemented.
+
+Completed in the latest session:
+- Added `scripts/overlay_viewmodel_validator.py`, a stdlib-only contract validator for compact, deep, and debug overlay view models.
+- The validator exposes `collect_overlay_viewmodel_errors(...)` and `assert_valid_overlay_view_model(...)` plus `OverlayViewModelValidationError`.
+- Common view-model fields are now validated for `schema_version`, `mode`, `source.original_english`, `source.speaker`, `source.scene_id`, `source.conversation_id`, and optional `source.line_id`.
+- Compact, deep, and debug mode payloads now have explicit required field/type checks based on the committed fixture contract.
+- Player-facing compact/deep validation rejects raw internal flags, provider debug fields, raw prompt/debug payload markers, generated HTML, future provider markers, secrets, private absolute paths, English provider policy notes, and `context_packet.game.title`.
+- Debug validation allows raw flags and provider evidence but rejects secrets, raw full prompt markers, private paths, future provider markers, generated HTML, and `context_packet.game.title`.
+- Updated `scripts/check_overlay_viewmodel_fixtures.py` so freshly generated view models and committed fixtures both pass through the new contract validator before drift comparison.
+- Updated `scripts/render_overlay_review.py` so review HTML refuses invalid fixtures before rendering.
+- Added `tests/test_overlay_viewmodel_validator.py` covering valid fixtures, missing required fields, wrong mode, raw player flags, `provider_debug` in deep mode, debug secret/private paths, game-title leakage, generated HTML markers, and fixture-checker error surfacing.
+- Updated `docs/overlay-prototype.md` to document the Python validator plus committed JSON fixtures as the current overlay view-model contract.
+- Did not add JSON Schema files or dependencies, change schemas, change companion HTTP contracts, call providers, add frontend framework work, or touch real game content.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including 204 unit tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 204 tests.
+  - `npm run check` passed.
+  - `python scripts/check_overlay_viewmodel_fixtures.py --quiet` passed.
+  - `python scripts/render_overlay_review.py --quiet` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+
 Milestone 3D overlay prototype HTML snapshot review workflow is implemented.
 
 Completed in the latest session:

@@ -36,3 +36,5 @@
 - Decide the review/approval process for intentional overlay fixture rewrites once visual review and real overlay shell work begin.
 - Milestone 3D keeps generated HTML review artifacts out of git. Decide later whether any browser screenshot baselines are worth adding once a real overlay shell exists.
 - Decide whether the Milestone 3D review index should stay static HTML or become part of a richer local review dashboard after schema hardening.
+- Milestone 3E chose a stdlib Python validator instead of JSON Schema files for mode-specific safety checks. Decide later whether to generate a portable schema once the overlay view model stabilizes.
+- Decide whether future non-Python overlay clients consume a documented contract page, generated schema, or a small shared package for view-model validation.
