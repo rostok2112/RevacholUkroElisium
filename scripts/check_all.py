@@ -94,6 +94,15 @@ def main() -> int:
             ],
         ),
         (
+            "local overlay prototype smoke",
+            [
+                sys.executable,
+                "scripts/run_local_overlay_prototype.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

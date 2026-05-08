@@ -28,3 +28,5 @@
 - Decide the long-term redaction policy for provider request payloads, cache keys, and debug logs before storing real prompt/model traces.
 - Decide whether future provider cache entries should store raw payloads, encrypted payloads, structured redacted payloads, or hashes-only records.
 - Decide cache retention/deletion/audit rules before enabling real provider persistence.
+- Milestone 3A chose a stdlib static HTML overlay prototype first; decide later whether the real overlay shell should be native, webview, game-adjacent, or another UI stack.
+- Decide which Milestone 3A overlay view-model fields should become a stable public overlay contract before real overlay/BepInEx clients consume them.

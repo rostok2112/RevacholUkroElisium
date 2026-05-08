@@ -1,13 +1,13 @@
 # Next Actions
 
-After Milestone 2I:
+After Milestone 3A:
 
-1. Keep provider runtime behavior mock-only until explicit real-provider adapters are implemented.
-2. Run `python scripts/run_provider_preflight.py --quiet`, `python scripts/run_provider_privacy_check.py --quiet`, and `python scripts/run_provider_contract_regression.py --quiet` before changing provider execution, logging, cache, or HTTP response shapes.
-3. Keep generated provider privacy artifacts under `workspace/synthetic-slice/provider-privacy/`.
-4. Do not persist raw provider request/response payloads yet; cache write plans remain dry-run only.
-5. Treat cache keys as local identifiers derived from request structure, not public analytics.
+1. Keep the overlay prototype local/static and synthetic-only until a real overlay shell is planned.
+2. Use `python scripts/run_local_overlay_prototype.py --self-test --quiet` before changing overlay view-model or rendering behavior.
+3. Keep generated overlay artifacts under `workspace/synthetic-slice/overlay-prototype/`.
+4. Do not render raw prompt pack text, full provider requests, secrets, private absolute paths, or raw provider cache payloads in debug mode.
+5. Do not change the companion HTTP provider contract for overlay work without updating the contract docs, client tests, and provider regression runner.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 2I. Read AGENTS.md, docs/devlog/*.md, docs/api/companion-server-contract.md, docs/provider-runtime-safety.md, docs/provider-privacy-cache-policy.md, scripts/companion_server.py, scripts/companion_client.py, scripts/synthetic_review_renderer.py, scripts/provider_pipeline.py, scripts/provider_privacy.py, and tests/test_companion_client.py. Implement Milestone 3A: local overlay prototype consuming companion server. Build a minimal local/static or CLI-driven overlay prototype that consumes existing companion server/client synthetic endpoints and renders original English, Ukrainian concise/literary fields, annotations, risk/confidence, and provider/prompt-pack debug metadata. Keep it synthetic-only, offline, localhost-only, no frontend framework unless already present, no real game integration, no extraction, no web/API/LLM calls, no companion HTTP contract breaking changes, and run python scripts/check_all.py plus provider preflight, provider privacy check, and provider contract regression.`
+`Continue in revachol-ukro-elisium after Milestone 3A. Read AGENTS.md, docs/devlog/*.md, docs/overlay-prototype.md, docs/08-overlay-ux.md, docs/api/companion-server-contract.md, scripts/local_overlay_prototype.py, scripts/run_local_overlay_prototype.py, scripts/companion_client.py, scripts/companion_server.py, and tests/test_local_overlay_prototype.py. Implement Milestone 3B: local overlay prototype mode/state contract hardening. Add fixture-backed overlay view-model examples for compact, deep, and debug modes; add regression tests that lock HTML/JSON output shape without committing generated workspace artifacts; keep all data synthetic, localhost-only, stdlib-only, no frontend framework, no real game integration, no extraction, no web/API/LLM calls, no provider execution, no raw prompt/cache logging, and run python scripts/check_all.py plus provider preflight, privacy check, contract regression, and overlay self-test.`

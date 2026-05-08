@@ -1,5 +1,29 @@
 # Session Summary
 
+Milestone 3A local overlay prototype consuming the companion server is implemented.
+
+Completed in the latest session:
+- Added `scripts/local_overlay_prototype.py`, a stdlib-only overlay view-model and static HTML renderer for provider-backed synthetic annotations.
+- The view model exposes compact, deep, and debug sections with original English, Ukrainian concise/literary fields, explanation, notes, glossary, confidence, risk flags, provider metadata, prompt-pack metadata, and a safe provider privacy/cache dry-run summary.
+- Added `scripts/run_local_overlay_prototype.py` with `--server-url`, `--mode compact|deep|debug`, `--post-synthetic-event`, `--event`, `--output`, `--json-output`, `--quiet`, and `--self-test`.
+- The CLI consumes the existing companion client and `POST /synthetic/provider-annotate`; it does not change the companion HTTP contract.
+- `--self-test` starts an in-process `127.0.0.1:0` companion server, posts the synthetic fixture through the provider endpoint, renders an overlay prototype, and shuts down cleanly.
+- Generated overlay HTML/JSON is allowed only under ignored `workspace/synthetic-slice/overlay-prototype/`; unsafe output paths are rejected.
+- Added `docs/overlay-prototype.md` documenting the local/static/non-production overlay posture.
+- Added `tests/test_local_overlay_prototype.py` covering view-model shape, compact/deep/debug rendering, escaping, safe debug metadata, workspace-only outputs, and the CLI self-test.
+- Added `python scripts/run_local_overlay_prototype.py --self-test --quiet` to `scripts/check_all.py`.
+- Did not add frontend frameworks, production overlay behavior, game integration, BepInEx, OCR, extraction, web/API/LLM/provider calls, raw provider cache writes, or companion HTTP contract changes.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including the local overlay prototype smoke and 177 unit tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 177 tests.
+  - `npm run check` passed.
+  - `python scripts/run_provider_contract_regression.py --quiet` passed.
+  - `python scripts/run_provider_preflight.py --quiet` passed.
+  - `python scripts/run_provider_privacy_check.py --quiet` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+  - `python scripts/run_provider_pipeline.py --output workspace/synthetic-slice/provider-output.json --quiet` passed.
+
 Milestone 2I provider request privacy envelope and cache write dry-run is implemented.
 
 Completed in the latest session:
