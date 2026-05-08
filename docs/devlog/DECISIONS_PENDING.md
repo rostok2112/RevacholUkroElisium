@@ -31,3 +31,6 @@
 - Milestone 3A chose a stdlib static HTML overlay prototype first; decide later whether the real overlay shell should be native, webview, game-adjacent, or another UI stack.
 - Decide which Milestone 3A overlay view-model fields should become a stable public overlay contract before real overlay/BepInEx clients consume them.
 - Decide whether Milestone 3B Ukrainian fallback note text should remain overlay-owned or move into the provider/prompt-pack contract once real providers exist.
+- Milestone 3C uses committed JSON fixtures, not a JSON Schema, as the overlay view-model contract. Decide when the overlay view model needs a formal schema.
+- Milestone 3C made overlay view models mode-specific. Decide whether a future overlay client also needs an aggregate all-modes payload.
+- Decide the review/approval process for intentional overlay fixture rewrites once visual review and real overlay shell work begin.

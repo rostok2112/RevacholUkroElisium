@@ -1,0 +1,67 @@
+{
+  "deep": {
+    "character_tone_notes": [
+      {
+        "kind": "skill_voice",
+        "text": "Голос сухий і канцелярський, ніби свідок звітує про абсурд без підвищення тону.",
+        "title": "Голос персонажа"
+      },
+      {
+        "kind": "tone",
+        "text": "Тон сухий і стриманий; іронія тримається на буденному викладі абсурду.",
+        "title": "Тон"
+      }
+    ],
+    "character_voice_note_uk": "Голос сухий і канцелярський, ніби свідок звітує про абсурд без підвищення тону.",
+    "confidence": 0.77,
+    "confidence_summary_uk": "Впевненість: середня.",
+    "explanation_uk": "Це синтетична бюрократична іронія: проблему не лагодять, а перейменовують на досягнення.",
+    "glossary_terms": [
+      "committee",
+      "infrastructure",
+      "pipe"
+    ],
+    "idiom_reference_subtext_notes": [
+      {
+        "kind": "idiom",
+        "text": "Образ працює як іронія: зовнішня відзнака підміняє справжнє виправлення проблеми.",
+        "title": "Ідіома / образ"
+      },
+      {
+        "kind": "reference",
+        "text": "Можливий натяк на бюрократичну риторику; точне джерело не стверджується.",
+        "title": "Референс"
+      },
+      {
+        "kind": "translation_choice",
+        "text": "Переклад зберігає суху абсурдність замість прихованої культурної підміни.",
+        "title": "Вибір перекладу"
+      }
+    ],
+    "literary_rendering_uk": "Комітет причепив медаль до труби, що протікала, і назвав це інфраструктурою.",
+    "mode": "deep",
+    "original_english": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+    "risk_summary_uk": "Демонстраційний результат: перед реальним використанням потрібна людська перевірка.",
+    "section_order_uk": [
+      "Оригінал",
+      "Літературний український варіант",
+      "Що тут відбувається",
+      "Підтекст / іронія / референс",
+      "Тон / голос",
+      "Глосарій",
+      "Ризики / невпевненість"
+    ],
+    "speaker": "Synthetic Clerk",
+    "spoiler_budget": "none",
+    "spoiler_budget_summary_uk": "Спойлерів немає."
+  },
+  "mode": "deep",
+  "schema_version": "local-overlay-prototype.v1",
+  "source": {
+    "conversation_id": "synthetic.conv.infrastructure",
+    "line_id": "synthetic.m1a.001",
+    "original_english": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+    "scene_id": "synthetic.scene.harbor-office",
+    "speaker": "Synthetic Clerk"
+  }
+}

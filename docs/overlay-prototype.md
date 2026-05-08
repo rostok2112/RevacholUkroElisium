@@ -49,6 +49,42 @@ workspace/synthetic-slice/overlay-prototype/
 Unsafe output paths are rejected. Generated overlay artifacts are local review outputs and should not
 be committed.
 
+## View-Model Fixtures
+
+Milestone 3C adds committed JSON view-model fixtures as the current overlay UX contract:
+
+```text
+tests/fixtures/overlay_prototype.compact.viewmodel.synthetic.json
+tests/fixtures/overlay_prototype.deep.viewmodel.synthetic.json
+tests/fixtures/overlay_prototype.debug.viewmodel.synthetic.json
+```
+
+The fixtures are mode-specific:
+
+- Compact fixtures contain only `schema_version`, `mode`, `source`, and `compact`.
+- Deep fixtures contain only `schema_version`, `mode`, `source`, and `deep`.
+- Debug fixtures contain only `schema_version`, `mode`, `source`, and `debug`.
+
+This keeps player-facing modes free of raw internal flags and provider internals. Debug mode is the
+only committed view model that carries raw flags, provider metadata, prompt-pack metadata, and the
+redacted privacy/cache dry-run summary.
+
+Use the fixture checker before changing overlay view-model behavior:
+
+```text
+python scripts/check_overlay_viewmodel_fixtures.py --quiet
+```
+
+Fixture updates must be intentional:
+
+```text
+python scripts/check_overlay_viewmodel_fixtures.py --write
+```
+
+Generated HTML remains a local review artifact and is not committed. The fixture checker validates
+that the committed JSON view models do not contain generated HTML, raw prompt text, secrets, private
+absolute paths, future provider markers, or `context_packet.game.title`.
+
 ## Current Limits
 
 - Synthetic-only public data.

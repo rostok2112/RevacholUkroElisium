@@ -1,0 +1,29 @@
+{
+  "compact": {
+    "concise_meaning_uk": "Установа нагороджує власну поломку й удає, що це успіх.",
+    "confidence": 0.77,
+    "confidence_summary_uk": "Впевненість: середня.",
+    "deep_note_count": 5,
+    "deep_notes_label_uk": "Є глибше пояснення",
+    "has_deep_notes": true,
+    "labels_uk": {
+      "concise_meaning": "Коротко українською",
+      "confidence": "Впевненість",
+      "original": "Оригінал",
+      "risk_summary": "Ризики / невпевненість"
+    },
+    "mode": "compact",
+    "original_english": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+    "risk_summary_uk": "Демонстраційний результат: перед реальним використанням потрібна людська перевірка.",
+    "speaker": "Synthetic Clerk"
+  },
+  "mode": "compact",
+  "schema_version": "local-overlay-prototype.v1",
+  "source": {
+    "conversation_id": "synthetic.conv.infrastructure",
+    "line_id": "synthetic.m1a.001",
+    "original_english": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+    "scene_id": "synthetic.scene.harbor-office",
+    "speaker": "Synthetic Clerk"
+  }
+}

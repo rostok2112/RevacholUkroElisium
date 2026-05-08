@@ -103,6 +103,14 @@ def main() -> int:
             ],
         ),
         (
+            "overlay view-model fixture regression",
+            [
+                sys.executable,
+                "scripts/check_overlay_viewmodel_fixtures.py",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

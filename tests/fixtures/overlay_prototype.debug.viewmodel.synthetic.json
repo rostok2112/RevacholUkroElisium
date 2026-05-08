@@ -1,0 +1,189 @@
+{
+  "debug": {
+    "confidence_raw": 0.77,
+    "line_id": "synthetic.m1a.001",
+    "packet_id": "context.synthetic.event.m1a.001",
+    "privacy": {
+      "available": true,
+      "cache_key": "provider-cache-v1.91f30212c307c53f93d96a505e9f3816",
+      "cache_root": "workspace/provider-cache",
+      "cache_write_plan": {
+        "blocked_reasons": [],
+        "cache_root_is_private": true,
+        "cache_root_is_repo_ignored": true,
+        "dry_run": true,
+        "planned_relative_path": "workspace/provider-cache/mock/ukrainian_annotation_v1/provider-cache-v1.91f30212c307c53f93d96a505e9f3816.json",
+        "would_write": false,
+        "writes_raw_payload": false
+      },
+      "calls_external_services": false,
+      "context_packet_id": "context.synthetic.event.m1a.001",
+      "dry_run": true,
+      "line_id": "synthetic.m1a.001",
+      "prompt_pack_id": "ukrainian_annotation_v1",
+      "prompt_pack_version": "1.0.0",
+      "provider_id": "mock",
+      "provider_mode": "mock_offline_deterministic",
+      "raw_provider_payload_persisted": false,
+      "request_summary": {
+        "glossary_hint_count": 3,
+        "prompt_pack_section_count": 12,
+        "quality_priority_count": 10,
+        "requested_output_field_count": 14
+      },
+      "schema_version": "provider-privacy-envelope.v1",
+      "text_metadata": {
+        "nearby_tree_count": 0,
+        "original_english_length": 78,
+        "player_options_count": 1,
+        "visible_history_count": 1
+      }
+    },
+    "prompt_pack": {
+      "internal_guidance_language": "english_allowed_for_provider_guidance",
+      "pack_id": "ukrainian_annotation_v1",
+      "player_facing_language_default": "uk",
+      "policy_note_keys": [
+        "spoiler_policy",
+        "anti_hallucination_policy",
+        "anti_overlocalization_policy",
+        "russianism_avoidance"
+      ],
+      "policy_refs": [
+        "spoiler_policy.md",
+        "anti_hallucination_policy.md",
+        "anti_overlocalization_policy.md",
+        "russianism_avoidance.md"
+      ],
+      "quality_priorities": [
+        "preserve_original_english",
+        "produce_ukrainian_concise_meaning",
+        "produce_literary_ukrainian_rendering",
+        "explain_idioms_references_subtext",
+        "preserve_character_voice",
+        "include_uncertainty_and_risk_flags",
+        "avoid_hallucination",
+        "avoid_russianisms",
+        "do_not_silently_overlocalize_ukrainian_cultural_adaptations",
+        "keep_compact_mode_playable"
+      ],
+      "required_output_fields": [
+        "original_english",
+        "concise_meaning_uk",
+        "literary_rendering_uk",
+        "translation_uk",
+        "literal_gloss",
+        "quick_note",
+        "explanation_uk",
+        "deep_notes",
+        "character_voice_note_uk",
+        "ukrainian_cultural_equivalents",
+        "glossary_terms",
+        "confidence",
+        "risk_flags",
+        "quality"
+      ],
+      "version": "1.0.0"
+    },
+    "provider": {
+      "deterministic": true,
+      "offline": true,
+      "provider_kind": "deterministic_mock",
+      "provider_name": "mock",
+      "version": "provider-pipeline.mock.v1"
+    },
+    "provider_debug": {
+      "internal_guidance_language": "english_allowed_for_provider_guidance",
+      "player_facing_language_default": "uk",
+      "policy_note_keys": [
+        "spoiler_policy",
+        "anti_hallucination_policy",
+        "anti_overlocalization_policy",
+        "russianism_avoidance"
+      ],
+      "policy_refs_seen": [
+        "spoiler_policy.md",
+        "anti_hallucination_policy.md",
+        "anti_overlocalization_policy.md",
+        "russianism_avoidance.md"
+      ],
+      "prompt_pack_id": "ukrainian_annotation_v1",
+      "prompt_pack_version": "1.0.0",
+      "provider_name": "mock",
+      "provider_role": "deterministic_mock",
+      "provider_version": "provider-pipeline.mock.v1",
+      "quality_priorities_seen": [
+        "preserve_original_english",
+        "produce_ukrainian_concise_meaning",
+        "produce_literary_ukrainian_rendering",
+        "explain_idioms_references_subtext",
+        "preserve_character_voice",
+        "include_uncertainty_and_risk_flags",
+        "avoid_hallucination",
+        "avoid_russianisms",
+        "do_not_silently_overlocalize_ukrainian_cultural_adaptations",
+        "keep_compact_mode_playable"
+      ],
+      "required_output_fields_seen": [
+        "original_english",
+        "concise_meaning_uk",
+        "literary_rendering_uk",
+        "translation_uk",
+        "literal_gloss",
+        "quick_note",
+        "explanation_uk",
+        "deep_notes",
+        "character_voice_note_uk",
+        "ukrainian_cultural_equivalents",
+        "glossary_terms",
+        "confidence",
+        "risk_flags",
+        "quality"
+      ]
+    },
+    "raw_deep_notes": [
+      {
+        "kind": "idiom",
+        "text": "The image treats praise for a broken object as a deadpan joke.",
+        "title": "Idiom"
+      },
+      {
+        "kind": "reference",
+        "text": "Synthetic bureaucracy reference only; no game dialogue is sourced.",
+        "title": "Reference"
+      },
+      {
+        "kind": "skill_voice",
+        "text": "Голос сухий і канцелярський, ніби свідок звітує про абсурд без підвищення тону.",
+        "title": "Character Voice"
+      },
+      {
+        "kind": "translation_choice",
+        "text": "The mock keeps the civic absurdity and avoids silent localization.",
+        "title": "Translation Choice"
+      },
+      {
+        "kind": "tone",
+        "text": "Prompt-pack policy keeps player-facing annotation Ukrainian by default, prefers uncertainty over invention, and avoids Russian-style calque.",
+        "title": "Tone"
+      }
+    ],
+    "raw_risk_flags": [
+      "synthetic_fixture",
+      "mock_provider",
+      "deterministic_mock_provider",
+      "needs_human_review_before_real_use",
+      "prompt_pack_guided"
+    ],
+    "retrieval_strategy": "synthetic_event_adapter_v1"
+  },
+  "mode": "debug",
+  "schema_version": "local-overlay-prototype.v1",
+  "source": {
+    "conversation_id": "synthetic.conv.infrastructure",
+    "line_id": "synthetic.m1a.001",
+    "original_english": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+    "scene_id": "synthetic.scene.harbor-office",
+    "speaker": "Synthetic Clerk"
+  }
+}

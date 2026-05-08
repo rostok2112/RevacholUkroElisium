@@ -118,12 +118,21 @@ def build_overlay_view_model(
         ),
     }
 
-    return {
+    view_model = {
         "schema_version": OVERLAY_SCHEMA_VERSION,
         "mode": mode,
         "source": source,
-        "compact": {
+    }
+
+    if mode == "compact":
+        view_model["compact"] = {
             "mode": "compact",
+            "labels_uk": {
+                "original": "Оригінал",
+                "concise_meaning": "Коротко українською",
+                "confidence": "Впевненість",
+                "risk_summary": "Ризики / невпевненість",
+            },
             "original_english": source["original_english"],
             "speaker": source["speaker"],
             "concise_meaning_uk": annotation_card.get("concise_meaning_uk"),
@@ -133,9 +142,19 @@ def build_overlay_view_model(
             "deep_notes_label_uk": deep_notes_label_uk,
             "has_deep_notes": bool(raw_notes),
             "deep_note_count": len(raw_notes),
-        },
-        "deep": {
+        }
+    elif mode == "deep":
+        view_model["deep"] = {
             "mode": "deep",
+            "section_order_uk": [
+                "Оригінал",
+                "Літературний український варіант",
+                "Що тут відбувається",
+                "Підтекст / іронія / референс",
+                "Тон / голос",
+                "Глосарій",
+                "Ризики / невпевненість",
+            ],
             "original_english": source["original_english"],
             "speaker": source["speaker"],
             "literary_rendering_uk": annotation_card.get("literary_rendering_uk"),
@@ -151,9 +170,11 @@ def build_overlay_view_model(
             "spoiler_budget_summary_uk": _spoiler_budget_summary_uk(
                 context_packet.get("spoiler_budget")
             ),
-        },
-        "debug": debug,
-    }
+        }
+    else:
+        view_model["debug"] = debug
+
+    return view_model
 
 
 def build_safe_privacy_summary(
@@ -266,16 +287,17 @@ def render_overlay_html(view_model: dict[str, Any]) -> str:
 
 def _render_compact_mode(view_model: dict[str, Any]) -> str:
     compact = view_model["compact"]
+    labels = _as_dict(compact.get("labels_uk"))
     return "\n".join(
         [
             '    <section class="overlay" id="compact-mode">',
-            f'      <p class="label">{_text("Оригінал")}</p>',
+            f'      <p class="label">{_text(labels.get("original", "Оригінал"))}</p>',
             f'      <p class="source">{_text(compact.get("original_english"))}</p>',
-            f'      <p class="label">{_text("Коротко українською")}</p>',
+            f'      <p class="label">{_text(labels.get("concise_meaning", "Коротко українською"))}</p>',
             f'      <p class="uk">{_text(compact.get("concise_meaning_uk"))}</p>',
             "      <section>",
-            f"        <p><strong>{_text('Впевненість')}:</strong> {_text(compact.get('confidence_summary_uk'))}</p>",
-            f"        <p><strong>{_text('Ризики / невпевненість')}:</strong> {_text(compact.get('risk_summary_uk'))}</p>",
+            f"        <p><strong>{_text(labels.get('confidence', 'Впевненість'))}:</strong> {_text(compact.get('confidence_summary_uk'))}</p>",
+            f"        <p><strong>{_text(labels.get('risk_summary', 'Ризики / невпевненість'))}:</strong> {_text(compact.get('risk_summary_uk'))}</p>",
             f"        <p><strong>{_text(compact.get('deep_notes_label_uk'))}</strong></p>",
             "      </section>",
             "    </section>",
@@ -285,23 +307,34 @@ def _render_compact_mode(view_model: dict[str, Any]) -> str:
 
 def _render_deep_mode(view_model: dict[str, Any]) -> str:
     deep = view_model["deep"]
+    labels = deep.get("section_order_uk", [])
+    if not isinstance(labels, list) or len(labels) < 7:
+        labels = [
+            "Оригінал",
+            "Літературний український варіант",
+            "Що тут відбувається",
+            "Підтекст / іронія / референс",
+            "Тон / голос",
+            "Глосарій",
+            "Ризики / невпевненість",
+        ]
     return "\n".join(
         [
             '    <section class="overlay" id="deep-mode">',
-            f"      <h2>{_text('Оригінал')}</h2>",
+            f"      <h2>{_text(labels[0])}</h2>",
             f'      <p class="source">{_text(deep.get("original_english"))}</p>',
-            f"      <h2>{_text('Літературний український варіант')}</h2>",
+            f"      <h2>{_text(labels[1])}</h2>",
             f'      <p class="uk">{_text(deep.get("literary_rendering_uk"))}</p>',
-            f"      <h2>{_text('Що тут відбувається')}</h2>",
+            f"      <h2>{_text(labels[2])}</h2>",
             f"      <p>{_text(deep.get('explanation_uk'))}</p>",
-            f"      <h3>{_text('Підтекст / іронія / референс')}</h3>",
+            f"      <h3>{_text(labels[3])}</h3>",
             _player_note_list(deep.get("idiom_reference_subtext_notes")),
-            f"      <h3>{_text('Тон / голос')}</h3>",
+            f"      <h3>{_text(labels[4])}</h3>",
             f"      <p>{_text(deep.get('character_voice_note_uk'))}</p>",
             _player_note_list(deep.get("character_tone_notes")),
-            f"      <h3>{_text('Глосарій')}</h3>",
+            f"      <h3>{_text(labels[5])}</h3>",
             f"      <p>{_flags(deep.get('glossary_terms'))}</p>",
-            f"      <h3>{_text('Ризики / невпевненість')}</h3>",
+            f"      <h3>{_text(labels[6])}</h3>",
             f"      <p>{_text(deep.get('risk_summary_uk'))}</p>",
             f"      <p>{_text(deep.get('confidence_summary_uk'))}</p>",
             f"      <p>{_text(deep.get('spoiler_budget_summary_uk'))}</p>",

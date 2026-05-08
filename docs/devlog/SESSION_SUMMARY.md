@@ -1,5 +1,30 @@
 # Session Summary
 
+Milestone 3C overlay view-model fixture regression pack is implemented.
+
+Completed in the latest session:
+- Updated `scripts/local_overlay_prototype.py` so `build_overlay_view_model(..., mode=...)` returns a mode-specific payload instead of carrying compact, deep, and debug sections together.
+- Compact view models now contain only `schema_version`, `mode`, `source`, and `compact`; deep view models contain only `schema_version`, `mode`, `source`, and `deep`; debug view models contain only `schema_version`, `mode`, `source`, and `debug`.
+- Added committed synthetic view-model fixtures:
+  - `tests/fixtures/overlay_prototype.compact.viewmodel.synthetic.json`
+  - `tests/fixtures/overlay_prototype.deep.viewmodel.synthetic.json`
+  - `tests/fixtures/overlay_prototype.debug.viewmodel.synthetic.json`
+- Added `scripts/check_overlay_viewmodel_fixtures.py`, a stdlib-only regression checker with `--quiet` for checks and `--write` for intentional fixture regeneration.
+- The fixture checker rebuilds current compact/deep/debug view models from the synthetic fake event -> context packet -> mock provider annotation flow and compares canonical JSON against the committed fixtures.
+- The fixture checker rejects raw prompts, generated HTML, private absolute paths, secrets, future provider markers, and `context_packet.game.title` in overlay fixtures.
+- Added `tests/test_overlay_viewmodel_fixtures.py` covering compact raw-flag hiding, Ukrainian player labels, deep Ukrainian section structure, debug metadata, forbidden marker safety, renderer escaping, and drift detection.
+- Updated `tests/test_local_overlay_prototype.py` for the mode-specific view-model shape.
+- Added `python scripts/check_overlay_viewmodel_fixtures.py --quiet` to `scripts/check_all.py`.
+- Updated `docs/overlay-prototype.md` to document view-model fixtures as the current overlay UX contract and generated HTML as uncommitted local output.
+- Did not change schemas, companion HTTP contracts, provider execution behavior, frontend stack, extraction, BepInEx, OCR, real provider calls, web/API/LLM calls, or production overlay behavior.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including the new overlay view-model fixture regression and 184 unit tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 184 tests.
+  - `npm run check` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+  - `python scripts/check_overlay_viewmodel_fixtures.py --quiet` passed.
+
 Milestone 3B overlay UX polish and player/debug separation is implemented.
 
 Completed in the latest session:

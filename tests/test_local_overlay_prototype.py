@@ -35,11 +35,21 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
             annotation_card["concise_meaning_uk"],
             view_model["compact"]["concise_meaning_uk"],
         )
+        self.assertNotIn("deep", view_model)
+        self.assertNotIn("debug", view_model)
+
+        deep_view_model = build_overlay_view_model(context_packet, annotation_card, mode="deep")
         self.assertEqual(
             annotation_card["literary_rendering_uk"],
-            view_model["deep"]["literary_rendering_uk"],
+            deep_view_model["deep"]["literary_rendering_uk"],
         )
-        self.assertEqual("mock", view_model["debug"]["provider_debug"]["provider_name"])
+        self.assertNotIn("compact", deep_view_model)
+        self.assertNotIn("debug", deep_view_model)
+
+        debug_view_model = build_overlay_view_model(context_packet, annotation_card, mode="debug")
+        self.assertEqual("mock", debug_view_model["debug"]["provider_debug"]["provider_name"])
+        self.assertNotIn("compact", debug_view_model)
+        self.assertNotIn("deep", debug_view_model)
 
     def test_compact_mode_contains_original_concise_confidence_and_human_status(self) -> None:
         context_packet, annotation_card = _provider_context_and_annotation()

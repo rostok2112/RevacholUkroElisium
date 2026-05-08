@@ -1,5 +1,9 @@
 # Known Risks
 
+- Milestone 3C view-model fixtures lock overlay structure and player/debug separation, but they do not prove real overlay placement, timing, readability, accessibility, or in-game interaction quality.
+- Milestone 3C makes `build_overlay_view_model(..., mode=...)` mode-specific. Any future caller that expects compact, deep, and debug sections in one payload must be updated deliberately.
+- Overlay fixture updates are now contract changes. Use `scripts/check_overlay_viewmodel_fixtures.py --write` only when the JSON diff is intended and reviewed.
+- The committed overlay fixtures are synthetic-only regression artifacts; generated HTML remains local workspace output and must not be committed.
 - Milestone 3B improves player/debug separation, but the overlay prototype is still static HTML and not representative of real in-game placement, timing, accessibility, focus, or hotkey behavior.
 - Milestone 3B uses deterministic Ukrainian fallback text when mock provider notes are English/debug-like. Real provider output will need stricter language-contract validation before player-facing use.
 - Compact/deep modes now hide raw internal flags; future debugging work must avoid reintroducing those flags into player-facing UI.
