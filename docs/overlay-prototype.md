@@ -186,6 +186,49 @@ It checks:
 This is a structural guardrail only. It is not a browser accessibility audit, not WCAG
 certification, not visual testing, and not a substitute for later real overlay usability review.
 
+## Transition Preview Simulator
+
+Milestone 3H adds a declarative overlay action/state transition simulator:
+
+```text
+python scripts/run_overlay_state_simulator.py --fixture compact --action switch_deep --quiet
+```
+
+The simulator consumes validated compact, deep, or debug JSON view models and returns a transition
+preview. It does not mutate the input view model and does not implement a real UI side effect.
+
+Transition previews include:
+
+- source mode and requested action id
+- Ukrainian action label and hint
+- whether the action is allowed
+- a stable blocked reason when it is not allowed
+- next mode and next visibility preview
+- side-effect type: `none`, `copy_preview`, or `hide_preview`
+- copy preview text for copy actions, without writing to the clipboard
+- a Ukrainian human-facing summary
+- explicit flags showing no clipboard write, keyboard hook, companion server call, provider call, or
+  input mutation happened
+
+Mode switches and visibility toggles only preview the next state. Copy actions only expose the text
+that a future shell could copy. Hide only sets `hidden = true` in the preview visibility. Navigation
+actions preview movement through annotation notes without changing a real index.
+
+The simulator blocks unknown actions, actions absent from the current view model, debug-only actions
+from compact/deep modes, actions not allowed in the current mode, malformed view models, and invalid
+visibility state. Transition summaries are scanned for the same safety posture: no rendered
+`context_packet.game.title`, raw prompts, secrets, private paths, future provider markers, generated
+HTML payloads, or external URLs.
+
+Generated transition summaries, when requested, are local artifacts only and must stay under:
+
+```text
+workspace/synthetic-slice/overlay-prototype/transitions/
+```
+
+This is still declarative contract work. It is not keyboard hooks, global hotkeys, clipboard
+integration, an always-on-top window, JavaScript, a browser shell, or production overlay behavior.
+
 ## Current Limits
 
 - Synthetic-only public data.

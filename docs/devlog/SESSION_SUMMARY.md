@@ -1,5 +1,51 @@
 # Session Summary
 
+Milestone 3H declarative overlay action/state transition simulator is implemented.
+
+Completed in the latest session:
+- Added `scripts/overlay_state_simulator.py`, a stdlib-only simulator that consumes validated
+  compact/deep/debug overlay view models and returns JSON-safe transition previews.
+- The simulator exposes `simulate_overlay_action(...)`, `collect_overlay_transition_errors(...)`,
+  `assert_valid_overlay_transition(...)`, and `OverlayStateSimulatorError`.
+- Transition previews include source mode, action id, Ukrainian action label/hint, allowed/blocked
+  status, stable blocked reason, next mode, next visibility, side-effect preview type, optional copy
+  preview text, Ukrainian summary, and explicit no-side-effect flags.
+- Implemented deterministic previews for mode switching, original/translation/annotation visibility
+  toggles, next/previous annotation navigation, copy previews, and hide previews.
+- Copy actions return preview text only and never write to the clipboard. Hide actions only set
+  `hidden = true` in preview visibility. Navigation actions do not mutate an index.
+- Unknown actions, actions absent from the current view model, debug-only actions in player modes,
+  malformed view models, invalid visibility state, and unavailable copy sources fail or block
+  clearly.
+- Transition previews are safety-scanned for `context_packet.game.title`, raw prompt/provider payload
+  markers, secrets, private paths, future provider markers, generated HTML markers, external URLs,
+  JavaScript markers, and hook/shortcut-looking fields.
+- Added `scripts/run_overlay_state_simulator.py`, a fixture-based CLI with `--fixture`,
+  `--action`, `--quiet`, and workspace-only `--output` support under
+  `workspace/synthetic-slice/overlay-prototype/transitions/`.
+- Added `tests/test_overlay_state_simulator.py` covering switch/toggle/navigation/copy/hide
+  previews, blocked debug/player actions, unknown and absent actions, malformed visibility, no input
+  mutation, safety failures, CLI behavior, and output path safety.
+- Added the simulator smoke to `scripts/check_all.py`.
+- Updated `docs/overlay-prototype.md` and devlog handoff files to document transition previews as
+  declarative/no-side-effect state contracts.
+- Did not add keyboard hooks, global hotkeys, clipboard writes, JavaScript, browser shell,
+  always-on-top UI, production overlay behavior, companion HTTP changes, provider execution,
+  BepInEx, OCR, extraction, or real game content.
+- Validation completed:
+  - Initial `python scripts/check_all.py` reached functional completion but failed Ruff format-check
+    for the two new Python files.
+  - `ruff format scripts/overlay_state_simulator.py tests/test_overlay_state_simulator.py` was run.
+  - `python scripts/check_all.py` passed, including 246 unit tests and the new overlay state
+    transition simulator smoke.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 246 tests.
+  - `npm run check` passed.
+  - `python scripts/check_overlay_viewmodel_fixtures.py --quiet` passed.
+  - `python scripts/render_overlay_review.py --quiet` passed.
+  - `python scripts/check_overlay_review_accessibility.py --quiet` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+
 Milestone 3G overlay static readability and accessibility review checks are implemented.
 
 Completed in the latest session:

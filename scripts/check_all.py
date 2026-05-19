@@ -127,6 +127,18 @@ def main() -> int:
             ],
         ),
         (
+            "overlay state transition simulator smoke",
+            [
+                sys.executable,
+                "scripts/run_overlay_state_simulator.py",
+                "--fixture",
+                "compact",
+                "--action",
+                "switch_deep",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

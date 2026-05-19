@@ -1,5 +1,15 @@
 # Known Risks
 
+- Milestone 3H simulates overlay transitions only. It does not prove real runtime state management,
+  keyboard behavior, clipboard behavior, always-on-top behavior, focus behavior, or shell integration.
+- Milestone 3H copy and hide actions are previews. Future shell work must keep the boundary clear
+  between preview metadata and actual clipboard/UI side effects.
+- Milestone 3H transition summaries can include source English for `copy_original`; this remains
+  synthetic-only in committed fixtures and checks, and must not become a public/raw real-game logging
+  surface.
+- Milestone 3H does not add committed transition preview fixtures yet. Drift is covered by tests and
+  a smoke command; Milestone 3I should lock representative previews as JSON fixtures if the contract
+  remains stable.
 - Milestone 3G adds static readability/accessibility guardrails, but they are not a browser audit,
   WCAG certification, visual regression suite, or real player usability test.
 - Milestone 3G parses generated HTML strings with Python stdlib only. It can catch structural drift,

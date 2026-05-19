@@ -49,3 +49,10 @@
   shell exists.
 - Decide whether compact-mode brevity limits should become configurable once synthetic fixtures no
   longer represent the full range of annotation length.
+- Milestone 3H added declarative transition previews only. Decide later whether the real overlay shell
+  consumes these previews directly or implements its own runtime state manager using the same action
+  ids.
+- Decide whether transition preview fixtures should become the next committed overlay state contract
+  in Milestone 3I.
+- Decide which layer eventually owns real clipboard writes, hide/show behavior, and keyboard mapping;
+  they are intentionally outside the simulator.
