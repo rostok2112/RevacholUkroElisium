@@ -38,3 +38,9 @@
 - Decide whether the Milestone 3D review index should stay static HTML or become part of a richer local review dashboard after schema hardening.
 - Milestone 3E chose a stdlib Python validator instead of JSON Schema files for mode-specific safety checks. Decide later whether to generate a portable schema once the overlay view model stabilizes.
 - Decide whether future non-Python overlay clients consume a documented contract page, generated schema, or a small shared package for view-model validation.
+- Milestone 3F added a declarative action catalog and visibility state only. Decide later which real
+  overlay shell maps these action ids to actual controls.
+- Decide whether future key bindings, clipboard actions, and hide/show behavior live in the overlay
+  shell, companion client, or a separate local input layer.
+- Decide whether action/visibility metadata should later be exported as a portable schema for
+  non-Python overlay clients.

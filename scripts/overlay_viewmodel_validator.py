@@ -3,9 +3,29 @@ from __future__ import annotations
 import json
 from typing import Any
 
+try:
+    from scripts.overlay_actions import (
+        ACTION_BY_ID,
+        ACTION_IDS,
+        DEBUG_ONLY_ACTION_IDS,
+        build_overlay_actions,
+        build_visibility_state,
+    )
+except ModuleNotFoundError:  # pragma: no cover - used when run as a script path dependency.
+    from overlay_actions import (
+        ACTION_BY_ID,
+        ACTION_IDS,
+        DEBUG_ONLY_ACTION_IDS,
+        build_overlay_actions,
+        build_visibility_state,
+    )
+
 
 OVERLAY_SCHEMA_VERSION = "local-overlay-prototype.v1"
 MODES = ("compact", "deep", "debug")
+EXPECTED_ACTION_IDS_BY_MODE = {
+    mode: tuple(action["id"] for action in build_overlay_actions(mode)) for mode in MODES
+}
 
 RAW_INTERNAL_FLAGS = (
     "synthetic_fixture",
@@ -43,6 +63,10 @@ COMMON_FORBIDDEN_MARKERS = (
     "steamapps",
     "http://",
     "https://",
+    "key_binding",
+    "hotkey",
+    "shortcut",
+    "Ctrl+",
 ) + FUTURE_PROVIDER_MARKERS
 
 PLAYER_FORBIDDEN_MARKERS = RAW_INTERNAL_FLAGS + (
@@ -57,6 +81,7 @@ PLAYER_FORBIDDEN_MARKERS = RAW_INTERNAL_FLAGS + (
 )
 
 DEBUG_REQUIRED_FLAGS = ("synthetic_fixture", "mock_provider", "prompt_pack_guided")
+DISALLOWED_ACTION_FIELDS = ("key_binding", "hotkey", "shortcut", "shortcut_key")
 
 
 class OverlayViewModelValidationError(ValueError):
@@ -145,6 +170,8 @@ def _validate_compact(compact: Any, source: Any, errors: list[str]) -> None:
     _require_number(compact, "confidence", "$.compact", errors)
     _require_type(compact, "has_deep_notes", bool, "$.compact", errors)
     _require_type(compact, "deep_note_count", int, "$.compact", errors)
+    _validate_visibility(compact.get("visibility"), "compact", "$.compact.visibility", errors)
+    _validate_actions(compact.get("actions"), "compact", "$.compact.actions", errors)
     _check_source_mirror(compact, source, "$.compact", errors)
 
 
@@ -170,6 +197,8 @@ def _validate_deep(deep: Any, source: Any, errors: list[str]) -> None:
     _require_string_array(deep, "glossary_terms", "$.deep", errors)
     _require_note_array(deep, "idiom_reference_subtext_notes", "$.deep", errors)
     _require_note_array(deep, "character_tone_notes", "$.deep", errors)
+    _validate_visibility(deep.get("visibility"), "deep", "$.deep.visibility", errors)
+    _validate_actions(deep.get("actions"), "deep", "$.deep.actions", errors)
     _check_source_mirror(deep, source, "$.deep", errors)
 
 
@@ -184,6 +213,8 @@ def _validate_debug(debug: Any, errors: list[str]) -> None:
     _require_note_array(debug, "raw_deep_notes", "$.debug", errors)
     for key in ("provider", "provider_debug", "prompt_pack", "privacy"):
         _require_type(debug, key, dict, "$.debug", errors)
+    _validate_visibility(debug.get("visibility"), "debug", "$.debug.visibility", errors)
+    _validate_actions(debug.get("actions"), "debug", "$.debug.actions", errors)
 
     raw_flags = debug.get("raw_risk_flags")
     if isinstance(raw_flags, list):
@@ -195,6 +226,121 @@ def _validate_debug(debug: Any, errors: list[str]) -> None:
     _validate_provider_debug(debug.get("provider_debug"), errors)
     _validate_prompt_pack(debug.get("prompt_pack"), errors)
     _validate_privacy(debug.get("privacy"), errors)
+
+
+def _validate_visibility(
+    visibility: Any,
+    mode: str,
+    path: str,
+    errors: list[str],
+) -> None:
+    if not isinstance(visibility, dict):
+        errors.append(f"{path}: expected object")
+        return
+
+    expected = build_visibility_state(mode)
+    expected_keys = set(expected)
+    actual_keys = set(visibility)
+    if actual_keys != expected_keys:
+        errors.append(f"{path}: expected keys {sorted(expected_keys)}, got {sorted(actual_keys)}")
+
+    for key in (
+        "original_visible",
+        "translation_visible",
+        "annotations_visible",
+        "debug_visible",
+    ):
+        _require_type(visibility, key, bool, path, errors)
+    _require_type(visibility, "current_mode", str, path, errors)
+    _require_string_array(visibility, "available_modes", path, errors)
+
+    for key, expected_value in expected.items():
+        if key in visibility and visibility[key] != expected_value:
+            errors.append(f"{path}.{key}: expected {expected_value!r}, got {visibility[key]!r}")
+
+    if mode in {"compact", "deep"} and visibility.get("debug_visible") is True:
+        errors.append(f"{path}.debug_visible: compact/deep must keep debug hidden")
+    if mode == "debug" and visibility.get("debug_visible") is not True:
+        errors.append(f"{path}.debug_visible: debug mode must expose debug visibility")
+
+
+def _validate_actions(actions: Any, mode: str, path: str, errors: list[str]) -> None:
+    if not isinstance(actions, list):
+        errors.append(f"{path}: expected array")
+        return
+
+    seen: list[str] = []
+    for index, action in enumerate(actions):
+        action_path = f"{path}[{index}]"
+        if not isinstance(action, dict):
+            errors.append(f"{action_path}: expected object")
+            continue
+        for field in DISALLOWED_ACTION_FIELDS:
+            if field in action:
+                errors.append(f"{action_path}: field {field!r} is not allowed")
+
+        for key in ("id", "label_uk", "hint_uk"):
+            _require_type(action, key, str, action_path, errors)
+        _require_string_array(action, "allowed_modes", action_path, errors)
+        _require_type(action, "player_facing", bool, action_path, errors)
+        _require_type(action, "debug_only", bool, action_path, errors)
+
+        action_id = action.get("id")
+        if not isinstance(action_id, str):
+            continue
+        if action_id in seen:
+            errors.append(f"{action_path}.id: duplicate action id {action_id!r}")
+        seen.append(action_id)
+
+        expected = ACTION_BY_ID.get(action_id)
+        if expected is None:
+            errors.append(f"{action_path}.id: unknown action id {action_id!r}")
+            continue
+
+        if mode not in expected.allowed_modes:
+            errors.append(f"{action_path}.id: action {action_id!r} is not allowed in {mode!r}")
+        if list(expected.allowed_modes) != action.get("allowed_modes"):
+            errors.append(
+                f"{action_path}.allowed_modes: expected {list(expected.allowed_modes)!r}, "
+                f"got {action.get('allowed_modes')!r}"
+            )
+        if action.get("player_facing") != expected.player_facing:
+            errors.append(
+                f"{action_path}.player_facing: expected {expected.player_facing!r}, "
+                f"got {action.get('player_facing')!r}"
+            )
+        if action.get("debug_only") != expected.debug_only:
+            errors.append(
+                f"{action_path}.debug_only: expected {expected.debug_only!r}, "
+                f"got {action.get('debug_only')!r}"
+            )
+        if action.get("label_uk") != expected.label_uk:
+            errors.append(f"{action_path}.label_uk: does not match canonical Ukrainian label")
+        if action.get("hint_uk") != expected.hint_uk:
+            errors.append(f"{action_path}.hint_uk: does not match canonical Ukrainian hint")
+        if not str(action.get("label_uk", "")).strip():
+            errors.append(f"{action_path}.label_uk: must not be empty")
+        if not str(action.get("hint_uk", "")).strip():
+            errors.append(f"{action_path}.hint_uk: must not be empty")
+        if action.get("player_facing") and not _contains_ukrainian(
+            f"{action.get('label_uk', '')} {action.get('hint_uk', '')}"
+        ):
+            errors.append(f"{action_path}: player-facing label and hint must be Ukrainian")
+        if mode in {"compact", "deep"} and (
+            action_id in DEBUG_ONLY_ACTION_IDS or action.get("debug_only")
+        ):
+            errors.append(f"{action_path}.id: debug-only action is not allowed in player modes")
+        if mode in {"compact", "deep"} and action.get("player_facing") is not True:
+            errors.append(
+                f"{action_path}.player_facing: player modes may expose only player actions"
+            )
+
+    expected_ids = EXPECTED_ACTION_IDS_BY_MODE[mode]
+    if tuple(seen) != expected_ids:
+        errors.append(f"{path}: expected action ids {expected_ids!r}, got {tuple(seen)!r}")
+    for action_id in seen:
+        if action_id not in ACTION_IDS:
+            errors.append(f"{path}: unknown action id {action_id!r}")
 
 
 def _validate_provider(provider: Any, errors: list[str]) -> None:
@@ -408,6 +554,10 @@ def _assert_markers_absent(
     for marker in markers:
         if marker.lower() in lowered:
             errors.append(f"{path}: contains forbidden marker {marker!r}")
+
+
+def _contains_ukrainian(value: str) -> bool:
+    return any("\u0400" <= char <= "\u04ff" for char in value)
 
 
 def _canonical(value: Any) -> str:

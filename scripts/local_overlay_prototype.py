@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 try:
+    from scripts.overlay_actions import build_overlay_actions, build_visibility_state
     from scripts.provider_pipeline import ProviderPipelineError, build_provider_request
     from scripts.provider_privacy import ProviderPrivacyError, build_provider_privacy_envelope
     from scripts.provider_runtime_safety import (
@@ -15,6 +16,7 @@ try:
     from scripts.synthetic_slice import ANNOTATION_CARD_SCHEMA, CONTEXT_PACKET_SCHEMA, ROOT
     from scripts.validate_config import load_config
 except ModuleNotFoundError:  # pragma: no cover - used when run as a script path dependency.
+    from overlay_actions import build_overlay_actions, build_visibility_state
     from provider_pipeline import ProviderPipelineError, build_provider_request
     from provider_privacy import ProviderPrivacyError, build_provider_privacy_envelope
     from provider_runtime_safety import ProviderRuntimeSafetyError, build_provider_execution_plan
@@ -127,6 +129,8 @@ def build_overlay_view_model(
     if mode == "compact":
         view_model["compact"] = {
             "mode": "compact",
+            "visibility": build_visibility_state("compact"),
+            "actions": build_overlay_actions("compact"),
             "labels_uk": {
                 "original": "Оригінал",
                 "concise_meaning": "Коротко українською",
@@ -146,6 +150,8 @@ def build_overlay_view_model(
     elif mode == "deep":
         view_model["deep"] = {
             "mode": "deep",
+            "visibility": build_visibility_state("deep"),
+            "actions": build_overlay_actions("deep"),
             "section_order_uk": [
                 "Оригінал",
                 "Літературний український варіант",
@@ -172,6 +178,8 @@ def build_overlay_view_model(
             ),
         }
     else:
+        debug["visibility"] = build_visibility_state("debug")
+        debug["actions"] = build_overlay_actions("debug")
         view_model["debug"] = debug
 
     return view_model
@@ -268,6 +276,8 @@ def render_overlay_html(view_model: dict[str, Any]) -> str:
             "    .source { color: #ddd; }",
             "    .uk { color: #f2f2f2; font-size: 1.1rem; }",
             "    .flag { display: inline-block; border: 1px solid #666; padding: 0.1rem 0.35rem; margin: 0.1rem; }",
+            "    .actions { padding-left: 1.1rem; }",
+            "    .actions li { margin: 0.3rem 0; }",
             "    section { margin-top: 1rem; }",
             "    h1, h2, h3, p { margin-top: 0; }",
             "    code { background: #2b2b2b; padding: 0.1rem 0.25rem; }",
@@ -300,6 +310,8 @@ def _render_compact_mode(view_model: dict[str, Any]) -> str:
             f"        <p><strong>{_text(labels.get('risk_summary', 'Ризики / невпевненість'))}:</strong> {_text(compact.get('risk_summary_uk'))}</p>",
             f"        <p><strong>{_text(compact.get('deep_notes_label_uk'))}</strong></p>",
             "      </section>",
+            f"      <h3>{_text('Дії')}</h3>",
+            _action_hint_list(compact.get("actions")),
             "    </section>",
         ]
     )
@@ -338,6 +350,8 @@ def _render_deep_mode(view_model: dict[str, Any]) -> str:
             f"      <p>{_text(deep.get('risk_summary_uk'))}</p>",
             f"      <p>{_text(deep.get('confidence_summary_uk'))}</p>",
             f"      <p>{_text(deep.get('spoiler_budget_summary_uk'))}</p>",
+            f"      <h3>{_text('Дії')}</h3>",
+            _action_hint_list(deep.get("actions")),
             "    </section>",
         ]
     )
@@ -380,6 +394,8 @@ def _render_debug_mode(view_model: dict[str, Any]) -> str:
             f"      <p><strong>{_text('Would write')}:</strong> {_text(cache_plan.get('would_write'))}</p>",
             f"      <p><strong>{_text('Writes raw payload')}:</strong> {_text(cache_plan.get('writes_raw_payload'))}</p>",
             f"      <p><strong>{_text('Calls external services')}:</strong> {_text(privacy.get('calls_external_services'))}</p>",
+            f"      <h3>{_text('Declarative Actions')}</h3>",
+            _debug_action_list(debug.get("actions")),
             "    </section>",
         ]
     )
@@ -453,6 +469,44 @@ def _raw_note_list(notes: Any) -> str:
         ]
     )
     return "\n".join(["      <ul>", items, "      </ul>"])
+
+
+def _action_hint_list(actions: Any) -> str:
+    if not isinstance(actions, list) or not actions:
+        return f"      <p>{_text('Дії недоступні')}</p>"
+    items = []
+    for action in actions:
+        if not isinstance(action, dict):
+            continue
+        items.append(
+            "        <li>"
+            f"<strong>{_text(action.get('label_uk'))}</strong>: "
+            f"{_text(action.get('hint_uk'))}"
+            "</li>"
+        )
+    if not items:
+        return f"      <p>{_text('Дії недоступні')}</p>"
+    return "\n".join(['      <ul class="actions">', *items, "      </ul>"])
+
+
+def _debug_action_list(actions: Any) -> str:
+    if not isinstance(actions, list) or not actions:
+        return "      <p>No actions declared.</p>"
+    items = []
+    for action in actions:
+        if not isinstance(action, dict):
+            continue
+        allowed_modes = ", ".join(str(mode) for mode in action.get("allowed_modes", []))
+        items.append(
+            "        <li>"
+            f"<code>{_text(action.get('id'))}</code> "
+            f"{_text(action.get('label_uk'))} "
+            f"({_text(allowed_modes)}) "
+            f"player_facing={_text(action.get('player_facing'))}, "
+            f"debug_only={_text(action.get('debug_only'))}"
+            "</li>"
+        )
+    return "\n".join(['      <ul class="actions">', *items, "      </ul>"])
 
 
 def _mode_label_uk(mode: Any) -> str:

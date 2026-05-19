@@ -12,11 +12,12 @@ synthetic fake event -> /synthetic/provider-annotate -> context packet + annotat
 ## What It Shows
 
 - Compact mode: original English, concise Ukrainian meaning, human-readable Ukrainian confidence
-  and risk status, and whether deeper notes are available.
+  and risk status, whether deeper notes are available, and concise Ukrainian action hints.
 - Deep mode: original English, literary Ukrainian rendering, explanation, idiom/reference/subtext
-  notes, tone/voice notes, glossary terms, spoiler status, and uncertainty/risk summary.
+  notes, tone/voice notes, glossary terms, spoiler status, uncertainty/risk summary, and
+  Ukrainian action hints for moving through annotation content.
 - Debug mode: provider metadata, prompt pack metadata, and a redacted provider privacy/cache dry-run
-  summary.
+  summary, plus the full declarative action catalog for developer inspection.
 
 Compact and deep modes are player-facing. They must not show raw internal flags such as
 `synthetic_fixture`, `mock_provider`, or `prompt_pack_guided`. They should use Ukrainian labels and
@@ -76,6 +77,33 @@ Common stable fields:
 - `source.scene_id`
 - `source.conversation_id`
 - `source.line_id`
+
+Each mode payload also carries declarative interaction state:
+
+- `visibility.original_visible`
+- `visibility.translation_visible`
+- `visibility.annotations_visible`
+- `visibility.debug_visible`
+- `visibility.current_mode`
+- `visibility.available_modes`
+- `actions`
+
+Actions are contract metadata only. They describe the controls a future overlay shell may expose, but
+they do not implement keyboard hooks, global shortcuts, clipboard behavior, an always-on-top window,
+or any live UI shell.
+
+Each action has:
+
+- `id`
+- `label_uk`
+- `hint_uk`
+- `allowed_modes`
+- `player_facing`
+- `debug_only`
+
+Player-facing action labels and hints are Ukrainian. Compact and deep fixtures expose only
+player-facing actions. Debug fixtures carry the full declarative action catalog, including the
+developer-only switch into debug mode, so future clients can inspect the whole contract safely.
 
 This keeps player-facing modes free of raw internal flags and provider internals. Debug mode is the
 only committed view model that carries raw flags, provider metadata, prompt-pack metadata, and the

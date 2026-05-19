@@ -63,6 +63,9 @@ class OverlayReviewRendererTests(unittest.TestCase):
         self.assertIn("Коротко українською", compact_html)
         self.assertIn("Є глибше пояснення", compact_html)
         self.assertIn("Впевненість", compact_html)
+        self.assertIn("Дії", compact_html)
+        self.assertIn("Глибше пояснення", compact_html)
+        self.assertIn("Скопіювати український зміст", compact_html)
         for heading in (
             "Оригінал",
             "Літературний український варіант",
@@ -74,7 +77,14 @@ class OverlayReviewRendererTests(unittest.TestCase):
         ):
             with self.subTest(heading=heading):
                 self.assertIn(heading, deep_html)
+        self.assertIn("Дії", deep_html)
+        self.assertIn("Наступна нотатка", deep_html)
+        self.assertIn("Скопіювати пояснення", deep_html)
         self.assertNotIn("Prompt-pack policy keeps", deep_html)
+        self.assertNotIn("switch_debug", compact_html)
+        self.assertNotIn("switch_debug", deep_html)
+        self.assertNotIn("debug_only", compact_html)
+        self.assertNotIn("debug_only", deep_html)
         for raw_flag in RAW_PLAYER_FLAGS:
             with self.subTest(raw_flag=raw_flag):
                 self.assertNotIn(raw_flag, compact_html)
@@ -92,6 +102,9 @@ class OverlayReviewRendererTests(unittest.TestCase):
         self.assertIn("ukrainian_annotation_v1", debug_html)
         self.assertIn("provider-cache-v1.", debug_html)
         self.assertIn("Writes raw payload", debug_html)
+        self.assertIn("Declarative Actions", debug_html)
+        self.assertIn("switch_debug", debug_html)
+        self.assertIn("debug_only=True", debug_html)
         self.assertNotIn("Disco Elysium: The Final Cut", debug_html)
         for marker in FORBIDDEN_DEBUG_MARKERS:
             with self.subTest(marker=marker):

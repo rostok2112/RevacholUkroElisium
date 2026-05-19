@@ -1,5 +1,122 @@
 {
   "deep": {
+    "actions": [
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Повернути короткий вигляд.",
+        "id": "switch_compact",
+        "label_uk": "Компактний режим",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Увімкнути або приховати англійський текст.",
+        "id": "toggle_original",
+        "label_uk": "Оригінал",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Увімкнути або приховати український текст.",
+        "id": "toggle_translation",
+        "label_uk": "Український варіант",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Увімкнути або приховати нотатки й глосарій.",
+        "id": "toggle_annotations",
+        "label_uk": "Пояснення",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Перейти до наступного пояснення.",
+        "id": "next_annotation",
+        "label_uk": "Наступна нотатка",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Повернутися до попереднього пояснення.",
+        "id": "previous_annotation",
+        "label_uk": "Попередня нотатка",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Підготувати англійський текст до копіювання.",
+        "id": "copy_original",
+        "label_uk": "Скопіювати оригінал",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Підготувати короткий український зміст до копіювання.",
+        "id": "copy_ukrainian_summary",
+        "label_uk": "Скопіювати український зміст",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Підготувати стислий підсумок нотаток до копіювання.",
+        "id": "copy_annotation_summary",
+        "label_uk": "Скопіювати пояснення",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Прибрати підказку з екрана.",
+        "id": "hide_overlay",
+        "label_uk": "Сховати оверлей",
+        "player_facing": true
+      }
+    ],
     "character_tone_notes": [
       {
         "kind": "skill_voice",
@@ -53,7 +170,18 @@
     ],
     "speaker": "Synthetic Clerk",
     "spoiler_budget": "none",
-    "spoiler_budget_summary_uk": "Спойлерів немає."
+    "spoiler_budget_summary_uk": "Спойлерів немає.",
+    "visibility": {
+      "annotations_visible": true,
+      "available_modes": [
+        "compact",
+        "deep"
+      ],
+      "current_mode": "deep",
+      "debug_visible": false,
+      "original_visible": true,
+      "translation_visible": true
+    }
   },
   "mode": "deep",
   "schema_version": "local-overlay-prototype.v1",

@@ -1,5 +1,143 @@
 {
   "debug": {
+    "actions": [
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Повернути короткий вигляд.",
+        "id": "switch_compact",
+        "label_uk": "Компактний режим",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Відкрити повні нотатки до репліки.",
+        "id": "switch_deep",
+        "label_uk": "Глибше пояснення",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "debug"
+        ],
+        "debug_only": true,
+        "hint_uk": "Показати службові дані для перевірки.",
+        "id": "switch_debug",
+        "label_uk": "Режим розробника",
+        "player_facing": false
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Увімкнути або приховати англійський текст.",
+        "id": "toggle_original",
+        "label_uk": "Оригінал",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Увімкнути або приховати український текст.",
+        "id": "toggle_translation",
+        "label_uk": "Український варіант",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Увімкнути або приховати нотатки й глосарій.",
+        "id": "toggle_annotations",
+        "label_uk": "Пояснення",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Перейти до наступного пояснення.",
+        "id": "next_annotation",
+        "label_uk": "Наступна нотатка",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Повернутися до попереднього пояснення.",
+        "id": "previous_annotation",
+        "label_uk": "Попередня нотатка",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Підготувати англійський текст до копіювання.",
+        "id": "copy_original",
+        "label_uk": "Скопіювати оригінал",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Підготувати короткий український зміст до копіювання.",
+        "id": "copy_ukrainian_summary",
+        "label_uk": "Скопіювати український зміст",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Підготувати стислий підсумок нотаток до копіювання.",
+        "id": "copy_annotation_summary",
+        "label_uk": "Скопіювати пояснення",
+        "player_facing": true
+      },
+      {
+        "allowed_modes": [
+          "compact",
+          "deep",
+          "debug"
+        ],
+        "debug_only": false,
+        "hint_uk": "Прибрати підказку з екрана.",
+        "id": "hide_overlay",
+        "label_uk": "Сховати оверлей",
+        "player_facing": true
+      }
+    ],
     "confidence_raw": 0.77,
     "line_id": "synthetic.m1a.001",
     "packet_id": "context.synthetic.event.m1a.001",
@@ -175,7 +313,19 @@
       "needs_human_review_before_real_use",
       "prompt_pack_guided"
     ],
-    "retrieval_strategy": "synthetic_event_adapter_v1"
+    "retrieval_strategy": "synthetic_event_adapter_v1",
+    "visibility": {
+      "annotations_visible": true,
+      "available_modes": [
+        "compact",
+        "deep",
+        "debug"
+      ],
+      "current_mode": "debug",
+      "debug_visible": true,
+      "original_visible": true,
+      "translation_visible": true
+    }
   },
   "mode": "debug",
   "schema_version": "local-overlay-prototype.v1",

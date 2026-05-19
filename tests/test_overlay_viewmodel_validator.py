@@ -62,6 +62,73 @@ class OverlayViewModelValidatorTests(unittest.TestCase):
         self.assertTrue(_contains(errors, "C:\\"))
         self.assertTrue(_contains(errors, "secret"))
 
+    def test_visibility_state_is_mode_specific(self) -> None:
+        compact = _load_fixture("compact")
+        deep = _load_fixture("deep")
+        debug = _load_fixture("debug")
+
+        self.assertFalse(compact["compact"]["visibility"]["annotations_visible"])
+        self.assertFalse(compact["compact"]["visibility"]["debug_visible"])
+        self.assertEqual(["compact", "deep"], compact["compact"]["visibility"]["available_modes"])
+        self.assertTrue(deep["deep"]["visibility"]["annotations_visible"])
+        self.assertFalse(deep["deep"]["visibility"]["debug_visible"])
+        self.assertTrue(debug["debug"]["visibility"]["debug_visible"])
+        self.assertEqual(
+            ["compact", "deep", "debug"],
+            debug["debug"]["visibility"]["available_modes"],
+        )
+
+    def test_unknown_action_id_fails(self) -> None:
+        compact = _load_fixture("compact")
+        compact["compact"]["actions"][0]["id"] = "launch_real_overlay"
+
+        errors = collect_overlay_viewmodel_errors(compact, expected_mode="compact")
+
+        self.assertTrue(_contains(errors, "unknown action id"))
+
+    def test_empty_action_label_fails(self) -> None:
+        compact = _load_fixture("compact")
+        compact["compact"]["actions"][0]["label_uk"] = ""
+
+        errors = collect_overlay_viewmodel_errors(compact, expected_mode="compact")
+
+        self.assertTrue(_contains(errors, "label_uk"))
+        self.assertTrue(_contains(errors, "must not be empty"))
+
+    def test_action_key_binding_field_fails(self) -> None:
+        compact = _load_fixture("compact")
+        compact["compact"]["actions"][0]["key_binding"] = "Ctrl+Space"
+
+        errors = collect_overlay_viewmodel_errors(compact, expected_mode="compact")
+
+        self.assertTrue(_contains(errors, "key_binding"))
+
+    def test_debug_visible_true_fails_in_compact(self) -> None:
+        compact = _load_fixture("compact")
+        compact["compact"]["visibility"]["debug_visible"] = True
+
+        errors = collect_overlay_viewmodel_errors(compact, expected_mode="compact")
+
+        self.assertTrue(_contains(errors, "debug_visible"))
+        self.assertTrue(_contains(errors, "debug hidden"))
+
+    def test_debug_only_action_fails_in_compact(self) -> None:
+        compact = _load_fixture("compact")
+        switch_debug = _load_fixture("debug")["debug"]["actions"][2]
+        compact["compact"]["actions"].append(switch_debug)
+
+        errors = collect_overlay_viewmodel_errors(compact, expected_mode="compact")
+
+        self.assertTrue(_contains(errors, "debug-only action"))
+
+    def test_debug_fixture_can_include_debug_only_action(self) -> None:
+        debug = _load_fixture("debug")
+
+        errors = collect_overlay_viewmodel_errors(debug, expected_mode="debug")
+
+        self.assertFalse(errors)
+        self.assertIn("switch_debug", [action["id"] for action in debug["debug"]["actions"]])
+
     def test_context_packet_game_title_fails_in_every_mode(self) -> None:
         for mode in ("compact", "deep", "debug"):
             view_model = _load_fixture(mode)

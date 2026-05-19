@@ -35,6 +35,19 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
             annotation_card["concise_meaning_uk"],
             view_model["compact"]["concise_meaning_uk"],
         )
+        self.assertFalse(view_model["compact"]["visibility"]["debug_visible"])
+        self.assertEqual("compact", view_model["compact"]["visibility"]["current_mode"])
+        self.assertEqual(
+            [
+                "switch_deep",
+                "toggle_original",
+                "toggle_translation",
+                "copy_original",
+                "copy_ukrainian_summary",
+                "hide_overlay",
+            ],
+            [action["id"] for action in view_model["compact"]["actions"]],
+        )
         self.assertNotIn("deep", view_model)
         self.assertNotIn("debug", view_model)
 
@@ -43,11 +56,17 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
             annotation_card["literary_rendering_uk"],
             deep_view_model["deep"]["literary_rendering_uk"],
         )
+        self.assertTrue(deep_view_model["deep"]["visibility"]["annotations_visible"])
+        self.assertFalse(deep_view_model["deep"]["visibility"]["debug_visible"])
         self.assertNotIn("compact", deep_view_model)
         self.assertNotIn("debug", deep_view_model)
 
         debug_view_model = build_overlay_view_model(context_packet, annotation_card, mode="debug")
         self.assertEqual("mock", debug_view_model["debug"]["provider_debug"]["provider_name"])
+        self.assertTrue(debug_view_model["debug"]["visibility"]["debug_visible"])
+        self.assertIn(
+            "switch_debug", [action["id"] for action in debug_view_model["debug"]["actions"]]
+        )
         self.assertNotIn("compact", debug_view_model)
         self.assertNotIn("deep", debug_view_model)
 
@@ -64,6 +83,11 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
         self.assertIn("Впевненість", html)
         self.assertIn("Ризики / невпевненість", html)
         self.assertIn("Є глибше пояснення", html)
+        self.assertIn("Дії", html)
+        self.assertIn("Глибше пояснення", html)
+        self.assertIn("Скопіювати український зміст", html)
+        self.assertNotIn("switch_debug", html)
+        self.assertNotIn("debug_only", html)
         for raw_flag in ("synthetic_fixture", "mock_provider", "prompt_pack_guided"):
             with self.subTest(raw_flag=raw_flag):
                 self.assertNotIn(raw_flag, html)
@@ -94,6 +118,11 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
         self.assertIn("Образ працює як іронія", html)
         self.assertIn("committee", html)
         self.assertIn("infrastructure", html)
+        self.assertIn("Дії", html)
+        self.assertIn("Наступна нотатка", html)
+        self.assertIn("Скопіювати пояснення", html)
+        self.assertNotIn("switch_debug", html)
+        self.assertNotIn("debug_only", html)
         self.assertNotIn("Prompt-pack policy keeps", html)
         for raw_flag in ("synthetic_fixture", "mock_provider", "prompt_pack_guided"):
             with self.subTest(raw_flag=raw_flag):
@@ -118,6 +147,9 @@ class LocalOverlayPrototypeTests(unittest.TestCase):
         self.assertIn("workspace/provider-cache", html)
         self.assertIn("Writes raw payload", html)
         self.assertIn("False", html)
+        self.assertIn("Declarative Actions", html)
+        self.assertIn("switch_debug", html)
+        self.assertIn("debug_only=True", html)
         self.assertNotIn("prompt_pack_sections", html)
         self.assertNotIn("raw_provider_request", html)
         self.assertNotIn("C:\\", html)

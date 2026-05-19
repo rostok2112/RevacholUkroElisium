@@ -1,5 +1,12 @@
 # Known Risks
 
+- Milestone 3F adds declarative overlay actions and visibility state, but it still does not implement
+  real keyboard hooks, clipboard behavior, always-on-top windows, or a live overlay shell.
+- Milestone 3F visibility state is a static fixture/default contract, not runtime state management.
+- Milestone 3F action catalog changes are overlay contract changes. Update action helpers, validator
+  rules, fixtures, tests, and docs together.
+- Debug mode carries the full declarative action catalog. Future rendering work must keep debug-only
+  actions such as `switch_debug` out of compact/deep player-facing modes.
 - Milestone 3E hardens the overlay contract structurally, but it still does not prove production UI quality, accessibility, timing, or in-game placement.
 - The Milestone 3E Python validator is intentionally stricter than the old fixture checker. Any deliberate view-model contract change must update validator rules, fixtures, tests, and docs together.
 - The Milestone 3E contract is Python-enforced, not a portable JSON Schema yet. Future non-Python overlay clients may need generated schema docs or a formal schema once the shape stabilizes further.

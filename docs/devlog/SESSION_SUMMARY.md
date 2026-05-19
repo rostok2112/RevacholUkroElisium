@@ -1,5 +1,43 @@
 # Session Summary
 
+Milestone 3F overlay interaction state and action contract is implemented.
+
+Completed in the latest session:
+- Added `scripts/overlay_actions.py`, a stdlib-only declarative action catalog for overlay view
+  models.
+- Added mode-specific `visibility` state and `actions` lists inside compact, deep, and debug payloads
+  while preserving the existing top-level mode-specific fixture shape.
+- Compact/deep view models now expose only player-facing Ukrainian action labels and hints; debug mode
+  exposes the full declarative action catalog for developer inspection.
+- Visibility defaults are now explicit:
+  - compact shows original and Ukrainian summary, hides annotations and debug.
+  - deep shows original, Ukrainian rendering, and annotations, hides debug.
+  - debug shows original, translation, annotations, and debug metadata.
+- Extended `scripts/overlay_viewmodel_validator.py` so fixtures must use known action ids, canonical
+  Ukrainian labels/hints, valid allowed modes, correct player/debug flags, and no key-binding fields.
+- The validator now rejects `debug_visible = true` in compact/deep modes and rejects debug-only
+  actions in player-facing modes.
+- Updated `scripts/local_overlay_prototype.py` so compact/deep review HTML renders Ukrainian action
+  hints and debug review HTML renders action metadata safely.
+- Regenerated the three committed overlay view-model JSON fixtures intentionally with
+  `python scripts/check_overlay_viewmodel_fixtures.py --write`.
+- Updated overlay prototype, validator, fixture, and review-renderer tests for visibility state,
+  action ids, Ukrainian labels/hints, debug-only separation, no key-binding fields, escaping, and
+  existing player/debug safety rules.
+- Updated `docs/overlay-prototype.md` and devlog handoff files with the declarative-only action
+  contract and the next Milestone 3G prompt.
+- Did not add keyboard hooks, global shortcuts, clipboard behavior, always-on-top windows, JavaScript,
+  frontend frameworks, companion HTTP changes, provider calls, BepInEx, OCR, extraction, or real game
+  content.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including 211 unit tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 211 tests.
+  - `npm run check` passed.
+  - `python scripts/check_overlay_viewmodel_fixtures.py --quiet` passed.
+  - `python scripts/render_overlay_review.py --quiet` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+
 Milestone 3E overlay view-model schema and contract hardening is implemented.
 
 Completed in the latest session:

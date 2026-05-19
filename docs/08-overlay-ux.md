@@ -49,6 +49,9 @@ For development only:
 
 ## Hotkeys
 
+Current local prototype actions are declarative metadata only. The project does not implement
+keyboard hooks, global shortcuts, or always-on-top behavior yet.
+
 Suggested defaults:
 
 - `Ctrl+Space`: toggle compact overlay.

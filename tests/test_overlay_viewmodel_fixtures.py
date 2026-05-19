@@ -57,6 +57,13 @@ class OverlayViewModelFixtureTests(unittest.TestCase):
         self.assertEqual("Є глибше пояснення", compact["compact"]["deep_notes_label_uk"])
         self.assertIn("Впевненість", compact["compact"]["confidence_summary_uk"])
         self.assertIn("людська перевірка", compact["compact"]["risk_summary_uk"])
+        self.assertFalse(compact["compact"]["visibility"]["debug_visible"])
+        self.assertEqual("compact", compact["compact"]["visibility"]["current_mode"])
+        self.assertIn(
+            "copy_ukrainian_summary",
+            [action["id"] for action in compact["compact"]["actions"]],
+        )
+        self.assertNotIn("switch_debug", [action["id"] for action in compact["compact"]["actions"]])
         for flag in RAW_FLAGS:
             with self.subTest(flag=flag):
                 self.assertNotIn(flag, rendered)
@@ -79,6 +86,10 @@ class OverlayViewModelFixtureTests(unittest.TestCase):
             with self.subTest(heading=heading):
                 self.assertIn(heading, deep["deep"]["section_order_uk"])
         self.assertNotIn("Prompt-pack policy keeps", rendered)
+        self.assertTrue(deep["deep"]["visibility"]["annotations_visible"])
+        self.assertFalse(deep["deep"]["visibility"]["debug_visible"])
+        self.assertIn("next_annotation", [action["id"] for action in deep["deep"]["actions"]])
+        self.assertNotIn("switch_debug", [action["id"] for action in deep["deep"]["actions"]])
         for flag in RAW_FLAGS:
             with self.subTest(flag=flag):
                 self.assertNotIn(flag, rendered)
@@ -97,6 +108,13 @@ class OverlayViewModelFixtureTests(unittest.TestCase):
         self.assertIn("provider-cache-v1.", debug["debug"]["privacy"]["cache_key"])
         self.assertFalse(debug["debug"]["privacy"]["cache_write_plan"]["would_write"])
         self.assertFalse(debug["debug"]["privacy"]["cache_write_plan"]["writes_raw_payload"])
+        self.assertTrue(debug["debug"]["visibility"]["debug_visible"])
+        self.assertIn("switch_debug", [action["id"] for action in debug["debug"]["actions"]])
+        self.assertTrue(
+            next(action for action in debug["debug"]["actions"] if action["id"] == "switch_debug")[
+                "debug_only"
+            ]
+        )
 
     def test_fixtures_exclude_forbidden_markers(self) -> None:
         for mode in ("compact", "deep", "debug"):
