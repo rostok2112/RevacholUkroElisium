@@ -1,13 +1,14 @@
 # Current Session Plan
 
-Goal: implement Milestone 3F overlay interaction state and action contract.
+Goal: implement Milestone 3G overlay static readability and accessibility review checks.
 
-- Add a stdlib-only declarative action catalog for compact/deep/debug overlay view models.
-- Add mode-specific visibility state and action lists to committed overlay JSON fixtures.
-- Keep compact/deep player-facing, Ukrainian, and free of raw debug/provider metadata.
-- Keep debug developer-facing, redacted, and allowed to expose the full declarative action catalog.
-- Extend the overlay view-model validator for visibility state, known action ids, Ukrainian labels and
-  hints, debug-only action separation, and no key-binding fields.
-- Render action hints in static review HTML without JavaScript, keyboard hooks, or a live overlay
-  shell.
-- Update docs/devlog and run the full local validation suite.
+- Add a stdlib-only checker for fixture-rendered compact/deep/debug overlay HTML.
+- Inspect rendered HTML with `html.parser`, not a browser or JavaScript runtime.
+- Check language metadata, title, h1, heading flow, expected section ids, action hint visibility,
+  compact brevity, deep grouping, debug metadata, and redaction.
+- Keep the checker structural only; it is not WCAG certification, visual testing, or production
+  overlay readiness.
+- Integrate the checker into `scripts/check_all.py`.
+- Add tests for passing modes and clear failures for missing metadata, bad heading flow, raw flags,
+  game-title leakage, unescaped script tags, and excessive compact text.
+- Update overlay docs and devlog handoff.

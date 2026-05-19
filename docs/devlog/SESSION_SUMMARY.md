@@ -1,5 +1,32 @@
 # Session Summary
 
+Milestone 3G overlay static readability and accessibility review checks are implemented.
+
+Completed in the latest session:
+- Added `scripts/check_overlay_review_accessibility.py`, a stdlib-only checker for
+  fixture-rendered compact, deep, and debug overlay HTML.
+- The checker loads validated committed overlay view-model fixtures, renders HTML in memory with the
+  existing overlay renderer, and inspects the result with Python stdlib `html.parser`.
+- Added structural checks for `lang="uk"`, nonempty title, exactly one nonempty `h1`, expected
+  mode section ids, and sane heading flow.
+- Added readability checks for compact brevity, player-facing action hints, deep grouped Ukrainian
+  headings, and debug metadata presence.
+- Added safety checks so compact/deep still hide raw internal flags and all modes reject rendered
+  `context_packet.game.title`, raw prompt/provider payload markers, secrets, private paths, future
+  provider markers, external URLs, JavaScript URLs, event-handler attributes, and unescaped script
+  tags.
+- Escaped unsafe text such as `&lt;script&gt;...&lt;/script&gt;` remains allowed.
+- Added `tests/test_overlay_review_accessibility.py` covering passing compact/deep/debug HTML,
+  missing language metadata, missing title/h1, heading disorder, raw flags, excessive compact text,
+  game-title leakage, escaped unsafe text, unescaped script tags, event-handler attributes, and CLI
+  quiet mode.
+- Added the checker smoke to `scripts/check_all.py`.
+- Updated `docs/overlay-prototype.md` and devlog handoff files to document that these are structural
+  readability/accessibility guardrails, not a browser audit or WCAG certification.
+- Did not add browser automation, JavaScript, frontend framework work, production overlay behavior,
+  keyboard hooks, companion HTTP changes, provider execution, BepInEx, OCR, extraction, or real game
+  content.
+
 Milestone 3F overlay interaction state and action contract is implemented.
 
 Completed in the latest session:

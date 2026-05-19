@@ -157,13 +157,42 @@ The review HTML is generated output and must stay uncommitted. The compact and d
 player-facing snapshots and must hide raw internal flags. The debug page is developer-facing and may
 show raw provider metadata only in redacted form.
 
+## Static Readability Checks
+
+Milestone 3G adds a fixture-backed structural readability/accessibility checker:
+
+```text
+python scripts/check_overlay_review_accessibility.py --quiet
+```
+
+The checker renders compact, deep, and debug HTML from committed JSON view-model fixtures in memory
+and inspects the result with Python stdlib `html.parser`.
+
+It checks:
+
+- `lang="uk"`
+- nonempty title and `h1`
+- sane heading order for the static prototype
+- expected compact/deep/debug section ids
+- visible player-facing action hints in compact/deep
+- compact-mode brevity
+- grouped Ukrainian deep-mode headings
+- debug metadata presence and redaction
+- no raw internal flags in compact/deep
+- no rendered `context_packet.game.title`
+- no raw prompt, secret, private path, future provider marker, external URL, JavaScript URL, event
+  handler attribute, or unescaped script tag
+
+This is a structural guardrail only. It is not a browser accessibility audit, not WCAG
+certification, not visual testing, and not a substitute for later real overlay usability review.
+
 ## Current Limits
 
 - Synthetic-only public data.
 - Localhost-only companion access.
 - Deterministic mock provider only.
-- No frontend framework, JavaScript, external CSS, assets, OCR, BepInEx, extraction, real provider
-  call, web call, paid API call, DeepL call, or local model runtime.
+- No frontend framework, JavaScript, external CSS, browser automation, assets, OCR, BepInEx,
+  extraction, real provider call, web call, paid API call, DeepL call, or local model runtime.
 
 Future milestones can use this view-model shape as a handoff point for a real overlay shell after the
 local HTTP contract, privacy policy, and player-facing UX are more stable.

@@ -1,5 +1,12 @@
 # Known Risks
 
+- Milestone 3G adds static readability/accessibility guardrails, but they are not a browser audit,
+  WCAG certification, visual regression suite, or real player usability test.
+- Milestone 3G parses generated HTML strings with Python stdlib only. It can catch structural drift,
+  raw debug leaks, and obvious safety issues, but it cannot prove focus behavior, screen-reader
+  behavior, contrast, text overflow, or in-game placement.
+- The Milestone 3G compact brevity thresholds are deterministic guardrails for the current synthetic
+  fixture, not a final product readability model.
 - Milestone 3F adds declarative overlay actions and visibility state, but it still does not implement
   real keyboard hooks, clipboard behavior, always-on-top windows, or a live overlay shell.
 - Milestone 3F visibility state is a static fixture/default contract, not runtime state management.

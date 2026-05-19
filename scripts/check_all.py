@@ -119,6 +119,14 @@ def main() -> int:
             ],
         ),
         (
+            "overlay review accessibility smoke",
+            [
+                sys.executable,
+                "scripts/check_overlay_review_accessibility.py",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

@@ -44,3 +44,8 @@
   shell, companion client, or a separate local input layer.
 - Decide whether action/visibility metadata should later be exported as a portable schema for
   non-Python overlay clients.
+- Milestone 3G added stdlib static HTML readability/accessibility guardrails. Decide later whether to
+  add browser automation, screenshot baselines, or formal accessibility tooling once a real overlay
+  shell exists.
+- Decide whether compact-mode brevity limits should become configurable once synthetic fixtures no
+  longer represent the full range of annotation length.
