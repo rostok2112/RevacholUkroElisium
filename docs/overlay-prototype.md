@@ -229,6 +229,51 @@ workspace/synthetic-slice/overlay-prototype/transitions/
 This is still declarative contract work. It is not keyboard hooks, global hotkeys, clipboard
 integration, an always-on-top window, JavaScript, a browser shell, or production overlay behavior.
 
+## State Source Contract
+
+Milestone 3I adds a side-effect-free state-source contract for future overlay shells:
+
+```text
+python scripts/run_overlay_state_source.py --self-test --quiet
+```
+
+The state-source layer reads the latest provider context and annotation through the existing
+companion client contract and turns them into a current overlay render state. It does not change the
+companion HTTP API and does not implement a polling loop.
+
+State-source results use `schema_version: "overlay-state-source.v1"` and model:
+
+- `ready`: latest provider context and annotation were available and produced a valid overlay view
+  model.
+- `no_provider_state`: no latest provider context or annotation is available yet.
+- `stale`: an existing view model is being reused deterministically as stale state.
+- `error`: companion client, partial-state, or malformed provider-state failures.
+
+Ready and stale results include:
+
+- current mode
+- validated mode-specific overlay view model
+- visibility state
+- available actions
+- stale-after threshold, currently deterministic and not time-driven
+- latest line/update id when available
+- safe debug summary in debug mode
+
+All state-source results explicitly report that no polling loop, timer, background thread, provider
+call, companion HTTP contract change, UI side effect, or clipboard write happened. Staleness is
+represented by explicit inputs such as `stale=True` or previous state fallback; there is no real
+timer and no flaky time-based behavior.
+
+Generated state-source summaries, when requested, are local artifacts only and must stay under:
+
+```text
+workspace/synthetic-slice/overlay-prototype/state/
+```
+
+This is a future-shell handoff contract. It is not a daemon, live polling loop, browser shell,
+JavaScript runtime, keyboard hook, clipboard integration, always-on-top overlay, provider execution,
+or production UI.
+
 ## Current Limits
 
 - Synthetic-only public data.

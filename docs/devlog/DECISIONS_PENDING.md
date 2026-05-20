@@ -52,7 +52,12 @@
 - Milestone 3H added declarative transition previews only. Decide later whether the real overlay shell
   consumes these previews directly or implements its own runtime state manager using the same action
   ids.
-- Decide whether transition preview fixtures should become the next committed overlay state contract
-  in Milestone 3I.
+- Decide whether transition preview fixtures should become a committed overlay state contract later.
 - Decide which layer eventually owns real clipboard writes, hide/show behavior, and keyboard mapping;
   they are intentionally outside the simulator.
+- Milestone 3I added a state-source contract but no real polling loop. Decide later whether the live
+  overlay shell owns polling cadence, debounce, retry, and stale-state expiry.
+- Decide whether state-source result fixtures should become the next committed overlay state contract
+  in Milestone 3J.
+- Decide whether future non-Python overlay clients need a portable schema for state-source results or
+  should consume generated contract docs from the Python validator/tests.

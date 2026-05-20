@@ -1,5 +1,14 @@
 # Known Risks
 
+- Milestone 3I models overlay state-source behavior only. It does not prove real polling cadence,
+  lifecycle management, shell rendering, focus behavior, or in-game placement.
+- Milestone 3I staleness is deterministic and explicit. There is still no real clock, timer loop, or
+  expiry policy for a live overlay shell.
+- Milestone 3I CLI self-test uses the existing deterministic mock provider endpoint to seed latest
+  provider state; the state-source module itself does not call providers directly.
+- Milestone 3I does not add committed state-source fixtures yet. Drift is covered by unit tests and a
+  smoke command; Milestone 3J should lock representative ready/no-data/stale/error state outputs if
+  the contract remains stable.
 - Milestone 3H simulates overlay transitions only. It does not prove real runtime state management,
   keyboard behavior, clipboard behavior, always-on-top behavior, focus behavior, or shell integration.
 - Milestone 3H copy and hide actions are previews. Future shell work must keep the boundary clear

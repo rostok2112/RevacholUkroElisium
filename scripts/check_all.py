@@ -139,6 +139,15 @@ def main() -> int:
             ],
         ),
         (
+            "overlay state source smoke",
+            [
+                sys.executable,
+                "scripts/run_overlay_state_source.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

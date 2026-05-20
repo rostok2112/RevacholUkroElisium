@@ -1,5 +1,53 @@
 # Session Summary
 
+Milestone 3I overlay polling/state-source contract is implemented.
+
+Completed in the latest session:
+- Added `scripts/overlay_state_source.py`, a stdlib-only state-source contract layer for turning
+  latest companion provider state into a current overlay render state.
+- The module exposes `OverlayStateSourceError`, `build_overlay_state_source(...)`,
+  `build_overlay_state_from_client(...)`, `collect_overlay_state_source_errors(...)`, and
+  `assert_valid_overlay_state_source(...)`.
+- State-source results use `schema_version: "overlay-state-source.v1"` and model `ready`,
+  `no_provider_state`, `stale`, and `error` statuses.
+- Ready/stale states include the active mode, validated mode-specific overlay view model, visibility,
+  available actions, deterministic stale threshold, line/update id, optional debug summary, and
+  explicit no-side-effect flags.
+- No-provider states are represented as valid state-source results rather than crashes. Partial
+  provider state, malformed provider payloads, and companion client failures become clear error
+  states.
+- Stale state is deterministic through explicit `stale=True` or previous-state fallback. No real
+  timers, polling loops, daemon threads, or background workers were added.
+- Added `scripts/run_overlay_state_source.py`, a CLI with `--server-url`, `--mode`,
+  `--self-test`, `--quiet`, and workspace-only `--output` under
+  `workspace/synthetic-slice/overlay-prototype/state/`.
+- The CLI self-test starts an in-process `127.0.0.1:0` companion server, posts the synthetic fixture
+  through the existing provider endpoint, reads latest provider state through `CompanionClient`,
+  builds the overlay state-source result, and shuts down cleanly.
+- Added `tests/test_overlay_state_source.py` covering ready/no-provider/stale/error states,
+  compact/deep/debug view-model validation, previous-state fallback, fake-client flows,
+  self-test/CLI behavior, output path safety, transition simulator compatibility, and forbidden
+  marker safety.
+- Added `python scripts/run_overlay_state_source.py --self-test --quiet` to `scripts/check_all.py`.
+- Updated `docs/overlay-prototype.md` and devlog handoff files to document state-source results as a
+  future overlay-shell handoff contract, not a real polling loop.
+- Did not add real polling loops, timers, background daemon work, JavaScript, frontend frameworks,
+  keyboard hooks, clipboard writes, always-on-top UI, provider execution, companion HTTP changes,
+  BepInEx, OCR, extraction, web/API calls, or real game content.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including the new overlay state source smoke and 263 unit
+    tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 263 tests.
+  - `npm run check` passed.
+  - `python scripts/check_overlay_viewmodel_fixtures.py --quiet` passed.
+  - `python scripts/render_overlay_review.py --quiet` passed.
+  - `python scripts/check_overlay_review_accessibility.py --quiet` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+  - `python scripts/run_overlay_state_simulator.py --fixture compact --action switch_deep --quiet`
+    passed.
+  - `python scripts/run_overlay_state_source.py --self-test --quiet` passed.
+
 Milestone 3H declarative overlay action/state transition simulator is implemented.
 
 Completed in the latest session:
