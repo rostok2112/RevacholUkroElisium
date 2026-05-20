@@ -1,5 +1,35 @@
 # Session Summary
 
+Milestone 4B BepInEx bridge optional build and manual verification hardening is implemented.
+
+Completed in the latest session:
+- Added `scripts/build_bepinex_bridge.py`, a stdlib-only optional build helper for the 4A C# bridge.
+- The helper detects `dotnet`, accepts explicit BepInEx IL2CPP reference DLL paths or established
+  local env vars, skips cleanly when tooling or references are missing, and attempts `dotnet build`
+  only when both references are supplied.
+- Build reports use `schema_version: "bepinex-bridge-build-report.v1"` and include `dotnet_found`,
+  `references_supplied`, `build_attempted`, `build_succeeded`, `warning_count`,
+  `msb3277_warning_count`, `output_dll_path`, `skipped_reason`, and explicit no-download/no-game-file
+  flags.
+- Reports redact local reference paths and only write optional JSON under
+  `workspace/synthetic-slice/bepinex-bridge/`.
+- Formalized the 4B warning policy: `MSB3277` warnings are visible and counted, but do not fail a
+  successful optional build by themselves.
+- Extended `scripts/check_bepinex_bridge_safety.py` so it verifies ignored `bin/`, `obj/`, and
+  `workspace/` roots, checks the optional build helper exists, rejects download/install markers, and
+  confirms `check_all` does not require the build helper.
+- Added `tests/test_bepinex_bridge_build.py` and extended bridge safety tests for skip behavior,
+  command construction, warning parsing, path redaction, output path safety, build failure reporting,
+  ignored output roots, no downloads, and no mandatory dotnet requirement.
+- Updated `docs/bepinex-bridge.md` and `packages/bepinex-plugin/README.md` with optional build
+  usage, `MSB3277` policy, and a synthetic/manual runtime verification checklist.
+- Confirmed the default helper invocation skips cleanly when no local refs are visible in the current
+  process environment, and an explicit local-ref invocation successfully builds the bridge with
+  `33` warnings, all counted as `MSB3277`.
+- Did not add game hooks, dialogue detection, Unity object scanning, OCR, extraction, decompiled game
+  code, provider execution, frontend/shell work, keyboard hooks, clipboard writes, companion HTTP
+  changes, downloads, web calls, or new dependencies.
+
 Milestone 4A safe BepInEx bridge skeleton is implemented.
 
 Completed in the latest session:

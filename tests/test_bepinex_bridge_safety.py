@@ -7,12 +7,15 @@ import unittest
 
 from scripts.check_bepinex_bridge_safety import (
     ALLOWED_URLS,
+    BUILD_HELPER,
     CHECK_ALL,
     DEFAULT_URL,
     FIXTURE_PATH,
     FORBIDDEN_EXTERNAL_MARKERS,
     FORBIDDEN_GAME_CONTENT_MARKERS,
     FORBIDDEN_HOOK_OR_EXTRACTION_MARKERS,
+    FORBIDDEN_DOWNLOAD_OR_INSTALL_MARKERS,
+    GITIGNORE,
     PACKAGE_DIR,
     PROJECT_FILE,
     RAW_PAYLOAD_LOG_PATTERNS,
@@ -108,6 +111,27 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
     def test_check_all_includes_bridge_safety_smoke(self) -> None:
         self.assertIn("scripts/check_bepinex_bridge_safety.py", _read(CHECK_ALL))
 
+    def test_check_all_does_not_require_optional_dotnet_build(self) -> None:
+        self.assertNotIn("scripts/build_bepinex_bridge.py", _read(CHECK_ALL))
+
+    def test_local_build_outputs_and_toolchains_are_ignored(self) -> None:
+        gitignore = _read(GITIGNORE)
+
+        for marker in ("bin/", "obj/", "workspace/"):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, gitignore)
+
+    def test_build_helper_is_optional_and_performs_no_downloads(self) -> None:
+        helper = _read(BUILD_HELPER)
+
+        self.assertIn("build_attempted", helper)
+        self.assertIn("skipped_reason", helper)
+        self.assertIn("no_downloads_performed", helper)
+        self.assertIn("no_game_files_required", helper)
+        for marker in FORBIDDEN_DOWNLOAD_OR_INSTALL_MARKERS:
+            with self.subTest(marker=marker):
+                self.assertNotIn(marker, helper)
+
 
 def _scanned_bridge_files() -> list[Path]:
     files = [
@@ -115,6 +139,7 @@ def _scanned_bridge_files() -> list[Path]:
         PACKAGE_DIR / "DESIGN.md",
         PROJECT_FILE,
         FIXTURE_PATH,
+        BUILD_HELPER,
     ]
     files.extend(sorted(SOURCE_DIR.glob("*.cs")))
     return files

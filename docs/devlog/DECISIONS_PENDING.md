@@ -1,10 +1,11 @@
 # Decisions Pending
 
-- Milestone 4A added a static-reviewable BepInEx bridge skeleton. Decide in 4B how optional C#
-  compilation should be detected, skipped, and documented when dotnet or user-local BepInEx
-  references are missing.
-- Decide after 4B whether the bridge remains synthetic/manual longer or starts carefully scoped
+- Milestone 4B decided optional C# compilation should skip cleanly when `dotnet` or user-local
+  BepInEx references are missing, and should remain outside mandatory `check_all`.
+- Decide after 4C whether the bridge remains synthetic/manual longer or starts carefully scoped
   current-line detection research.
+- Decide whether later runtime testing requires pinning/cleaning BepInEx/.NET references to reduce
+  `MSB3277` warnings, or whether warnings can remain documented.
 - Decide how a future manual in-game trigger should work without global keyboard hooks, clipboard
   writes, or production overlay behavior.
 - Whether to add a full JSON Schema dependency later or keep the local validator small.

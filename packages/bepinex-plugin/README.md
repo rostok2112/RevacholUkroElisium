@@ -22,7 +22,7 @@ What does not exist:
 - No text extraction, OCR, or decompiled game-code integration.
 - No production overlay, keyboard hooks, clipboard behavior, or provider execution.
 
-## Manual build posture
+## Optional build verification
 
 `Revachol.UkrainianCompanion.BepInExBridge.csproj` is intentionally minimal. It expects local
 BepInEx assemblies supplied by the user through MSBuild properties:
@@ -32,8 +32,46 @@ BepInExCoreDll=<path to BepInEx.Core.dll>
 BepInExIL2CPPDll=<path to BepInEx.Unity.IL2CPP.dll>
 ```
 
-The repository checks do not require `dotnet build`, the .NET SDK, or BepInEx binaries. Milestone 4A
-is covered by Python static safety checks until a later milestone adds build verification.
+Milestone 4B adds a local-only helper:
+
+```powershell
+python scripts/build_bepinex_bridge.py --quiet
+```
+
+It skips cleanly if `dotnet` or BepInEx references are missing. When references are supplied, it runs
+`dotnet build`, reports total warnings plus `MSB3277` warning count, and writes optional reports only
+under `workspace/synthetic-slice/bepinex-bridge/`.
+
+Example:
+
+```powershell
+python scripts/build_bepinex_bridge.py `
+  --core-dll <path-to-BepInEx.Core.dll> `
+  --il2cpp-dll <path-to-BepInEx.Unity.IL2CPP.dll> `
+  --output workspace/synthetic-slice/bepinex-bridge/build-report.json
+```
+
+The repository checks still do not require a successful C# build, the .NET SDK, or BepInEx binaries.
+`check_all` runs the Python safety checker only.
+
+`MSB3277` assembly-version warnings are allowed in 4B when the build succeeds and safety checks pass.
+They are not hidden; the helper summarizes them so a later runtime milestone can decide whether to
+pin or clean references.
+
+## Manual verification checklist
+
+1. Start the companion server with `python scripts/run_companion_server.py`.
+2. Run the optional build helper with user-local BepInEx references.
+3. Copy the built DLL into the user-owned `BepInEx/plugins/` folder.
+4. Launch the game.
+5. Confirm plugin startup logs appear.
+6. Confirm the companion `/health` check logs availability or a safe unavailable warning.
+7. Optionally enable `SendSyntheticEventOnStart = true` in local config.
+8. Confirm the companion receives the invented synthetic provider event.
+9. Confirm the game continues if the companion server is unavailable.
+
+Keep this verification synthetic/manual only. Do not capture real dialogue, scan Unity objects, run
+OCR, extract data, or commit local install paths.
 
 ## Local companion defaults
 

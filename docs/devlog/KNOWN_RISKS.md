@@ -1,10 +1,17 @@
 # Known Risks
 
+- Milestone 4B proves an optional local compile path only when `dotnet` and user-local BepInEx IL2CPP
+  references are supplied. It still does not prove runtime loading inside the game.
+- Local BepInEx IL2CPP builds may emit `MSB3277` assembly-version warnings. 4B counts and documents
+  them, but intentionally does not fail a successful optional build solely because of those warnings.
+- Build reports redact local reference paths, but generated reports and DLL outputs remain local
+  artifacts under ignored `workspace/`, `bin/`, and `obj/` paths and must not be committed.
+- The optional build helper does not download toolchains or references. Users remain responsible for
+  their own local .NET/BepInEx install.
 - Milestone 4A adds a BepInEx bridge skeleton only. It does not prove C# compilation, BepInEx
   runtime loading, game compatibility, install flow, or current-line detection.
-- `dotnet build` is intentionally not part of `check_all` yet because the local environment has no
-  .NET SDK and the repo does not carry BepInEx assemblies. Milestone 4B should harden optional build
-  verification without making local proprietary binaries required.
+- `dotnet build` is intentionally not a required part of `check_all` because the repo does not carry
+  BepInEx assemblies and must stay usable without local game/mod toolchains.
 - The bridge has a manual `.csproj` that expects user-local BepInEx references. Those paths and
   binaries must remain private and uncommitted.
 - `SendSyntheticEventOnStart` defaults to false. Enabling it still sends only invented synthetic text

@@ -19,6 +19,8 @@ PROJECT_FILE = PACKAGE_DIR / "Revachol.UkrainianCompanion.BepInExBridge.csproj"
 FIXTURE_PATH = ROOT / "tests/fixtures/bepinex_bridge.provider_annotate_request.synthetic.json"
 FAKE_EVENT_SCHEMA = ROOT / "specs/fake-game-event.schema.json"
 CHECK_ALL = ROOT / "scripts/check_all.py"
+BUILD_HELPER = ROOT / "scripts/build_bepinex_bridge.py"
+GITIGNORE = ROOT / ".gitignore"
 
 DEFAULT_URL = "http://127.0.0.1:8765"
 SYNTHETIC_EVENT_ID = "synthetic.event.bepinex.4a.001"
@@ -85,6 +87,21 @@ RAW_PAYLOAD_LOG_PATTERNS = (
     r"Log(?:Info|Warning|Error|Debug)\s*\(\s*RawEnglishText",
 )
 
+FORBIDDEN_DOWNLOAD_OR_INSTALL_MARKERS = (
+    "Invoke-WebRequest",
+    "Start-BitsTransfer",
+    "WebClient",
+    "urllib.request",
+    "requests.",
+    "curl ",
+    "wget ",
+    "winget ",
+    "choco ",
+    "scoop ",
+    "dotnet add package",
+    "dotnet restore",
+)
+
 
 class BepInExBridgeSafetyError(RuntimeError):
     """Raised when the BepInEx bridge skeleton violates the 4A safety boundary."""
@@ -139,6 +156,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_fixture())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
+    errors.extend(_check_ignored_output_roots())
     errors.extend(_check_check_all_smoke())
     return errors
 
@@ -152,6 +170,7 @@ def _check_required_files() -> list[str]:
         SOURCE_DIR / "CompanionHttpClient.cs",
         SOURCE_DIR / "SyntheticEventFactory.cs",
         FIXTURE_PATH,
+        BUILD_HELPER,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -190,6 +209,17 @@ def _check_fixture() -> list[str]:
         errors.append("Bridge fixture synthetic_line_id does not match the C# synthetic line id.")
     if "synthetic" not in json.dumps(fixture, ensure_ascii=False).lower():
         errors.append("Bridge provider request fixture must be clearly synthetic.")
+    return errors
+
+
+def _check_ignored_output_roots() -> list[str]:
+    if not GITIGNORE.exists():
+        return [".gitignore is missing; bridge build outputs must stay ignored."]
+    text = _read_text(GITIGNORE)
+    errors: list[str] = []
+    for marker in ("bin/", "obj/", "workspace/"):
+        if marker not in text:
+            errors.append(f".gitignore must keep {marker!r} ignored for local bridge outputs.")
     return errors
 
 
@@ -243,6 +273,10 @@ def _check_text_safety() -> list[str]:
             for pattern in RAW_PAYLOAD_LOG_PATTERNS:
                 if re.search(pattern, text):
                     errors.append(f"{relative}: appears to log a raw request payload.")
+        if path == BUILD_HELPER:
+            errors.extend(
+                _check_forbidden_markers(text, relative, FORBIDDEN_DOWNLOAD_OR_INSTALL_MARKERS)
+            )
 
     return errors
 
@@ -253,6 +287,8 @@ def _check_check_all_smoke() -> list[str]:
     text = _read_text(CHECK_ALL)
     if "scripts/check_bepinex_bridge_safety.py" not in text:
         return ["scripts/check_all.py must include the BepInEx bridge safety smoke."]
+    if "scripts/build_bepinex_bridge.py" in text:
+        return ["scripts/check_all.py must not require the optional BepInEx bridge build helper."]
     return []
 
 
@@ -289,6 +325,7 @@ def _scanned_files() -> list[Path]:
         PACKAGE_DIR / "DESIGN.md",
         PROJECT_FILE,
         FIXTURE_PATH,
+        BUILD_HELPER,
     ]
     files.extend(sorted(SOURCE_DIR.glob("*.cs")))
     return [path for path in files if path.exists()]
