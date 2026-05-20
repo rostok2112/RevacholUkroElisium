@@ -1,5 +1,17 @@
 # Known Risks
 
+- Milestone 4A adds a BepInEx bridge skeleton only. It does not prove C# compilation, BepInEx
+  runtime loading, game compatibility, install flow, or current-line detection.
+- `dotnet build` is intentionally not part of `check_all` yet because the local environment has no
+  .NET SDK and the repo does not carry BepInEx assemblies. Milestone 4B should harden optional build
+  verification without making local proprietary binaries required.
+- The bridge has a manual `.csproj` that expects user-local BepInEx references. Those paths and
+  binaries must remain private and uncommitted.
+- `SendSyntheticEventOnStart` defaults to false. Enabling it still sends only invented synthetic text
+  to the local companion mock-provider endpoint; it must not become real game-content capture without
+  a later milestone and safety review.
+- Static bridge safety checks catch obvious scope creep, but they are not a substitute for runtime
+  testing inside a user-owned local install.
 - Milestone 3K is an architecture decision only. It does not prove BepInEx feasibility, current-line
   detection, install flow, build tooling, or runtime compatibility.
 - Deferring shell work means generated HTML and JSON fixtures remain review contracts, not a

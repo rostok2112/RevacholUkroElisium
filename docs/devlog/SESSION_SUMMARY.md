@@ -1,5 +1,47 @@
 # Session Summary
 
+Milestone 4A safe BepInEx bridge skeleton is implemented.
+
+Completed in the latest session:
+- Reused the existing `packages/bepinex-plugin/` scaffold instead of creating a second bridge
+  package.
+- Added a static-reviewable C# BepInEx IL2CPP plugin skeleton with plugin metadata, safe startup
+  logging, BepInEx config bindings, a localhost-only companion client, `/health` check support, and
+  manual/synthetic provider annotation send support.
+- Added safe config defaults:
+  - `Enabled = true`
+  - `CompanionServerUrl = "http://127.0.0.1:8765"`
+  - `RequestTimeoutMs = 3000`
+  - `SendSyntheticEventOnStart = false`
+- Added a built-in invented synthetic fake event and committed matching wrapper fixture:
+  `tests/fixtures/bepinex_bridge.provider_annotate_request.synthetic.json`.
+- The C# skeleton sends only `{ "input_type": "fake_event", "event": ... }` to the existing
+  `/synthetic/provider-annotate` companion contract and logs only event id, line id, status, and
+  availability metadata.
+- Added `scripts/check_bepinex_bridge_safety.py`, a stdlib-only safety checker that validates the
+  bridge fixture, localhost defaults, synthetic/manual posture, no secret-looking values, no
+  external service URLs, no raw payload logging, and no hook/extraction/OCR markers in C# source.
+- Added `tests/test_bepinex_bridge_safety.py` covering fixture shape/schema validity, safe defaults,
+  localhost guard, manual project posture, no external/secrets/game-content markers, no hook
+  side-effect markers, no raw payload logging, and `check_all` smoke registration.
+- Added `python scripts/check_bepinex_bridge_safety.py --quiet` to `scripts/check_all.py`.
+- Added `docs/bepinex-bridge.md` and updated the package README/DESIGN with manual build/install
+  posture, unavailable-server behavior, synthetic send policy, and explicit non-goals.
+- Added a minimal `.csproj` for later manual local builds using user-supplied BepInEx references.
+  `dotnet build` is intentionally not required by `check_all` because this environment has no .NET
+  SDK and the repo must not commit BepInEx/game binaries.
+- Did not add game hooks, Unity object scanning, current dialogue detection, OCR, extraction,
+  decompiled game code, provider execution, frontend/shell work, keyboard hooks, clipboard writes,
+  companion HTTP changes, auth/TLS/persistence/CORS/database work, or new dependencies.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including the new BepInEx bridge safety smoke and 287
+    unit tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 287 tests.
+  - `npm run check` passed.
+  - `python scripts/check_bepinex_bridge_safety.py --quiet` passed.
+  - `python -m unittest tests.test_bepinex_bridge_safety -v` passed with 11 tests.
+
 Milestone 3K overlay shell readiness decision and 4A architecture handoff is implemented.
 
 Completed in the latest session:

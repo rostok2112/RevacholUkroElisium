@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Revachol.UkrainianCompanion.BepInExBridge</AssemblyName>
+    <RootNamespace>Revachol.UkrainianCompanion.BepInExBridge</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(BepInExCoreDll)' != ''">
+    <Reference Include="BepInEx.Core">
+      <HintPath>$(BepInExCoreDll)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(BepInExIL2CPPDll)' != ''">
+    <Reference Include="BepInEx.Unity.IL2CPP">
+      <HintPath>$(BepInExIL2CPPDll)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

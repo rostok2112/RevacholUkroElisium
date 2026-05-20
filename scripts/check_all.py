@@ -156,6 +156,14 @@ def main() -> int:
             ],
         ),
         (
+            "BepInEx bridge safety smoke",
+            [
+                sys.executable,
+                "scripts/check_bepinex_bridge_safety.py",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

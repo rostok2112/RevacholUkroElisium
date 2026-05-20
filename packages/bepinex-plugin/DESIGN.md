@@ -1,22 +1,31 @@
 # BepInEx Plugin Design
 
-## Responsibilities
+## Milestone 4A boundary
 
-- Hook or observe text display events.
-- Resolve current line ID where possible.
-- Emit current state to `127.0.0.1`.
-- Avoid altering game text in the first milestone.
-- Provide debug logs and version info.
+The bridge is currently a synthetic/manual communication skeleton only. It exists to prove a safe
+shape for future game-to-companion communication before any real game-state capture is attempted.
 
-## Anti-goals
+## Responsibilities now
 
-- No API keys in plugin.
-- No cloud calls from plugin.
-- No bundled translation database.
-- No destructive asset replacement in MVP.
+- Load as a BepInEx plugin skeleton.
+- Bind safe config defaults.
+- Check the localhost companion `/health` endpoint.
+- Optionally send one built-in synthetic fake event when explicitly configured.
+- Provide safe logs for enabled/disabled state, companion availability, event id, line id, and HTTP
+  status.
+
+## Anti-goals now
+
+- No real dialogue detection.
+- No game hooks or Unity object scanning.
+- No OCR, extraction, decompiled game-code integration, or bundled translation database.
+- No cloud calls, provider execution, keyboard hooks, clipboard writes, or production overlay shell.
+- No hard dependency on the companion server being available.
 
 ## Future
 
-- Optional in-game UI injection.
-- Optional audio reference emission.
-- Optional live reload for translator/debug mode.
+- Build verification against user-local BepInEx references.
+- Manual in-game command or debug panel for sending the synthetic event.
+- Carefully scoped current-line detection research after the skeleton proves safe installation and
+  localhost communication.
+- Later shell/window work only after bridge feasibility is better understood.

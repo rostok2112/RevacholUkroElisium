@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- Milestone 4A added a static-reviewable BepInEx bridge skeleton. Decide in 4B how optional C#
+  compilation should be detected, skipped, and documented when dotnet or user-local BepInEx
+  references are missing.
+- Decide after 4B whether the bridge remains synthetic/manual longer or starts carefully scoped
+  current-line detection research.
+- Decide how a future manual in-game trigger should work without global keyboard hooks, clipboard
+  writes, or production overlay behavior.
 - Whether to add a full JSON Schema dependency later or keep the local validator small.
 - Whether the companion server starts as Python, TypeScript, or a split service.
 - Which overlay stack to use for the first real UI prototype after bridge feasibility is proven.
