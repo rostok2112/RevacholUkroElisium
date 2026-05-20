@@ -1,0 +1,342 @@
+{
+  "available_actions": [
+    {
+      "allowed_modes": [
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Повернути короткий вигляд.",
+      "id": "switch_compact",
+      "label_uk": "Компактний режим",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "compact",
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Увімкнути або приховати англійський текст.",
+      "id": "toggle_original",
+      "label_uk": "Оригінал",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "compact",
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Увімкнути або приховати український текст.",
+      "id": "toggle_translation",
+      "label_uk": "Український варіант",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Увімкнути або приховати нотатки й глосарій.",
+      "id": "toggle_annotations",
+      "label_uk": "Пояснення",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Перейти до наступного пояснення.",
+      "id": "next_annotation",
+      "label_uk": "Наступна нотатка",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Повернутися до попереднього пояснення.",
+      "id": "previous_annotation",
+      "label_uk": "Попередня нотатка",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "compact",
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Підготувати англійський текст до копіювання.",
+      "id": "copy_original",
+      "label_uk": "Скопіювати оригінал",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "compact",
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Підготувати короткий український зміст до копіювання.",
+      "id": "copy_ukrainian_summary",
+      "label_uk": "Скопіювати український зміст",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Підготувати стислий підсумок нотаток до копіювання.",
+      "id": "copy_annotation_summary",
+      "label_uk": "Скопіювати пояснення",
+      "player_facing": true
+    },
+    {
+      "allowed_modes": [
+        "compact",
+        "deep",
+        "debug"
+      ],
+      "debug_only": false,
+      "hint_uk": "Прибрати підказку з екрана.",
+      "id": "hide_overlay",
+      "label_uk": "Сховати оверлей",
+      "player_facing": true
+    }
+  ],
+  "background_thread_started": false,
+  "calls_provider": false,
+  "clipboard_written": false,
+  "companion_contract_changed": false,
+  "companion_http_contract_changed": false,
+  "current_mode": "deep",
+  "debug_summary": null,
+  "error": null,
+  "last_update_id": "synthetic.provider_contract.001",
+  "line_id": "synthetic.provider_contract.001",
+  "polling_loop_started": false,
+  "provider_call_performed": false,
+  "schema_version": "overlay-state-source.v1",
+  "source_status": "ready",
+  "stale_after_seconds": 30,
+  "timer_started": false,
+  "ui_side_effects": false,
+  "view_model": {
+    "deep": {
+      "actions": [
+        {
+          "allowed_modes": [
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Повернути короткий вигляд.",
+          "id": "switch_compact",
+          "label_uk": "Компактний режим",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "compact",
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Увімкнути або приховати англійський текст.",
+          "id": "toggle_original",
+          "label_uk": "Оригінал",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "compact",
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Увімкнути або приховати український текст.",
+          "id": "toggle_translation",
+          "label_uk": "Український варіант",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Увімкнути або приховати нотатки й глосарій.",
+          "id": "toggle_annotations",
+          "label_uk": "Пояснення",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Перейти до наступного пояснення.",
+          "id": "next_annotation",
+          "label_uk": "Наступна нотатка",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Повернутися до попереднього пояснення.",
+          "id": "previous_annotation",
+          "label_uk": "Попередня нотатка",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "compact",
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Підготувати англійський текст до копіювання.",
+          "id": "copy_original",
+          "label_uk": "Скопіювати оригінал",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "compact",
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Підготувати короткий український зміст до копіювання.",
+          "id": "copy_ukrainian_summary",
+          "label_uk": "Скопіювати український зміст",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Підготувати стислий підсумок нотаток до копіювання.",
+          "id": "copy_annotation_summary",
+          "label_uk": "Скопіювати пояснення",
+          "player_facing": true
+        },
+        {
+          "allowed_modes": [
+            "compact",
+            "deep",
+            "debug"
+          ],
+          "debug_only": false,
+          "hint_uk": "Прибрати підказку з екрана.",
+          "id": "hide_overlay",
+          "label_uk": "Сховати оверлей",
+          "player_facing": true
+        }
+      ],
+      "character_tone_notes": [
+        {
+          "kind": "skill_voice",
+          "text": "Голос сухий і канцелярський, ніби свідок звітує про абсурд без підвищення тону.",
+          "title": "Голос персонажа"
+        },
+        {
+          "kind": "tone",
+          "text": "Тон сухий і стриманий; іронія тримається на буденному викладі абсурду.",
+          "title": "Тон"
+        }
+      ],
+      "character_voice_note_uk": "Голос сухий і канцелярський, ніби свідок звітує про абсурд без підвищення тону.",
+      "confidence": 0.77,
+      "confidence_summary_uk": "Впевненість: середня.",
+      "explanation_uk": "Це синтетична бюрократична іронія: проблему не лагодять, а перейменовують на досягнення.",
+      "glossary_terms": [
+        "committee",
+        "infrastructure",
+        "pipe"
+      ],
+      "idiom_reference_subtext_notes": [
+        {
+          "kind": "idiom",
+          "text": "Образ працює як іронія: зовнішня відзнака підміняє справжнє виправлення проблеми.",
+          "title": "Ідіома / образ"
+        },
+        {
+          "kind": "reference",
+          "text": "Можливий натяк на бюрократичну риторику; точне джерело не стверджується.",
+          "title": "Референс"
+        },
+        {
+          "kind": "translation_choice",
+          "text": "Переклад зберігає суху абсурдність замість прихованої культурної підміни.",
+          "title": "Вибір перекладу"
+        }
+      ],
+      "literary_rendering_uk": "Комітет причепив медаль до труби, що протікала, і назвав це інфраструктурою.",
+      "mode": "deep",
+      "original_english": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+      "risk_summary_uk": "Демонстраційний результат: перед реальним використанням потрібна людська перевірка.",
+      "section_order_uk": [
+        "Оригінал",
+        "Літературний український варіант",
+        "Що тут відбувається",
+        "Підтекст / іронія / референс",
+        "Тон / голос",
+        "Глосарій",
+        "Ризики / невпевненість"
+      ],
+      "speaker": "Synthetic Clerk",
+      "spoiler_budget": "none",
+      "spoiler_budget_summary_uk": "Спойлерів немає.",
+      "visibility": {
+        "annotations_visible": true,
+        "available_modes": [
+          "compact",
+          "deep"
+        ],
+        "current_mode": "deep",
+        "debug_visible": false,
+        "original_visible": true,
+        "translation_visible": true
+      }
+    },
+    "mode": "deep",
+    "schema_version": "local-overlay-prototype.v1",
+    "source": {
+      "conversation_id": "synthetic.conv.provider-contract",
+      "line_id": "synthetic.provider_contract.001",
+      "original_english": "The committee pinned a medal on the leaking pipe and called it infrastructure.",
+      "scene_id": "synthetic.scene.provider-contract-office",
+      "speaker": "Synthetic Clerk"
+    }
+  },
+  "visibility": {
+    "annotations_visible": true,
+    "available_modes": [
+      "compact",
+      "deep"
+    ],
+    "current_mode": "deep",
+    "debug_visible": false,
+    "original_visible": true,
+    "translation_visible": true
+  }
+}

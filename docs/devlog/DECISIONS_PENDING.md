@@ -57,7 +57,10 @@
   they are intentionally outside the simulator.
 - Milestone 3I added a state-source contract but no real polling loop. Decide later whether the live
   overlay shell owns polling cadence, debounce, retry, and stale-state expiry.
-- Decide whether state-source result fixtures should become the next committed overlay state contract
-  in Milestone 3J.
+- Milestone 3J made state-source result fixtures a committed overlay shell handoff contract.
 - Decide whether future non-Python overlay clients need a portable schema for state-source results or
   should consume generated contract docs from the Python validator/tests.
+- Decide whether a later state-source schema version should keep both no-side-effect alias names or
+  consolidate around one naming convention.
+- Decide the review process for intentional state-source fixture updates once a real overlay shell
+  starts consuming these fixtures.

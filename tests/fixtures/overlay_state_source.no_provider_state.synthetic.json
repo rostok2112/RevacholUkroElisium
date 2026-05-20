@@ -1,0 +1,25 @@
+{
+  "available_actions": [],
+  "background_thread_started": false,
+  "calls_provider": false,
+  "clipboard_written": false,
+  "companion_contract_changed": false,
+  "companion_http_contract_changed": false,
+  "current_mode": "compact",
+  "debug_summary": null,
+  "error": {
+    "code": "no_provider_state",
+    "message": "No latest provider context or annotation is available."
+  },
+  "last_update_id": null,
+  "line_id": null,
+  "polling_loop_started": false,
+  "provider_call_performed": false,
+  "schema_version": "overlay-state-source.v1",
+  "source_status": "no_provider_state",
+  "stale_after_seconds": 30,
+  "timer_started": false,
+  "ui_side_effects": false,
+  "view_model": null,
+  "visibility": null
+}

@@ -148,6 +148,14 @@ def main() -> int:
             ],
         ),
         (
+            "overlay state-source fixture regression",
+            [
+                sys.executable,
+                "scripts/check_overlay_state_source_fixtures.py",
+                "--quiet",
+            ],
+        ),
+        (
             "prompt pack smoke",
             [sys.executable, "scripts/run_prompt_pack.py", "--summary"],
         ),

@@ -204,7 +204,9 @@ def collect_overlay_state_source_errors(state: Any) -> list[str]:
         "polling_loop_started",
         "timer_started",
         "background_thread_started",
+        "provider_call_performed",
         "calls_provider",
+        "companion_contract_changed",
         "companion_http_contract_changed",
         "ui_side_effects",
         "clipboard_written",
@@ -235,6 +237,8 @@ def collect_overlay_state_source_errors(state: Any) -> list[str]:
         errors.append("$.error: ready states must use null")
     if status == "no_provider_state":
         _require_error_code(state.get("error"), "no_provider_state", errors)
+    if status == "stale":
+        _require_error_code(state.get("error"), "stale", errors)
     if status == "error" and not isinstance(state.get("error"), dict):
         errors.append("$.error: error states require error details")
 
@@ -242,7 +246,9 @@ def collect_overlay_state_source_errors(state: Any) -> list[str]:
         "polling_loop_started",
         "timer_started",
         "background_thread_started",
+        "provider_call_performed",
         "calls_provider",
+        "companion_contract_changed",
         "companion_http_contract_changed",
         "ui_side_effects",
         "clipboard_written",
@@ -335,7 +341,9 @@ def _base_state(
         "polling_loop_started": False,
         "timer_started": False,
         "background_thread_started": False,
+        "provider_call_performed": False,
         "calls_provider": False,
+        "companion_contract_changed": False,
         "companion_http_contract_changed": False,
         "ui_side_effects": False,
         "clipboard_written": False,

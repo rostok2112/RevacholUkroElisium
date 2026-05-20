@@ -1,5 +1,13 @@
 # Known Risks
 
+- Milestone 3J locks state-source fixture shape, so intentional state-source contract changes now
+  require coordinated updates to builder code, fixtures, checker, tests, and docs.
+- Milestone 3J ready debug fixture is larger than player-mode fixtures because it embeds developer
+  metadata. Keep it reviewable and redacted; do not let it grow into raw prompt or payload logging.
+- Milestone 3J fixtures are structural regression artifacts. They do not prove real polling cadence,
+  retries, live shell lifecycle, focus behavior, or in-game placement.
+- Milestone 3J adds additive alias no-side-effect fields. Future clients should treat both the old
+  and clearer alias names as contract fields until a later versioning decision is made.
 - Milestone 3I models overlay state-source behavior only. It does not prove real polling cadence,
   lifecycle management, shell rendering, focus behavior, or in-game placement.
 - Milestone 3I staleness is deterministic and explicit. There is still no real clock, timer loop, or

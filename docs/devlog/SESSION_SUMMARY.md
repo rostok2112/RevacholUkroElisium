@@ -1,5 +1,28 @@
 # Session Summary
 
+Milestone 3J overlay state-source regression fixtures and contract hardening is implemented.
+
+Completed in the latest session:
+- Added committed synthetic overlay state-source fixtures for ready compact, ready deep, ready debug,
+  no-provider, stale, and error states.
+- Added `scripts/check_overlay_state_source_fixtures.py`, a stdlib-only checker with `--quiet` and
+  intentional `--write` regeneration.
+- The checker rebuilds current state-source outputs from committed synthetic provider fixtures,
+  validates state-source shape, safety-scans fixtures, compares canonical JSON, and checks ready
+  fixture transition compatibility through the overlay state simulator.
+- Added explicit additive no-side-effect aliases to state-source results:
+  `provider_call_performed: false` and `companion_contract_changed: false`, while retaining the
+  existing `calls_provider: false` and `companion_http_contract_changed: false`.
+- Added `tests/test_overlay_state_source_fixtures.py` covering fixture validation, drift detection,
+  deterministic regeneration through temporary fixture paths, status-specific shape, safety checks,
+  no-provider/stale/error behavior, ready view-model validation, and transition compatibility.
+- Added the state-source fixture regression smoke to `scripts/check_all.py`.
+- Updated `docs/overlay-prototype.md` and devlog handoff files to document state-source fixtures as a
+  future overlay shell handoff contract.
+- Did not add real polling loops, timers, background workers, UI shell behavior, JavaScript,
+  keyboard hooks, clipboard writes, always-on-top UI, provider execution, companion HTTP changes,
+  BepInEx, OCR, extraction, web/API calls, or real game content.
+
 Milestone 3I overlay polling/state-source contract is implemented.
 
 Completed in the latest session:

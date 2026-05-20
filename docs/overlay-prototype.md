@@ -270,6 +270,41 @@ Generated state-source summaries, when requested, are local artifacts only and m
 workspace/synthetic-slice/overlay-prototype/state/
 ```
 
+## State Source Fixtures
+
+Milestone 3J adds committed synthetic JSON fixtures for the state-source contract:
+
+```text
+tests/fixtures/overlay_state_source.ready.compact.synthetic.json
+tests/fixtures/overlay_state_source.ready.deep.synthetic.json
+tests/fixtures/overlay_state_source.ready.debug.synthetic.json
+tests/fixtures/overlay_state_source.no_provider_state.synthetic.json
+tests/fixtures/overlay_state_source.stale.synthetic.json
+tests/fixtures/overlay_state_source.error.synthetic.json
+```
+
+Use the fixture checker before changing state-source behavior:
+
+```text
+python scripts/check_overlay_state_source_fixtures.py --quiet
+```
+
+Fixture updates must be intentional:
+
+```text
+python scripts/check_overlay_state_source_fixtures.py --write
+```
+
+Ready fixtures embed validated mode-specific overlay view models. The stale fixture reuses a
+validated previous view model with deterministic stale metadata. The no-provider fixture represents
+absence as a valid state, not a crash. The error fixture is redacted and must not include raw
+provider payloads, prompts, secrets, private paths, generated HTML, future provider markers, or
+`context_packet.game.title`.
+
+The fixtures and checker are the current state-source handoff contract for a future overlay shell.
+They still do not implement polling cadence, timers, retries, background workers, UI side effects, or
+provider execution.
+
 This is a future-shell handoff contract. It is not a daemon, live polling loop, browser shell,
 JavaScript runtime, keyboard hook, clipboard integration, always-on-top overlay, provider execution,
 or production UI.
