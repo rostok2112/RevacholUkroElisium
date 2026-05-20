@@ -2,7 +2,7 @@
 
 - Whether to add a full JSON Schema dependency later or keep the local validator small.
 - Whether the companion server starts as Python, TypeScript, or a split service.
-- Which overlay stack to use for the first real UI prototype.
+- Which overlay stack to use for the first real UI prototype after bridge feasibility is proven.
 - How to structure lawful opt-in web enrichment and source attribution.
 - Whether to rename or alias `docs/00-start-here.md` as `docs/00-project-vision.md`.
 - Whether to keep the actual repository spelling `revachol-ukro-elisium` long-term or introduce a documented `elysium` alias later.
@@ -64,3 +64,9 @@
   consolidate around one naming convention.
 - Decide the review process for intentional state-source fixture updates once a real overlay shell
   starts consuming these fixtures.
+- Milestone 3K accepted ADR 0007: defer Electron/Tauri/native overlay shell work and move next to a
+  synthetic/manual BepInEx bridge skeleton.
+- Decide after Milestone 4A whether the bridge should remain manual/synthetic longer or begin
+  carefully scoped current-line detection research.
+- Decide later whether the first real shell should be a local browser page, companion-served page,
+  Electron, Tauri, or native overlay after the bridge proves useful state emission.

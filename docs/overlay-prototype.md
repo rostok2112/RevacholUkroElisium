@@ -3,6 +3,12 @@
 Milestone 3A adds a local static overlay prototype for synthetic review and client-contract work.
 It is not a production overlay, not game integration, and not an always-on-top window.
 
+Milestone 3K closes the current overlay-contract phase. ADR 0007 recommends keeping these JSON,
+HTML, state-source, and transition artifacts as the reviewable contract for now, while deferring
+Electron, Tauri, native always-on-top behavior, global hotkeys, clipboard writes, and production
+shell work. The next coding phase should prove the game bridge path first with a synthetic/manual
+BepInEx skeleton.
+
 The prototype consumes the existing localhost companion client/provider annotation contract:
 
 ```text
@@ -319,3 +325,21 @@ or production UI.
 
 Future milestones can use this view-model shape as a handoff point for a real overlay shell after the
 local HTTP contract, privacy policy, and player-facing UX are more stable.
+
+## Shell Readiness Decision
+
+ADR 0007 records the current shell-readiness decision:
+
+- The 3.x overlay contract is sufficiently complete for now.
+- Static JSON fixtures, state-source fixtures, transition previews, and review HTML remain the
+  project contract and review surface.
+- A real desktop shell is deferred until the bridge proves safe current-state emission.
+- Electron, Tauri, native always-on-top UI, global hotkeys, clipboard writes, JavaScript shell work,
+  browser automation, production auth/TLS/persistence, and companion HTTP changes are out of scope
+  for the next phase.
+- Milestone 4A should add only a BepInEx bridge skeleton that can check companion health and send a
+  manual/synthetic fake event to the existing local companion contract.
+
+The 4A bridge skeleton must stay synthetic/manual at first. It must not extract real dialogue,
+commit decompiled game code, bundle copyrighted assets, call providers, or require the companion
+server for the game to keep running.

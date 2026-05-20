@@ -1,5 +1,13 @@
 # Known Risks
 
+- Milestone 3K is an architecture decision only. It does not prove BepInEx feasibility, current-line
+  detection, install flow, build tooling, or runtime compatibility.
+- Deferring shell work means generated HTML and JSON fixtures remain review contracts, not a
+  player-ready overlay window.
+- Milestone 4A must remain synthetic/manual first. Accidentally emitting real game text, decompiled
+  code, assets, screenshots, or extracted databases would violate the repo safety model.
+- The future shell stack remains undecided. ADR 0007 only chooses to defer that decision until bridge
+  feasibility is better understood.
 - Milestone 3J locks state-source fixture shape, so intentional state-source contract changes now
   require coordinated updates to builder code, fixtures, checker, tests, and docs.
 - Milestone 3J ready debug fixture is larger than player-mode fixtures because it embeds developer

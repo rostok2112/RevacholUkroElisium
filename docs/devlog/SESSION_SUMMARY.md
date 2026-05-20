@@ -1,5 +1,35 @@
 # Session Summary
 
+Milestone 3K overlay shell readiness decision and 4A architecture handoff is implemented.
+
+Completed in the latest session:
+- Added `docs/adr/0007-overlay-shell-path.md`.
+- ADR 0007 compares static review artifacts, a local browser page, companion-served local web page,
+  Electron, Tauri, native overlay, and moving next to a BepInEx bridge skeleton.
+- Accepted decision: defer Electron/Tauri/native always-on-top shell work and make Milestone 4A a
+  synthetic/manual BepInEx bridge skeleton.
+- Documented why: 3.x overlay contracts are stable enough for now, while current line/game-state
+  capture is the largest remaining unknown.
+- Added a Milestone 4A readiness checklist covering C# plugin skeleton, configurable localhost
+  companion URL, `/health` check, manual/synthetic event send, safe logging, graceful unavailable
+  server behavior, and no real extraction or proprietary content.
+- Updated `docs/overlay-prototype.md` to state that the 3.x overlay contract phase is sufficiently
+  complete for now and production shell work is deferred.
+- Updated devlog handoff files with 3K risks, pending decisions, and the exact 4A prompt.
+- Did not add BepInEx code, frontend framework work, JavaScript, Electron/Tauri/native shell,
+  always-on-top behavior, keyboard hooks, clipboard writes, provider execution, OCR, extraction,
+  companion HTTP changes, or real game content.
+- Validation completed:
+  - `python scripts/check_all.py` passed, including 276 unit tests.
+  - `python scripts/validate_schemas.py` passed.
+  - `python -m unittest discover -s tests -p "test_*.py"` passed with 276 tests.
+  - `npm run check` passed.
+  - `python scripts/check_overlay_viewmodel_fixtures.py --quiet` passed.
+  - `python scripts/check_overlay_state_source_fixtures.py --quiet` passed.
+  - `python scripts/render_overlay_review.py --quiet` passed.
+  - `python scripts/check_overlay_review_accessibility.py --quiet` passed.
+  - `python scripts/run_local_overlay_prototype.py --self-test --quiet` passed.
+
 Milestone 3J overlay state-source regression fixtures and contract hardening is implemented.
 
 Completed in the latest session:
