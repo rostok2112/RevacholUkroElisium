@@ -15,6 +15,11 @@
   "game_continued_when_companion_unavailable": false,
   "warnings_count": 0,
   "msb3277_warning_count": 0,
+  "blockers": [],
+  "next_step_notes": "Synthetic fixture only. Review is not ready for any next phase.",
+  "synthetic_send_not_run_reason": "Synthetic send was not run because this committed fixture is not a runtime result.",
+  "unavailable_case_not_run_reason": "Unavailable companion case was not run because this committed fixture is not a runtime result.",
+  "evidence_summary_redacted": true,
   "notes_redacted": "Synthetic committed fixture. No user-local runtime evidence is attached.",
   "evidence_summary": "Safe metadata-only summary placeholder for a future manual smoke.",
   "created_by_user_manually": true

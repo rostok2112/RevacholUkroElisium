@@ -39,6 +39,7 @@ LOG_CONTRACT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-log-contract.md"
 RUNTIME_REPORT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke-report.md"
 RUNTIME_REPORT_CHECKER = ROOT / "scripts/check_bepinex_runtime_smoke_report.py"
 RUNTIME_REPORT_WRITER = ROOT / "scripts/write_bepinex_runtime_smoke_report.py"
+RUNTIME_REPORT_REVIEWER = ROOT / "scripts/review_bepinex_runtime_smoke_report.py"
 
 DEFAULT_URL = "http://127.0.0.1:8765"
 SYNTHETIC_EVENT_ID = "synthetic.event.bepinex.4a.001"
@@ -202,6 +203,7 @@ def _check_required_files() -> list[str]:
         RUNTIME_REPORT_FIXTURE_PATH,
         RUNTIME_REPORT_CHECKER,
         RUNTIME_REPORT_WRITER,
+        RUNTIME_REPORT_REVIEWER,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -251,10 +253,15 @@ def _check_runtime_report_contract() -> list[str]:
         text = _read_text(doc_path).replace("\\", "/")
         fixture_ref = str(RUNTIME_REPORT_FIXTURE_PATH.relative_to(ROOT)).replace("\\", "/")
         checker_ref = str(RUNTIME_REPORT_CHECKER.relative_to(ROOT)).replace("\\", "/")
+        reviewer_ref = str(RUNTIME_REPORT_REVIEWER.relative_to(ROOT)).replace("\\", "/")
         if fixture_ref not in text:
             errors.append(f"{doc_path.relative_to(ROOT)} must point to the runtime report fixture.")
         if checker_ref not in text:
             errors.append(f"{doc_path.relative_to(ROOT)} must point to the runtime report checker.")
+        if reviewer_ref not in text:
+            errors.append(
+                f"{doc_path.relative_to(ROOT)} must point to the runtime report reviewer."
+            )
 
     gitignore_text = _read_text(GITIGNORE) if GITIGNORE.exists() else ""
     report_root = str(RUNTIME_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
@@ -440,6 +447,7 @@ def _scanned_files() -> list[Path]:
         BUILD_HELPER,
         RUNTIME_REPORT_CHECKER,
         RUNTIME_REPORT_WRITER,
+        RUNTIME_REPORT_REVIEWER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,

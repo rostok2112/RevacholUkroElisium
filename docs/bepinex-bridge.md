@@ -151,11 +151,22 @@ Validate the committed synthetic report fixture or a local workspace report with
 python scripts/check_bepinex_runtime_smoke_report.py --quiet
 ```
 
+Review a completed redacted local report with:
+
+```powershell
+python scripts/review_bepinex_runtime_smoke_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/runtime-smoke/report.json
+```
+
 Runtime logs may include only safe metadata: enabled/disabled state, localhost skip, companion
 health availability, endpoint status, synthetic event id, synthetic line id, and concise unavailable
 warnings. Do not commit local BepInEx logs, game logs, full payloads, response bodies, stack traces,
 private paths, or smoke reports. Redacted local report summaries belong only under
 `workspace/synthetic-slice/bepinex-bridge/runtime-smoke/`.
+
+`ready_for_next_phase = true` in a review summary means the manual smoke evidence is ready for
+human discussion of a later metadata-only probe. It is not approval to capture real text, add hooks,
+run OCR, scan Unity objects, or change the companion contract.
 
 ## Current-Line Capture Research
 

@@ -1,5 +1,11 @@
 # Known Risks
 
+- Milestone 4F reviews redacted report summaries only. It does not prove the underlying manual smoke
+  observations are true, complete, or reproducible.
+- `ready_for_next_phase = true` is not approval for current-line capture, hooks, OCR, extraction, or
+  companion contract changes. It only says the redacted evidence is complete enough for human review.
+- Review summaries intentionally omit report notes and evidence text, so they may hide useful nuance.
+  Keep the full redacted report local and ignored if more context is needed.
 - Milestone 4E is an architecture decision only. It does not prove current-line capture feasibility,
   runtime UI observability, method patch viability, or legal safety for real text capture.
 - ADR 0008 discusses risky approaches such as OCR, broad UI observation, and method patching so they

@@ -22,6 +22,7 @@ from scripts.check_bepinex_bridge_safety import (
     RUNTIME_REPORT_CHECKER,
     RUNTIME_REPORT_DOC,
     RUNTIME_REPORT_FIXTURE_PATH,
+    RUNTIME_REPORT_REVIEWER,
     RUNTIME_REPORT_ROOT,
     RUNTIME_REPORT_WRITER,
     RUNTIME_SMOKE_DOC,
@@ -85,16 +86,21 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
     def test_runtime_report_contract_is_registered_without_requiring_real_report(self) -> None:
         fixture_ref = "tests/fixtures/bepinex_bridge.runtime_smoke_report.synthetic.json"
         checker_ref = "scripts/check_bepinex_runtime_smoke_report.py"
+        reviewer_ref = "scripts/review_bepinex_runtime_smoke_report.py"
 
         self.assertTrue(RUNTIME_REPORT_FIXTURE_PATH.exists())
         self.assertTrue(RUNTIME_REPORT_DOC.exists())
         self.assertTrue(RUNTIME_REPORT_CHECKER.exists())
         self.assertTrue(RUNTIME_REPORT_WRITER.exists())
+        self.assertTrue(RUNTIME_REPORT_REVIEWER.exists())
         self.assertIn(fixture_ref, _read(RUNTIME_SMOKE_DOC))
         self.assertIn(fixture_ref, _read(RUNTIME_REPORT_DOC))
         self.assertIn(checker_ref, _read(RUNTIME_SMOKE_DOC))
         self.assertIn(checker_ref, _read(RUNTIME_REPORT_DOC))
+        self.assertIn(reviewer_ref, _read(RUNTIME_SMOKE_DOC))
+        self.assertIn(reviewer_ref, _read(RUNTIME_REPORT_DOC))
         self.assertNotIn(checker_ref, _read(CHECK_ALL))
+        self.assertNotIn(reviewer_ref, _read(CHECK_ALL))
         self.assertTrue(str(RUNTIME_REPORT_ROOT.relative_to(ROOT)).startswith("workspace"))
 
     def test_current_line_capture_research_adr_is_registered(self) -> None:
@@ -214,6 +220,7 @@ def _scanned_bridge_files() -> list[Path]:
         BUILD_HELPER,
         RUNTIME_REPORT_CHECKER,
         RUNTIME_REPORT_WRITER,
+        RUNTIME_REPORT_REVIEWER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,

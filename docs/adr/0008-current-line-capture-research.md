@@ -154,6 +154,8 @@ implementation.
 - Review process for a user-supplied redacted runtime smoke report.
 - Clear pass/partial/fail interpretation for build, plugin load, health check, unavailable companion,
   optional synthetic send, and game-continues observations.
+- A redacted review helper may summarize readiness, but it must not read logs, screenshots, game
+  files, companion state, or provider outputs.
 - No real text capture by default.
 - No game hooks unless a later milestone explicitly approves them.
 - No OCR.

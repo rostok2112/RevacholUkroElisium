@@ -1,11 +1,10 @@
 # Decisions Pending
 
+- Milestone 4F added a redacted runtime smoke report review helper. Decide after reviewing actual
+  user-local evidence whether Milestone 4G should remain planning-only or add a disabled
+  metadata-only probe contract.
 - Milestone 4E accepted ADR 0008: keep current-line capture unimplemented and continue
   manual/synthetic bridge events until redacted runtime smoke evidence is reviewed.
-- Decide after Milestone 4F whether reviewed user-local runtime smoke evidence is enough to scope a
-  metadata-only current-line probe.
-- Decide whether the 4F evidence review should produce a local readiness summary helper or remain a
-  purely manual checklist.
 - Milestone 4B decided optional C# compilation should skip cleanly when `dotnet` or user-local
   BepInEx references are missing, and should remain outside mandatory `check_all`.
 - Decide whether later runtime testing requires pinning/cleaning BepInEx/.NET references to reduce

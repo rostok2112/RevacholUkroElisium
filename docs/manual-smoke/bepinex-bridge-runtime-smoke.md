@@ -22,6 +22,13 @@ Validate the report shape with:
 python scripts/check_bepinex_runtime_smoke_report.py --quiet
 ```
 
+Review a completed redacted local report with:
+
+```powershell
+python scripts/review_bepinex_runtime_smoke_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/runtime-smoke/report.json
+```
+
 The report workflow is documented in:
 
 ```text
@@ -143,6 +150,10 @@ paste or commit local runtime logs. If you record the result, use only a redacte
 ```text
 workspace/synthetic-slice/bepinex-bridge/runtime-smoke/
 ```
+
+After filling the report, run the review helper. `ready_for_next_phase = true` means only that the
+manual smoke evidence is complete enough to discuss a later metadata-only probe. It does not approve
+current-line capture, hooks, OCR, extraction, or companion contract changes.
 
 ## Cleanup
 

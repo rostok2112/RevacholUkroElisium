@@ -1,5 +1,32 @@
 # Session Summary
 
+Milestone 4F runtime smoke evidence review workflow is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_bepinex_runtime_smoke_report.py`, a stdlib-only helper for reviewing
+  user-local redacted runtime smoke reports.
+- The reviewer accepts only reports under `workspace/synthetic-slice/bepinex-bridge/runtime-smoke/`
+  and can write redacted JSON/Markdown summaries only under
+  `workspace/synthetic-slice/bepinex-bridge/runtime-smoke/review/`.
+- Review summaries use `schema_version: "bepinex-bridge-runtime-smoke-review.v1"` and include report
+  status, observed smoke booleans, warning counts, redaction/no-side-effect flags, deterministic
+  blockers, and a recommended next step.
+- Readiness is deterministic: `pass` report status, plugin load, health check, companion availability
+  path, unavailable-case observation or explanation, and synthetic-send observation or safe not-run
+  reason are required.
+- Review output never copies report `notes_redacted` or `evidence_summary` text, and the helper does
+  not read logs, game files, screenshots, companion state, or provider outputs.
+- Extended the report template/checker and committed synthetic report fixture with optional review
+  fields: `blockers`, `next_step_notes`, `synthetic_send_not_run_reason`,
+  `unavailable_case_not_run_reason`, and `evidence_summary_redacted`.
+- Added `tests/test_bepinex_runtime_smoke_review.py` and extended bridge safety registration so the
+  review helper is required without making `check_all` depend on a real runtime report.
+- Updated manual-smoke docs, bridge docs, and ADR 0008 to document the review command and clarify
+  that readiness does not approve current-line capture.
+- Did not add C# behavior, game hooks, dialogue detection, Unity object scanning, OCR, extraction,
+  decompiled game-code work, provider execution, frontend/shell work, keyboard hooks, clipboard
+  writes, companion HTTP changes, downloads, web calls, or new dependencies.
+
 Milestone 4E current-line capture research ADR and safety boundaries are implemented.
 
 Completed in the latest session:

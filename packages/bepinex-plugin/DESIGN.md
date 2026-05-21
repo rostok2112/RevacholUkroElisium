@@ -73,3 +73,10 @@ with game text, or raw companion payloads containing real game text.
 Milestone 4F should review runtime smoke evidence before any metadata-only current-line probe is
 scoped. It should not add real text capture, game hooks, OCR, extraction, or companion contract
 changes.
+
+## Milestone 4F evidence review posture
+
+`scripts/review_bepinex_runtime_smoke_report.py` reviews a redacted user-local smoke report and can
+write a redacted readiness summary under ignored workspace paths. It never reads BepInEx logs, game
+logs, screenshots, game files, companion state, or provider outputs. A ready review means only that
+evidence is complete enough to discuss a later metadata-only probe; it does not approve capture.

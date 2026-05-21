@@ -48,6 +48,25 @@ python scripts/write_bepinex_runtime_smoke_report.py --quiet
 The template writer does not inspect game logs, BepInEx logs, companion responses, private paths, or
 runtime files.
 
+Review a completed redacted report:
+
+```powershell
+python scripts/review_bepinex_runtime_smoke_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/runtime-smoke/report.json
+```
+
+Optionally write redacted review artifacts:
+
+```powershell
+python scripts/review_bepinex_runtime_smoke_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/runtime-smoke/report.json `
+  --output workspace/synthetic-slice/bepinex-bridge/runtime-smoke/review/summary.json `
+  --markdown-output workspace/synthetic-slice/bepinex-bridge/runtime-smoke/review/summary.md
+```
+
+The review helper does not read BepInEx logs, game logs, screenshots, game files, companion state,
+or provider outputs.
+
 ## Allowed Fields
 
 Reports may summarize:
@@ -62,9 +81,31 @@ Reports may summarize:
 - companion received synthetic event boolean;
 - game continued when companion unavailable boolean;
 - warning counts and MSB3277 warning counts;
+- optional `blockers`;
+- optional `next_step_notes`;
+- optional `synthetic_send_not_run_reason`;
+- optional `unavailable_case_not_run_reason`;
+- `evidence_summary_redacted: true`;
 - short redacted notes;
 - short evidence summary with safe metadata only;
 - `created_by_user_manually: true`.
+
+## Review Readiness
+
+`ready_for_next_phase = true` means the redacted report is complete enough to discuss a later
+metadata-only probe. It does not approve current-line capture.
+
+Readiness requires:
+
+- report validation passes;
+- report status is `pass`;
+- plugin load and health check were observed;
+- companion available or unavailable behavior was observed;
+- unavailable companion behavior either kept the game running or was explicitly not applicable;
+- synthetic send was observed or explicitly not run with a safe reason.
+
+`partial`, `fail`, and `not_run` reports are valid report shapes but not ready for next-phase
+planning.
 
 ## Forbidden Content
 
