@@ -98,6 +98,24 @@ python scripts/check_bepinex_metadata_probe_report.py `
   --quiet
 ```
 
+Review the completed local report:
+
+```powershell
+python scripts/review_bepinex_metadata_probe_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json `
+  --quiet
+```
+
+Optional review artifacts must be written only under:
+
+```text
+workspace/synthetic-slice/bepinex-bridge/metadata-probe/review/
+```
+
+The review summary is redacted. It copies only status booleans, counters, blockers, and readiness
+status; it does not copy report notes, raw evidence, logs, screenshots, game files, companion state,
+or provider output.
+
 The report must stay redacted and must not include raw logs, screenshots, private paths, stack
 traces, request or response dumps, real game text, UI text, OCR output, save data, or asset/audio
 references.
@@ -127,4 +145,6 @@ tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json
 
 Passing this smoke only confirms that the disabled metadata probe can emit a redacted startup
 summary when manually enabled. It does not approve current-line capture, text capture, broader
-runtime probing, hooks, OCR, extraction, provider execution, or a new companion contract.
+runtime probing, hooks, OCR, extraction, provider execution, or a new companion contract. A metadata
+probe review marked `ready` means only that the redacted report is complete enough to discuss a later
+metadata-only extension.

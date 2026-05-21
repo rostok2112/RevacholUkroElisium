@@ -98,6 +98,18 @@ Write a blank redacted local template:
 python scripts/write_bepinex_metadata_probe_report.py --quiet
 ```
 
+Review a completed redacted local report:
+
+```powershell
+python scripts/review_bepinex_metadata_probe_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json `
+  --quiet
+```
+
+The review summary uses `schema_version: "bepinex-bridge-metadata-probe-review.v1"` and copies only
+status booleans, counters, blockers, readiness status, and no-side-effect flags. It does not copy
+report notes, raw evidence, logs, screenshots, game files, companion state, or provider output.
+
 The manual smoke checklist for enabling and disabling the probe locally is:
 
 ```text
@@ -141,3 +153,25 @@ The local workflow is:
 The template writer is `scripts/write_bepinex_metadata_probe_report.py`. Passing the checker still
 does not approve current-line capture, text capture, hooks, OCR, extraction, provider execution, or
 new companion endpoints.
+
+## Milestone 4J Review Boundary
+
+Milestone 4J adds `scripts/review_bepinex_metadata_probe_report.py`, a redacted readiness helper for
+local metadata probe reports. `readiness_status = "ready"` means only that the report is complete
+enough to discuss a later metadata-only extension. It does not approve current-line capture, UI text
+reading, real text capture, hooks, OCR, extraction, provider execution, or companion contract
+changes.
+
+The reviewer is deterministic:
+
+- `pass` report status is required;
+- metadata-only and capture-disabled flags must remain safe;
+- the probe must be enabled, attempted, and completed;
+- `ui_probe_attempted` and `scene_probe_attempted` must remain false;
+- unsafe markers fail during report validation before review output is generated.
+
+Review artifacts, if written, belong only under:
+
+```text
+workspace/synthetic-slice/bepinex-bridge/metadata-probe/review/
+```

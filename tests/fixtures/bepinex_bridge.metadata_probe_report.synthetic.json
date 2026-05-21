@@ -18,6 +18,10 @@
     "safe_status_events": 0,
     "synthetic_events": 0
   },
+  "blockers": [],
+  "next_step_notes": "Synthetic fixture only. No next step is implied.",
+  "not_run_reason": "Synthetic fixture has no user-local metadata probe run.",
+  "evidence_summary_redacted": true,
   "redacted_notes": "Synthetic fixture only. No user-local metadata probe evidence is attached.",
   "created_by_user_manually": true
 }

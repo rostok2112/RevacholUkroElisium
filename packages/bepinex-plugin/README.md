@@ -131,8 +131,17 @@ python scripts/check_bepinex_metadata_probe_report.py `
   --quiet
 ```
 
+Review a completed local report with:
+
+```powershell
+python scripts/review_bepinex_metadata_probe_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json `
+  --quiet
+```
+
 Completed reports must stay local and ignored. Passing validation does not approve current-line
-capture or any broader runtime probing.
+capture or any broader runtime probing. A ready review means only that a later metadata-only
+extension can be discussed.
 
 Local redacted runtime smoke reports, if created, must stay under:
 

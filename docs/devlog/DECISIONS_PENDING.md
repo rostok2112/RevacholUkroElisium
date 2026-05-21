@@ -1,8 +1,8 @@
 # Decisions Pending
 
-- Milestone 4I added a workspace-only metadata probe report template and manual smoke checklist.
-  Decide in Milestone 4J how to review redacted metadata probe reports and whether they are complete
-  enough for next-phase discussion.
+- Milestone 4J added a redacted metadata probe report reviewer. Decide in Milestone 4K whether a
+  reviewed ready report is sufficient to scope a later metadata-only extension, still without
+  current-line capture or real text capture.
 - Any future metadata probe expansion requires separate approval and must keep
   `current_line_capture_enabled=false` and `real_text_captured=false` until a later safety review
   changes that boundary.

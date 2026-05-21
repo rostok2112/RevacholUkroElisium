@@ -55,6 +55,7 @@ RUNTIME_REPORT_WRITER = ROOT / "scripts/write_bepinex_runtime_smoke_report.py"
 RUNTIME_REPORT_REVIEWER = ROOT / "scripts/review_bepinex_runtime_smoke_report.py"
 METADATA_PROBE_CHECKER = ROOT / "scripts/check_bepinex_metadata_probe_report.py"
 METADATA_PROBE_WRITER = ROOT / "scripts/write_bepinex_metadata_probe_report.py"
+METADATA_PROBE_REVIEWER = ROOT / "scripts/review_bepinex_metadata_probe_report.py"
 
 DEFAULT_URL = "http://127.0.0.1:8765"
 SYNTHETIC_EVENT_ID = "synthetic.event.bepinex.4a.001"
@@ -226,6 +227,7 @@ def _check_required_files() -> list[str]:
         METADATA_PROBE_FIXTURE_PATH,
         METADATA_PROBE_CHECKER,
         METADATA_PROBE_WRITER,
+        METADATA_PROBE_REVIEWER,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -301,9 +303,10 @@ def _check_metadata_probe_contract() -> list[str]:
     fixture_ref = str(METADATA_PROBE_FIXTURE_PATH.relative_to(ROOT)).replace("\\", "/")
     checker_ref = str(METADATA_PROBE_CHECKER.relative_to(ROOT)).replace("\\", "/")
     writer_ref = str(METADATA_PROBE_WRITER.relative_to(ROOT)).replace("\\", "/")
+    reviewer_ref = str(METADATA_PROBE_REVIEWER.relative_to(ROOT)).replace("\\", "/")
     smoke_ref = str(METADATA_PROBE_SMOKE_DOC.relative_to(ROOT)).replace("\\", "/")
     report_root = str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
-    for ref in (fixture_ref, checker_ref, writer_ref, smoke_ref, report_root):
+    for ref in (fixture_ref, checker_ref, writer_ref, reviewer_ref, smoke_ref, report_root):
         if ref not in text:
             errors.append(f"{METADATA_PROBE_GATE_DOC.relative_to(ROOT)} must point to {ref}.")
 
@@ -321,6 +324,7 @@ def _check_metadata_probe_contract() -> list[str]:
             "scene_probe_attempted=false",
             writer_ref,
             checker_ref,
+            reviewer_ref,
             report_root,
         ):
             if marker not in smoke_text:
@@ -335,6 +339,8 @@ def _check_metadata_probe_contract() -> list[str]:
             errors.append("docs/bepinex-bridge.md must point to the metadata probe gate.")
         if smoke_ref not in bridge_text:
             errors.append("docs/bepinex-bridge.md must point to the metadata probe smoke doc.")
+        if reviewer_ref not in bridge_text:
+            errors.append("docs/bepinex-bridge.md must point to the metadata probe reviewer.")
 
     gitignore_text = _read_text(GITIGNORE) if GITIGNORE.exists() else ""
     if "workspace/" not in gitignore_text:
@@ -542,6 +548,7 @@ def _scanned_files() -> list[Path]:
         RUNTIME_REPORT_WRITER,
         RUNTIME_REPORT_REVIEWER,
         METADATA_PROBE_WRITER,
+        METADATA_PROBE_REVIEWER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,

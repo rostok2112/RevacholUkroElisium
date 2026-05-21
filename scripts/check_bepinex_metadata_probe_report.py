@@ -36,6 +36,9 @@ REQUIRED_BOOL_FIELDS = (
     "created_by_user_manually",
 )
 REQUIRED_STRING_FIELDS = ("schema_version", "probe_status", "redacted_notes")
+OPTIONAL_STRING_FIELDS = ("next_step_notes", "not_run_reason")
+OPTIONAL_STRING_LIST_FIELDS = ("blockers",)
+OPTIONAL_TRUE_BOOL_FIELDS = ("evidence_summary_redacted",)
 
 ALLOWED_URLS = ("http://127.0.0.1:8765",)
 URL_PATTERN = re.compile(r"https?://[^\s\"'<>)]+", re.IGNORECASE)
@@ -221,6 +224,10 @@ def default_metadata_probe_report_template() -> dict[str, object]:
             "safe_status_events": 0,
             "synthetic_events": 0,
         },
+        "blockers": [],
+        "next_step_notes": "Fill with a short redacted next-step note if useful.",
+        "not_run_reason": "Metadata probe was not run for this template.",
+        "evidence_summary_redacted": True,
         "redacted_notes": (
             "Template only. Fill with safe metadata observations. Do not paste logs."
         ),
@@ -266,6 +273,20 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
             "Metadata probe report cannot have synthetic_event_sent=true when "
             "synthetic_event_send_configured=false."
         )
+    for field in OPTIONAL_STRING_FIELDS:
+        if field in payload and not isinstance(payload.get(field), str):
+            errors.append(f"Metadata probe report field {field!r} must be a string when present.")
+    for field in OPTIONAL_STRING_LIST_FIELDS:
+        value = payload.get(field)
+        if field in payload and (
+            not isinstance(value, list) or not all(isinstance(item, str) for item in value)
+        ):
+            errors.append(
+                f"Metadata probe report field {field!r} must be a list of strings when present."
+            )
+    for field in OPTIONAL_TRUE_BOOL_FIELDS:
+        if field in payload and payload.get(field) is not True:
+            errors.append(f"Metadata probe report field {field!r} must be true when present.")
 
     counters = payload.get("counters")
     if not isinstance(counters, dict):

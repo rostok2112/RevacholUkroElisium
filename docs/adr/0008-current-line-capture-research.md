@@ -176,6 +176,19 @@ later disabled-by-default probe:
 - local reports must stay under ignored workspace paths;
 - probe implementation still requires a later approved milestone.
 
+## Milestone 4J Metadata Report Review
+
+Milestone 4J adds a redacted metadata probe report reviewer:
+
+```text
+scripts/review_bepinex_metadata_probe_report.py
+```
+
+The reviewer can mark a report `ready` only for discussion of a later metadata-only extension. It
+does not approve current-line capture, real text capture, UI text reading, hooks, OCR, extraction,
+provider execution, or companion HTTP contract changes. It does not read logs, screenshots, game
+files, companion state, or provider output.
+
 ## Consequences
 
 Pros:

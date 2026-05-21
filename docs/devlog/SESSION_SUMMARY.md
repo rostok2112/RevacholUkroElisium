@@ -1,5 +1,30 @@
 # Session Summary
 
+Milestone 4J metadata probe report review/readiness helper is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_bepinex_metadata_probe_report.py`, a stdlib-only reviewer for redacted
+  user-local metadata probe reports under
+  `workspace/synthetic-slice/bepinex-bridge/metadata-probe/`.
+- Review summaries use `schema_version: "bepinex-bridge-metadata-probe-review.v1"` and include
+  report status, metadata/capture flags, probe completion flags, counters, deterministic blockers,
+  readiness status, recommendation, redaction marker, and no-side-effect flags.
+- Review outputs can be written only under
+  `workspace/synthetic-slice/bepinex-bridge/metadata-probe/review/`.
+- The reviewer validates reports through `scripts/check_bepinex_metadata_probe_report.py` before
+  producing any summary and never copies `redacted_notes` or other free-text evidence into output.
+- Added optional template/checker fields for `blockers`, `next_step_notes`, `not_run_reason`, and
+  `evidence_summary_redacted`.
+- Extended bridge safety checks/tests so the metadata probe reviewer is required, documented, and
+  kept out of mandatory `check_all` real-report requirements.
+- Updated metadata probe docs, bridge docs, ADR 0008, package README/DESIGN, and devlog handoff
+  notes.
+- Did not change C# runtime behavior, companion HTTP contracts, provider behavior, or report fixture
+  safety boundaries.
+- Did not add current-line capture, real text capture, UI text reading, Unity object scanning, game
+  hooks, Harmony patches, OCR, extraction, decompiled game-code work, frontend/shell work, keyboard
+  hooks, clipboard writes, downloads, web calls, or new dependencies.
+
 Milestone 4I metadata probe manual verification workflow is implemented.
 
 Completed in the latest session:

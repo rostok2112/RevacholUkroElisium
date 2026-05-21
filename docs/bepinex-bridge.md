@@ -205,6 +205,13 @@ Write a blank local report template with:
 python scripts/write_bepinex_metadata_probe_report.py --quiet
 ```
 
+Review a completed redacted local report with:
+
+```powershell
+python scripts/review_bepinex_metadata_probe_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json
+```
+
 The manual metadata probe smoke checklist is:
 
 ```text
@@ -218,8 +225,10 @@ workspace/synthetic-slice/bepinex-bridge/metadata-probe/
 ```
 
 Passing the checker does not approve text capture. It only verifies that a report is metadata-only
-and redacted. The 4I workflow does not add a review helper yet; report readiness review is deferred
-to a later milestone.
+and redacted. A metadata probe review with `readiness_status = "ready"` means only that the redacted
+report is complete enough to discuss a later metadata-only extension. It does not approve current-line
+capture, UI text reading, real text capture, hooks, OCR, extraction, provider execution, or companion
+contract changes.
 
 ## Current-Line Capture Research
 

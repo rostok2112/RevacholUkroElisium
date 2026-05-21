@@ -1,5 +1,12 @@
 # Known Risks
 
+- Milestone 4J review readiness is discussion-only. It must not be treated as approval for
+  current-line capture, UI text reading, hooks, OCR, extraction, provider calls, or companion
+  contract changes.
+- The metadata probe reviewer validates report shape and redaction, but it still cannot prove the
+  user-local observations are true or complete.
+- Review summaries intentionally omit report notes and any free-text evidence, so the local redacted
+  report may need human review for nuance while staying ignored.
 - Milestone 4I makes metadata probe manual verification easier, but it still relies on user-local
   observation. The repo does not commit raw evidence, screenshots, logs, or completed real reports.
 - The metadata probe report template is safe by construction, but a filled local report can still be

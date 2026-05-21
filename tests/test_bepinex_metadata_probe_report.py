@@ -46,7 +46,21 @@ class BepInExMetadataProbeReportTests(unittest.TestCase):
         self.assertFalse(report["current_line_capture_enabled"])
         self.assertFalse(report["ui_probe_attempted"])
         self.assertFalse(report["scene_probe_attempted"])
+        self.assertTrue(report["evidence_summary_redacted"])
+        self.assertIn("not_run_reason", report)
+        self.assertIn("next_step_notes", report)
+        self.assertIn("blockers", report)
         self.assertEqual([], _errors_for(report))
+
+    def test_optional_review_fields_are_validated_when_present(self) -> None:
+        report = _valid_report()
+        report["blockers"] = "not a list"
+        report["evidence_summary_redacted"] = False
+
+        errors = "\n".join(_errors_for(report))
+
+        self.assertIn("blockers", errors)
+        self.assertIn("evidence_summary_redacted", errors)
 
     def test_real_text_captured_true_fails(self) -> None:
         report = _valid_report()

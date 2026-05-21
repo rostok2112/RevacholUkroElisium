@@ -119,3 +119,13 @@ reads logs, game files, screenshots, companion state, or provider output.
 
 Milestone 4I deliberately does not add a metadata probe review helper. That readiness review is
 deferred to Milestone 4J and still must not approve text capture by itself.
+
+## Milestone 4J metadata probe review posture
+
+`scripts/review_bepinex_metadata_probe_report.py` reviews a redacted user-local metadata probe
+report and can write redacted JSON/Markdown summaries under ignored workspace review paths. It never
+reads logs, game files, screenshots, companion state, or provider output.
+
+`readiness_status = "ready"` means only that the report is complete enough to discuss a later
+metadata-only extension. It does not approve current-line capture, UI text reading, real text
+capture, hooks, OCR, extraction, provider execution, or companion contract changes.

@@ -23,6 +23,7 @@ from scripts.check_bepinex_bridge_safety import (
     METADATA_PROBE_FIXTURE_PATH,
     METADATA_PROBE_GATE_DOC,
     METADATA_PROBE_REPORT_ROOT,
+    METADATA_PROBE_REVIEWER,
     METADATA_PROBE_SMOKE_DOC,
     METADATA_PROBE_SOURCE,
     METADATA_PROBE_WRITER,
@@ -114,6 +115,7 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         fixture_ref = "tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json"
         checker_ref = "scripts/check_bepinex_metadata_probe_report.py"
         writer_ref = "scripts/write_bepinex_metadata_probe_report.py"
+        reviewer_ref = "scripts/review_bepinex_metadata_probe_report.py"
         gate_ref = "docs/bepinex-metadata-probe-gate.md"
         smoke_ref = "docs/manual-smoke/bepinex-metadata-probe-smoke.md"
 
@@ -122,16 +124,20 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertTrue(METADATA_PROBE_FIXTURE_PATH.exists())
         self.assertTrue(METADATA_PROBE_CHECKER.exists())
         self.assertTrue(METADATA_PROBE_WRITER.exists())
+        self.assertTrue(METADATA_PROBE_REVIEWER.exists())
         self.assertIn(fixture_ref, _read(METADATA_PROBE_GATE_DOC))
         self.assertIn(checker_ref, _read(METADATA_PROBE_GATE_DOC))
         self.assertIn(writer_ref, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(reviewer_ref, _read(METADATA_PROBE_GATE_DOC))
         self.assertIn(smoke_ref, _read(METADATA_PROBE_GATE_DOC))
         report_root = str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
         self.assertIn(report_root, _read(METADATA_PROBE_GATE_DOC))
         self.assertIn(gate_ref, _read(ROOT / "docs/bepinex-bridge.md"))
         self.assertIn(smoke_ref, _read(ROOT / "docs/bepinex-bridge.md"))
+        self.assertIn(reviewer_ref, _read(ROOT / "docs/bepinex-bridge.md"))
         self.assertNotIn(checker_ref, _read(CHECK_ALL))
         self.assertNotIn(writer_ref, _read(CHECK_ALL))
+        self.assertNotIn(reviewer_ref, _read(CHECK_ALL))
         self.assertTrue(str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).startswith("workspace"))
 
     def test_metadata_probe_manual_smoke_doc_documents_safe_observations(self) -> None:
@@ -152,6 +158,7 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
             "scene_probe_attempted=false",
             "scripts/write_bepinex_metadata_probe_report.py",
             "scripts/check_bepinex_metadata_probe_report.py",
+            "scripts/review_bepinex_metadata_probe_report.py",
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, text)
@@ -314,6 +321,7 @@ def _scanned_bridge_files() -> list[Path]:
         RUNTIME_REPORT_WRITER,
         RUNTIME_REPORT_REVIEWER,
         METADATA_PROBE_WRITER,
+        METADATA_PROBE_REVIEWER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,
