@@ -1,5 +1,11 @@
 # Known Risks
 
+- Milestone 4C documents manual runtime verification and log expectations only. It still does not
+  prove runtime loading, plugin lifecycle behavior, or game compatibility.
+- Manual BepInEx/game logs remain user-local artifacts. Do not commit raw runtime logs, stack traces,
+  local install paths, screenshots, or smoke reports.
+- The log contract allows exception type and message for unavailable companion warnings, but not
+  stack traces, payloads, response bodies, or private paths.
 - Milestone 4B proves an optional local compile path only when `dotnet` and user-local BepInEx IL2CPP
   references are supplied. It still does not prove runtime loading inside the game.
 - Local BepInEx IL2CPP builds may emit `MSB3277` assembly-version warnings. 4B counts and documents

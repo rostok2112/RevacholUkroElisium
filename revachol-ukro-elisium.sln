@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{809F86A1-1C4C-B159-0CD4-DF9D33D876CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bepinex-plugin", "bepinex-plugin", "{64B01E96-32C3-EB26-0265-B42FD9505D40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revachol.UkrainianCompanion.BepInExBridge", "packages\bepinex-plugin\Revachol.UkrainianCompanion.BepInExBridge.csproj", "{0E5DCAFD-F707-ED01-8825-B5F81046DECA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E5DCAFD-F707-ED01-8825-B5F81046DECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E5DCAFD-F707-ED01-8825-B5F81046DECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E5DCAFD-F707-ED01-8825-B5F81046DECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E5DCAFD-F707-ED01-8825-B5F81046DECA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{64B01E96-32C3-EB26-0265-B42FD9505D40} = {809F86A1-1C4C-B159-0CD4-DF9D33D876CE}
+		{0E5DCAFD-F707-ED01-8825-B5F81046DECA} = {64B01E96-32C3-EB26-0265-B42FD9505D40}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A8BCEAA-4B63-4F03-8BAF-894BEC7FD5B7}
+	EndGlobalSection
+EndGlobal

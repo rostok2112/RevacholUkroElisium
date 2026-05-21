@@ -73,6 +73,18 @@ pin or clean references.
 Keep this verification synthetic/manual only. Do not capture real dialogue, scan Unity objects, run
 OCR, extract data, or commit local install paths.
 
+Milestone 4C keeps the detailed checklist and log contract in:
+
+```text
+docs/manual-smoke/bepinex-bridge-runtime-smoke.md
+docs/manual-smoke/bepinex-bridge-log-contract.md
+tests/fixtures/bepinex_bridge.log_contract.synthetic.json
+```
+
+The C# bridge logs must remain metadata-only: plugin state, localhost safety state, companion health
+status, HTTP status code, synthetic event id, and synthetic line id. Do not log full request
+payloads, response bodies, raw source text, private paths, stack traces, or local game data.
+
 ## Local companion defaults
 
 Default companion URL:

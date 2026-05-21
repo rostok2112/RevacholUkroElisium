@@ -1,5 +1,7 @@
 # Decisions Pending
 
+- Milestone 4C added a manual runtime smoke checklist and safe log contract. Decide after 4D whether
+  redacted smoke reports are enough evidence to begin scoped current-line detection research.
 - Milestone 4B decided optional C# compilation should skip cleanly when `dotnet` or user-local
   BepInEx references are missing, and should remain outside mandatory `check_all`.
 - Decide after 4C whether the bridge remains synthetic/manual longer or starts carefully scoped

@@ -17,10 +17,14 @@ PACKAGE_DIR = ROOT / "packages/bepinex-plugin"
 SOURCE_DIR = PACKAGE_DIR / "src"
 PROJECT_FILE = PACKAGE_DIR / "Revachol.UkrainianCompanion.BepInExBridge.csproj"
 FIXTURE_PATH = ROOT / "tests/fixtures/bepinex_bridge.provider_annotate_request.synthetic.json"
+LOG_CONTRACT_PATH = ROOT / "tests/fixtures/bepinex_bridge.log_contract.synthetic.json"
 FAKE_EVENT_SCHEMA = ROOT / "specs/fake-game-event.schema.json"
 CHECK_ALL = ROOT / "scripts/check_all.py"
 BUILD_HELPER = ROOT / "scripts/build_bepinex_bridge.py"
 GITIGNORE = ROOT / ".gitignore"
+MANUAL_SMOKE_DIR = ROOT / "docs/manual-smoke"
+RUNTIME_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke.md"
+LOG_CONTRACT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-log-contract.md"
 
 DEFAULT_URL = "http://127.0.0.1:8765"
 SYNTHETIC_EVENT_ID = "synthetic.event.bepinex.4a.001"
@@ -85,6 +89,9 @@ RAW_PAYLOAD_LOG_PATTERNS = (
     r"Log(?:Info|Warning|Error|Debug)\s*\(\s*jsonPayload",
     r"Log(?:Info|Warning|Error|Debug)\s*\(\s*request",
     r"Log(?:Info|Warning|Error|Debug)\s*\(\s*RawEnglishText",
+    r"Log(?:Info|Warning|Error|Debug).*ReadAsStringAsync",
+    r"Log(?:Info|Warning|Error|Debug).*response\.Content",
+    r"Log(?:Info|Warning|Error|Debug).*StackTrace",
 )
 
 FORBIDDEN_DOWNLOAD_OR_INSTALL_MARKERS = (
@@ -154,6 +161,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors: list[str] = []
     errors.extend(_check_required_files())
     errors.extend(_check_fixture())
+    errors.extend(_check_log_contract())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
     errors.extend(_check_ignored_output_roots())
@@ -170,7 +178,10 @@ def _check_required_files() -> list[str]:
         SOURCE_DIR / "CompanionHttpClient.cs",
         SOURCE_DIR / "SyntheticEventFactory.cs",
         FIXTURE_PATH,
+        LOG_CONTRACT_PATH,
         BUILD_HELPER,
+        RUNTIME_SMOKE_DOC,
+        LOG_CONTRACT_DOC,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -209,6 +220,64 @@ def _check_fixture() -> list[str]:
         errors.append("Bridge fixture synthetic_line_id does not match the C# synthetic line id.")
     if "synthetic" not in json.dumps(fixture, ensure_ascii=False).lower():
         errors.append("Bridge provider request fixture must be clearly synthetic.")
+    return errors
+
+
+def _check_log_contract() -> list[str]:
+    errors: list[str] = []
+    try:
+        contract = load_json(LOG_CONTRACT_PATH)
+    except Exception as exc:
+        return [f"Could not load bridge log contract fixture: {exc}"]
+
+    if not isinstance(contract, dict):
+        return ["Bridge log contract fixture must be a JSON object."]
+    if contract.get("schema_version") != "bepinex-bridge-log-contract.v1":
+        errors.append("Bridge log contract fixture has the wrong schema_version.")
+    if contract.get("synthetic_only") is not True:
+        errors.append("Bridge log contract fixture must set synthetic_only=true.")
+
+    expected = contract.get("expected_safe_log_snippets")
+    if not isinstance(expected, list) or not all(isinstance(item, str) for item in expected):
+        errors.append(
+            "Bridge log contract fixture must include expected_safe_log_snippets strings."
+        )
+        expected = []
+    forbidden = contract.get("forbidden_log_content")
+    if not isinstance(forbidden, list) or not all(isinstance(item, str) for item in forbidden):
+        errors.append("Bridge log contract fixture must include forbidden_log_content strings.")
+
+    source = _read_source_text()
+    for snippet in expected:
+        if snippet not in source:
+            errors.append(f"Bridge source missing safe log contract snippet: {snippet!r}")
+
+    metadata_tokens = contract.get("required_metadata_tokens")
+    if not isinstance(metadata_tokens, list) or not all(
+        isinstance(item, str) for item in metadata_tokens
+    ):
+        errors.append("Bridge log contract fixture must include required_metadata_tokens strings.")
+
+    runtime_policy = contract.get("runtime_report_policy")
+    if not isinstance(runtime_policy, dict):
+        errors.append("Bridge log contract fixture must include runtime_report_policy.")
+    else:
+        for key in (
+            "commit_runtime_logs",
+            "commit_bepinex_logs",
+            "commit_game_logs",
+            "commit_smoke_reports",
+        ):
+            if runtime_policy.get(key) is not False:
+                errors.append(f"Bridge log contract runtime_report_policy.{key} must be false.")
+
+    for doc_path in (RUNTIME_SMOKE_DOC, LOG_CONTRACT_DOC):
+        fixture_ref = str(LOG_CONTRACT_PATH.relative_to(ROOT)).replace("\\", "/")
+        if doc_path.exists() and fixture_ref not in _read_text(doc_path).replace("\\", "/"):
+            errors.append(
+                f"{doc_path.relative_to(ROOT)} must point to the committed log contract fixture."
+            )
+
     return errors
 
 
@@ -325,7 +394,10 @@ def _scanned_files() -> list[Path]:
         PACKAGE_DIR / "DESIGN.md",
         PROJECT_FILE,
         FIXTURE_PATH,
+        LOG_CONTRACT_PATH,
         BUILD_HELPER,
+        RUNTIME_SMOKE_DOC,
+        LOG_CONTRACT_DOC,
     ]
     files.extend(sorted(SOURCE_DIR.glob("*.cs")))
     return [path for path in files if path.exists()]

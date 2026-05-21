@@ -1,5 +1,27 @@
 # Session Summary
 
+Milestone 4C BepInEx bridge manual runtime smoke and log contract is implemented.
+
+Completed in the latest session:
+- Added `docs/manual-smoke/bepinex-bridge-runtime-smoke.md`, a synthetic/manual checklist for local
+  runtime verification.
+- Added `docs/manual-smoke/bepinex-bridge-log-contract.md`, documenting allowed log metadata and
+  forbidden log content.
+- Added `tests/fixtures/bepinex_bridge.log_contract.synthetic.json`, a tiny machine-readable log
+  contract fixture.
+- Extended `scripts/check_bepinex_bridge_safety.py` so it requires the new manual smoke docs and log
+  contract fixture, validates expected safe snippets against the C# bridge source, and keeps runtime
+  report policy false for committed logs/reports.
+- Extended `tests/test_bepinex_bridge_safety.py` for log contract shape, docs linkage, expected safe
+  snippets, unavailable-companion non-fatal logging, no stack trace logging, no response body logging,
+  and existing synthetic/manual safety posture.
+- Updated `docs/bepinex-bridge.md`, `packages/bepinex-plugin/README.md`, and
+  `packages/bepinex-plugin/DESIGN.md` to point to the manual smoke checklist and log contract.
+- The C# bridge source did not need changes; current logs already match the metadata-only contract.
+- Did not add game hooks, dialogue detection, Unity object scanning, OCR, extraction, decompiled game
+  code, provider execution, frontend/shell work, keyboard hooks, clipboard writes, companion HTTP
+  changes, downloads, web calls, or new dependencies.
+
 Milestone 4B BepInEx bridge optional build and manual verification hardening is implemented.
 
 Completed in the latest session:

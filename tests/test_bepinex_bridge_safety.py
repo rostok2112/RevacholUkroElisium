@@ -16,6 +16,9 @@ from scripts.check_bepinex_bridge_safety import (
     FORBIDDEN_HOOK_OR_EXTRACTION_MARKERS,
     FORBIDDEN_DOWNLOAD_OR_INSTALL_MARKERS,
     GITIGNORE,
+    LOG_CONTRACT_DOC,
+    LOG_CONTRACT_PATH,
+    RUNTIME_SMOKE_DOC,
     PACKAGE_DIR,
     PROJECT_FILE,
     RAW_PAYLOAD_LOG_PATTERNS,
@@ -50,6 +53,28 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         errors = collect_errors(fixture["event"], load_json(FAKE_EVENT_SCHEMA))
 
         self.assertEqual([], errors)
+
+    def test_log_contract_fixture_shape_and_expected_snippets(self) -> None:
+        contract = load_json(LOG_CONTRACT_PATH)
+        source = "\n".join(_read(path) for path in SOURCE_DIR.glob("*.cs"))
+
+        self.assertEqual("bepinex-bridge-log-contract.v1", contract["schema_version"])
+        self.assertTrue(contract["synthetic_only"])
+        self.assertIsInstance(contract["expected_safe_log_snippets"], list)
+        self.assertIsInstance(contract["forbidden_log_content"], list)
+        self.assertFalse(contract["runtime_report_policy"]["commit_runtime_logs"])
+        self.assertFalse(contract["runtime_report_policy"]["commit_bepinex_logs"])
+        self.assertFalse(contract["runtime_report_policy"]["commit_game_logs"])
+        self.assertFalse(contract["runtime_report_policy"]["commit_smoke_reports"])
+        for snippet in contract["expected_safe_log_snippets"]:
+            with self.subTest(snippet=snippet):
+                self.assertIn(snippet, source)
+
+    def test_manual_smoke_docs_point_to_log_contract(self) -> None:
+        fixture_ref = "tests/fixtures/bepinex_bridge.log_contract.synthetic.json"
+
+        self.assertIn(fixture_ref, _read(RUNTIME_SMOKE_DOC))
+        self.assertIn(fixture_ref, _read(LOG_CONTRACT_DOC))
 
     def test_config_defaults_are_safe_and_manual_first(self) -> None:
         plugin_source = _read(SOURCE_DIR / "RevacholCompanionBridgePlugin.cs")
@@ -100,6 +125,18 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
             with self.subTest(pattern=pattern):
                 self.assertIsNone(re.search(pattern, source))
         self.assertNotIn("RawEnglishText +", source)
+        self.assertNotIn("ReadAsStringAsync", source)
+        self.assertNotIn("response.Content", source)
+
+    def test_unavailable_companion_path_is_non_fatal_and_has_no_stack_trace_logging(self) -> None:
+        plugin_source = _read(SOURCE_DIR / "RevacholCompanionBridgePlugin.cs")
+
+        self.assertIn("Companion unavailable during bridge startup", plugin_source)
+        self.assertIn("Game continues without companion data", plugin_source)
+        self.assertIn("exc.GetType().Name", plugin_source)
+        self.assertIn("exc.Message", plugin_source)
+        self.assertNotIn("exc.ToString()", plugin_source)
+        self.assertNotIn("StackTrace", plugin_source)
 
     def test_project_file_is_manual_and_has_no_package_restore_dependency(self) -> None:
         project = _read(PROJECT_FILE)
@@ -139,7 +176,10 @@ def _scanned_bridge_files() -> list[Path]:
         PACKAGE_DIR / "DESIGN.md",
         PROJECT_FILE,
         FIXTURE_PATH,
+        LOG_CONTRACT_PATH,
         BUILD_HELPER,
+        RUNTIME_SMOKE_DOC,
+        LOG_CONTRACT_DOC,
     ]
     files.extend(sorted(SOURCE_DIR.glob("*.cs")))
     return files

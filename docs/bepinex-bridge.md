@@ -125,6 +125,24 @@ This checklist is manual and synthetic-only:
 Do not use this checklist to capture real dialogue, scan Unity objects, run OCR, or extract game
 data.
 
+The dedicated Milestone 4C checklist is:
+
+```text
+docs/manual-smoke/bepinex-bridge-runtime-smoke.md
+```
+
+The safe log contract is:
+
+```text
+docs/manual-smoke/bepinex-bridge-log-contract.md
+tests/fixtures/bepinex_bridge.log_contract.synthetic.json
+```
+
+Runtime logs may include only safe metadata: enabled/disabled state, localhost skip, companion
+health availability, endpoint status, synthetic event id, synthetic line id, and concise unavailable
+warnings. Do not commit local BepInEx logs, game logs, full payloads, response bodies, stack traces,
+private paths, or smoke reports.
+
 ## Synthetic Event Policy
 
 The built-in event is invented synthetic text only:
@@ -159,7 +177,8 @@ python scripts/check_bepinex_bridge_safety.py --quiet
 The check verifies safe defaults, synthetic fixture shape, localhost-only posture, no secret-looking
 values, no external service URLs, no raw payload logging, and no hook/extraction/OCR markers in the
 C# source. It also verifies local build outputs stay ignored and the optional build helper does not
-download tools or become mandatory in `check_all`.
+download tools or become mandatory in `check_all`. Milestone 4C extends it to require the manual
+smoke docs and log contract fixture.
 
 ## Not Implemented
 

@@ -1,0 +1,56 @@
+{
+  "schema_version": "bepinex-bridge-log-contract.v1",
+  "synthetic_only": true,
+  "purpose": "Static expected log contract for the synthetic/manual BepInEx bridge runtime smoke.",
+  "expected_safe_log_snippets": [
+    "loaded in synthetic/manual bridge mode",
+    "Bridge disabled by config. No companion requests will be sent.",
+    "CompanionServerUrl is not localhost. Bridge requests are disabled for safety.",
+    "Synthetic send skipped because the companion client is unavailable.",
+    "Synthetic send skipped because the companion URL is not localhost.",
+    "Synthetic provider event sent: event_id=",
+    "Synthetic provider event was not accepted: event_id=",
+    "Companion health check passed: status=",
+    "Companion health check failed: status=",
+    "Companion unavailable during bridge startup. Game continues without companion data.",
+    "Game continues without companion data",
+    "event_id=",
+    "line_id=",
+    "status="
+  ],
+  "required_metadata_tokens": [
+    "event_id",
+    "line_id",
+    "status",
+    "synthetic",
+    "manual",
+    "localhost"
+  ],
+  "allowed_exception_metadata": [
+    "exception type name",
+    "exception message"
+  ],
+  "forbidden_log_content": [
+    "full request payload",
+    "full response payload",
+    "raw source text",
+    "raw_english_text",
+    "api key",
+    "authorization token",
+    "private absolute path",
+    "real game dialogue",
+    "game hook",
+    "Unity object scan",
+    "OCR",
+    "text extraction",
+    "decompiled game code",
+    "stack trace"
+  ],
+  "runtime_report_policy": {
+    "commit_runtime_logs": false,
+    "commit_bepinex_logs": false,
+    "commit_game_logs": false,
+    "commit_smoke_reports": false,
+    "local_report_root": "workspace/synthetic-slice/bepinex-bridge/"
+  }
+}
