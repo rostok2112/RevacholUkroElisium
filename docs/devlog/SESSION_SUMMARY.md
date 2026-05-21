@@ -1,5 +1,30 @@
 # Session Summary
 
+Milestone 4E current-line capture research ADR and safety boundaries are implemented.
+
+Completed in the latest session:
+- Added `docs/adr/0008-current-line-capture-research.md`, an accepted ADR comparing future
+  current-line capture strategies before any implementation exists.
+- Compared manual/synthetic triggers, user-assisted manual input, Unity UI text observation, method
+  patching, save/state/event observation, OCR fallback, and external screen/accessibility APIs.
+- Accepted the conservative recommendation: remain manual/synthetic until redacted runtime smoke
+  evidence is reviewed; defer OCR, broad Unity scanning, game method patches, extraction, decompiled
+  integration, and real text capture.
+- Documented future capture boundaries: no committed real dialogue, screenshots, audio, extracted
+  localization, save files, OCR output, decompiled code or risky decompiled names, private paths,
+  runtime logs containing game text, or raw companion payloads with real game text.
+- Documented allowed future local experiment outputs as redacted metadata, booleans, safe counters,
+  synthetic event ids, bridge-generated line ids, and redacted runtime smoke reports.
+- Added a Milestone 4F readiness checklist for runtime smoke execution guide and local evidence
+  review before any metadata-only current-line probe is scoped.
+- Updated `docs/bepinex-bridge.md` and `packages/bepinex-plugin/DESIGN.md` to point at ADR 0008 and
+  restate that current-line capture is not implemented.
+- Extended `scripts/check_bepinex_bridge_safety.py` and bridge safety tests so ADR 0008 is required
+  without treating the ADR as runtime source.
+- Did not add C# behavior, game hooks, dialogue detection, Unity object scanning, OCR, extraction,
+  decompiled game-code work, provider execution, frontend/shell work, keyboard hooks, clipboard
+  writes, companion HTTP changes, downloads, web calls, or new dependencies.
+
 Milestone 4D redacted manual runtime smoke report workflow is implemented.
 
 Completed in the latest session:

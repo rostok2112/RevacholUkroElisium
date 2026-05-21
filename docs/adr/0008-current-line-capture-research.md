@@ -1,0 +1,179 @@
+# ADR 0008: Current-line capture research and safety boundaries
+
+## Status
+
+Accepted.
+
+## Context
+
+Milestones 4A through 4D produced a synthetic/manual bridge skeleton, optional local build helper,
+manual runtime smoke checklist, safe log contract, and redacted report workflow. The bridge still
+does not detect the current visible line, inspect runtime UI, patch game methods, extract text, run
+OCR, or send real game content.
+
+Before any capture implementation exists, the project needs a conservative decision record for the
+possible approaches and the legal/privacy boundary around future experiments.
+
+## Options Considered
+
+### A. Manual or synthetic event trigger only
+
+- Enables: continued bridge verification through invented events and user-controlled smoke tests.
+- Complexity: low.
+- Legal/copyright/data risk: low, because committed data remains synthetic.
+- Privacy/logging risk: low when logs stay metadata-only.
+- Brittleness: low, because it does not depend on game internals.
+- Testing feasibility: high with the existing companion server and synthetic fixtures.
+- Decompiled names/code required: no.
+- Real copyrighted text capture risk: no, if kept synthetic/manual.
+- Synthetic-only start: yes.
+- Recommended status: allowed now.
+
+### B. User-assisted copy or manual input
+
+- Enables: user-controlled experiments where the user provides text outside automated capture.
+- Complexity: low to medium.
+- Legal/copyright/data risk: medium, because users could paste real text into local private flows.
+- Privacy/logging risk: medium; all payloads and logs must remain local, ignored, and redacted.
+- Brittleness: low.
+- Testing feasibility: medium with synthetic manual examples.
+- Decompiled names/code required: no.
+- Real copyrighted text capture risk: possible if users provide it.
+- Synthetic-only start: yes, if limited to invented examples.
+- Recommended status: research only; not a default runtime path.
+
+### C. Observe Unity UI text objects
+
+- Enables: possible runtime discovery of visible text without patching a specific method.
+- Complexity: high.
+- Legal/copyright/data risk: high if observed text is logged, committed, or sent as raw payloads.
+- Privacy/logging risk: high because visible text can include copyrighted content and user context.
+- Brittleness: high across UI layout, localization, engine, and version changes.
+- Testing feasibility: low without local private runtime experiments.
+- Decompiled names/code required: not necessarily, but object names or component structures may still
+  become legally sensitive if recorded.
+- Real copyrighted text capture risk: high.
+- Synthetic-only start: only if probes report booleans and counters, not text.
+- Recommended status: defer; metadata-only research later if runtime smoke is proven.
+
+### D. Patch dialogue or UI update methods
+
+- Enables: precise current-line events if the correct local runtime method is identified.
+- Complexity: high.
+- Legal/copyright/data risk: high if decompiled names, signatures, or captured text are committed.
+- Privacy/logging risk: high because hooks can expose real text at the exact moment of display.
+- Brittleness: high across game versions and mod-loader/runtime versions.
+- Testing feasibility: low in public CI; only local private verification is realistic.
+- Decompiled names/code required: likely, and those details must not be committed if legally risky.
+- Real copyrighted text capture risk: high.
+- Synthetic-only start: only through a dummy/local metadata probe that emits no real text.
+- Recommended status: research only after manual smoke evidence review; no implementation now.
+
+### E. Save, state, or event observation
+
+- Enables: possible context inference from local runtime state rather than visible UI text.
+- Complexity: medium to high.
+- Legal/copyright/data risk: high if save files, extracted state, or proprietary identifiers are
+  committed.
+- Privacy/logging risk: high because saves/state can include broad user and game progress data.
+- Brittleness: medium to high across versions and user state.
+- Testing feasibility: low without private local fixtures that must remain ignored.
+- Decompiled names/code required: maybe, depending on the observation route.
+- Real copyrighted text capture risk: medium to high.
+- Synthetic-only start: possible with booleans, counters, and bridge-generated ids only.
+- Recommended status: defer; metadata-only local research after runtime smoke evidence.
+
+### F. OCR fallback
+
+- Enables: screen-text capture without game-specific integration.
+- Complexity: high.
+- Legal/copyright/data risk: very high because screenshots and OCR output can contain copyrighted
+  text and visual assets.
+- Privacy/logging risk: very high because screen capture can include unrelated private user data.
+- Brittleness: very high across resolution, font, language, overlays, and accessibility settings.
+- Testing feasibility: poor without committing screenshots or OCR outputs, which this repo must not
+  do.
+- Decompiled names/code required: no.
+- Real copyrighted text capture risk: very high.
+- Synthetic-only start: possible only with synthetic screenshots, but not useful for game feasibility.
+- Recommended status: forbidden for near-term project work.
+
+### G. External screen capture or accessibility APIs
+
+- Enables: possible OS-level observation outside game integration.
+- Complexity: high.
+- Legal/copyright/data risk: very high if screenshots, OCR-like text, or accessibility text are
+  stored.
+- Privacy/logging risk: very high because OS-level capture can include unrelated applications.
+- Brittleness: high across platforms, permissions, focus, display mode, and accessibility settings.
+- Testing feasibility: poor without sensitive local artifacts.
+- Decompiled names/code required: no.
+- Real copyrighted text capture risk: high.
+- Synthetic-only start: possible only as a generic metadata probe, not as useful line capture.
+- Recommended status: defer; do not use for early bridge work.
+
+## Decision
+
+Stay conservative:
+
+- Continue with manual and synthetic bridge events until a redacted runtime smoke report is reviewed.
+- Do not implement OCR.
+- Do not implement broad Unity object scanning yet.
+- Do not implement game method patches yet.
+- Do not commit decompiled names, method signatures, extracted text, screenshots, audio, save files,
+  runtime logs containing game text, private paths, OCR output, or raw companion payloads with real
+  game text.
+- If hook or UI research becomes necessary, keep it local-only, metadata-only, and disabled by
+  default at first.
+- Any future probe must emit synthetic/manual metadata before it is allowed to emit real text.
+- Any future real text capture must be explicit opt-in, private, ignored, and covered by a later
+  safety review.
+
+Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
+
+```json
+{
+  "plugin_loaded": true,
+  "ui_probe_attempted": false,
+  "current_line_capture_enabled": false,
+  "real_text_captured": false,
+  "synthetic_event_sent": true
+}
+```
+
+Other allowed local outputs include bridge-generated synthetic event ids, bridge-generated line ids,
+safe counters, and redacted runtime smoke reports under ignored workspace paths.
+
+## Milestone 4F Readiness Checklist
+
+Milestone 4F should be runtime smoke execution guide and local evidence review, not first capture
+implementation.
+
+4F should include:
+
+- Review process for a user-supplied redacted runtime smoke report.
+- Clear pass/partial/fail interpretation for build, plugin load, health check, unavailable companion,
+  optional synthetic send, and game-continues observations.
+- No real text capture by default.
+- No game hooks unless a later milestone explicitly approves them.
+- No OCR.
+- No extraction.
+- No committed logs, screenshots, save files, private paths, or real runtime reports.
+- No companion HTTP contract changes.
+- A decision gate before any metadata-only current-line probe is scoped.
+
+## Consequences
+
+Pros:
+
+- Keeps the public repository free of proprietary text and local runtime artifacts.
+- Avoids building a fragile capture mechanism before manual runtime viability is known.
+- Keeps the bridge smoke path testable with current synthetic fixtures and redacted reports.
+- Makes future capture work reviewable by forcing metadata-only experiments first.
+
+Cons:
+
+- Current-line capture remains unimplemented.
+- Manual/synthetic events remain the only safe bridge behavior for now.
+- Real feasibility remains unknown until a local runtime report is reviewed.
+- Any useful capture path will need another milestone and likely local-only testing.

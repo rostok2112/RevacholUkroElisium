@@ -9,6 +9,7 @@ from scripts.check_bepinex_bridge_safety import (
     ALLOWED_URLS,
     BUILD_HELPER,
     CHECK_ALL,
+    CURRENT_LINE_CAPTURE_ADR,
     DEFAULT_URL,
     FIXTURE_PATH,
     FORBIDDEN_EXTERNAL_MARKERS,
@@ -95,6 +96,14 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertIn(checker_ref, _read(RUNTIME_REPORT_DOC))
         self.assertNotIn(checker_ref, _read(CHECK_ALL))
         self.assertTrue(str(RUNTIME_REPORT_ROOT.relative_to(ROOT)).startswith("workspace"))
+
+    def test_current_line_capture_research_adr_is_registered(self) -> None:
+        self.assertTrue(CURRENT_LINE_CAPTURE_ADR.exists())
+        text = _read(CURRENT_LINE_CAPTURE_ADR)
+
+        self.assertIn("Manual or synthetic event trigger only", text)
+        self.assertIn("Current-line capture remains unimplemented", text)
+        self.assertIn("Milestone 4F", text)
 
     def test_config_defaults_are_safe_and_manual_first(self) -> None:
         plugin_source = _read(SOURCE_DIR / "RevacholCompanionBridgePlugin.cs")

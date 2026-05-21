@@ -57,3 +57,19 @@ fixture is synthetic and marked `not_run`; user-local reports belong under
 `scripts/check_bepinex_runtime_smoke_report.py`. The checker rejects raw logs, stack traces, payload
 dumps, private paths, screenshots/assets/audio markers, real game content markers, hooks,
 OCR/extraction/decompiled markers, provider execution markers, and non-localhost URLs.
+
+## Milestone 4E capture research posture
+
+ADR 0008 (`docs/adr/0008-current-line-capture-research.md`) compares future current-line capture
+approaches and keeps implementation deferred. The bridge remains synthetic/manual until redacted
+runtime smoke evidence is reviewed.
+
+Future capture probes must begin metadata-only and disabled by default. Acceptable local experiment
+output is limited to booleans, safe counters, synthetic event ids, bridge-generated line ids, and
+redacted smoke reports. Do not commit real dialogue text, screenshots, audio, extracted localization
+files, save files, OCR output, decompiled code or risky decompiled names, private paths, runtime logs
+with game text, or raw companion payloads containing real game text.
+
+Milestone 4F should review runtime smoke evidence before any metadata-only current-line probe is
+scoped. It should not add real text capture, game hooks, OCR, extraction, or companion contract
+changes.

@@ -1,9 +1,11 @@
 # Decisions Pending
 
-- Milestone 4D added a redacted manual runtime smoke report workflow. Decide after 4E whether a
-  reviewed user-local report is enough evidence to begin scoped current-line capture research.
-- Decide whether Milestone 4E should add a report review summary helper, or keep review fully manual
-  until real bridge runtime evidence exists.
+- Milestone 4E accepted ADR 0008: keep current-line capture unimplemented and continue
+  manual/synthetic bridge events until redacted runtime smoke evidence is reviewed.
+- Decide after Milestone 4F whether reviewed user-local runtime smoke evidence is enough to scope a
+  metadata-only current-line probe.
+- Decide whether the 4F evidence review should produce a local readiness summary helper or remain a
+  purely manual checklist.
 - Milestone 4B decided optional C# compilation should skip cleanly when `dotnet` or user-local
   BepInEx references are missing, and should remain outside mandatory `check_all`.
 - Decide whether later runtime testing requires pinning/cleaning BepInEx/.NET references to reduce

@@ -157,6 +157,29 @@ warnings. Do not commit local BepInEx logs, game logs, full payloads, response b
 private paths, or smoke reports. Redacted local report summaries belong only under
 `workspace/synthetic-slice/bepinex-bridge/runtime-smoke/`.
 
+## Current-Line Capture Research
+
+Milestone 4E records the future capture decision in:
+
+```text
+docs/adr/0008-current-line-capture-research.md
+```
+
+The decision keeps the bridge synthetic/manual until redacted runtime smoke evidence is reviewed.
+Current-line capture is not implemented. Future probes must start as metadata-only local
+experiments, emitting booleans, safe counters, synthetic event ids, bridge-generated line ids, or
+redacted smoke reports before any real text capture is considered.
+
+Near-term boundaries:
+
+- no OCR;
+- no broad Unity object scanning;
+- no game method patches;
+- no decompiled names or method signatures committed;
+- no real text capture by default;
+- no committed runtime logs, screenshots, save files, private paths, OCR output, or raw companion
+  payloads with real game text.
+
 ## Synthetic Event Policy
 
 The built-in event is invented synthetic text only:

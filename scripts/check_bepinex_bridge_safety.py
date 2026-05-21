@@ -32,6 +32,7 @@ FAKE_EVENT_SCHEMA = ROOT / "specs/fake-game-event.schema.json"
 CHECK_ALL = ROOT / "scripts/check_all.py"
 BUILD_HELPER = ROOT / "scripts/build_bepinex_bridge.py"
 GITIGNORE = ROOT / ".gitignore"
+CURRENT_LINE_CAPTURE_ADR = ROOT / "docs/adr/0008-current-line-capture-research.md"
 MANUAL_SMOKE_DIR = ROOT / "docs/manual-smoke"
 RUNTIME_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke.md"
 LOG_CONTRACT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-log-contract.md"
@@ -194,6 +195,7 @@ def _check_required_files() -> list[str]:
         FIXTURE_PATH,
         LOG_CONTRACT_PATH,
         BUILD_HELPER,
+        CURRENT_LINE_CAPTURE_ADR,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,

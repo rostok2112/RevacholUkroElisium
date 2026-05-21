@@ -1,5 +1,12 @@
 # Known Risks
 
+- Milestone 4E is an architecture decision only. It does not prove current-line capture feasibility,
+  runtime UI observability, method patch viability, or legal safety for real text capture.
+- ADR 0008 discusses risky approaches such as OCR, broad UI observation, and method patching so they
+  can be explicitly deferred; discussion in docs is not approval to implement them.
+- Future metadata-only probes may still reveal sensitive local state if logging is sloppy. Keep
+  probe outputs to booleans, safe counters, synthetic ids, bridge-generated line ids, and redacted
+  reports until a later safety review approves more.
 - Milestone 4D validates redacted report shape and forbidden markers only. It does not prove a real
   manual smoke happened, that the plugin loaded in a user install, or that companion communication
   succeeded at runtime.
