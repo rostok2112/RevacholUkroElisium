@@ -1,11 +1,11 @@
 # Decisions Pending
 
-- Milestone 4C added a manual runtime smoke checklist and safe log contract. Decide after 4D whether
-  redacted smoke reports are enough evidence to begin scoped current-line detection research.
+- Milestone 4D added a redacted manual runtime smoke report workflow. Decide after 4E whether a
+  reviewed user-local report is enough evidence to begin scoped current-line capture research.
+- Decide whether Milestone 4E should add a report review summary helper, or keep review fully manual
+  until real bridge runtime evidence exists.
 - Milestone 4B decided optional C# compilation should skip cleanly when `dotnet` or user-local
   BepInEx references are missing, and should remain outside mandatory `check_all`.
-- Decide after 4C whether the bridge remains synthetic/manual longer or starts carefully scoped
-  current-line detection research.
 - Decide whether later runtime testing requires pinning/cleaning BepInEx/.NET references to reduce
   `MSB3277` warnings, or whether warnings can remain documented.
 - Decide how a future manual in-game trigger should work without global keyboard hooks, clipboard

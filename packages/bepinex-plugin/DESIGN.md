@@ -48,3 +48,12 @@ Manual runtime verification is documented under `docs/manual-smoke/`. The repo c
 snippets and forbidden log categories, but does not commit local runtime logs or reports. The bridge
 still has no game hooks, Unity object scanning, current-line detection, OCR, extraction, provider
 execution, keyboard hooks, clipboard writes, or companion HTTP contract changes.
+
+## Milestone 4D report posture
+
+Manual smoke evidence is summarized through a redacted JSON report contract only. The committed
+fixture is synthetic and marked `not_run`; user-local reports belong under
+`workspace/synthetic-slice/bepinex-bridge/runtime-smoke/` and are validated with
+`scripts/check_bepinex_runtime_smoke_report.py`. The checker rejects raw logs, stack traces, payload
+dumps, private paths, screenshots/assets/audio markers, real game content markers, hooks,
+OCR/extraction/decompiled markers, provider execution markers, and non-localhost URLs.

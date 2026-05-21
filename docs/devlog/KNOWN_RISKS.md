@@ -1,5 +1,13 @@
 # Known Risks
 
+- Milestone 4D validates redacted report shape and forbidden markers only. It does not prove a real
+  manual smoke happened, that the plugin loaded in a user install, or that companion communication
+  succeeded at runtime.
+- User-local runtime reports can still omit important context. Treat them as summaries for review,
+  not as raw evidence or audit logs.
+- Runtime smoke report templates and completed reports must remain under the ignored workspace report
+  root; raw BepInEx/game logs, screenshots, stack traces, payload dumps, and private paths must not
+  be committed.
 - Milestone 4C documents manual runtime verification and log expectations only. It still does not
   prove runtime loading, plugin lifecycle behavior, or game compatibility.
 - Manual BepInEx/game logs remain user-local artifacts. Do not commit raw runtime logs, stack traces,

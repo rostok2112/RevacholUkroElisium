@@ -10,6 +10,24 @@ The machine-readable safe log contract is:
 tests/fixtures/bepinex_bridge.log_contract.synthetic.json
 ```
 
+The redacted smoke report contract is:
+
+```text
+tests/fixtures/bepinex_bridge.runtime_smoke_report.synthetic.json
+```
+
+Validate the report shape with:
+
+```powershell
+python scripts/check_bepinex_runtime_smoke_report.py --quiet
+```
+
+The report workflow is documented in:
+
+```text
+docs/manual-smoke/bepinex-bridge-runtime-smoke-report.md
+```
+
 ## Prerequisites
 
 - A user-owned local game install with BepInEx IL2CPP installed.
@@ -120,7 +138,11 @@ Synthetic provider event was not accepted: event_id=synthetic.event.bepinex.4a.0
 
 On the companion server, verify that a synthetic provider event was received by checking the server
 console or by querying latest provider state with existing local companion client commands. Do not
-paste or commit local runtime logs.
+paste or commit local runtime logs. If you record the result, use only a redacted report under:
+
+```text
+workspace/synthetic-slice/bepinex-bridge/runtime-smoke/
+```
 
 ## Cleanup
 
@@ -128,6 +150,7 @@ paste or commit local runtime logs.
 2. Remove the bridge DLL from the local `BepInEx/plugins/` folder if the smoke is complete.
 3. Stop the companion server.
 4. Leave generated build reports and outputs under ignored `workspace/`, `bin/`, or `obj/`.
+5. Keep any redacted smoke report under ignored `workspace/`; do not commit it.
 
 ## Safety Boundaries
 

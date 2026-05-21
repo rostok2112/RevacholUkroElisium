@@ -78,12 +78,26 @@ Milestone 4C keeps the detailed checklist and log contract in:
 ```text
 docs/manual-smoke/bepinex-bridge-runtime-smoke.md
 docs/manual-smoke/bepinex-bridge-log-contract.md
+docs/manual-smoke/bepinex-bridge-runtime-smoke-report.md
 tests/fixtures/bepinex_bridge.log_contract.synthetic.json
+tests/fixtures/bepinex_bridge.runtime_smoke_report.synthetic.json
 ```
 
 The C# bridge logs must remain metadata-only: plugin state, localhost safety state, companion health
 status, HTTP status code, synthetic event id, and synthetic line id. Do not log full request
 payloads, response bodies, raw source text, private paths, stack traces, or local game data.
+
+Local redacted runtime smoke reports, if created, must stay under:
+
+```text
+workspace/synthetic-slice/bepinex-bridge/runtime-smoke/
+```
+
+Validate report summaries with:
+
+```powershell
+python scripts/check_bepinex_runtime_smoke_report.py --quiet
+```
 
 ## Local companion defaults
 

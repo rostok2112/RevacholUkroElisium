@@ -8,8 +8,18 @@ import sys
 
 try:
     from scripts.schema_validator import collect_errors, load_json
+    from scripts.check_bepinex_runtime_smoke_report import (
+        FIXTURE_PATH as RUNTIME_REPORT_FIXTURE_PATH,
+        REPORT_ROOT as RUNTIME_REPORT_ROOT,
+        collect_runtime_smoke_report_errors,
+    )
 except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
     from schema_validator import collect_errors, load_json
+    from check_bepinex_runtime_smoke_report import (
+        FIXTURE_PATH as RUNTIME_REPORT_FIXTURE_PATH,
+        REPORT_ROOT as RUNTIME_REPORT_ROOT,
+        collect_runtime_smoke_report_errors,
+    )
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +35,9 @@ GITIGNORE = ROOT / ".gitignore"
 MANUAL_SMOKE_DIR = ROOT / "docs/manual-smoke"
 RUNTIME_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke.md"
 LOG_CONTRACT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-log-contract.md"
+RUNTIME_REPORT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke-report.md"
+RUNTIME_REPORT_CHECKER = ROOT / "scripts/check_bepinex_runtime_smoke_report.py"
+RUNTIME_REPORT_WRITER = ROOT / "scripts/write_bepinex_runtime_smoke_report.py"
 
 DEFAULT_URL = "http://127.0.0.1:8765"
 SYNTHETIC_EVENT_ID = "synthetic.event.bepinex.4a.001"
@@ -162,6 +175,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_required_files())
     errors.extend(_check_fixture())
     errors.extend(_check_log_contract())
+    errors.extend(_check_runtime_report_contract())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
     errors.extend(_check_ignored_output_roots())
@@ -182,6 +196,10 @@ def _check_required_files() -> list[str]:
         BUILD_HELPER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
+        RUNTIME_REPORT_DOC,
+        RUNTIME_REPORT_FIXTURE_PATH,
+        RUNTIME_REPORT_CHECKER,
+        RUNTIME_REPORT_WRITER,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -220,6 +238,26 @@ def _check_fixture() -> list[str]:
         errors.append("Bridge fixture synthetic_line_id does not match the C# synthetic line id.")
     if "synthetic" not in json.dumps(fixture, ensure_ascii=False).lower():
         errors.append("Bridge provider request fixture must be clearly synthetic.")
+    return errors
+
+
+def _check_runtime_report_contract() -> list[str]:
+    errors = collect_runtime_smoke_report_errors(RUNTIME_REPORT_FIXTURE_PATH)
+    for doc_path in (RUNTIME_SMOKE_DOC, RUNTIME_REPORT_DOC):
+        if not doc_path.exists():
+            continue
+        text = _read_text(doc_path).replace("\\", "/")
+        fixture_ref = str(RUNTIME_REPORT_FIXTURE_PATH.relative_to(ROOT)).replace("\\", "/")
+        checker_ref = str(RUNTIME_REPORT_CHECKER.relative_to(ROOT)).replace("\\", "/")
+        if fixture_ref not in text:
+            errors.append(f"{doc_path.relative_to(ROOT)} must point to the runtime report fixture.")
+        if checker_ref not in text:
+            errors.append(f"{doc_path.relative_to(ROOT)} must point to the runtime report checker.")
+
+    gitignore_text = _read_text(GITIGNORE) if GITIGNORE.exists() else ""
+    report_root = str(RUNTIME_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
+    if "workspace/" not in gitignore_text:
+        errors.append(f"Runtime report root {report_root} must stay under ignored workspace/.")
     return errors
 
 
@@ -332,8 +370,9 @@ def _check_text_safety() -> list[str]:
         relative = path.relative_to(ROOT)
         errors.extend(_check_urls(text, relative))
         errors.extend(_check_secret_values(text, relative))
-        errors.extend(_check_forbidden_markers(text, relative, FORBIDDEN_EXTERNAL_MARKERS))
-        errors.extend(_check_forbidden_markers(text, relative, FORBIDDEN_GAME_CONTENT_MARKERS))
+        if path != RUNTIME_REPORT_CHECKER:
+            errors.extend(_check_forbidden_markers(text, relative, FORBIDDEN_EXTERNAL_MARKERS))
+            errors.extend(_check_forbidden_markers(text, relative, FORBIDDEN_GAME_CONTENT_MARKERS))
 
         if path.suffix.lower() == ".cs":
             errors.extend(
@@ -395,9 +434,13 @@ def _scanned_files() -> list[Path]:
         PROJECT_FILE,
         FIXTURE_PATH,
         LOG_CONTRACT_PATH,
+        RUNTIME_REPORT_FIXTURE_PATH,
         BUILD_HELPER,
+        RUNTIME_REPORT_CHECKER,
+        RUNTIME_REPORT_WRITER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
+        RUNTIME_REPORT_DOC,
     ]
     files.extend(sorted(SOURCE_DIR.glob("*.cs")))
     return [path for path in files if path.exists()]

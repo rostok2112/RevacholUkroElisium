@@ -1,0 +1,21 @@
+{
+  "schema_version": "bepinex-bridge-runtime-smoke-report.v1",
+  "smoke_status": "not_run",
+  "plugin_id": "local.revachol.ukrainian-companion.bridge",
+  "bridge_version": "0.4.0-synthetic",
+  "build_attempted": false,
+  "build_succeeded": false,
+  "plugin_loaded_observed": false,
+  "health_check_observed": false,
+  "companion_available_observed": false,
+  "companion_unavailable_observed": false,
+  "synthetic_send_enabled": false,
+  "synthetic_send_observed": false,
+  "companion_received_synthetic_event": false,
+  "game_continued_when_companion_unavailable": false,
+  "warnings_count": 0,
+  "msb3277_warning_count": 0,
+  "notes_redacted": "Synthetic committed fixture. No user-local runtime evidence is attached.",
+  "evidence_summary": "Safe metadata-only summary placeholder for a future manual smoke.",
+  "created_by_user_manually": true
+}

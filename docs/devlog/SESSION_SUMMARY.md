@@ -1,5 +1,35 @@
 # Session Summary
 
+Milestone 4D redacted manual runtime smoke report workflow is implemented.
+
+Completed in the latest session:
+- Added `docs/manual-smoke/bepinex-bridge-runtime-smoke-report.md`, a safe report contract for
+  summarizing user-local bridge runtime smoke results without committing raw logs, stack traces,
+  payload dumps, screenshots, private paths, or real game content.
+- Added `tests/fixtures/bepinex_bridge.runtime_smoke_report.synthetic.json`, a tiny committed
+  synthetic `not_run` report fixture using only metadata booleans, warning counts, redacted notes,
+  and `created_by_user_manually: true`.
+- Added `scripts/check_bepinex_runtime_smoke_report.py`, a stdlib-only validator for the committed
+  fixture and optional user-local reports under
+  `workspace/synthetic-slice/bepinex-bridge/runtime-smoke/`.
+- Added `scripts/write_bepinex_runtime_smoke_report.py`, a local template writer that creates a
+  blank redacted report template under the ignored workspace report root without reading logs,
+  private files, game data, or companion responses.
+- Extended `scripts/check_bepinex_bridge_safety.py` so it requires the report docs, fixture, checker,
+  and writer, validates the committed report fixture, and confirms report output remains under the
+  ignored `workspace/` root.
+- Added `tests/test_bepinex_runtime_smoke_report.py` and extended bridge safety tests for report
+  shape, workspace-only paths, raw log markers, payload markers, stack traces, private paths,
+  non-localhost URLs, hook/OCR/extraction/decompiled markers, and no real runtime report requirement.
+- Updated `docs/manual-smoke/bepinex-bridge-runtime-smoke.md`, `docs/bepinex-bridge.md`,
+  `packages/bepinex-plugin/README.md`, and `packages/bepinex-plugin/DESIGN.md` to link the redacted
+  report workflow.
+- The C# bridge source did not need changes; 4D does not alter runtime behavior or the companion HTTP
+  contract.
+- Did not add game hooks, dialogue detection, Unity object scanning, OCR, extraction, decompiled game
+  code, provider execution, frontend/shell work, keyboard hooks, clipboard writes, companion HTTP
+  changes, downloads, web calls, or new dependencies.
+
 Milestone 4C BepInEx bridge manual runtime smoke and log contract is implemented.
 
 Completed in the latest session:

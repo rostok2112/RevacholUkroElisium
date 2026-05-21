@@ -138,10 +138,24 @@ docs/manual-smoke/bepinex-bridge-log-contract.md
 tests/fixtures/bepinex_bridge.log_contract.synthetic.json
 ```
 
+The redacted manual smoke report contract is:
+
+```text
+docs/manual-smoke/bepinex-bridge-runtime-smoke-report.md
+tests/fixtures/bepinex_bridge.runtime_smoke_report.synthetic.json
+```
+
+Validate the committed synthetic report fixture or a local workspace report with:
+
+```powershell
+python scripts/check_bepinex_runtime_smoke_report.py --quiet
+```
+
 Runtime logs may include only safe metadata: enabled/disabled state, localhost skip, companion
 health availability, endpoint status, synthetic event id, synthetic line id, and concise unavailable
 warnings. Do not commit local BepInEx logs, game logs, full payloads, response bodies, stack traces,
-private paths, or smoke reports.
+private paths, or smoke reports. Redacted local report summaries belong only under
+`workspace/synthetic-slice/bepinex-bridge/runtime-smoke/`.
 
 ## Synthetic Event Policy
 

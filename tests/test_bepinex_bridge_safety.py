@@ -18,6 +18,11 @@ from scripts.check_bepinex_bridge_safety import (
     GITIGNORE,
     LOG_CONTRACT_DOC,
     LOG_CONTRACT_PATH,
+    RUNTIME_REPORT_CHECKER,
+    RUNTIME_REPORT_DOC,
+    RUNTIME_REPORT_FIXTURE_PATH,
+    RUNTIME_REPORT_ROOT,
+    RUNTIME_REPORT_WRITER,
     RUNTIME_SMOKE_DOC,
     PACKAGE_DIR,
     PROJECT_FILE,
@@ -76,6 +81,21 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertIn(fixture_ref, _read(RUNTIME_SMOKE_DOC))
         self.assertIn(fixture_ref, _read(LOG_CONTRACT_DOC))
 
+    def test_runtime_report_contract_is_registered_without_requiring_real_report(self) -> None:
+        fixture_ref = "tests/fixtures/bepinex_bridge.runtime_smoke_report.synthetic.json"
+        checker_ref = "scripts/check_bepinex_runtime_smoke_report.py"
+
+        self.assertTrue(RUNTIME_REPORT_FIXTURE_PATH.exists())
+        self.assertTrue(RUNTIME_REPORT_DOC.exists())
+        self.assertTrue(RUNTIME_REPORT_CHECKER.exists())
+        self.assertTrue(RUNTIME_REPORT_WRITER.exists())
+        self.assertIn(fixture_ref, _read(RUNTIME_SMOKE_DOC))
+        self.assertIn(fixture_ref, _read(RUNTIME_REPORT_DOC))
+        self.assertIn(checker_ref, _read(RUNTIME_SMOKE_DOC))
+        self.assertIn(checker_ref, _read(RUNTIME_REPORT_DOC))
+        self.assertNotIn(checker_ref, _read(CHECK_ALL))
+        self.assertTrue(str(RUNTIME_REPORT_ROOT.relative_to(ROOT)).startswith("workspace"))
+
     def test_config_defaults_are_safe_and_manual_first(self) -> None:
         plugin_source = _read(SOURCE_DIR / "RevacholCompanionBridgePlugin.cs")
 
@@ -100,12 +120,16 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
                 for url in re.findall(r"https?://[^\s\"'<>)]+", text, flags=re.IGNORECASE):
                     self.assertIn(url.rstrip(".,)"), ALLOWED_URLS)
                 self.assertIsNone(SECRET_VALUE_PATTERN.search(text))
+                if path == RUNTIME_REPORT_CHECKER:
+                    continue
                 lowered = text.lower()
                 for marker in FORBIDDEN_EXTERNAL_MARKERS:
                     self.assertNotIn(marker.lower(), lowered, marker)
 
     def test_bridge_sources_contain_no_real_game_content_markers(self) -> None:
         for path in _scanned_bridge_files():
+            if path == RUNTIME_REPORT_CHECKER:
+                continue
             text = _read(path).lower()
             with self.subTest(path=path.relative_to(ROOT)):
                 for marker in FORBIDDEN_GAME_CONTENT_MARKERS:
@@ -177,9 +201,13 @@ def _scanned_bridge_files() -> list[Path]:
         PROJECT_FILE,
         FIXTURE_PATH,
         LOG_CONTRACT_PATH,
+        RUNTIME_REPORT_FIXTURE_PATH,
         BUILD_HELPER,
+        RUNTIME_REPORT_CHECKER,
+        RUNTIME_REPORT_WRITER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
+        RUNTIME_REPORT_DOC,
     ]
     files.extend(sorted(SOURCE_DIR.glob("*.cs")))
     return files
