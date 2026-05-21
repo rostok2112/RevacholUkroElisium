@@ -1,8 +1,12 @@
 # Decisions Pending
 
-- Milestone 4J added a redacted metadata probe report reviewer. Decide in Milestone 4K whether a
-  reviewed ready report is sufficient to scope a later metadata-only extension, still without
-  current-line capture or real text capture.
+- Milestone 4K accepted ADR 0009: the project is ready for metadata-only extension discussion only,
+  not implementation. Decide in Milestone 4L the exact scope contract and approval packet for any
+  later metadata-only runtime expansion.
+- Any future move from `ready_for_metadata_only_extension_discussion` to
+  `ready_for_metadata_only_extension_implementation` requires a ready local review or documented
+  no-review exception, explicit approval, disabled defaults, no text capture, and no companion HTTP
+  contract changes.
 - Any future metadata probe expansion requires separate approval and must keep
   `current_line_capture_enabled=false` and `real_text_captured=false` until a later safety review
   changes that boundary.

@@ -129,3 +129,16 @@ reads logs, game files, screenshots, companion state, or provider output.
 `readiness_status = "ready"` means only that the report is complete enough to discuss a later
 metadata-only extension. It does not approve current-line capture, UI text reading, real text
 capture, hooks, OCR, extraction, provider execution, or companion contract changes.
+
+## Milestone 4K metadata-only extension decision posture
+
+ADR 0009 (`docs/adr/0009-metadata-only-extension-gate.md`) records that the project is ready for
+metadata-only extension discussion only. Runtime implementation remains blocked until a later
+approved milestone has either a ready local metadata probe review or a documented decision to proceed
+without one.
+
+The gate fixture (`tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json`) keeps
+`implementation_allowed=false`, `text_capture_allowed=false`, `current_line_capture_allowed=false`,
+and `companion_contract_change_allowed=false`. Future extension scope is limited to safe booleans,
+safe counters, bridge-generated synthetic ids, redacted status codes, and explicit false capture
+flags.

@@ -1,0 +1,15 @@
+{
+  "schema_version": "bepinex-bridge-metadata-extension-gate.v1",
+  "decision_status": "ready_for_metadata_only_extension_discussion",
+  "reviewed_metadata_report_available": false,
+  "review_ready": false,
+  "implementation_allowed": false,
+  "text_capture_allowed": false,
+  "current_line_capture_allowed": false,
+  "companion_contract_change_allowed": false,
+  "required_next_milestone": "Milestone 4L: metadata-only extension scope contract",
+  "blockers": [
+    "No committed ready local metadata probe review is available.",
+    "Runtime extension implementation has not been separately approved."
+  ]
+}

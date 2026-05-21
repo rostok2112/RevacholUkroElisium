@@ -1,21 +1,22 @@
 # Next Actions
 
-After Milestone 4J:
+After Milestone 4K:
 
-1. Review only redacted metadata probe reports with
-   `scripts/review_bepinex_metadata_probe_report.py`.
-2. Keep completed metadata probe reports and review artifacts under
-   `workspace/synthetic-slice/bepinex-bridge/metadata-probe/`.
-3. Treat `readiness_status = "ready"` as discussion-only. It does not approve current-line capture,
-   UI text reading, real text capture, hooks, OCR, extraction, provider execution, or companion
-   contract changes.
-4. Keep `MetadataProbeEnabled=false` and `MetadataProbeLogOnStart=false` as source defaults.
-5. Do not commit completed real metadata probe reports, raw BepInEx/game logs, screenshots, private
+1. Treat ADR 0009 as the current gate: the project is ready for metadata-only extension discussion
+   only, not implementation.
+2. Keep `tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json` in sync with any
+   intentional gate decision change.
+3. Keep `implementation_allowed=false`, `text_capture_allowed=false`,
+   `current_line_capture_allowed=false`, and `companion_contract_change_allowed=false` until a later
+   approved milestone changes the gate.
+4. Review local metadata probe reports only with `scripts/review_bepinex_metadata_probe_report.py`
+   and keep reports/reviews under the ignored workspace metadata-probe root.
+5. Keep `MetadataProbeEnabled=false` and `MetadataProbeLogOnStart=false` as source defaults.
+6. Do not commit completed real metadata probe reports, raw BepInEx/game logs, screenshots, private
    paths, payload dumps, save files, OCR output, stack traces, or real game text.
-6. Keep `scripts/check_all.py` independent of any real metadata probe report.
-7. Use Milestone 4K to decide whether a reviewed metadata-only report is sufficient to scope a later
-   extension, still without capture or runtime inspection.
+7. Use Milestone 4L to define the exact metadata-only extension scope contract and approval packet,
+   still without runtime implementation or capture.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 4J. First inspect git status, read AGENTS.md, docs/devlog/*.md, docs/bepinex-metadata-probe-gate.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, docs/adr/0008-current-line-capture-research.md, docs/bepinex-bridge.md, packages/bepinex-plugin/README.md, packages/bepinex-plugin/DESIGN.md, and inspect scripts/review_bepinex_metadata_probe_report.py, scripts/check_bepinex_metadata_probe_report.py, scripts/check_bepinex_bridge_safety.py, tests/test_bepinex_metadata_probe_review.py, tests/test_bepinex_metadata_probe_report.py, packages/bepinex-plugin/src/MetadataProbe.cs, and tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json. Implement Milestone 4K: metadata-only probe extension decision gate. Decide and document whether a reviewed metadata probe report is sufficient to scope a later metadata-only extension, define the exact allowed extension shape if approved for planning, keep current-line capture and real text capture forbidden, update safety docs/tests/devlog, and run the full validation suite. Do not implement capture, dialogue detection, game hooks, Harmony patches, Unity object scanning, UI text reading, OCR, extraction, decompiled-code integration, provider execution, companion HTTP contract changes, shell work, keyboard hooks, clipboard writes, committed logs, committed screenshots, committed real reports, downloads, or new dependencies.`
+`Continue in revachol-ukro-elisium after Milestone 4K. First inspect git status, read AGENTS.md, docs/devlog/*.md, docs/adr/0009-metadata-only-extension-gate.md, docs/bepinex-metadata-probe-gate.md, docs/bepinex-bridge.md, packages/bepinex-plugin/DESIGN.md, scripts/check_bepinex_bridge_safety.py, and tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json. Implement Milestone 4L: metadata-only extension scope contract. Define the exact future metadata-only extension scope and approval packet, still without runtime implementation, current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction, provider execution, companion HTTP contract changes, shell work, committed logs, committed screenshots, committed real reports, downloads, or new dependencies.`

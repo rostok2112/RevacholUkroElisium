@@ -189,6 +189,18 @@ does not approve current-line capture, real text capture, UI text reading, hooks
 provider execution, or companion HTTP contract changes. It does not read logs, screenshots, game
 files, companion state, or provider output.
 
+## Milestone 4K Extension Gate
+
+Milestone 4K records the next decision in:
+
+```text
+docs/adr/0009-metadata-only-extension-gate.md
+```
+
+The decision allows metadata-only extension discussion only. Implementation still needs a later
+approved milestone, a ready local metadata probe review or documented no-review exception, disabled
+defaults, no text capture, and no companion HTTP contract changes.
+
 ## Consequences
 
 Pros:

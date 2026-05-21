@@ -1,5 +1,13 @@
 # Known Risks
 
+- Milestone 4K allows metadata-only extension discussion only. It must not be treated as approval for
+  implementation, current-line capture, real text capture, UI text reading, Unity scanning, hooks,
+  OCR, extraction, provider calls, companion contract changes, or shell work.
+- The metadata extension gate fixture intentionally closes implementation and capture permissions.
+  Any future change to that fixture is a contract decision and must be reviewed with ADR/docs/tests.
+- A future `ready_for_metadata_only_extension_implementation` state would still not approve text
+  capture or companion contract changes; it would only allow a separately scoped metadata-only
+  runtime expansion.
 - Milestone 4J review readiness is discussion-only. It must not be treated as approval for
   current-line capture, UI text reading, hooks, OCR, extraction, provider calls, or companion
   contract changes.

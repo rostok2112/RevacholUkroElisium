@@ -44,6 +44,7 @@ CHECK_ALL = ROOT / "scripts/check_all.py"
 BUILD_HELPER = ROOT / "scripts/build_bepinex_bridge.py"
 GITIGNORE = ROOT / ".gitignore"
 CURRENT_LINE_CAPTURE_ADR = ROOT / "docs/adr/0008-current-line-capture-research.md"
+METADATA_EXTENSION_GATE_ADR = ROOT / "docs/adr/0009-metadata-only-extension-gate.md"
 METADATA_PROBE_GATE_DOC = ROOT / "docs/bepinex-metadata-probe-gate.md"
 MANUAL_SMOKE_DIR = ROOT / "docs/manual-smoke"
 RUNTIME_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke.md"
@@ -56,6 +57,9 @@ RUNTIME_REPORT_REVIEWER = ROOT / "scripts/review_bepinex_runtime_smoke_report.py
 METADATA_PROBE_CHECKER = ROOT / "scripts/check_bepinex_metadata_probe_report.py"
 METADATA_PROBE_WRITER = ROOT / "scripts/write_bepinex_metadata_probe_report.py"
 METADATA_PROBE_REVIEWER = ROOT / "scripts/review_bepinex_metadata_probe_report.py"
+METADATA_EXTENSION_GATE_FIXTURE = (
+    ROOT / "tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json"
+)
 
 DEFAULT_URL = "http://127.0.0.1:8765"
 SYNTHETIC_EVENT_ID = "synthetic.event.bepinex.4a.001"
@@ -195,6 +199,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_log_contract())
     errors.extend(_check_runtime_report_contract())
     errors.extend(_check_metadata_probe_contract())
+    errors.extend(_check_metadata_extension_gate_contract())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
     errors.extend(_check_ignored_output_roots())
@@ -215,6 +220,7 @@ def _check_required_files() -> list[str]:
         LOG_CONTRACT_PATH,
         BUILD_HELPER,
         CURRENT_LINE_CAPTURE_ADR,
+        METADATA_EXTENSION_GATE_ADR,
         METADATA_PROBE_GATE_DOC,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
@@ -228,6 +234,7 @@ def _check_required_files() -> list[str]:
         METADATA_PROBE_CHECKER,
         METADATA_PROBE_WRITER,
         METADATA_PROBE_REVIEWER,
+        METADATA_EXTENSION_GATE_FIXTURE,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -347,6 +354,114 @@ def _check_metadata_probe_contract() -> list[str]:
         errors.append(
             f"Metadata probe report root {report_root} must stay under ignored workspace/."
         )
+    return errors
+
+
+def collect_metadata_extension_gate_errors(
+    path: Path = METADATA_EXTENSION_GATE_FIXTURE,
+) -> list[str]:
+    errors: list[str] = []
+    try:
+        gate = load_json(path)
+    except Exception as exc:
+        return [f"Could not load metadata extension gate fixture: {exc}"]
+
+    if not isinstance(gate, dict):
+        return ["Metadata extension gate fixture must be a JSON object."]
+
+    allowed_statuses = (
+        "not_ready",
+        "ready_for_metadata_only_extension_discussion",
+        "ready_for_metadata_only_extension_implementation",
+    )
+    if gate.get("schema_version") != "bepinex-bridge-metadata-extension-gate.v1":
+        errors.append("Metadata extension gate fixture has the wrong schema_version.")
+    if gate.get("decision_status") not in allowed_statuses:
+        errors.append("Metadata extension gate decision_status is not a known readiness state.")
+
+    for field in (
+        "reviewed_metadata_report_available",
+        "review_ready",
+        "implementation_allowed",
+        "text_capture_allowed",
+        "current_line_capture_allowed",
+        "companion_contract_change_allowed",
+    ):
+        if not isinstance(gate.get(field), bool):
+            errors.append(f"Metadata extension gate field {field!r} must be a boolean.")
+
+    if gate.get("text_capture_allowed") is not False:
+        errors.append("Metadata extension gate must keep text_capture_allowed=false.")
+    if gate.get("current_line_capture_allowed") is not False:
+        errors.append("Metadata extension gate must keep current_line_capture_allowed=false.")
+    if gate.get("companion_contract_change_allowed") is not False:
+        errors.append("Metadata extension gate must keep companion_contract_change_allowed=false.")
+    if (
+        gate.get("decision_status") == "ready_for_metadata_only_extension_discussion"
+        and gate.get("implementation_allowed") is not False
+    ):
+        errors.append(
+            "Metadata extension gate discussion status must keep implementation_allowed=false."
+        )
+    if gate.get("implementation_allowed") and (
+        gate.get("text_capture_allowed")
+        or gate.get("current_line_capture_allowed")
+        or gate.get("companion_contract_change_allowed")
+    ):
+        errors.append("Metadata extension implementation cannot imply capture or contract changes.")
+
+    if not isinstance(gate.get("required_next_milestone"), str) or not gate.get(
+        "required_next_milestone"
+    ):
+        errors.append("Metadata extension gate must include a required_next_milestone string.")
+    blockers = gate.get("blockers")
+    if not isinstance(blockers, list) or not all(isinstance(item, str) for item in blockers):
+        errors.append("Metadata extension gate blockers must be a list of strings.")
+
+    rendered = json.dumps(gate, ensure_ascii=False, sort_keys=True)
+    errors.extend(_check_urls(rendered, path.relative_to(ROOT)))
+    errors.extend(_check_secret_values(rendered, path.relative_to(ROOT)))
+    errors.extend(
+        _check_forbidden_markers(rendered, path.relative_to(ROOT), FORBIDDEN_EXTERNAL_MARKERS)
+    )
+    errors.extend(
+        _check_forbidden_markers(rendered, path.relative_to(ROOT), FORBIDDEN_GAME_CONTENT_MARKERS)
+    )
+    return errors
+
+
+def _check_metadata_extension_gate_contract() -> list[str]:
+    errors = collect_metadata_extension_gate_errors(METADATA_EXTENSION_GATE_FIXTURE)
+
+    if METADATA_EXTENSION_GATE_ADR.exists():
+        adr_text = _read_text(METADATA_EXTENSION_GATE_ADR).replace("\\", "/")
+        fixture_ref = str(METADATA_EXTENSION_GATE_FIXTURE.relative_to(ROOT)).replace("\\", "/")
+        for marker in (
+            "ready_for_metadata_only_extension_discussion",
+            "ready_for_metadata_only_extension_implementation",
+            "not_ready",
+            fixture_ref,
+            "does not approve current-line capture",
+        ):
+            if marker not in adr_text:
+                errors.append(
+                    f"{METADATA_EXTENSION_GATE_ADR.relative_to(ROOT)} must mention {marker}."
+                )
+
+    if METADATA_PROBE_GATE_DOC.exists():
+        gate_text = _read_text(METADATA_PROBE_GATE_DOC).replace("\\", "/")
+        adr_ref = str(METADATA_EXTENSION_GATE_ADR.relative_to(ROOT)).replace("\\", "/")
+        fixture_ref = str(METADATA_EXTENSION_GATE_FIXTURE.relative_to(ROOT)).replace("\\", "/")
+        for ref in (adr_ref, fixture_ref):
+            if ref not in gate_text:
+                errors.append(f"{METADATA_PROBE_GATE_DOC.relative_to(ROOT)} must point to {ref}.")
+
+    bridge_doc = ROOT / "docs/bepinex-bridge.md"
+    if bridge_doc.exists():
+        bridge_text = _read_text(bridge_doc).replace("\\", "/")
+        adr_ref = str(METADATA_EXTENSION_GATE_ADR.relative_to(ROOT)).replace("\\", "/")
+        if adr_ref not in bridge_text:
+            errors.append("docs/bepinex-bridge.md must point to ADR 0009.")
     return errors
 
 

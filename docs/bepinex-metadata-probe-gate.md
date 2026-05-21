@@ -175,3 +175,34 @@ Review artifacts, if written, belong only under:
 ```text
 workspace/synthetic-slice/bepinex-bridge/metadata-probe/review/
 ```
+
+## Milestone 4K Extension Decision Gate
+
+Milestone 4K records the metadata-only extension decision in:
+
+```text
+docs/adr/0009-metadata-only-extension-gate.md
+```
+
+The current decision is `ready_for_metadata_only_extension_discussion`, not implementation. A later
+extension may be scoped in docs, but runtime expansion remains blocked until a ready local metadata
+probe review exists or a documented no-review exception is explicitly approved.
+
+The committed gate fixture is:
+
+```text
+tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json
+```
+
+The fixture keeps:
+
+```text
+implementation_allowed=false
+text_capture_allowed=false
+current_line_capture_allowed=false
+companion_contract_change_allowed=false
+```
+
+Even a future `ready_for_metadata_only_extension_implementation` state must not approve current-line
+capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction, provider
+execution, companion HTTP contract changes, or production overlay work.

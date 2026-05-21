@@ -230,6 +230,27 @@ report is complete enough to discuss a later metadata-only extension. It does no
 capture, UI text reading, real text capture, hooks, OCR, extraction, provider execution, or companion
 contract changes.
 
+## Metadata-Only Extension Decision Gate
+
+Milestone 4K records the extension gate in:
+
+```text
+docs/adr/0009-metadata-only-extension-gate.md
+```
+
+The current decision is `ready_for_metadata_only_extension_discussion`. That allows only future
+scoping and review of a strictly metadata-only extension. It does not allow implementation yet.
+
+The committed gate fixture is:
+
+```text
+tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json
+```
+
+The gate keeps implementation closed until a ready local metadata probe review exists, or a later
+documented decision explicitly explains why implementation may proceed without one. It also keeps
+text capture, current-line capture, and companion contract changes disallowed.
+
 ## Current-Line Capture Research
 
 Milestone 4E records the future capture decision in:

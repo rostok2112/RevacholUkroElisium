@@ -20,6 +20,8 @@ from scripts.check_bepinex_bridge_safety import (
     LOG_CONTRACT_DOC,
     LOG_CONTRACT_PATH,
     METADATA_PROBE_CHECKER,
+    METADATA_EXTENSION_GATE_ADR,
+    METADATA_EXTENSION_GATE_FIXTURE,
     METADATA_PROBE_FIXTURE_PATH,
     METADATA_PROBE_GATE_DOC,
     METADATA_PROBE_REPORT_ROOT,
@@ -42,6 +44,7 @@ from scripts.check_bepinex_bridge_safety import (
     SYNTHETIC_EVENT_ID,
     SYNTHETIC_LINE_ID,
     collect_bepinex_bridge_safety_errors,
+    collect_metadata_extension_gate_errors,
 )
 from scripts.schema_validator import collect_errors, load_json
 
@@ -139,6 +142,58 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertNotIn(writer_ref, _read(CHECK_ALL))
         self.assertNotIn(reviewer_ref, _read(CHECK_ALL))
         self.assertTrue(str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).startswith("workspace"))
+
+    def test_metadata_extension_gate_is_registered(self) -> None:
+        adr_ref = "docs/adr/0009-metadata-only-extension-gate.md"
+        fixture_ref = "tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json"
+
+        self.assertTrue(METADATA_EXTENSION_GATE_ADR.exists())
+        self.assertTrue(METADATA_EXTENSION_GATE_FIXTURE.exists())
+        self.assertEqual(
+            [], collect_metadata_extension_gate_errors(METADATA_EXTENSION_GATE_FIXTURE)
+        )
+        self.assertIn(adr_ref, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(fixture_ref, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(adr_ref, _read(ROOT / "docs/bepinex-bridge.md"))
+        self.assertIn(
+            "ready_for_metadata_only_extension_discussion", _read(METADATA_EXTENSION_GATE_ADR)
+        )
+
+    def test_metadata_extension_gate_fixture_keeps_implementation_closed(self) -> None:
+        gate = load_json(METADATA_EXTENSION_GATE_FIXTURE)
+
+        self.assertEqual("ready_for_metadata_only_extension_discussion", gate["decision_status"])
+        self.assertFalse(gate["reviewed_metadata_report_available"])
+        self.assertFalse(gate["review_ready"])
+        self.assertFalse(gate["implementation_allowed"])
+        self.assertFalse(gate["text_capture_allowed"])
+        self.assertFalse(gate["current_line_capture_allowed"])
+        self.assertFalse(gate["companion_contract_change_allowed"])
+        self.assertIn("Milestone 4L", gate["required_next_milestone"])
+
+    def test_metadata_extension_gate_rejects_capture_permissions(self) -> None:
+        gate = load_json(METADATA_EXTENSION_GATE_FIXTURE)
+        for field in (
+            "text_capture_allowed",
+            "current_line_capture_allowed",
+            "companion_contract_change_allowed",
+            "implementation_allowed",
+        ):
+            with self.subTest(field=field):
+                mutated = dict(gate)
+                mutated[field] = True
+
+                self.assertNotEqual([], _metadata_extension_gate_errors_for(mutated))
+
+    def test_metadata_extension_gate_fixture_does_not_approve_risky_scope(self) -> None:
+        fixture_text = _read(METADATA_EXTENSION_GATE_FIXTURE).lower()
+        adr_text = _read(METADATA_EXTENSION_GATE_ADR)
+
+        for marker in ("hooks", "ocr", "extraction", "unity scanning"):
+            with self.subTest(marker=marker):
+                self.assertNotIn(marker, fixture_text)
+        self.assertIn("does not approve current-line capture", adr_text)
+        self.assertIn("It must not include:", adr_text)
 
     def test_metadata_probe_manual_smoke_doc_documents_safe_observations(self) -> None:
         text = _read(METADATA_PROBE_SMOKE_DOC)
@@ -333,6 +388,17 @@ def _scanned_bridge_files() -> list[Path]:
 
 def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def _metadata_extension_gate_errors_for(gate: dict[str, object]) -> list[str]:
+    path = ROOT / "workspace/synthetic-slice/bepinex-bridge/unit-metadata-extension-gate.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(gate, indent=2, ensure_ascii=False), encoding="utf-8")
+    try:
+        return collect_metadata_extension_gate_errors(path)
+    finally:
+        if path.exists():
+            path.unlink()
 
 
 if __name__ == "__main__":

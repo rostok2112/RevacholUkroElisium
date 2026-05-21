@@ -1,5 +1,25 @@
 # Session Summary
 
+Milestone 4K metadata-only extension decision gate is implemented.
+
+Completed in the latest session:
+- Added `docs/adr/0009-metadata-only-extension-gate.md`, an accepted ADR that records the project is
+  ready for metadata-only extension discussion only.
+- Defined readiness states: `not_ready`, `ready_for_metadata_only_extension_discussion`, and
+  `ready_for_metadata_only_extension_implementation`.
+- Added `tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json`, a tiny synthetic
+  gate fixture with implementation, text capture, current-line capture, and companion contract
+  change permissions all closed.
+- Extended `scripts/check_bepinex_bridge_safety.py` and bridge safety tests so ADR 0009 and the
+  gate fixture are required and validated.
+- Updated metadata probe gate docs, bridge docs, ADR 0008, package design notes, and devlog handoff
+  notes.
+- Did not change C# runtime behavior, companion HTTP contracts, provider behavior, or metadata probe
+  runtime behavior.
+- Did not add current-line capture, real text capture, UI text reading, Unity scanning, game hooks,
+  Harmony patches, OCR, extraction, decompiled game-code work, frontend/shell work, keyboard hooks,
+  clipboard writes, downloads, web calls, or new dependencies.
+
 Milestone 4J metadata probe report review/readiness helper is implemented.
 
 Completed in the latest session:
