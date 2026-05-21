@@ -107,6 +107,18 @@ Readiness requires:
 `partial`, `fail`, and `not_run` reports are valid report shapes but not ready for next-phase
 planning.
 
+## Metadata Probe Gate
+
+After a report review is ready, the next boundary is still a metadata-only gate:
+
+```text
+docs/bepinex-metadata-probe-gate.md
+```
+
+That gate does not approve current-line capture. It only defines the safe shape for a possible
+future disabled-by-default metadata probe report. Real text, hooks, Unity text scanning, OCR,
+extraction, raw payloads, screenshots, and committed runtime logs remain forbidden.
+
 ## Forbidden Content
 
 Reports must not include:

@@ -164,6 +164,18 @@ implementation.
 - No companion HTTP contract changes.
 - A decision gate before any metadata-only current-line probe is scoped.
 
+## Milestone 4G Metadata Gate
+
+Milestone 4G adds the decision gate in `docs/bepinex-metadata-probe-gate.md`. The gate does not
+approve capture or add runtime probe code. It only defines a reportable metadata boundary for a
+later disabled-by-default probe:
+
+- booleans, safe counters, synthetic ids, and safe status/error codes are allowed;
+- `current_line_capture_enabled` must remain `false`;
+- `real_text_captured` must remain `false`;
+- local reports must stay under ignored workspace paths;
+- probe implementation still requires a later approved milestone.
+
 ## Consequences
 
 Pros:

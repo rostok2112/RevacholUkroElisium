@@ -80,3 +80,15 @@ changes.
 write a redacted readiness summary under ignored workspace paths. It never reads BepInEx logs, game
 logs, screenshots, game files, companion state, or provider outputs. A ready review means only that
 evidence is complete enough to discuss a later metadata-only probe; it does not approve capture.
+
+## Milestone 4G metadata probe gate posture
+
+`docs/bepinex-metadata-probe-gate.md` defines the static safety gate for a future metadata-only
+probe. No C# probe code exists yet. A later implementation may only be considered after a ready 4F
+review and a separate approval step.
+
+The only acceptable future probe outputs before another safety review are booleans, safe counters,
+synthetic ids, safe status/error codes, and explicit `current_line_capture_enabled = false` /
+`real_text_captured = false` markers. Real text capture, hooks, Unity text scanning, OCR,
+extraction, provider execution, raw payloads, screenshots, and committed runtime logs remain outside
+the bridge design.

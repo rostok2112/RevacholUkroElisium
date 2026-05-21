@@ -168,6 +168,41 @@ private paths, or smoke reports. Redacted local report summaries belong only und
 human discussion of a later metadata-only probe. It is not approval to capture real text, add hooks,
 run OCR, scan Unity objects, or change the companion contract.
 
+## Metadata-Only Probe Gate
+
+Milestone 4G defines the future-probe gate in:
+
+```text
+docs/bepinex-metadata-probe-gate.md
+```
+
+The gate is docs/static-contract work only. It does not add probe code, current-line capture, Unity
+scanning, hooks, OCR, extraction, provider execution, or companion HTTP changes. It defines the only
+kind of data a later disabled-by-default probe may report before another approval step: booleans,
+safe counters, synthetic ids, safe status/error codes, and explicit `current_line_capture_enabled =
+false` / `real_text_captured = false` markers.
+
+The committed synthetic metadata probe report fixture is:
+
+```text
+tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json
+```
+
+Validate the fixture or an optional local redacted report with:
+
+```powershell
+python scripts/check_bepinex_metadata_probe_report.py --quiet
+```
+
+Optional local metadata probe reports must remain ignored under:
+
+```text
+workspace/synthetic-slice/bepinex-bridge/metadata-probe/
+```
+
+Passing the checker does not approve text capture. It only verifies that a report is metadata-only
+and redacted.
+
 ## Current-Line Capture Research
 
 Milestone 4E records the future capture decision in:

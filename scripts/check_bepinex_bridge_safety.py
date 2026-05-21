@@ -13,12 +13,22 @@ try:
         REPORT_ROOT as RUNTIME_REPORT_ROOT,
         collect_runtime_smoke_report_errors,
     )
+    from scripts.check_bepinex_metadata_probe_report import (
+        FIXTURE_PATH as METADATA_PROBE_FIXTURE_PATH,
+        REPORT_ROOT as METADATA_PROBE_REPORT_ROOT,
+        collect_metadata_probe_report_errors,
+    )
 except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
     from schema_validator import collect_errors, load_json
     from check_bepinex_runtime_smoke_report import (
         FIXTURE_PATH as RUNTIME_REPORT_FIXTURE_PATH,
         REPORT_ROOT as RUNTIME_REPORT_ROOT,
         collect_runtime_smoke_report_errors,
+    )
+    from check_bepinex_metadata_probe_report import (
+        FIXTURE_PATH as METADATA_PROBE_FIXTURE_PATH,
+        REPORT_ROOT as METADATA_PROBE_REPORT_ROOT,
+        collect_metadata_probe_report_errors,
     )
 
 
@@ -33,6 +43,7 @@ CHECK_ALL = ROOT / "scripts/check_all.py"
 BUILD_HELPER = ROOT / "scripts/build_bepinex_bridge.py"
 GITIGNORE = ROOT / ".gitignore"
 CURRENT_LINE_CAPTURE_ADR = ROOT / "docs/adr/0008-current-line-capture-research.md"
+METADATA_PROBE_GATE_DOC = ROOT / "docs/bepinex-metadata-probe-gate.md"
 MANUAL_SMOKE_DIR = ROOT / "docs/manual-smoke"
 RUNTIME_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke.md"
 LOG_CONTRACT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-log-contract.md"
@@ -40,6 +51,7 @@ RUNTIME_REPORT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke-report.md"
 RUNTIME_REPORT_CHECKER = ROOT / "scripts/check_bepinex_runtime_smoke_report.py"
 RUNTIME_REPORT_WRITER = ROOT / "scripts/write_bepinex_runtime_smoke_report.py"
 RUNTIME_REPORT_REVIEWER = ROOT / "scripts/review_bepinex_runtime_smoke_report.py"
+METADATA_PROBE_CHECKER = ROOT / "scripts/check_bepinex_metadata_probe_report.py"
 
 DEFAULT_URL = "http://127.0.0.1:8765"
 SYNTHETIC_EVENT_ID = "synthetic.event.bepinex.4a.001"
@@ -178,6 +190,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_fixture())
     errors.extend(_check_log_contract())
     errors.extend(_check_runtime_report_contract())
+    errors.extend(_check_metadata_probe_contract())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
     errors.extend(_check_ignored_output_roots())
@@ -197,6 +210,7 @@ def _check_required_files() -> list[str]:
         LOG_CONTRACT_PATH,
         BUILD_HELPER,
         CURRENT_LINE_CAPTURE_ADR,
+        METADATA_PROBE_GATE_DOC,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,
@@ -204,6 +218,8 @@ def _check_required_files() -> list[str]:
         RUNTIME_REPORT_CHECKER,
         RUNTIME_REPORT_WRITER,
         RUNTIME_REPORT_REVIEWER,
+        METADATA_PROBE_FIXTURE_PATH,
+        METADATA_PROBE_CHECKER,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -267,6 +283,33 @@ def _check_runtime_report_contract() -> list[str]:
     report_root = str(RUNTIME_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
     if "workspace/" not in gitignore_text:
         errors.append(f"Runtime report root {report_root} must stay under ignored workspace/.")
+    return errors
+
+
+def _check_metadata_probe_contract() -> list[str]:
+    errors = collect_metadata_probe_report_errors(METADATA_PROBE_FIXTURE_PATH)
+    if not METADATA_PROBE_GATE_DOC.exists():
+        return errors
+
+    text = _read_text(METADATA_PROBE_GATE_DOC).replace("\\", "/")
+    fixture_ref = str(METADATA_PROBE_FIXTURE_PATH.relative_to(ROOT)).replace("\\", "/")
+    checker_ref = str(METADATA_PROBE_CHECKER.relative_to(ROOT)).replace("\\", "/")
+    report_root = str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
+    for ref in (fixture_ref, checker_ref, report_root):
+        if ref not in text:
+            errors.append(f"{METADATA_PROBE_GATE_DOC.relative_to(ROOT)} must point to {ref}.")
+
+    bridge_doc = ROOT / "docs/bepinex-bridge.md"
+    if bridge_doc.exists():
+        bridge_text = _read_text(bridge_doc).replace("\\", "/")
+        if "docs/bepinex-metadata-probe-gate.md" not in bridge_text:
+            errors.append("docs/bepinex-bridge.md must point to the metadata probe gate.")
+
+    gitignore_text = _read_text(GITIGNORE) if GITIGNORE.exists() else ""
+    if "workspace/" not in gitignore_text:
+        errors.append(
+            f"Metadata probe report root {report_root} must stay under ignored workspace/."
+        )
     return errors
 
 

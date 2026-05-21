@@ -19,6 +19,10 @@ from scripts.check_bepinex_bridge_safety import (
     GITIGNORE,
     LOG_CONTRACT_DOC,
     LOG_CONTRACT_PATH,
+    METADATA_PROBE_CHECKER,
+    METADATA_PROBE_FIXTURE_PATH,
+    METADATA_PROBE_GATE_DOC,
+    METADATA_PROBE_REPORT_ROOT,
     RUNTIME_REPORT_CHECKER,
     RUNTIME_REPORT_DOC,
     RUNTIME_REPORT_FIXTURE_PATH,
@@ -102,6 +106,22 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertNotIn(checker_ref, _read(CHECK_ALL))
         self.assertNotIn(reviewer_ref, _read(CHECK_ALL))
         self.assertTrue(str(RUNTIME_REPORT_ROOT.relative_to(ROOT)).startswith("workspace"))
+
+    def test_metadata_probe_gate_is_registered_without_requiring_real_report(self) -> None:
+        fixture_ref = "tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json"
+        checker_ref = "scripts/check_bepinex_metadata_probe_report.py"
+        gate_ref = "docs/bepinex-metadata-probe-gate.md"
+
+        self.assertTrue(METADATA_PROBE_GATE_DOC.exists())
+        self.assertTrue(METADATA_PROBE_FIXTURE_PATH.exists())
+        self.assertTrue(METADATA_PROBE_CHECKER.exists())
+        self.assertIn(fixture_ref, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(checker_ref, _read(METADATA_PROBE_GATE_DOC))
+        report_root = str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
+        self.assertIn(report_root, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(gate_ref, _read(ROOT / "docs/bepinex-bridge.md"))
+        self.assertNotIn(checker_ref, _read(CHECK_ALL))
+        self.assertTrue(str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).startswith("workspace"))
 
     def test_current_line_capture_research_adr_is_registered(self) -> None:
         self.assertTrue(CURRENT_LINE_CAPTURE_ADR.exists())

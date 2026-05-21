@@ -1,5 +1,30 @@
 # Session Summary
 
+Milestone 4G metadata-only probe gate is implemented.
+
+Completed in the latest session:
+- Added `docs/bepinex-metadata-probe-gate.md`, a static safety gate for a future metadata-only
+  bridge probe.
+- The gate allows only redacted metadata such as booleans, safe counters, synthetic ids, safe
+  status/error codes, and explicit `current_line_capture_enabled = false` /
+  `real_text_captured = false` markers.
+- Added `tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json`, a committed
+  synthetic `not_run` metadata probe report fixture with no user-local runtime evidence.
+- Added `scripts/check_bepinex_metadata_probe_report.py`, a stdlib-only checker for the committed
+  fixture and optional local reports under
+  `workspace/synthetic-slice/bepinex-bridge/metadata-probe/`.
+- The checker rejects real text, screenshots, OCR markers, private paths, stack traces, raw logs,
+  payload dumps, decompiled-code markers, hook/capture claims, external URLs, and secret-looking
+  values.
+- Extended the bridge safety checker and tests so the metadata gate doc, checker, and fixture are
+  required without making `check_all` depend on a real metadata probe report.
+- Updated bridge docs, ADR 0008, package design notes, and manual smoke report docs to clarify that
+  the metadata gate does not approve text capture.
+- Did not add C# behavior, current-line capture, game hooks, Harmony patches, Unity object
+  scanning, OCR, extraction, decompiled game-code work, provider execution, frontend/shell work,
+  keyboard hooks, clipboard writes, companion HTTP changes, downloads, web calls, or new
+  dependencies.
+
 Milestone 4F runtime smoke evidence review workflow is implemented.
 
 Completed in the latest session:

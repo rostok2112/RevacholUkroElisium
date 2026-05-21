@@ -1,5 +1,12 @@
 # Known Risks
 
+- Milestone 4G is a static gate and committed synthetic fixture only. It does not prove metadata
+  probe runtime feasibility or authorize probe implementation.
+- A valid metadata probe report proves only that the report shape stayed metadata-only and redacted.
+  It does not approve current-line capture, hooks, OCR, extraction, Unity scanning, provider calls,
+  or companion contract changes.
+- The metadata probe checker intentionally lists forbidden concepts as rejection markers. Safety
+  tooling must keep distinguishing policy/checker text from runtime implementation code.
 - Milestone 4F reviews redacted report summaries only. It does not prove the underlying manual smoke
   observations are true, complete, or reproducible.
 - `ready_for_next_phase = true` is not approval for current-line capture, hooks, OCR, extraction, or
