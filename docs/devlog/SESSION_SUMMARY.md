@@ -1,5 +1,26 @@
 # Session Summary
 
+Milestone 4L metadata-only extension scope contract is implemented.
+
+Completed in the latest session:
+- Added `docs/bepinex-metadata-only-extension-scope.md`, a docs/static-contract scope for a possible
+  Milestone 4M metadata-only extension.
+- Added `tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json`, a synthetic
+  fixture that permits only a later inert metadata step and keeps text capture, current-line capture,
+  UI text reading, Unity scanning, hooks, OCR, extraction, provider calls, and companion contract
+  changes false.
+- Recorded the 4L decision that a reviewed local metadata report is not required for the minimal 4M
+  scope because it is inert, disabled by default, no-capture, and limited to counters/booleans.
+- Extended `scripts/check_bepinex_bridge_safety.py` and bridge safety tests so the scope doc and
+  fixture are required and validated.
+- Updated metadata probe gate docs, bridge docs, ADR 0009, package design notes, and devlog handoff
+  notes.
+- Did not change C# runtime behavior, companion HTTP contracts, provider behavior, or metadata probe
+  runtime behavior.
+- Did not add current-line capture, real text capture, UI text reading, Unity scanning, game hooks,
+  Harmony patches, OCR, extraction, decompiled game-code work, frontend/shell work, keyboard hooks,
+  clipboard writes, downloads, web calls, or new dependencies.
+
 Milestone 4K metadata-only extension decision gate is implemented.
 
 Completed in the latest session:

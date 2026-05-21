@@ -46,6 +46,7 @@ GITIGNORE = ROOT / ".gitignore"
 CURRENT_LINE_CAPTURE_ADR = ROOT / "docs/adr/0008-current-line-capture-research.md"
 METADATA_EXTENSION_GATE_ADR = ROOT / "docs/adr/0009-metadata-only-extension-gate.md"
 METADATA_PROBE_GATE_DOC = ROOT / "docs/bepinex-metadata-probe-gate.md"
+METADATA_ONLY_EXTENSION_SCOPE_DOC = ROOT / "docs/bepinex-metadata-only-extension-scope.md"
 MANUAL_SMOKE_DIR = ROOT / "docs/manual-smoke"
 RUNTIME_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke.md"
 LOG_CONTRACT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-log-contract.md"
@@ -59,6 +60,9 @@ METADATA_PROBE_WRITER = ROOT / "scripts/write_bepinex_metadata_probe_report.py"
 METADATA_PROBE_REVIEWER = ROOT / "scripts/review_bepinex_metadata_probe_report.py"
 METADATA_EXTENSION_GATE_FIXTURE = (
     ROOT / "tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json"
+)
+METADATA_ONLY_EXTENSION_SCOPE_FIXTURE = (
+    ROOT / "tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json"
 )
 
 DEFAULT_URL = "http://127.0.0.1:8765"
@@ -200,6 +204,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_runtime_report_contract())
     errors.extend(_check_metadata_probe_contract())
     errors.extend(_check_metadata_extension_gate_contract())
+    errors.extend(_check_metadata_only_extension_scope_contract())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
     errors.extend(_check_ignored_output_roots())
@@ -222,6 +227,7 @@ def _check_required_files() -> list[str]:
         CURRENT_LINE_CAPTURE_ADR,
         METADATA_EXTENSION_GATE_ADR,
         METADATA_PROBE_GATE_DOC,
+        METADATA_ONLY_EXTENSION_SCOPE_DOC,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,
@@ -235,6 +241,7 @@ def _check_required_files() -> list[str]:
         METADATA_PROBE_WRITER,
         METADATA_PROBE_REVIEWER,
         METADATA_EXTENSION_GATE_FIXTURE,
+        METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -462,6 +469,148 @@ def _check_metadata_extension_gate_contract() -> list[str]:
         adr_ref = str(METADATA_EXTENSION_GATE_ADR.relative_to(ROOT)).replace("\\", "/")
         if adr_ref not in bridge_text:
             errors.append("docs/bepinex-bridge.md must point to ADR 0009.")
+    return errors
+
+
+def collect_metadata_only_extension_scope_errors(
+    path: Path = METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
+) -> list[str]:
+    errors: list[str] = []
+    try:
+        scope = load_json(path)
+    except Exception as exc:
+        return [f"Could not load metadata-only extension scope fixture: {exc}"]
+
+    if not isinstance(scope, dict):
+        return ["Metadata-only extension scope fixture must be a JSON object."]
+
+    if scope.get("schema_version") != "bepinex-bridge-metadata-only-extension-scope.v1":
+        errors.append("Metadata-only extension scope fixture has the wrong schema_version.")
+    if scope.get("scope_status") != "planned_not_implemented":
+        errors.append("Metadata-only extension scope_status must be planned_not_implemented.")
+    if scope.get("required_next_milestone") != "4M":
+        errors.append("Metadata-only extension scope required_next_milestone must be 4M.")
+
+    required_bool_fields = (
+        "implementation_allowed_next",
+        "requires_reviewed_runtime_report",
+        "text_capture_allowed",
+        "current_line_capture_allowed",
+        "ui_text_reading_allowed",
+        "unity_scanning_allowed",
+        "hooks_allowed",
+        "ocr_allowed",
+        "extraction_allowed",
+        "companion_contract_change_allowed",
+        "provider_calls_allowed",
+    )
+    for field in required_bool_fields:
+        if not isinstance(scope.get(field), bool):
+            errors.append(f"Metadata-only extension scope field {field!r} must be a boolean.")
+
+    if scope.get("implementation_allowed_next") is not True:
+        errors.append("Metadata-only extension scope must set implementation_allowed_next=true.")
+    if scope.get("requires_reviewed_runtime_report") is not False:
+        errors.append(
+            "Metadata-only extension scope must set requires_reviewed_runtime_report=false."
+        )
+
+    forbidden_permissions = (
+        "text_capture_allowed",
+        "current_line_capture_allowed",
+        "ui_text_reading_allowed",
+        "unity_scanning_allowed",
+        "hooks_allowed",
+        "ocr_allowed",
+        "extraction_allowed",
+        "companion_contract_change_allowed",
+        "provider_calls_allowed",
+    )
+    for field in forbidden_permissions:
+        if scope.get(field) is not False:
+            errors.append(f"Metadata-only extension scope must keep {field}=false.")
+
+    if scope.get("implementation_allowed_next") and any(
+        scope.get(field) for field in forbidden_permissions
+    ):
+        errors.append(
+            "Metadata-only extension implementation cannot imply capture, provider calls, "
+            "or companion contract changes."
+        )
+
+    for field in ("allowed_future_fields", "forbidden_future_fields"):
+        value = scope.get(field)
+        if (
+            not isinstance(value, list)
+            or not value
+            or not all(isinstance(item, str) and item for item in value)
+        ):
+            errors.append(
+                f"Metadata-only extension scope field {field!r} must be a non-empty list of strings."
+            )
+
+    required_allowed = (
+        "probe_execution_count",
+        "plugin_loaded",
+        "plugin_enabled",
+        "companion_health_checked",
+        "companion_available",
+        "synthetic_event_send_configured",
+        "synthetic_event_sent",
+        "probe_attempted",
+        "probe_completed",
+        "safe_status_events",
+        "synthetic_events",
+        "real_text_captured_false",
+        "current_line_capture_enabled_false",
+    )
+    allowed_fields = set(scope.get("allowed_future_fields", []))
+    for field in required_allowed:
+        if field not in allowed_fields:
+            errors.append(f"Metadata-only extension scope allowed fields must include {field!r}.")
+
+    rendered = json.dumps(scope, ensure_ascii=False, sort_keys=True)
+    errors.extend(_check_urls(rendered, path.relative_to(ROOT)))
+    errors.extend(_check_secret_values(rendered, path.relative_to(ROOT)))
+    return errors
+
+
+def _check_metadata_only_extension_scope_contract() -> list[str]:
+    errors = collect_metadata_only_extension_scope_errors(METADATA_ONLY_EXTENSION_SCOPE_FIXTURE)
+
+    if METADATA_ONLY_EXTENSION_SCOPE_DOC.exists():
+        scope_text = _read_text(METADATA_ONLY_EXTENSION_SCOPE_DOC).replace("\\", "/")
+        fixture_ref = str(METADATA_ONLY_EXTENSION_SCOPE_FIXTURE.relative_to(ROOT)).replace(
+            "\\", "/"
+        )
+        for marker in (
+            fixture_ref,
+            "Milestone 4L defines",
+            "docs/static-contract work only",
+            "Milestone 4M may be planned without a reviewed local metadata probe report",
+            "does not implement runtime behavior",
+            "must not",
+        ):
+            if marker not in scope_text:
+                errors.append(
+                    f"{METADATA_ONLY_EXTENSION_SCOPE_DOC.relative_to(ROOT)} must mention {marker}."
+                )
+
+    docs_to_link = (
+        METADATA_PROBE_GATE_DOC,
+        ROOT / "docs/bepinex-bridge.md",
+        METADATA_EXTENSION_GATE_ADR,
+        PACKAGE_DIR / "DESIGN.md",
+    )
+    scope_ref = str(METADATA_ONLY_EXTENSION_SCOPE_DOC.relative_to(ROOT)).replace("\\", "/")
+    fixture_ref = str(METADATA_ONLY_EXTENSION_SCOPE_FIXTURE.relative_to(ROOT)).replace("\\", "/")
+    for doc_path in docs_to_link:
+        if not doc_path.exists():
+            continue
+        text = _read_text(doc_path).replace("\\", "/")
+        for ref in (scope_ref, fixture_ref):
+            if ref not in text:
+                errors.append(f"{doc_path.relative_to(ROOT)} must point to {ref}.")
     return errors
 
 

@@ -91,6 +91,20 @@ tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json
 
 The fixture records the current decision and keeps implementation and capture permissions closed.
 
+## Milestone 4L Scope Follow-up
+
+Milestone 4L adds a narrower scope contract for a possible 4M implementation:
+
+```text
+docs/bepinex-metadata-only-extension-scope.md
+tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json
+```
+
+The 4L decision may allow 4M planning without a ready reviewed local metadata report only because
+the allowed 4M behavior is inert, disabled by default, and limited to counters and booleans. That
+does not change the capture boundary: text capture, current-line capture, UI text reading, Unity
+scanning, hooks, OCR, extraction, provider calls, and companion contract changes remain disallowed.
+
 ## Consequences
 
 Pros:

@@ -1,8 +1,12 @@
 # Decisions Pending
 
+- Milestone 4L defined the exact scope for a possible 4M inert metadata-only C# extension. Decide in
+  4M whether to implement only that scoped counter/boolean extension now.
+- Milestone 4L waived the reviewed local metadata report requirement only for the minimal 4M inert
+  scope. Decide later whether any broader probe requires a ready reviewed report before
+  implementation.
 - Milestone 4K accepted ADR 0009: the project is ready for metadata-only extension discussion only,
-  not implementation. Decide in Milestone 4L the exact scope contract and approval packet for any
-  later metadata-only runtime expansion.
+  not broad implementation.
 - Any future move from `ready_for_metadata_only_extension_discussion` to
   `ready_for_metadata_only_extension_implementation` requires a ready local review or documented
   no-review exception, explicit approval, disabled defaults, no text capture, and no companion HTTP

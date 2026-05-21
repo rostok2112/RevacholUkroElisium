@@ -22,6 +22,8 @@ from scripts.check_bepinex_bridge_safety import (
     METADATA_PROBE_CHECKER,
     METADATA_EXTENSION_GATE_ADR,
     METADATA_EXTENSION_GATE_FIXTURE,
+    METADATA_ONLY_EXTENSION_SCOPE_DOC,
+    METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
     METADATA_PROBE_FIXTURE_PATH,
     METADATA_PROBE_GATE_DOC,
     METADATA_PROBE_REPORT_ROOT,
@@ -45,6 +47,7 @@ from scripts.check_bepinex_bridge_safety import (
     SYNTHETIC_LINE_ID,
     collect_bepinex_bridge_safety_errors,
     collect_metadata_extension_gate_errors,
+    collect_metadata_only_extension_scope_errors,
 )
 from scripts.schema_validator import collect_errors, load_json
 
@@ -194,6 +197,70 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
                 self.assertNotIn(marker, fixture_text)
         self.assertIn("does not approve current-line capture", adr_text)
         self.assertIn("It must not include:", adr_text)
+
+    def test_metadata_only_extension_scope_is_registered(self) -> None:
+        scope_ref = "docs/bepinex-metadata-only-extension-scope.md"
+        fixture_ref = "tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json"
+
+        self.assertTrue(METADATA_ONLY_EXTENSION_SCOPE_DOC.exists())
+        self.assertTrue(METADATA_ONLY_EXTENSION_SCOPE_FIXTURE.exists())
+        self.assertEqual(
+            [],
+            collect_metadata_only_extension_scope_errors(METADATA_ONLY_EXTENSION_SCOPE_FIXTURE),
+        )
+        self.assertIn(fixture_ref, _read(METADATA_ONLY_EXTENSION_SCOPE_DOC))
+        self.assertIn(scope_ref, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(fixture_ref, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(scope_ref, _read(ROOT / "docs/bepinex-bridge.md"))
+        self.assertIn(scope_ref, _read(METADATA_EXTENSION_GATE_ADR))
+
+    def test_metadata_only_extension_scope_fixture_allows_only_inert_next_step(self) -> None:
+        scope = load_json(METADATA_ONLY_EXTENSION_SCOPE_FIXTURE)
+
+        self.assertEqual("planned_not_implemented", scope["scope_status"])
+        self.assertTrue(scope["implementation_allowed_next"])
+        self.assertFalse(scope["requires_reviewed_runtime_report"])
+        self.assertFalse(scope["text_capture_allowed"])
+        self.assertFalse(scope["current_line_capture_allowed"])
+        self.assertFalse(scope["ui_text_reading_allowed"])
+        self.assertFalse(scope["unity_scanning_allowed"])
+        self.assertFalse(scope["hooks_allowed"])
+        self.assertFalse(scope["ocr_allowed"])
+        self.assertFalse(scope["extraction_allowed"])
+        self.assertFalse(scope["companion_contract_change_allowed"])
+        self.assertFalse(scope["provider_calls_allowed"])
+        self.assertEqual("4M", scope["required_next_milestone"])
+        self.assertIn("probe_execution_count", scope["allowed_future_fields"])
+        self.assertIn("companion_payload", scope["forbidden_future_fields"])
+
+    def test_metadata_only_extension_scope_rejects_forbidden_permissions(self) -> None:
+        scope = load_json(METADATA_ONLY_EXTENSION_SCOPE_FIXTURE)
+        for field in (
+            "text_capture_allowed",
+            "current_line_capture_allowed",
+            "ui_text_reading_allowed",
+            "unity_scanning_allowed",
+            "hooks_allowed",
+            "ocr_allowed",
+            "extraction_allowed",
+            "companion_contract_change_allowed",
+            "provider_calls_allowed",
+        ):
+            with self.subTest(field=field):
+                mutated = dict(scope)
+                mutated[field] = True
+
+                self.assertNotEqual([], _metadata_only_extension_scope_errors_for(mutated))
+
+    def test_metadata_only_extension_docs_do_not_approve_capture(self) -> None:
+        scope_doc = _read(METADATA_ONLY_EXTENSION_SCOPE_DOC)
+        bridge_doc = _read(ROOT / "docs/bepinex-bridge.md")
+        normalized_bridge_doc = " ".join(bridge_doc.split())
+
+        self.assertIn("does not implement runtime behavior", scope_doc)
+        self.assertIn("must not", scope_doc)
+        self.assertIn("does not approve current-line capture", normalized_bridge_doc)
+        self.assertNotIn("current-line capture is approved", scope_doc.lower())
 
     def test_metadata_probe_manual_smoke_doc_documents_safe_observations(self) -> None:
         text = _read(METADATA_PROBE_SMOKE_DOC)
@@ -396,6 +463,17 @@ def _metadata_extension_gate_errors_for(gate: dict[str, object]) -> list[str]:
     path.write_text(json.dumps(gate, indent=2, ensure_ascii=False), encoding="utf-8")
     try:
         return collect_metadata_extension_gate_errors(path)
+    finally:
+        if path.exists():
+            path.unlink()
+
+
+def _metadata_only_extension_scope_errors_for(scope: dict[str, object]) -> list[str]:
+    path = ROOT / "workspace/synthetic-slice/bepinex-bridge/unit-metadata-scope.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(scope, indent=2, ensure_ascii=False), encoding="utf-8")
+    try:
+        return collect_metadata_only_extension_scope_errors(path)
     finally:
         if path.exists():
             path.unlink()

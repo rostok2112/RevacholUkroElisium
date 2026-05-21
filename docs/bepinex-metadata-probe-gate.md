@@ -206,3 +206,23 @@ companion_contract_change_allowed=false
 Even a future `ready_for_metadata_only_extension_implementation` state must not approve current-line
 capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction, provider
 execution, companion HTTP contract changes, or production overlay work.
+
+## Milestone 4L Metadata-Only Extension Scope
+
+Milestone 4L defines the exact allowed scope for a possible 4M implementation in:
+
+```text
+docs/bepinex-metadata-only-extension-scope.md
+```
+
+The committed scope fixture is:
+
+```text
+tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json
+```
+
+4L does not implement runtime behavior. It allows planning 4M without a reviewed local metadata
+probe report only because the allowed 4M scope is inert, disabled by default, and limited to safe
+counters and booleans. The fixture may set `implementation_allowed_next=true`, but it must keep text
+capture, current-line capture, UI text reading, Unity scanning, hooks, OCR, extraction, provider
+calls, and companion contract changes false.

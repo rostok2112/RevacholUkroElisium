@@ -251,6 +251,24 @@ The gate keeps implementation closed until a ready local metadata probe review e
 documented decision explicitly explains why implementation may proceed without one. It also keeps
 text capture, current-line capture, and companion contract changes disallowed.
 
+## Metadata-Only Extension Scope
+
+Milestone 4L defines the exact scope for a possible inert 4M extension in:
+
+```text
+docs/bepinex-metadata-only-extension-scope.md
+```
+
+The scope fixture is:
+
+```text
+tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json
+```
+
+The 4M scope may add only safe counters and booleans, disabled by default. It does not approve
+current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction,
+provider calls, companion payloads, new companion endpoints, or production overlay behavior.
+
 ## Current-Line Capture Research
 
 Milestone 4E records the future capture decision in:

@@ -1,5 +1,12 @@
 # Known Risks
 
+- Milestone 4L allows planning a minimal 4M inert metadata implementation without a reviewed local
+  report. That waiver is narrow and must not be reused for UI/scene probes, capture, hooks, OCR,
+  extraction, provider calls, or companion contract changes.
+- The 4L scope fixture sets `implementation_allowed_next=true`, but only while every capture,
+  hook/scanning, provider, and companion contract permission remains false.
+- Milestone 4M must update bridge safety checks before or with any C# changes, otherwise the inert
+  metadata scope can drift into runtime inspection by accident.
 - Milestone 4K allows metadata-only extension discussion only. It must not be treated as approval for
   implementation, current-line capture, real text capture, UI text reading, Unity scanning, hooks,
   OCR, extraction, provider calls, companion contract changes, or shell work.

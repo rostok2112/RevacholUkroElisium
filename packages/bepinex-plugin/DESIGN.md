@@ -142,3 +142,17 @@ The gate fixture (`tests/fixtures/bepinex_bridge.metadata_extension_gate.synthet
 and `companion_contract_change_allowed=false`. Future extension scope is limited to safe booleans,
 safe counters, bridge-generated synthetic ids, redacted status codes, and explicit false capture
 flags.
+
+## Milestone 4L metadata-only extension scope posture
+
+`docs/bepinex-metadata-only-extension-scope.md` defines the exact 4M scope contract. The matching
+fixture is `tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json`.
+
+4M may be planned without a reviewed local metadata report only for this minimal inert scope:
+non-negative counters, plugin lifecycle booleans, companion health booleans, synthetic-send
+booleans, probe attempted/completed booleans, and explicit false capture flags. Runtime behavior
+must remain disabled by default.
+
+The scope still forbids current-line capture, real text capture, UI text reading, Unity scanning,
+hooks, OCR, extraction, provider execution, companion HTTP contract changes, companion metadata
+payloads, private paths, raw payload logging, and runtime scene or object names.
