@@ -1,5 +1,48 @@
 # Session Summary
 
+Milestone 4I metadata probe manual verification workflow is implemented.
+
+Completed in the latest session:
+- Added `docs/manual-smoke/bepinex-metadata-probe-smoke.md`, a synthetic/manual checklist for
+  enabling the disabled metadata probe locally and observing only a redacted startup summary.
+- Added `scripts/write_bepinex_metadata_probe_report.py`, a stdlib-only template writer that creates
+  blank metadata probe reports only under
+  `workspace/synthetic-slice/bepinex-bridge/metadata-probe/`.
+- Added a shared `default_metadata_probe_report_template()` helper to the metadata probe report
+  checker so the committed fixture, writer, and tests stay aligned.
+- Extended bridge safety checks/tests so the manual metadata probe smoke doc and template writer are
+  required, while `check_all` still does not require a real local report or runtime probe execution.
+- Updated bridge docs, metadata probe gate docs, package README/DESIGN, and devlog handoff notes.
+- Did not change C# runtime behavior. The metadata probe remains disabled by default with
+  `MetadataProbeEnabled=false` and `MetadataProbeLogOnStart=false`.
+- Did not add current-line capture, dialogue detection, Unity object scanning, UI text reading, game
+  hooks, Harmony patches, OCR, extraction, decompiled game-code work, provider execution,
+  frontend/shell work, keyboard hooks, clipboard writes, companion HTTP changes, downloads, web
+  calls, or new dependencies.
+
+Milestone 4H disabled metadata-only BepInEx probe skeleton is implemented.
+
+Completed in the latest session:
+- Added `packages/bepinex-plugin/src/MetadataProbe.cs`, a C# snapshot helper that reports only safe
+  booleans and zero/default counters.
+- Added false-by-default bridge config values:
+  - `MetadataProbeEnabled = false`
+  - `MetadataProbeLogOnStart = false`
+- When both values are manually enabled, the bridge may log one startup metadata snapshot after
+  companion health handling.
+- The snapshot always keeps `real_text_captured=false`, `current_line_capture_enabled=false`,
+  `ui_probe_attempted=false`, and `scene_probe_attempted=false`.
+- Updated the committed metadata probe report fixture and checker to include probe-enabled,
+  attempted/completed, and synthetic-send-configured fields.
+- Hardened bridge safety checks/tests so the C# source must keep metadata probe defaults false, safe
+  false capture markers present, no raw payload logging, and no hook/scanning/OCR/extraction
+  behavior.
+- Updated bridge docs, metadata gate docs, package README/DESIGN, and devlog handoff notes.
+- Did not add current-line capture, dialogue detection, Unity object scanning, game hooks, Harmony
+  patches, OCR, extraction, decompiled game-code work, provider execution, frontend/shell work,
+  keyboard hooks, clipboard writes, companion HTTP changes, downloads, web calls, or new
+  dependencies.
+
 Milestone 4G metadata-only probe gate is implemented.
 
 Completed in the latest session:

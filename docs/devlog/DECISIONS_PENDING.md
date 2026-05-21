@@ -1,10 +1,11 @@
 # Decisions Pending
 
-- Milestone 4G added a metadata-only probe gate and report fixture. Decide after reviewing actual
-  user-local runtime smoke evidence whether Milestone 4H should remain design-only or add a
-  disabled metadata-only probe stub.
-- Any future metadata probe code requires separate approval and must keep `current_line_capture_enabled=false`
-  and `real_text_captured=false` until a later safety review changes that boundary.
+- Milestone 4I added a workspace-only metadata probe report template and manual smoke checklist.
+  Decide in Milestone 4J how to review redacted metadata probe reports and whether they are complete
+  enough for next-phase discussion.
+- Any future metadata probe expansion requires separate approval and must keep
+  `current_line_capture_enabled=false` and `real_text_captured=false` until a later safety review
+  changes that boundary.
 - Milestone 4F added a redacted runtime smoke report review helper. Actual user-local evidence still
   needs to be reviewed before probe implementation work begins.
 - Milestone 4E accepted ADR 0008: keep current-line capture unimplemented and continue

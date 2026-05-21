@@ -1,5 +1,18 @@
 # Known Risks
 
+- Milestone 4I makes metadata probe manual verification easier, but it still relies on user-local
+  observation. The repo does not commit raw evidence, screenshots, logs, or completed real reports.
+- The metadata probe report template is safe by construction, but a filled local report can still be
+  misleading or incomplete. Treat it as a redacted summary, not as an audit log.
+- Passing `scripts/check_bepinex_metadata_probe_report.py` proves only that the report is
+  metadata-only and redacted. It does not approve current-line capture, UI text reading, hooks, OCR,
+  extraction, provider calls, or companion contract changes.
+- The 4I workflow deliberately defers metadata probe report readiness review to Milestone 4J. Do not
+  infer readiness from a valid report fixture or template alone.
+- Milestone 4H adds C# metadata probe code, but it is disabled by default and logs only a safe
+  snapshot when manually enabled. It still does not prove runtime usefulness.
+- The metadata probe log may help confirm startup posture, but it must not grow into text capture,
+  runtime object inspection, raw payload logging, screenshots, or local path logging.
 - Milestone 4G is a static gate and committed synthetic fixture only. It does not prove metadata
   probe runtime feasibility or authorize probe implementation.
 - A valid metadata probe report proves only that the report shape stayed metadata-only and redacted.

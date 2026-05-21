@@ -83,12 +83,39 @@ evidence is complete enough to discuss a later metadata-only probe; it does not 
 
 ## Milestone 4G metadata probe gate posture
 
-`docs/bepinex-metadata-probe-gate.md` defines the static safety gate for a future metadata-only
-probe. No C# probe code exists yet. A later implementation may only be considered after a ready 4F
-review and a separate approval step.
+`docs/bepinex-metadata-probe-gate.md` defines the static safety gate for metadata-only probe work.
+Probe behavior must stay disabled by default and bounded by a ready 4F review plus a separate
+approval step before any future expansion.
 
 The only acceptable future probe outputs before another safety review are booleans, safe counters,
 synthetic ids, safe status/error codes, and explicit `current_line_capture_enabled = false` /
 `real_text_captured = false` markers. Real text capture, hooks, Unity text scanning, OCR,
 extraction, provider execution, raw payloads, screenshots, and committed runtime logs remain outside
 the bridge design.
+
+## Milestone 4H metadata probe skeleton posture
+
+The C# bridge now includes a disabled-by-default metadata probe skeleton. It has two false defaults:
+`MetadataProbeEnabled` and `MetadataProbeLogOnStart`.
+
+When both are manually enabled, the bridge may log one startup metadata snapshot. The snapshot is
+limited to booleans, safe counters, synthetic/manual status, and hard false markers for
+`real_text_captured`, `current_line_capture_enabled`, `ui_probe_attempted`, and
+`scene_probe_attempted`.
+
+The skeleton does not call companion endpoints, create request payloads, read runtime text, inspect
+objects, parse logs, read files, capture screenshots, or approve future text capture.
+
+## Milestone 4I metadata probe manual verification posture
+
+`docs/manual-smoke/bepinex-metadata-probe-smoke.md` documents how a user can manually enable the
+disabled probe, observe one metadata-only startup summary, and then disable it again. The workflow
+records only redacted booleans and counters in local reports under
+`workspace/synthetic-slice/bepinex-bridge/metadata-probe/`.
+
+`scripts/write_bepinex_metadata_probe_report.py` writes a blank workspace-only template, and
+`scripts/check_bepinex_metadata_probe_report.py` validates completed local summaries. Neither helper
+reads logs, game files, screenshots, companion state, or provider output.
+
+Milestone 4I deliberately does not add a metadata probe review helper. That readiness review is
+deferred to Milestone 4J and still must not approve text capture by itself.

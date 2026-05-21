@@ -21,9 +21,13 @@ ALLOWED_STATUSES = ("not_run", "pass", "partial", "fail")
 
 REQUIRED_BOOL_FIELDS = (
     "metadata_only",
+    "probe_enabled",
+    "probe_attempted",
+    "probe_completed",
     "plugin_loaded",
     "companion_health_checked",
     "companion_available",
+    "synthetic_event_send_configured",
     "synthetic_event_sent",
     "scene_probe_attempted",
     "ui_probe_attempted",
@@ -196,6 +200,34 @@ def canonical_json(payload: dict[str, object]) -> str:
     return json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
 
 
+def default_metadata_probe_report_template() -> dict[str, object]:
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "probe_status": "not_run",
+        "metadata_only": True,
+        "probe_enabled": False,
+        "probe_attempted": False,
+        "probe_completed": False,
+        "plugin_loaded": False,
+        "companion_health_checked": False,
+        "companion_available": False,
+        "synthetic_event_send_configured": False,
+        "synthetic_event_sent": False,
+        "scene_probe_attempted": False,
+        "ui_probe_attempted": False,
+        "current_line_capture_enabled": False,
+        "real_text_captured": False,
+        "counters": {
+            "safe_status_events": 0,
+            "synthetic_events": 0,
+        },
+        "redacted_notes": (
+            "Template only. Fill with safe metadata observations. Do not paste logs."
+        ),
+        "created_by_user_manually": True,
+    }
+
+
 def _shape_errors(payload: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     for field in REQUIRED_STRING_FIELDS:
@@ -221,6 +253,19 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         errors.append("Metadata probe report must set current_line_capture_enabled=false.")
     if payload.get("created_by_user_manually") is not True:
         errors.append("Metadata probe report must set created_by_user_manually=true.")
+    if payload.get("probe_attempted") and not payload.get("probe_enabled"):
+        errors.append(
+            "Metadata probe report cannot have probe_attempted=true when probe_enabled=false."
+        )
+    if payload.get("probe_completed") and not payload.get("probe_attempted"):
+        errors.append(
+            "Metadata probe report cannot have probe_completed=true when probe_attempted=false."
+        )
+    if payload.get("synthetic_event_sent") and not payload.get("synthetic_event_send_configured"):
+        errors.append(
+            "Metadata probe report cannot have synthetic_event_sent=true when "
+            "synthetic_event_send_configured=false."
+        )
 
     counters = payload.get("counters")
     if not isinstance(counters, dict):

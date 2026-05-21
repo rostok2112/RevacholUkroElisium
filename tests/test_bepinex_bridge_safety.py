@@ -23,6 +23,9 @@ from scripts.check_bepinex_bridge_safety import (
     METADATA_PROBE_FIXTURE_PATH,
     METADATA_PROBE_GATE_DOC,
     METADATA_PROBE_REPORT_ROOT,
+    METADATA_PROBE_SMOKE_DOC,
+    METADATA_PROBE_SOURCE,
+    METADATA_PROBE_WRITER,
     RUNTIME_REPORT_CHECKER,
     RUNTIME_REPORT_DOC,
     RUNTIME_REPORT_FIXTURE_PATH,
@@ -110,18 +113,48 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
     def test_metadata_probe_gate_is_registered_without_requiring_real_report(self) -> None:
         fixture_ref = "tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json"
         checker_ref = "scripts/check_bepinex_metadata_probe_report.py"
+        writer_ref = "scripts/write_bepinex_metadata_probe_report.py"
         gate_ref = "docs/bepinex-metadata-probe-gate.md"
+        smoke_ref = "docs/manual-smoke/bepinex-metadata-probe-smoke.md"
 
         self.assertTrue(METADATA_PROBE_GATE_DOC.exists())
+        self.assertTrue(METADATA_PROBE_SMOKE_DOC.exists())
         self.assertTrue(METADATA_PROBE_FIXTURE_PATH.exists())
         self.assertTrue(METADATA_PROBE_CHECKER.exists())
+        self.assertTrue(METADATA_PROBE_WRITER.exists())
         self.assertIn(fixture_ref, _read(METADATA_PROBE_GATE_DOC))
         self.assertIn(checker_ref, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(writer_ref, _read(METADATA_PROBE_GATE_DOC))
+        self.assertIn(smoke_ref, _read(METADATA_PROBE_GATE_DOC))
         report_root = str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
         self.assertIn(report_root, _read(METADATA_PROBE_GATE_DOC))
         self.assertIn(gate_ref, _read(ROOT / "docs/bepinex-bridge.md"))
+        self.assertIn(smoke_ref, _read(ROOT / "docs/bepinex-bridge.md"))
         self.assertNotIn(checker_ref, _read(CHECK_ALL))
+        self.assertNotIn(writer_ref, _read(CHECK_ALL))
         self.assertTrue(str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).startswith("workspace"))
+
+    def test_metadata_probe_manual_smoke_doc_documents_safe_observations(self) -> None:
+        text = _read(METADATA_PROBE_SMOKE_DOC)
+
+        for marker in (
+            "MetadataProbeEnabled = true",
+            "MetadataProbeLogOnStart = true",
+            "MetadataProbeEnabled = false",
+            "MetadataProbeLogOnStart = false",
+            "Metadata probe snapshot: synthetic_manual=true",
+            "probe_enabled=true",
+            "probe_attempted=true",
+            "probe_completed=true",
+            "real_text_captured=false",
+            "current_line_capture_enabled=false",
+            "ui_probe_attempted=false",
+            "scene_probe_attempted=false",
+            "scripts/write_bepinex_metadata_probe_report.py",
+            "scripts/check_bepinex_metadata_probe_report.py",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, text)
 
     def test_current_line_capture_research_adr_is_registered(self) -> None:
         self.assertTrue(CURRENT_LINE_CAPTURE_ADR.exists())
@@ -138,7 +171,46 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertIn("DefaultRequestTimeoutMs = 3000", plugin_source)
         self.assertIn("DefaultEnabled = true", plugin_source)
         self.assertIn("DefaultSendSyntheticEventOnStart = false", plugin_source)
+        self.assertIn("DefaultMetadataProbeEnabled = false", plugin_source)
+        self.assertIn("DefaultMetadataProbeLogOnStart = false", plugin_source)
         self.assertIn("SendSyntheticEventOnStart", plugin_source)
+        self.assertIn("MetadataProbeEnabled", plugin_source)
+        self.assertIn("MetadataProbeLogOnStart", plugin_source)
+
+    def test_metadata_probe_source_has_safe_false_flags(self) -> None:
+        source = _read(METADATA_PROBE_SOURCE)
+
+        for marker in (
+            "RealTextCaptured = false",
+            "CurrentLineCaptureEnabled = false",
+            "UiProbeAttempted = false",
+            "SceneProbeAttempted = false",
+            "DefaultSafeStatusEvents = 0",
+            "DefaultSyntheticEvents = 0",
+            "real_text_captured=",
+            "current_line_capture_enabled=",
+            "ui_probe_attempted=",
+            "scene_probe_attempted=",
+            "Metadata probe snapshot: synthetic_manual=true",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, source)
+
+    def test_metadata_probe_source_has_no_companion_payload_or_runtime_reads(self) -> None:
+        source = _read(METADATA_PROBE_SOURCE)
+
+        for marker in (
+            "CompanionHttpClient",
+            "HttpClient",
+            "PostSyntheticProviderAnnotateAsync",
+            "BuildProviderAnnotateRequestJson",
+            "LogOutput",
+            "Player.log",
+            "ReadAllText",
+            "Directory.",
+        ):
+            with self.subTest(marker=marker):
+                self.assertNotIn(marker, source)
 
     def test_companion_client_has_localhost_guard(self) -> None:
         client_source = _read(SOURCE_DIR / "CompanionHttpClient.cs")
@@ -241,9 +313,11 @@ def _scanned_bridge_files() -> list[Path]:
         RUNTIME_REPORT_CHECKER,
         RUNTIME_REPORT_WRITER,
         RUNTIME_REPORT_REVIEWER,
+        METADATA_PROBE_WRITER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,
+        METADATA_PROBE_SMOKE_DOC,
     ]
     files.extend(sorted(SOURCE_DIR.glob("*.cs")))
     return files

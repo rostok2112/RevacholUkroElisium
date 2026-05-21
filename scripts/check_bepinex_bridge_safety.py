@@ -35,6 +35,7 @@ except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_DIR = ROOT / "packages/bepinex-plugin"
 SOURCE_DIR = PACKAGE_DIR / "src"
+METADATA_PROBE_SOURCE = SOURCE_DIR / "MetadataProbe.cs"
 PROJECT_FILE = PACKAGE_DIR / "Revachol.UkrainianCompanion.BepInExBridge.csproj"
 FIXTURE_PATH = ROOT / "tests/fixtures/bepinex_bridge.provider_annotate_request.synthetic.json"
 LOG_CONTRACT_PATH = ROOT / "tests/fixtures/bepinex_bridge.log_contract.synthetic.json"
@@ -48,10 +49,12 @@ MANUAL_SMOKE_DIR = ROOT / "docs/manual-smoke"
 RUNTIME_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke.md"
 LOG_CONTRACT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-log-contract.md"
 RUNTIME_REPORT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke-report.md"
+METADATA_PROBE_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-metadata-probe-smoke.md"
 RUNTIME_REPORT_CHECKER = ROOT / "scripts/check_bepinex_runtime_smoke_report.py"
 RUNTIME_REPORT_WRITER = ROOT / "scripts/write_bepinex_runtime_smoke_report.py"
 RUNTIME_REPORT_REVIEWER = ROOT / "scripts/review_bepinex_runtime_smoke_report.py"
 METADATA_PROBE_CHECKER = ROOT / "scripts/check_bepinex_metadata_probe_report.py"
+METADATA_PROBE_WRITER = ROOT / "scripts/write_bepinex_metadata_probe_report.py"
 
 DEFAULT_URL = "http://127.0.0.1:8765"
 SYNTHETIC_EVENT_ID = "synthetic.event.bepinex.4a.001"
@@ -206,6 +209,7 @@ def _check_required_files() -> list[str]:
         SOURCE_DIR / "RevacholCompanionBridgePlugin.cs",
         SOURCE_DIR / "CompanionHttpClient.cs",
         SOURCE_DIR / "SyntheticEventFactory.cs",
+        METADATA_PROBE_SOURCE,
         FIXTURE_PATH,
         LOG_CONTRACT_PATH,
         BUILD_HELPER,
@@ -214,12 +218,14 @@ def _check_required_files() -> list[str]:
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,
+        METADATA_PROBE_SMOKE_DOC,
         RUNTIME_REPORT_FIXTURE_PATH,
         RUNTIME_REPORT_CHECKER,
         RUNTIME_REPORT_WRITER,
         RUNTIME_REPORT_REVIEWER,
         METADATA_PROBE_FIXTURE_PATH,
         METADATA_PROBE_CHECKER,
+        METADATA_PROBE_WRITER,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -294,16 +300,41 @@ def _check_metadata_probe_contract() -> list[str]:
     text = _read_text(METADATA_PROBE_GATE_DOC).replace("\\", "/")
     fixture_ref = str(METADATA_PROBE_FIXTURE_PATH.relative_to(ROOT)).replace("\\", "/")
     checker_ref = str(METADATA_PROBE_CHECKER.relative_to(ROOT)).replace("\\", "/")
+    writer_ref = str(METADATA_PROBE_WRITER.relative_to(ROOT)).replace("\\", "/")
+    smoke_ref = str(METADATA_PROBE_SMOKE_DOC.relative_to(ROOT)).replace("\\", "/")
     report_root = str(METADATA_PROBE_REPORT_ROOT.relative_to(ROOT)).replace("\\", "/")
-    for ref in (fixture_ref, checker_ref, report_root):
+    for ref in (fixture_ref, checker_ref, writer_ref, smoke_ref, report_root):
         if ref not in text:
             errors.append(f"{METADATA_PROBE_GATE_DOC.relative_to(ROOT)} must point to {ref}.")
+
+    if METADATA_PROBE_SMOKE_DOC.exists():
+        smoke_text = _read_text(METADATA_PROBE_SMOKE_DOC).replace("\\", "/")
+        for marker in (
+            "MetadataProbeEnabled = true",
+            "MetadataProbeLogOnStart = true",
+            "MetadataProbeEnabled = false",
+            "MetadataProbeLogOnStart = false",
+            "Metadata probe snapshot: synthetic_manual=true",
+            "real_text_captured=false",
+            "current_line_capture_enabled=false",
+            "ui_probe_attempted=false",
+            "scene_probe_attempted=false",
+            writer_ref,
+            checker_ref,
+            report_root,
+        ):
+            if marker not in smoke_text:
+                errors.append(
+                    f"{METADATA_PROBE_SMOKE_DOC.relative_to(ROOT)} must document {marker}."
+                )
 
     bridge_doc = ROOT / "docs/bepinex-bridge.md"
     if bridge_doc.exists():
         bridge_text = _read_text(bridge_doc).replace("\\", "/")
         if "docs/bepinex-metadata-probe-gate.md" not in bridge_text:
             errors.append("docs/bepinex-bridge.md must point to the metadata probe gate.")
+        if smoke_ref not in bridge_text:
+            errors.append("docs/bepinex-bridge.md must point to the metadata probe smoke doc.")
 
     gitignore_text = _read_text(GITIGNORE) if GITIGNORE.exists() else ""
     if "workspace/" not in gitignore_text:
@@ -388,15 +419,20 @@ def _check_source_contract() -> list[str]:
     plugin_source = _read_text(SOURCE_DIR / "RevacholCompanionBridgePlugin.cs")
     client_source = _read_text(SOURCE_DIR / "CompanionHttpClient.cs")
     event_source = _read_text(SOURCE_DIR / "SyntheticEventFactory.cs")
+    metadata_probe_source = _read_text(METADATA_PROBE_SOURCE)
 
     required_source_markers = (
         'DefaultCompanionServerUrl = "http://127.0.0.1:8765"',
         "DefaultRequestTimeoutMs = 3000",
         "DefaultEnabled = true",
         "DefaultSendSyntheticEventOnStart = false",
+        "DefaultMetadataProbeEnabled = false",
+        "DefaultMetadataProbeLogOnStart = false",
         "CheckHealthAsync",
         "PostSyntheticProviderAnnotateAsync",
         "BuildProviderAnnotateRequestJson",
+        "MetadataProbe.BuildSnapshot",
+        "Metadata probe snapshot: synthetic_manual=true",
         "input_type",
         "fake_event",
         "synthetic/provider-annotate",
@@ -411,6 +447,20 @@ def _check_source_contract() -> list[str]:
         errors.append("Bridge plugin must bind BepInEx config entries.")
     if "raw_english_text" not in event_source:
         errors.append("Synthetic event builder must include the fake-event raw_english_text field.")
+    for marker in (
+        "RealTextCaptured = false",
+        "CurrentLineCaptureEnabled = false",
+        "UiProbeAttempted = false",
+        "SceneProbeAttempted = false",
+        "DefaultSafeStatusEvents = 0",
+        "DefaultSyntheticEvents = 0",
+        "real_text_captured=",
+        "current_line_capture_enabled=",
+        "ui_probe_attempted=",
+        "scene_probe_attempted=",
+    ):
+        if marker not in metadata_probe_source:
+            errors.append(f"Metadata probe source missing required safe marker: {marker}")
 
     return errors
 
@@ -491,9 +541,11 @@ def _scanned_files() -> list[Path]:
         RUNTIME_REPORT_CHECKER,
         RUNTIME_REPORT_WRITER,
         RUNTIME_REPORT_REVIEWER,
+        METADATA_PROBE_WRITER,
         RUNTIME_SMOKE_DOC,
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,
+        METADATA_PROBE_SMOKE_DOC,
     ]
     files.extend(sorted(SOURCE_DIR.glob("*.cs")))
     return [path for path in files if path.exists()]

@@ -92,8 +92,52 @@ The checker validates shape and rejects real text, screenshots, OCR markers, pri
 traces, raw logs, payload dumps, decompiled-code markers, hook or capture claims, external URLs, and
 secret-looking values.
 
-## Next Milestone Boundary
+Write a blank redacted local template:
 
-The next milestone may review this gate and decide whether to add disabled-by-default metadata probe
-code. That future work must still keep `current_line_capture_enabled = false` and
-`real_text_captured = false` unless a later, explicit safety review approves a different boundary.
+```powershell
+python scripts/write_bepinex_metadata_probe_report.py --quiet
+```
+
+The manual smoke checklist for enabling and disabling the probe locally is:
+
+```text
+docs/manual-smoke/bepinex-metadata-probe-smoke.md
+```
+
+## Milestone 4H Skeleton Boundary
+
+Milestone 4H adds a disabled-by-default C# metadata probe skeleton. It is not current-line capture
+and it does not inspect runtime text or game objects. The skeleton may only build a startup metadata
+snapshot with safe booleans and zero/default counters.
+
+The two probe config defaults must remain:
+
+```text
+MetadataProbeEnabled = false
+MetadataProbeLogOnStart = false
+```
+
+When both are manually enabled, the bridge may log one metadata-only startup summary. That summary
+must still keep `current_line_capture_enabled = false` and `real_text_captured = false`. Enabling the
+probe does not approve future text capture or broader runtime observation.
+
+## Milestone 4I Manual Verification Boundary
+
+Milestone 4I adds only a manual smoke checklist and a workspace-only template writer. It does not add
+a metadata report reviewer yet, does not read local logs, does not parse game output, does not call
+the companion server, and does not inspect game files or screenshots.
+
+The local workflow is:
+
+1. Enable `MetadataProbeEnabled = true` and `MetadataProbeLogOnStart = true` in the user-local
+   BepInEx config.
+2. Observe only the safe metadata summary described in
+   `docs/manual-smoke/bepinex-metadata-probe-smoke.md`.
+3. Record only redacted booleans and counters in a local report under
+   `workspace/synthetic-slice/bepinex-bridge/metadata-probe/`.
+4. Validate the report with `scripts/check_bepinex_metadata_probe_report.py`.
+5. Restore both metadata probe config flags to false.
+
+The template writer is `scripts/write_bepinex_metadata_probe_report.py`. Passing the checker still
+does not approve current-line capture, text capture, hooks, OCR, extraction, provider execution, or
+new companion endpoints.

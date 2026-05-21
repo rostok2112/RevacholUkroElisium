@@ -1,21 +1,23 @@
 # Next Actions
 
-After Milestone 4G:
+After Milestone 4I:
 
-1. Treat `docs/bepinex-metadata-probe-gate.md` as the boundary for any future metadata-only bridge
-   probe.
-2. Validate only synthetic or redacted metadata probe reports with
-   `scripts/check_bepinex_metadata_probe_report.py`.
-3. Keep optional local metadata probe reports under
+1. Keep `MetadataProbeEnabled=false` and `MetadataProbeLogOnStart=false` as source defaults.
+2. Use `docs/manual-smoke/bepinex-metadata-probe-smoke.md` only for user-local manual observation of
+   the disabled metadata probe.
+3. Generate optional blank report templates with
+   `scripts/write_bepinex_metadata_probe_report.py`; keep completed reports under
    `workspace/synthetic-slice/bepinex-bridge/metadata-probe/`.
-4. Do not treat a valid metadata probe report as approval for text capture; it only proves the report
-   stayed metadata-only.
-5. Require a separate approved milestone before adding any probe code.
-6. Keep raw BepInEx/game logs, screenshots, private paths, payload dumps, save files, OCR output,
-   stack traces, real runtime reports, and real metadata probe reports out of git.
-7. Keep Electron, Tauri, native always-on-top, global hotkey, clipboard, JavaScript shell, and
-   production overlay work deferred.
+4. Validate only synthetic or redacted metadata probe reports with
+   `scripts/check_bepinex_metadata_probe_report.py`.
+5. Do not commit completed real metadata probe reports, raw BepInEx/game logs, screenshots, private
+   paths, payload dumps, save files, OCR output, stack traces, or real game text.
+6. Treat a valid metadata probe report as evidence that the report stayed metadata-only, not as
+   approval for current-line capture.
+7. Keep current-line capture, UI text reading, game hooks, Harmony patches, Unity object scanning,
+   OCR, extraction, provider execution, companion HTTP changes, and shell work out of the bridge.
+8. Defer metadata probe report readiness review to Milestone 4J.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 4G. First inspect git status, read AGENTS.md, docs/devlog/*.md, docs/bepinex-metadata-probe-gate.md, docs/adr/0008-current-line-capture-research.md, docs/bepinex-bridge.md, docs/manual-smoke/bepinex-bridge-runtime-smoke-report.md, and inspect scripts/check_bepinex_metadata_probe_report.py, scripts/check_bepinex_bridge_safety.py, tests/test_bepinex_metadata_probe_report.py, tests/test_bepinex_bridge_safety.py, and tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json. Implement Milestone 4H: disabled metadata-only bridge probe design handoff. Decide whether to add a disabled-by-default metadata probe stub or keep it docs-only based on available redacted runtime smoke evidence. If code is added, it may emit only booleans, safe counters, synthetic ids, safe status/error codes, current_line_capture_enabled=false, and real_text_captured=false. Do not implement real text capture, dialogue detection, game hooks, Harmony patches, Unity object scanning, OCR, extraction, decompiled-code integration, provider execution, companion HTTP contract changes, shell work, keyboard hooks, clipboard writes, committed logs, committed screenshots, committed real reports, downloads, or new dependencies. Update docs/devlog and run the relevant validation suite.`
+`Continue in revachol-ukro-elisium after Milestone 4I. First inspect git status, read AGENTS.md, docs/devlog/*.md, docs/bepinex-metadata-probe-gate.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, docs/bepinex-bridge.md, packages/bepinex-plugin/README.md, packages/bepinex-plugin/DESIGN.md, and inspect scripts/check_bepinex_metadata_probe_report.py, scripts/write_bepinex_metadata_probe_report.py, scripts/check_bepinex_bridge_safety.py, tests/test_bepinex_metadata_probe_report.py, tests/test_bepinex_bridge_safety.py, packages/bepinex-plugin/src/MetadataProbe.cs, and tests/fixtures/bepinex_bridge.metadata_probe_report.synthetic.json. Implement Milestone 4J: metadata probe report review/readiness helper. Add a stdlib-only reviewer for redacted local metadata probe reports under workspace/synthetic-slice/bepinex-bridge/metadata-probe/, produce a redacted readiness summary without reading logs/game files/screenshots/companion/provider state, write optional review artifacts only under ignored workspace review paths, keep readiness as discussion-only and not approval for text capture, update docs/tests/devlog, and run the full validation suite. Do not implement real text capture, dialogue detection, game hooks, Harmony patches, Unity object scanning, UI text reading, OCR, extraction, decompiled-code integration, provider execution, companion HTTP contract changes, shell work, keyboard hooks, clipboard writes, committed logs, committed screenshots, committed real reports, downloads, or new dependencies.`

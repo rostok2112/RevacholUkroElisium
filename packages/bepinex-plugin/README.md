@@ -13,6 +13,7 @@ What exists:
 - Config entries for enabling the bridge, companion URL, timeout, and synthetic send-on-start.
 - Localhost-only companion `/health` check.
 - Manual/synthetic fake-event send to `POST /synthetic/provider-annotate`.
+- Disabled-by-default metadata probe snapshot support.
 - Metadata-only logs for event id, line id, status, and unavailable companion states.
 
 What does not exist:
@@ -21,6 +22,7 @@ What does not exist:
 - No game hooks or Unity object scanning.
 - No text extraction, OCR, or decompiled game-code integration.
 - No production overlay, keyboard hooks, clipboard behavior, or provider execution.
+- No current-line capture, runtime text reads, screenshots, or log parsing.
 
 ## Optional build verification
 
@@ -86,6 +88,51 @@ tests/fixtures/bepinex_bridge.runtime_smoke_report.synthetic.json
 The C# bridge logs must remain metadata-only: plugin state, localhost safety state, companion health
 status, HTTP status code, synthetic event id, and synthetic line id. Do not log full request
 payloads, response bodies, raw source text, private paths, stack traces, or local game data.
+
+## Metadata-only probe skeleton
+
+Milestone 4H adds a disabled metadata probe skeleton. Defaults:
+
+```text
+MetadataProbeEnabled = false
+MetadataProbeLogOnStart = false
+```
+
+When both are manually enabled, the plugin may log one startup snapshot containing only safe
+booleans and zero/default counters. The snapshot keeps:
+
+```text
+real_text_captured=false
+current_line_capture_enabled=false
+ui_probe_attempted=false
+scene_probe_attempted=false
+```
+
+It does not call new companion endpoints, create payloads, read runtime text, inspect game objects,
+read files, parse logs, capture screenshots, or enable future text capture.
+
+Manual metadata probe verification is documented in:
+
+```text
+docs/manual-smoke/bepinex-metadata-probe-smoke.md
+```
+
+Write a blank redacted metadata probe report template with:
+
+```powershell
+python scripts/write_bepinex_metadata_probe_report.py --quiet
+```
+
+Validate the completed local report with:
+
+```powershell
+python scripts/check_bepinex_metadata_probe_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json `
+  --quiet
+```
+
+Completed reports must stay local and ignored. Passing validation does not approve current-line
+capture or any broader runtime probing.
 
 Local redacted runtime smoke reports, if created, must stay under:
 

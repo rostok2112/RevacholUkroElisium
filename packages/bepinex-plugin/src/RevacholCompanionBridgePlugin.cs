@@ -17,11 +17,15 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         public const int DefaultRequestTimeoutMs = 3000;
         public const bool DefaultEnabled = true;
         public const bool DefaultSendSyntheticEventOnStart = false;
+        public const bool DefaultMetadataProbeEnabled = false;
+        public const bool DefaultMetadataProbeLogOnStart = false;
 
         private ConfigEntry<bool>? _enabled;
         private ConfigEntry<string>? _companionServerUrl;
         private ConfigEntry<int>? _requestTimeoutMs;
         private ConfigEntry<bool>? _sendSyntheticEventOnStart;
+        private ConfigEntry<bool>? _metadataProbeEnabled;
+        private ConfigEntry<bool>? _metadataProbeLogOnStart;
         private CompanionHttpClient? _client;
 
         public override void Load()
@@ -120,6 +124,18 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 DefaultSendSyntheticEventOnStart,
                 "Send the built-in synthetic fake event after a successful startup health check."
             );
+            _metadataProbeEnabled = Config.Bind(
+                "MetadataProbe",
+                "MetadataProbeEnabled",
+                DefaultMetadataProbeEnabled,
+                "Enable the disabled-by-default metadata-only probe snapshot."
+            );
+            _metadataProbeLogOnStart = Config.Bind(
+                "MetadataProbe",
+                "MetadataProbeLogOnStart",
+                DefaultMetadataProbeLogOnStart,
+                "Log one metadata-only startup snapshot when the metadata probe is enabled."
+            );
         }
 
         private async Task RunStartupChecksAsync()
@@ -129,9 +145,13 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 return;
             }
 
+            bool companionHealthChecked = false;
+            bool companionAvailable = false;
             try
             {
                 BridgeHttpResult health = await _client.CheckHealthAsync();
+                companionHealthChecked = true;
+                companionAvailable = health.Success;
                 if (health.Success)
                 {
                     Log.LogInfo("Companion health check passed: status=" + health.StatusCode + ".");
@@ -143,6 +163,7 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                         + health.StatusCode
                         + ". Game continues without companion data."
                     );
+                    LogMetadataProbeSnapshot(companionHealthChecked, companionAvailable);
                     return;
                 }
 
@@ -150,6 +171,8 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 {
                     await SendSyntheticEventNowAsync();
                 }
+
+                LogMetadataProbeSnapshot(companionHealthChecked, companionAvailable);
             }
             catch (Exception exc)
             {
@@ -159,7 +182,31 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                     + ": "
                     + exc.Message
                 );
+                LogMetadataProbeSnapshot(companionHealthChecked, companionAvailable);
             }
+        }
+
+        private void LogMetadataProbeSnapshot(bool companionHealthChecked, bool companionAvailable)
+        {
+            if (_metadataProbeEnabled == null || !_metadataProbeEnabled.Value)
+            {
+                return;
+            }
+
+            if (_metadataProbeLogOnStart == null || !_metadataProbeLogOnStart.Value)
+            {
+                return;
+            }
+
+            MetadataProbeSnapshot snapshot = MetadataProbe.BuildSnapshot(
+                probeEnabled: _metadataProbeEnabled.Value,
+                pluginLoaded: true,
+                companionHealthChecked: companionHealthChecked,
+                companionAvailable: companionAvailable,
+                syntheticEventSendConfigured: _sendSyntheticEventOnStart != null
+                    && _sendSyntheticEventOnStart.Value
+            );
+            Log.LogInfo(snapshot.ToLogLine());
         }
     }
 }

@@ -12,6 +12,7 @@ from scripts.check_bepinex_metadata_probe_report import (
     REPORT_ROOT,
     BepInExMetadataProbeReportError,
     collect_metadata_probe_report_errors,
+    default_metadata_probe_report_template,
     ensure_safe_metadata_probe_report_path,
 )
 
@@ -22,6 +23,30 @@ ROOT = Path(__file__).resolve().parents[1]
 class BepInExMetadataProbeReportTests(unittest.TestCase):
     def test_committed_fixture_validates(self) -> None:
         self.assertEqual([], collect_metadata_probe_report_errors(FIXTURE_PATH))
+
+    def test_committed_fixture_contains_disabled_probe_skeleton_fields(self) -> None:
+        report = _valid_report()
+
+        self.assertFalse(report["probe_enabled"])
+        self.assertFalse(report["probe_attempted"])
+        self.assertFalse(report["probe_completed"])
+        self.assertFalse(report["synthetic_event_send_configured"])
+        self.assertFalse(report["real_text_captured"])
+        self.assertFalse(report["current_line_capture_enabled"])
+
+    def test_default_template_contains_safe_manual_fields(self) -> None:
+        report = default_metadata_probe_report_template()
+
+        self.assertEqual("not_run", report["probe_status"])
+        self.assertTrue(report["metadata_only"])
+        self.assertFalse(report["probe_enabled"])
+        self.assertFalse(report["probe_attempted"])
+        self.assertFalse(report["probe_completed"])
+        self.assertFalse(report["real_text_captured"])
+        self.assertFalse(report["current_line_capture_enabled"])
+        self.assertFalse(report["ui_probe_attempted"])
+        self.assertFalse(report["scene_probe_attempted"])
+        self.assertEqual([], _errors_for(report))
 
     def test_real_text_captured_true_fails(self) -> None:
         report = _valid_report()
@@ -34,6 +59,25 @@ class BepInExMetadataProbeReportTests(unittest.TestCase):
         report["current_line_capture_enabled"] = True
 
         self.assertIn("current_line_capture_enabled=false", "\n".join(_errors_for(report)))
+
+    def test_probe_attempted_without_enabled_fails(self) -> None:
+        report = _valid_report()
+        report["probe_attempted"] = True
+
+        self.assertIn("probe_attempted=true", "\n".join(_errors_for(report)))
+
+    def test_probe_completed_without_attempted_fails(self) -> None:
+        report = _valid_report()
+        report["probe_enabled"] = True
+        report["probe_completed"] = True
+
+        self.assertIn("probe_completed=true", "\n".join(_errors_for(report)))
+
+    def test_synthetic_event_sent_without_configured_fails(self) -> None:
+        report = _valid_report()
+        report["synthetic_event_sent"] = True
+
+        self.assertIn("synthetic_event_sent=true", "\n".join(_errors_for(report)))
 
     def test_raw_dialogue_like_marker_fails(self) -> None:
         report = _valid_report()
@@ -109,6 +153,52 @@ class BepInExMetadataProbeReportTests(unittest.TestCase):
                 "scripts/check_bepinex_metadata_probe_report.py",
                 "--report",
                 "docs/manual-smoke/probe.json",
+                "--quiet",
+            ],
+            cwd=ROOT,
+            check=False,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        self.assertNotEqual(0, completed.returncode)
+        self.assertIn("workspace", completed.stderr)
+
+    def test_template_writer_writes_workspace_only_template(self) -> None:
+        output = REPORT_ROOT / "unit-test-metadata-probe.template.json"
+        if output.exists():
+            output.unlink()
+        try:
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/write_bepinex_metadata_probe_report.py",
+                    "--output",
+                    str(output),
+                    "--quiet",
+                ],
+                cwd=ROOT,
+                check=False,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            self.assertTrue(output.exists())
+            self.assertEqual([], collect_metadata_probe_report_errors(output))
+        finally:
+            if output.exists():
+                output.unlink()
+
+    def test_template_writer_rejects_unsafe_output_path(self) -> None:
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "scripts/write_bepinex_metadata_probe_report.py",
+                "--output",
+                "docs/manual-smoke/metadata-probe.template.json",
                 "--quiet",
             ],
             cwd=ROOT,
