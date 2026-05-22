@@ -242,3 +242,19 @@ capture. The defaults remain:
 MetadataProbeEnabled = false
 MetadataProbeLogOnStart = false
 ```
+
+## Milestone 4N Manual Counter Verification
+
+Milestone 4N aligns the manual metadata probe smoke workflow with the 4M counters. A local user may
+enable the disabled probe, observe a single safe startup snapshot, and summarize only these counter
+values in a redacted workspace report:
+
+```text
+metadata_snapshot_created_count
+health_check_observed_count
+synthetic_send_configured_count
+```
+
+The report checker and reviewer keep those counters as metadata-only evidence. They still reject
+capture flags set to true, raw logs, screenshots, private paths, stack traces, payload dumps, real
+game text, OCR output, hooks, extraction markers, provider calls, and companion contract changes.

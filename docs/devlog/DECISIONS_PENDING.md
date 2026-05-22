@@ -1,5 +1,7 @@
 # Decisions Pending
 
+- Milestone 4N aligned manual verification for the 4M counters. Decide in 4O whether a redacted
+  local report containing those counters is sufficient for later metadata-only discussion.
 - Milestone 4M implemented only the 4L-scoped inert metadata counters/booleans. Decide later whether
   user-local evidence is sufficient to discuss any broader metadata-only extension.
 - Milestone 4L waived the reviewed local metadata report requirement only for the minimal 4M inert

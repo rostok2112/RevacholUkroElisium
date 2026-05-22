@@ -68,6 +68,18 @@ class BepInExMetadataProbeReportTests(unittest.TestCase):
         self.assertIn("blockers", errors)
         self.assertIn("evidence_summary_redacted", errors)
 
+    def test_required_4m_counters_are_validated(self) -> None:
+        for counter_name in (
+            "metadata_snapshot_created_count",
+            "health_check_observed_count",
+            "synthetic_send_configured_count",
+        ):
+            with self.subTest(counter_name=counter_name):
+                report = _valid_report()
+                del report["counters"][counter_name]
+
+                self.assertIn(counter_name, "\n".join(_errors_for(report)))
+
     def test_real_text_captured_true_fails(self) -> None:
         report = _valid_report()
         report["real_text_captured"] = True

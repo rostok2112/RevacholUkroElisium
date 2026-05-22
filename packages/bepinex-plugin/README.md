@@ -123,6 +123,10 @@ The counters are derived from existing startup booleans, stay in memory only, an
 inside the manually enabled metadata snapshot log. They do not read game state or send companion
 payloads.
 
+Milestone 4N documents how to verify those counters manually and record only redacted values in a
+workspace-local report. Do not commit raw logs, screenshots, private paths, payload dumps, or real
+metadata probe reports.
+
 Manual metadata probe verification is documented in:
 
 ```text

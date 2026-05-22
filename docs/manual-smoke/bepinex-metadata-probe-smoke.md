@@ -1,9 +1,10 @@
 # BepInEx Metadata Probe Manual Smoke
 
 Milestone 4I documents how to manually enable the disabled metadata-only probe, observe one safe
-startup summary, and record a redacted local report. This is still a no-capture workflow: it does
-not approve current-line detection, UI text reading, game hooks, Unity object scanning, OCR,
-extraction, provider calls, or companion HTTP contract changes.
+startup summary, and record a redacted local report. Milestone 4N aligns that workflow with the 4M
+inert metadata counters. This is still a no-capture workflow: it does not approve current-line
+detection, UI text reading, game hooks, Unity object scanning, OCR, extraction, provider calls, or
+companion HTTP contract changes.
 
 ## Prerequisites
 
@@ -71,8 +72,24 @@ counters.safe_status_events=0
 counters.synthetic_events=0
 ```
 
+The 4M inert metadata counters should also be visible in the snapshot:
+
+```text
+counters.metadata_snapshot_created_count=1
+counters.health_check_observed_count=0|1
+counters.synthetic_send_configured_count=0|1
+```
+
+Interpret the 4M counters only as startup metadata:
+
+- `metadata_snapshot_created_count=1` means the manually enabled snapshot was built once.
+- `health_check_observed_count=1` means the startup health check returned a status result;
+  `0` is acceptable when the companion was unavailable before an HTTP status was observed.
+- `synthetic_send_configured_count=1` means `SendSyntheticEventOnStart=true` was configured;
+  it does not prove a real game event was captured.
+
 Do not paste raw log lines into committed files. A local redacted report should summarize only the
-booleans and counters you observed.
+booleans and counters you observed, including the three 4M counters above.
 
 ## Report Template
 

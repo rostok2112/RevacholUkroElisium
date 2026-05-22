@@ -1,5 +1,24 @@
 # Session Summary
 
+Milestone 4N inert metadata implementation manual verification workflow is implemented.
+
+Completed in the latest session:
+- Updated `docs/manual-smoke/bepinex-metadata-probe-smoke.md` with explicit 4M counter
+  verification steps for local manual runs.
+- Documented the expected safe counter fields:
+  `metadata_snapshot_created_count`, `health_check_observed_count`, and
+  `synthetic_send_configured_count`.
+- Tightened `scripts/check_bepinex_metadata_probe_report.py` so metadata probe reports must include
+  the 4M counters as non-negative integers.
+- Extended bridge safety and metadata report/review tests so the manual smoke doc, report template,
+  committed fixture, and review summary all cover the 4M counters.
+- Updated bridge docs, metadata probe gate docs, package README/DESIGN, and devlog handoff notes.
+- Did not change C# behavior, companion HTTP contracts, provider behavior, shell behavior, or
+  metadata probe runtime behavior.
+- Did not add current-line capture, real text capture, UI text reading, Unity scanning, game hooks,
+  Harmony patches, OCR, extraction, decompiled game-code work, frontend/shell work, keyboard hooks,
+  clipboard writes, downloads, web calls, or new dependencies.
+
 Milestone 4M minimal inert metadata-only C# extension is implemented.
 
 Completed in the latest session:

@@ -36,6 +36,9 @@ class BepInExMetadataProbeReviewTests(unittest.TestCase):
         self.assertFalse(review["screenshots_read"])
         self.assertFalse(review["companion_called"])
         self.assertFalse(review["provider_called"])
+        self.assertEqual(1, review["counters_summary"]["metadata_snapshot_created_count"])
+        self.assertEqual(1, review["counters_summary"]["health_check_observed_count"])
+        self.assertEqual(0, review["counters_summary"]["synthetic_send_configured_count"])
         self.assertIn("does not approve", review["recommended_next_step"])
 
     def test_not_run_partial_and_fail_reports_are_not_ready(self) -> None:

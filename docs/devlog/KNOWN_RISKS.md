@@ -1,5 +1,11 @@
 # Known Risks
 
+- Milestone 4N makes the 4M counters manually verifiable, but verified counters still prove only
+  startup metadata posture. They are not evidence of current-line capture, UI visibility, scene
+  state, or game-state detection.
+- Completed metadata probe reports must remain local and redacted. Do not commit raw logs,
+  screenshots, private paths, stack traces, payload dumps, or real reports while verifying the 4M
+  counters.
 - Milestone 4M implements inert metadata counters, but they are still not runtime capture evidence.
   Do not treat `metadata_snapshot_created_count`, `health_check_observed_count`, or
   `synthetic_send_configured_count` as current-line, UI, scene, or game-state observation.

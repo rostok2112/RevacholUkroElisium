@@ -275,6 +275,10 @@ Milestone 4M implements that inert scope only. The metadata snapshot can now inc
 only. The probe remains disabled by default and still does not read game state, UI text, scene or
 object names, files, logs, screenshots, OCR output, or companion payloads.
 
+Milestone 4N documents how to verify those counters manually in a local run. The verification path
+uses the existing metadata probe smoke checklist and redacted workspace reports only; raw logs,
+screenshots, private paths, payload dumps, and real runtime reports must not be committed.
+
 ## Current-Line Capture Research
 
 Milestone 4E records the future capture decision in:

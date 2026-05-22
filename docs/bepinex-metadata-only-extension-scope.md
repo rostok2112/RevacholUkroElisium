@@ -55,6 +55,11 @@ shape:
 Those counters are derived from existing startup booleans, stay in memory only, and are logged only
 when the disabled metadata probe is manually enabled with `MetadataProbeLogOnStart=true`.
 
+Milestone 4N documents the manual verification workflow for those counters. Verification remains
+local and redacted: users may summarize the observed counter values in a workspace-only metadata
+probe report, but must not commit raw BepInEx logs, game logs, screenshots, private paths, payload
+dumps, or real runtime reports.
+
 ## Forbidden 4M Behavior
 
 The 4M implementation must not:

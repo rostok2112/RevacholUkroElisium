@@ -166,3 +166,13 @@ counters are derived from existing startup booleans and are not persisted or sen
 The probe remains disabled by default and still does not read runtime text, inspect game/UI state,
 scan Unity objects, parse logs, read files, capture screenshots, call new companion endpoints, or
 create metadata payloads. All capture flags remain explicit false values.
+
+## Milestone 4N manual counter verification posture
+
+Manual verification for the 4M counters is documentation and report-contract work only. A local run
+may summarize `metadata_snapshot_created_count`, `health_check_observed_count`, and
+`synthetic_send_configured_count` in a redacted workspace report, but the repo must not commit raw
+logs, screenshots, private paths, payload dumps, real game text, or completed real reports.
+
+The verification path does not change C# behavior, does not approve capture, and does not add
+companion metadata payloads or endpoints.

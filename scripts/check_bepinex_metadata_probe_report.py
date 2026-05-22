@@ -39,6 +39,13 @@ REQUIRED_STRING_FIELDS = ("schema_version", "probe_status", "redacted_notes")
 OPTIONAL_STRING_FIELDS = ("next_step_notes", "not_run_reason")
 OPTIONAL_STRING_LIST_FIELDS = ("blockers",)
 OPTIONAL_TRUE_BOOL_FIELDS = ("evidence_summary_redacted",)
+REQUIRED_COUNTER_FIELDS = (
+    "safe_status_events",
+    "synthetic_events",
+    "metadata_snapshot_created_count",
+    "health_check_observed_count",
+    "synthetic_send_configured_count",
+)
 
 ALLOWED_URLS = ("http://127.0.0.1:8765",)
 URL_PATTERN = re.compile(r"https?://[^\s\"'<>)]+", re.IGNORECASE)
@@ -295,6 +302,9 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     if not isinstance(counters, dict):
         errors.append("Metadata probe report field 'counters' must be an object.")
     else:
+        for key in REQUIRED_COUNTER_FIELDS:
+            if key not in counters:
+                errors.append(f"Metadata probe report counters must include {key!r}.")
         for key, value in counters.items():
             if not isinstance(key, str) or not key:
                 errors.append("Metadata probe report counters must use non-empty string keys.")
