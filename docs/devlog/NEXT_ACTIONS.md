@@ -1,42 +1,24 @@
 # Next Actions
 
-After the local metadata probe smoke helper:
+After the redacted local metadata-probe smoke passed:
 
-1. Prepare the local Steam-installed game without launching it:
+1. Treat the successful smoke as evidence only for bridge startup, the metadata-probe snapshot, and
+   the safe 4M counters.
+2. Keep the completed local report, raw `LogOutput.log`, screenshots, private paths, and runtime
+   artifacts out of git.
+3. Do not infer current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR,
+   extraction, provider execution, or companion HTTP contract readiness from this result.
+4. Use the redacted evidence to decide the next metadata-only planning step. Any future runtime
+   expansion still needs a separate scope, tests, and safety-check updates before implementation.
+5. Keep `MetadataProbeEnabled=false` and `MetadataProbeLogOnStart=false` as the restored local
+   default after smoke testing.
 
-   ```powershell
-   python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --enable-probe
-   ```
+Recommended next step:
 
-2. Manually launch the game, wait for BepInEx startup, then close the game.
-3. Check only allowlisted metadata markers from `BepInEx/LogOutput.log` and write the redacted
-   workspace report:
+- Add a small docs/static decision note or ADR update that says the local metadata-probe startup
+  smoke is ready for human review of the next metadata-only planning step, while keeping all capture
+  and companion-contract permissions closed.
 
-   ```powershell
-   python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --check-log --write-report
-   ```
+Exact resume prompt:
 
-4. Validate and review the redacted report:
-
-   ```powershell
-   python scripts/check_bepinex_metadata_probe_report.py `
-     --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json `
-     --quiet
-
-   python scripts/review_bepinex_metadata_probe_report.py `
-     --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json `
-     --quiet
-   ```
-
-5. Disable the probe flags again:
-
-   ```powershell
-   python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --disable-probe
-   ```
-
-6. Keep raw BepInEx logs, game logs, private paths, screenshots, payload dumps, and completed real
-   reports out of git. Share only the redacted helper/reviewer summaries when debugging setup.
-
-Exact resume prompt after the real local smoke:
-
-`Continue in revachol-ukro-elisium after the local metadata probe smoke helper was used against the Steam install. First inspect git status, read AGENTS.md, docs/devlog/*.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, scripts/run_bepinex_metadata_probe_local_smoke.py, scripts/check_bepinex_metadata_probe_report.py, scripts/review_bepinex_metadata_probe_report.py, and if present validate workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json without printing raw logs. Analyze the redacted local smoke result and fix only setup/build/install/config/log-contract issues needed for the metadata probe startup smoke. Do not commit raw logs, BepInEx logs, screenshots, real reports, private paths, game files, real text, hooks, Unity scanning, OCR, extraction, provider execution, companion HTTP contract changes, downloads, or new dependencies.`
+`Continue in revachol-ukro-elisium after the redacted local metadata-probe smoke passed. First inspect git status, read AGENTS.md, docs/devlog/*.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, docs/bepinex-metadata-only-extension-scope.md, docs/bepinex-metadata-probe-gate.md, and docs/adr/0009-metadata-only-extension-gate.md. Use only the tracked redacted evidence note, not raw logs or report contents. Decide the next metadata-only planning step after successful startup/counter smoke, still without C# behavior changes, current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction, provider execution, companion HTTP contract changes, committed logs, committed screenshots, committed real reports, downloads, or new dependencies.`

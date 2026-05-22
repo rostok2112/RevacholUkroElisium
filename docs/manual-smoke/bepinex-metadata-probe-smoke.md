@@ -188,6 +188,34 @@ The report must stay redacted and must not include raw logs, screenshots, privat
 traces, request or response dumps, real game text, UI text, OCR output, save data, or asset/audio
 references.
 
+## Redacted Local Smoke Result
+
+A local metadata-probe smoke was completed and recorded only as redacted evidence. No raw
+`LogOutput.log` lines, report contents, screenshots, private paths, game text, or runtime artifacts
+are committed.
+
+Observed redacted result:
+
+- `plugin_loaded_observed`: yes
+- `metadata_snapshot_observed`: yes
+- `metadata_snapshot_created_count_observed`: yes
+- `health_check_observed_count_observed`: yes
+- `synthetic_send_configured_count_observed`: yes
+- `real_text_captured_false_observed`: yes
+- `current_line_capture_enabled_false_observed`: yes
+- `ui_probe_attempted_false_observed`: yes
+- `scene_probe_attempted_false_observed`: yes
+- `forbidden_marker_detected`: no
+- report checker: passed
+- reviewer: ready
+- `MetadataProbeEnabled=false` restored: yes
+- `MetadataProbeLogOnStart=false` restored: yes
+
+This proves only that the bridge loaded far enough to emit the metadata-probe startup snapshot and
+the safe 4M counters in a local manual run. It does not prove or approve current-line capture, real
+text capture, UI text reading, Unity object scanning, hooks, OCR, extraction, provider execution, or
+companion HTTP contract changes.
+
 ## Cleanup
 
 After the manual smoke, restore the local config:

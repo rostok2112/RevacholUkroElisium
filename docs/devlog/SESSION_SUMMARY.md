@@ -1,5 +1,21 @@
 # Session Summary
 
+Redacted local metadata-probe smoke evidence is recorded.
+
+Completed in the latest session:
+- Recorded a tracked redacted evidence note in `docs/manual-smoke/bepinex-metadata-probe-smoke.md`.
+- The redacted result says the bridge plugin loaded, the metadata snapshot was observed, all three
+  4M counter observations were present, all capture/probe expansion false flags were observed,
+  forbidden markers were not detected, the report checker passed, the reviewer returned ready, and
+  both metadata probe config flags were restored to false.
+- The note intentionally excludes raw `LogOutput.log` lines, report contents, screenshots, private
+  paths, game text, logs, and runtime artifacts.
+- This evidence proves only metadata-probe startup and safe counter observation. It does not prove or
+  approve current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR,
+  extraction, provider execution, or companion HTTP contract changes.
+- Did not read raw logs or report contents, change C# behavior, add hooks/OCR/scanning/capture, or
+  change companion HTTP contracts.
+
 Local in-game metadata probe smoke preparation helper is implemented.
 
 Completed in the latest session:
