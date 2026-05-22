@@ -1,5 +1,24 @@
 # Session Summary
 
+Redacted companion-connected synthetic bridge smoke evidence is recorded.
+
+Completed in the latest session:
+- Recorded a tracked redacted evidence note in `docs/manual-smoke/bepinex-metadata-probe-smoke.md`.
+- The redacted result says the bridge plugin loaded, the metadata snapshot was observed, localhost
+  companion health was observed, the invented synthetic send was observed, latest synthetic/provider
+  state existed, all three 4M counter observations were present, and all capture/probe expansion
+  false flags were observed.
+- The report checker passed, the reviewer returned ready, forbidden markers were not detected, and
+  `MetadataProbeEnabled`, `MetadataProbeLogOnStart`, and `SendSyntheticEventOnStart` were restored
+  to false.
+- The note intentionally excludes raw `LogOutput.log` lines, report contents, companion payloads,
+  screenshots, private paths, game text, logs, and runtime artifacts.
+- This evidence proves only the synthetic/manual bridge-to-companion flow. It does not prove or
+  approve current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR,
+  extraction, real provider execution, or companion HTTP contract changes.
+- Did not read raw logs or report contents, change C# behavior, add hooks/OCR/scanning/capture,
+  change companion HTTP contracts, or commit runtime artifacts.
+
 Companion-connected synthetic bridge smoke preparation is implemented.
 
 Completed in the latest session:

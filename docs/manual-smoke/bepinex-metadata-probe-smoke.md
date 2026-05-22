@@ -278,6 +278,39 @@ the safe 4M counters in a local manual run. It does not prove or approve current
 text capture, UI text reading, Unity object scanning, hooks, OCR, extraction, provider execution, or
 companion HTTP contract changes.
 
+## Redacted Companion-Connected Synthetic Smoke Result
+
+A companion-connected synthetic bridge smoke was completed and recorded only as redacted evidence.
+No raw `LogOutput.log` lines, report contents, screenshots, private paths, game text, companion
+payloads, logs, or runtime artifacts are committed.
+
+Observed redacted result:
+
+- `plugin_loaded_observed`: yes
+- `metadata_snapshot_observed`: yes
+- `companion_health_available_observed`: yes
+- `synthetic_send_observed`: yes
+- `metadata_snapshot_created_count_observed`: yes
+- `health_check_observed_count_observed`: yes
+- `synthetic_send_configured_count_observed`: yes
+- `real_text_captured_false_observed`: yes
+- `current_line_capture_enabled_false_observed`: yes
+- `ui_probe_attempted_false_observed`: yes
+- `scene_probe_attempted_false_observed`: yes
+- `forbidden_marker_detected`: no
+- report checker: passed
+- reviewer: ready
+- companion latest synthetic/provider state observed: yes
+- `MetadataProbeEnabled=false` restored: yes
+- `MetadataProbeLogOnStart=false` restored: yes
+- `SendSyntheticEventOnStart=false` restored: yes
+
+This proves only the synthetic/manual bridge-to-companion flow: the bridge loaded, saw localhost
+companion health through redacted markers, sent the invented synthetic provider event, and left all
+capture flags false. It does not prove or approve current-line capture, real text capture, UI text
+reading, Unity object scanning, hooks, OCR, extraction, provider execution with real providers, or
+companion HTTP contract changes.
+
 ## Cleanup
 
 After the manual smoke, restore the local config:

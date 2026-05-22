@@ -1,5 +1,32 @@
 # Next Actions
 
+After the companion-connected synthetic bridge smoke passed:
+
+1. Treat the successful smoke as evidence only for localhost companion availability, invented
+   synthetic provider-event delivery, bridge startup, the metadata-probe snapshot, and safe 4M
+   counters.
+2. Keep the completed local report, raw `LogOutput.log`, companion response payloads, screenshots,
+   private paths, and runtime artifacts out of git.
+3. Do not infer current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR,
+   extraction, real provider execution, or companion HTTP contract readiness from this result.
+4. Decide the next safe bridge step in docs first: either repeat the companion-connected smoke if
+   more local confidence is needed, or scope another synthetic/manual-only bridge check that still
+   does not read game text.
+5. Keep `MetadataProbeEnabled=false`, `MetadataProbeLogOnStart=false`, and
+   `SendSyntheticEventOnStart=false` restored after smoke testing.
+
+Recommended next step:
+
+- Add a small docs/static decision note for whether the successful companion-connected synthetic
+  smoke is enough to continue synthetic/manual bridge hardening, while keeping all capture and
+  companion-contract permissions closed.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after the companion-connected synthetic bridge smoke passed. First inspect git status, read AGENTS.md, docs/devlog/*.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, docs/manual-smoke/bepinex-bridge-runtime-smoke.md, docs/bepinex-bridge.md, scripts/run_bepinex_metadata_probe_local_smoke.py, scripts/run_companion_server.py, scripts/run_companion_client.py, and packages/bepinex-plugin/src/*.cs. Use only tracked redacted evidence notes, not raw logs, report contents, companion payloads, screenshots, private paths, or runtime artifacts. Decide the next synthetic/manual bridge hardening step after successful localhost companion health and invented synthetic provider-event delivery, still without current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction, real provider execution, companion HTTP contract changes, committed logs, committed screenshots, committed real reports, downloads, or new dependencies.`
+
+---
+
 After companion-connected synthetic bridge smoke prep:
 
 1. Start the localhost companion server with `python scripts/run_companion_server.py`.
