@@ -384,6 +384,8 @@ def _check_local_metadata_probe_smoke_helper() -> list[str]:
         "--auto-discover",
         "--enable-probe",
         "--disable-probe",
+        "--enable-synthetic-send",
+        "--disable-synthetic-send",
         "--check-log",
         "--write-report",
         "libraryfolders.vdf",
@@ -395,6 +397,11 @@ def _check_local_metadata_probe_smoke_helper() -> list[str]:
         "LogOutput.log",
         "MetadataProbeEnabled",
         "MetadataProbeLogOnStart",
+        "SendSyntheticEventOnStart",
+        "Companion health check passed",
+        "Synthetic provider event sent:",
+        "Synthetic provider event was not accepted:",
+        "synthetic_provider_event_sent_observed",
         "build_bepinex_bridge_report",
         "default_metadata_probe_report_template",
         "collect_metadata_probe_report_errors",
@@ -439,6 +446,11 @@ def _check_local_metadata_probe_smoke_helper() -> list[str]:
         doc_text = _read_text(doc_path).replace("\\", "/")
         if helper_ref not in doc_text:
             errors.append(f"{doc_path.relative_to(ROOT)} must point to {helper_ref}.")
+        for marker in ("--enable-synthetic-send", "--disable-synthetic-send"):
+            if marker not in doc_text:
+                errors.append(
+                    f"{doc_path.relative_to(ROOT)} must document local helper flag {marker}."
+                )
     return errors
 
 

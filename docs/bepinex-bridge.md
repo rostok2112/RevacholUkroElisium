@@ -218,6 +218,18 @@ Prepare a real local in-game metadata-probe smoke with the bounded helper:
 python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --enable-probe
 ```
 
+For the companion-connected synthetic smoke, start the existing localhost companion server in a
+separate terminal and temporarily enable the existing synthetic send-on-start config key:
+
+```powershell
+python scripts/run_companion_server.py
+python scripts/run_companion_client.py health
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --enable-probe `
+  --enable-synthetic-send
+```
+
 After manually launching and closing the game, check only `BepInEx/LogOutput.log` for allowlisted
 metadata markers and write the redacted report:
 
@@ -231,13 +243,27 @@ python scripts/run_bepinex_metadata_probe_local_smoke.py `
 Then disable the local probe flags:
 
 ```powershell
-python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --disable-probe
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --disable-probe `
+  --disable-synthetic-send
 ```
 
+If the redacted helper output says the synthetic provider event was observed, optional local
+confirmation can use:
+
+```powershell
+python scripts/run_companion_client.py latest-provider-context
+python scripts/run_companion_client.py latest-provider-annotation
+```
+
+Do not commit or paste companion response payloads from a real local run.
+
 The helper is local-test preparation only. It may discover Steam library paths, build/install the
-bridge, toggle bridge config flags, and summarize allowlisted metadata markers. It never launches
-the game, recursively scans drives, prints or stores raw logs, parses dialogue, reads arbitrary game
-files, calls providers, or changes the companion HTTP contract.
+bridge, toggle bridge config flags including `SendSyntheticEventOnStart`, and summarize allowlisted
+metadata plus synthetic bridge markers. It never launches the game, recursively scans drives, prints
+or stores raw logs, parses dialogue, reads arbitrary game files, calls providers, or changes the
+companion HTTP contract.
 
 The manual metadata probe smoke checklist is:
 

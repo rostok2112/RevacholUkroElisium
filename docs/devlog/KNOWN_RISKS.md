@@ -1,5 +1,13 @@
 # Known Risks
 
+- The companion-connected synthetic smoke temporarily enables the existing
+  `SendSyntheticEventOnStart` config key. Always restore it with `--disable-synthetic-send` after
+  the local run.
+- A successful synthetic provider send proves only localhost companion reachability and invented
+  fake-event delivery. It is not evidence of current-line capture, UI text reading, Unity scanning,
+  provider execution, or companion contract readiness.
+- Redacted helper detection is intentionally limited to bridge-owned markers. If ordinary Unity or
+  BepInEx noise appears in raw logs, do not broaden checks to parse dialogue or game content.
 - The local metadata probe smoke helper can edit the user-owned BepInEx config and copy the bridge
   DLL into `BepInEx/plugins/`. Keep those writes bounded to the discovered/provided install and use
   `--disable-probe` after the smoke.

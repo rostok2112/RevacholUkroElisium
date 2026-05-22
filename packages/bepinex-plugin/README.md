@@ -162,6 +162,18 @@ it:
 python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --enable-probe
 ```
 
+For the companion-connected synthetic smoke, start the existing localhost companion server in a
+separate terminal, verify health, and temporarily enable the existing synthetic send-on-start flag:
+
+```powershell
+python scripts/run_companion_server.py
+python scripts/run_companion_client.py health
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --enable-probe `
+  --enable-synthetic-send
+```
+
 After you manually launch and close the game, it can read only `BepInEx/LogOutput.log` for
 allowlisted metadata markers and write the redacted workspace report:
 
@@ -175,12 +187,19 @@ python scripts/run_bepinex_metadata_probe_local_smoke.py `
 Disable the probe flags after the smoke:
 
 ```powershell
-python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --disable-probe
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --disable-probe `
+  --disable-synthetic-send
 ```
 
 The helper never launches the game, recursively scans drives, prints raw logs, stores raw logs,
 parses dialogue, reads arbitrary game files, calls providers, or changes the companion HTTP
-contract.
+contract. It can summarize bridge-owned companion health and synthetic-send markers as redacted
+booleans only. Optional local provider-state checks should use
+`python scripts/run_companion_client.py latest-provider-context` and
+`python scripts/run_companion_client.py latest-provider-annotation`; do not commit or paste those
+runtime payloads.
 
 Completed reports must stay local and ignored. Passing validation does not approve current-line
 capture or any broader runtime probing. A ready review means only that a later metadata-only

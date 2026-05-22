@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- After the companion-connected synthetic smoke runs, decide whether redacted evidence of companion
+  health availability and the invented synthetic provider send is sufficient for the next
+  synthetic/manual bridge step.
+- Decide whether to keep using the existing metadata-probe helper for companion-connected smoke or
+  split a wrapper only if the workflow grows beyond config toggles and redacted marker checks.
 - After the user runs the local metadata probe smoke helper against the Steam install, decide whether
   the redacted report is enough to debug setup/build/install/config issues or whether another local
   smoke pass is needed.

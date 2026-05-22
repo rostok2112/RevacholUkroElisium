@@ -1,5 +1,22 @@
 # Session Summary
 
+Companion-connected synthetic bridge smoke preparation is implemented.
+
+Completed in the latest session:
+- Extended `scripts/run_bepinex_metadata_probe_local_smoke.py` with config-only
+  `--enable-synthetic-send` and `--disable-synthetic-send` flags for the existing
+  `SendSyntheticEventOnStart` key.
+- Extended the helper's redacted log summary to detect bridge-owned companion health and synthetic
+  provider send markers without printing or storing raw log lines.
+- Generated metadata probe reports can now set safe existing fields such as `companion_available`,
+  `synthetic_event_send_configured`, and `synthetic_event_sent` from allowlisted markers only.
+- Updated manual smoke docs, bridge docs, package README/DESIGN, bridge safety checks, and fake-temp
+  helper tests for the companion-connected synthetic flow.
+- Reused the existing companion server/client commands; no companion HTTP contract changes or C#
+  behavior changes were added.
+- Did not launch the game, parse dialogue, read arbitrary game files, print raw logs, add hooks,
+  add OCR, scan Unity objects, call providers, or commit runtime artifacts.
+
 Redacted local metadata-probe smoke evidence is recorded.
 
 Completed in the latest session:

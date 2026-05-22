@@ -59,6 +59,10 @@ PLUGIN_LOADED_MARKERS = (
     "loaded in synthetic/manual bridge mode",
 )
 METADATA_SNAPSHOT_MARKER = "Metadata probe snapshot: synthetic_manual=true"
+COMPANION_HEALTH_AVAILABLE_MARKER = "Companion health check passed"
+COMPANION_HEALTH_UNAVAILABLE_MARKER = "Companion health check failed"
+SYNTHETIC_PROVIDER_EVENT_SENT_MARKER = "Synthetic provider event sent:"
+SYNTHETIC_PROVIDER_EVENT_REJECTED_MARKER = "Synthetic provider event was not accepted:"
 TRUE_FALSE_MARKERS = (
     "real_text_captured=false",
     "current_line_capture_enabled=false",
@@ -169,6 +173,13 @@ class LogCheck:
     companion_health_checked: bool
     companion_available: bool
     synthetic_event_send_configured: bool
+    companion_health_available_observed: bool
+    companion_health_unavailable_observed: bool
+    synthetic_provider_event_sent_observed: bool
+    synthetic_provider_event_rejected_observed: bool
+    synthetic_provider_event_id_observed: bool
+    synthetic_provider_line_id_observed: bool
+    synthetic_provider_status_observed: bool
     forbidden_marker_categories: tuple[str, ...]
 
     def redacted_summary(self) -> dict[str, object]:
@@ -189,6 +200,15 @@ class LogCheck:
             ),
             "ui_probe_attempted_false_observed": self.ui_probe_attempted_false_observed,
             "scene_probe_attempted_false_observed": self.scene_probe_attempted_false_observed,
+            "companion_health_available_observed": (self.companion_health_available_observed),
+            "companion_health_unavailable_observed": (self.companion_health_unavailable_observed),
+            "synthetic_provider_event_sent_observed": (self.synthetic_provider_event_sent_observed),
+            "synthetic_provider_event_rejected_observed": (
+                self.synthetic_provider_event_rejected_observed
+            ),
+            "synthetic_provider_event_id_observed": (self.synthetic_provider_event_id_observed),
+            "synthetic_provider_line_id_observed": (self.synthetic_provider_line_id_observed),
+            "synthetic_provider_status_observed": self.synthetic_provider_status_observed,
             "forbidden_marker_detected": self.forbidden_marker_detected,
             "forbidden_marker_categories": list(self.forbidden_marker_categories),
             "raw_log_included": False,
@@ -218,6 +238,8 @@ def main(argv: list[str] | None = None) -> int:
             (
                 args.enable_probe,
                 args.disable_probe,
+                args.enable_synthetic_send,
+                args.disable_synthetic_send,
                 args.check_log,
                 args.write_report,
                 args.print_discovery,
@@ -241,6 +263,16 @@ def main(argv: list[str] | None = None) -> int:
         if args.disable_probe:
             result["actions"] = _merge_action(
                 result["actions"], set_probe_config_action(discovery, enabled=False)
+            )
+
+        if args.enable_synthetic_send:
+            result["actions"] = _merge_action(
+                result["actions"], set_synthetic_send_config_action(discovery, enabled=True)
+            )
+
+        if args.disable_synthetic_send:
+            result["actions"] = _merge_action(
+                result["actions"], set_synthetic_send_config_action(discovery, enabled=False)
             )
 
         log_check: LogCheck | None = None
@@ -299,6 +331,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--enable-probe", action="store_true", help="Enable metadata probe config.")
     parser.add_argument(
         "--disable-probe", action="store_true", help="Disable metadata probe config."
+    )
+    parser.add_argument(
+        "--enable-synthetic-send",
+        action="store_true",
+        help="Enable the existing SendSyntheticEventOnStart config key.",
+    )
+    parser.add_argument(
+        "--disable-synthetic-send",
+        action="store_true",
+        help="Disable the existing SendSyntheticEventOnStart config key.",
     )
     parser.add_argument("--check-log", action="store_true", help="Read only BepInEx/LogOutput.log.")
     parser.add_argument("--write-report", action="store_true", help="Write redacted report.json.")
@@ -682,7 +724,14 @@ def set_probe_config_action(discovery: LocalDiscovery, *, enabled: bool) -> dict
     if discovery.game.game_dir is None:
         raise LocalSmokeError("Game directory was not found. Pass --game-dir <path>.")
     config_dir = discovery.bepinex.config_dir or (discovery.game.game_dir / "BepInEx" / "config")
-    set_probe_config(config_dir, enabled=enabled)
+    set_bridge_config_values(
+        config_dir,
+        section="MetadataProbe",
+        values={
+            "MetadataProbeEnabled": enabled,
+            "MetadataProbeLogOnStart": enabled,
+        },
+    )
     return {
         "probe_enabled": enabled,
         "metadata_probe_enabled": enabled,
@@ -691,26 +740,57 @@ def set_probe_config_action(discovery: LocalDiscovery, *, enabled: bool) -> dict
     }
 
 
+def set_synthetic_send_config_action(
+    discovery: LocalDiscovery, *, enabled: bool
+) -> dict[str, object]:
+    if discovery.game.game_dir is None:
+        raise LocalSmokeError("Game directory was not found. Pass --game-dir <path>.")
+    config_dir = discovery.bepinex.config_dir or (discovery.game.game_dir / "BepInEx" / "config")
+    set_bridge_config_values(
+        config_dir,
+        section="Bridge",
+        values={"SendSyntheticEventOnStart": enabled},
+    )
+    return {
+        "synthetic_send_on_start": enabled,
+        "send_synthetic_event_on_start": enabled,
+        "config_file": PLUGIN_CONFIG_FILENAME,
+    }
+
+
 def set_probe_config(config_dir: Path, *, enabled: bool) -> Path:
+    return set_bridge_config_values(
+        config_dir,
+        section="MetadataProbe",
+        values={
+            "MetadataProbeEnabled": enabled,
+            "MetadataProbeLogOnStart": enabled,
+        },
+    )
+
+
+def set_bridge_config_values(config_dir: Path, *, section: str, values: Mapping[str, bool]) -> Path:
     resolved_config_dir = config_dir.resolve()
     resolved_config_dir.mkdir(parents=True, exist_ok=True)
     config_path = find_bridge_config_file(resolved_config_dir)
-    value = "true" if enabled else "false"
     if config_path.exists():
         lines = config_path.read_text(encoding="utf-8", errors="replace").splitlines()
     else:
         lines = []
 
-    lines, seen_enabled = _replace_or_track_config(lines, "MetadataProbeEnabled", value)
-    lines, seen_log_on_start = _replace_or_track_config(lines, "MetadataProbeLogOnStart", value)
-    if not seen_enabled or not seen_log_on_start:
+    seen_by_key: dict[str, bool] = {}
+    for key, enabled in values.items():
+        lines, seen_by_key[key] = _replace_or_track_config(
+            lines, key, "true" if enabled else "false"
+        )
+    if not all(seen_by_key.values()):
         if lines and lines[-1] != "":
             lines.append("")
-        lines.append("[MetadataProbe]")
-        if not seen_enabled:
-            lines.append(f"MetadataProbeEnabled = {value}")
-        if not seen_log_on_start:
-            lines.append(f"MetadataProbeLogOnStart = {value}")
+        lines.append(f"[{section}]")
+        for key, enabled in values.items():
+            if not seen_by_key[key]:
+                value = "true" if enabled else "false"
+                lines.append(f"{key} = {value}")
     config_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
     return config_path
 
@@ -762,6 +842,13 @@ def check_metadata_probe_log(log_file: Path) -> LogCheck:
             companion_health_checked=False,
             companion_available=False,
             synthetic_event_send_configured=False,
+            companion_health_available_observed=False,
+            companion_health_unavailable_observed=False,
+            synthetic_provider_event_sent_observed=False,
+            synthetic_provider_event_rejected_observed=False,
+            synthetic_provider_event_id_observed=False,
+            synthetic_provider_line_id_observed=False,
+            synthetic_provider_status_observed=False,
             forbidden_marker_categories=(),
         )
 
@@ -779,6 +866,10 @@ def check_metadata_probe_log(log_file: Path) -> LogCheck:
         for name, pattern in SNAPSHOT_BOOL_PATTERNS.items()
         if (match := pattern.search(text)) is not None
     }
+    synthetic_provider_event_observed = (
+        SYNTHETIC_PROVIDER_EVENT_SENT_MARKER in text
+        or SYNTHETIC_PROVIDER_EVENT_REJECTED_MARKER in text
+    )
     return LogCheck(
         log_found=True,
         plugin_loaded_observed=all(marker in text for marker in PLUGIN_LOADED_MARKERS),
@@ -795,14 +886,30 @@ def check_metadata_probe_log(log_file: Path) -> LogCheck:
         counter_values=counters,
         companion_health_checked=snapshot_bools.get(
             "companion_health_checked",
-            "Companion health check passed" in text or "Companion health check failed" in text,
+            COMPANION_HEALTH_AVAILABLE_MARKER in text
+            or COMPANION_HEALTH_UNAVAILABLE_MARKER in text,
         ),
         companion_available=snapshot_bools.get(
-            "companion_available", "Companion health check passed" in text
+            "companion_available", COMPANION_HEALTH_AVAILABLE_MARKER in text
         ),
         synthetic_event_send_configured=snapshot_bools.get(
             "synthetic_event_send_configured",
             counters.get("synthetic_send_configured_count", 0) > 0,
+        ),
+        companion_health_available_observed=COMPANION_HEALTH_AVAILABLE_MARKER in text,
+        companion_health_unavailable_observed=COMPANION_HEALTH_UNAVAILABLE_MARKER in text,
+        synthetic_provider_event_sent_observed=SYNTHETIC_PROVIDER_EVENT_SENT_MARKER in text,
+        synthetic_provider_event_rejected_observed=(
+            SYNTHETIC_PROVIDER_EVENT_REJECTED_MARKER in text
+        ),
+        synthetic_provider_event_id_observed=(
+            synthetic_provider_event_observed and "event_id=synthetic.event.bepinex.4a.001" in text
+        ),
+        synthetic_provider_line_id_observed=(
+            synthetic_provider_event_observed and "line_id=synthetic.bepinex.4a.001" in text
+        ),
+        synthetic_provider_status_observed=(
+            synthetic_provider_event_observed and re.search(r"status=\d+", text) is not None
         ),
         forbidden_marker_categories=forbidden_categories,
     )
@@ -848,6 +955,7 @@ def build_report_from_log_check(log_check: LogCheck) -> dict[str, object]:
     metadata_snapshot_count = log_check.counter_values.get("metadata_snapshot_created_count", 0)
     health_count = log_check.counter_values.get("health_check_observed_count", 0)
     synthetic_configured_count = log_check.counter_values.get("synthetic_send_configured_count", 0)
+    synthetic_event_sent = log_check.synthetic_provider_event_sent_observed
     report.update(
         {
             "probe_status": status,
@@ -859,14 +967,14 @@ def build_report_from_log_check(log_check: LogCheck) -> dict[str, object]:
             "companion_health_checked": log_check.companion_health_checked,
             "companion_available": log_check.companion_available,
             "synthetic_event_send_configured": log_check.synthetic_event_send_configured,
-            "synthetic_event_sent": False,
+            "synthetic_event_sent": synthetic_event_sent,
             "scene_probe_attempted": False,
             "ui_probe_attempted": False,
             "current_line_capture_enabled": False,
             "real_text_captured": False,
             "counters": {
                 "safe_status_events": 1 if log_check.plugin_loaded_observed else 0,
-                "synthetic_events": 0,
+                "synthetic_events": 1 if synthetic_event_sent else 0,
                 "metadata_snapshot_created_count": metadata_snapshot_count,
                 "health_check_observed_count": health_count,
                 "synthetic_send_configured_count": synthetic_configured_count,

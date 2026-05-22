@@ -1,5 +1,29 @@
 # Next Actions
 
+After companion-connected synthetic bridge smoke prep:
+
+1. Start the localhost companion server with `python scripts/run_companion_server.py`.
+2. Verify health with `python scripts/run_companion_client.py health`.
+3. Prepare the local game config with
+   `python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --enable-probe --enable-synthetic-send`.
+4. Manually launch and close the game; do not paste or commit raw logs.
+5. Run the redacted post-run check with
+   `python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --check-log --write-report`.
+6. Validate/review the workspace-only report, optionally query synthetic provider latest state
+   locally, and then restore config with
+   `python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --disable-probe --disable-synthetic-send`.
+
+Recommended next step:
+
+- Run the companion-connected synthetic smoke locally and record only a redacted result note if the
+  bridge observes companion availability and the invented synthetic provider event.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after companion-connected synthetic bridge smoke prep. First inspect git status, read AGENTS.md, docs/devlog/*.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, docs/manual-smoke/bepinex-bridge-runtime-smoke.md, docs/bepinex-bridge.md, scripts/run_bepinex_metadata_probe_local_smoke.py, scripts/run_companion_server.py, scripts/run_companion_client.py, and packages/bepinex-plugin/src/*.cs. Use only redacted helper output and workspace-only reports. Run the local companion-connected synthetic smoke manually with the companion server, then summarize only booleans for health/synthetic-send observations; still do not add current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction, provider execution, companion HTTP contract changes, committed logs, screenshots, or runtime reports.`
+
+---
+
 After the redacted local metadata-probe smoke passed:
 
 1. Treat the successful smoke as evidence only for bridge startup, the metadata-probe snapshot, and

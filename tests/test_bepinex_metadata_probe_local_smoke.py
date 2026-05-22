@@ -21,6 +21,7 @@ from scripts.run_bepinex_metadata_probe_local_smoke import (
     discover_reference_dlls,
     find_game_from_libraryfolders,
     install_bridge_dll,
+    set_bridge_config_values,
     set_probe_config,
     write_metadata_probe_report,
 )
@@ -154,6 +155,37 @@ class BepInExMetadataProbeLocalSmokeTests(unittest.TestCase):
             self.assertIn("MetadataProbeEnabled = false", disabled)
             self.assertIn("MetadataProbeLogOnStart = false", disabled)
 
+    def test_synthetic_send_config_enable_disable_preserves_unrelated_lines(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            config_dir = Path(temp) / "BepInEx" / "config"
+            config_dir.mkdir(parents=True)
+            config = config_dir / "local.revachol.ukrainian-companion.bridge.cfg"
+            config.write_text(
+                "[Bridge]\nEnabled = true\nSendSyntheticEventOnStart = false\n"
+                "CompanionServerUrl = http://127.0.0.1:8765\n\n[MetadataProbe]\n"
+                "MetadataProbeEnabled = false\n",
+                encoding="utf-8",
+            )
+
+            set_bridge_config_values(
+                config_dir,
+                section="Bridge",
+                values={"SendSyntheticEventOnStart": True},
+            )
+            enabled = config.read_text(encoding="utf-8")
+            set_bridge_config_values(
+                config_dir,
+                section="Bridge",
+                values={"SendSyntheticEventOnStart": False},
+            )
+            disabled = config.read_text(encoding="utf-8")
+
+            self.assertIn("Enabled = true", enabled)
+            self.assertIn("CompanionServerUrl = http://127.0.0.1:8765", enabled)
+            self.assertIn("MetadataProbeEnabled = false", enabled)
+            self.assertIn("SendSyntheticEventOnStart = true", enabled)
+            self.assertIn("SendSyntheticEventOnStart = false", disabled)
+
     def test_missing_config_creates_safe_minimal_config(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             config_dir = Path(temp) / "BepInEx" / "config"
@@ -188,6 +220,53 @@ class BepInExMetadataProbeLocalSmokeTests(unittest.TestCase):
                 self.assertNotIn("Metadata probe snapshot:", report_text)
             finally:
                 _delete(report_path)
+
+    def test_companion_connected_log_markers_are_redacted_and_reported(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            log_file = Path(temp) / "LogOutput.log"
+            log_file.write_text(_safe_companion_connected_log_text(), encoding="utf-8")
+            report_path = REPORT_ROOT / "unit-companion-connected-report.json"
+            _delete(report_path)
+            try:
+                check = check_metadata_probe_log(log_file)
+                result = write_metadata_probe_report(check, output_path=report_path)
+                report_text = report_path.read_text(encoding="utf-8")
+                report = json.loads(report_text)
+
+                self.assertTrue(check.companion_health_available_observed)
+                self.assertTrue(check.synthetic_provider_event_sent_observed)
+                self.assertFalse(check.synthetic_provider_event_rejected_observed)
+                self.assertTrue(check.synthetic_provider_event_id_observed)
+                self.assertTrue(check.synthetic_provider_line_id_observed)
+                self.assertTrue(check.synthetic_provider_status_observed)
+                self.assertTrue(result["written"])
+                self.assertEqual([], collect_metadata_probe_report_errors(report_path))
+                self.assertTrue(report["synthetic_event_send_configured"])
+                self.assertTrue(report["synthetic_event_sent"])
+                self.assertEqual(1, report["counters"]["synthetic_events"])
+                self.assertNotIn("Synthetic provider event sent:", report_text)
+                self.assertNotIn("event_id=synthetic.event.bepinex.4a.001", report_text)
+            finally:
+                _delete(report_path)
+
+    def test_synthetic_send_rejected_marker_is_detected_without_marking_event_sent(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            log_file = Path(temp) / "LogOutput.log"
+            log_file.write_text(
+                _safe_companion_connected_log_text().replace(
+                    "Synthetic provider event sent:",
+                    "Synthetic provider event was not accepted:",
+                ),
+                encoding="utf-8",
+            )
+
+            check = check_metadata_probe_log(log_file)
+
+            self.assertFalse(check.synthetic_provider_event_sent_observed)
+            self.assertTrue(check.synthetic_provider_event_rejected_observed)
+            self.assertTrue(check.synthetic_provider_event_id_observed)
+            self.assertTrue(check.synthetic_provider_line_id_observed)
+            self.assertTrue(check.synthetic_provider_status_observed)
 
     def test_unsafe_log_markers_block_report(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -249,6 +328,37 @@ class BepInExMetadataProbeLocalSmokeTests(unittest.TestCase):
             self.assertNotIn("UniqueBridgeRawLine", completed.stdout)
             self.assertNotIn("Metadata probe snapshot:", completed.stdout)
 
+    def test_cli_can_enable_probe_and_synthetic_send_without_real_steam(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            game = _fake_game(Path(temp))
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/run_bepinex_metadata_probe_local_smoke.py",
+                    "--game-dir",
+                    str(game),
+                    "--skip-build",
+                    "--skip-install",
+                    "--enable-probe",
+                    "--enable-synthetic-send",
+                    "--quiet",
+                ],
+                cwd=ROOT,
+                check=False,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+
+            config = (
+                game / "BepInEx" / "config" / "local.revachol.ukrainian-companion.bridge.cfg"
+            ).read_text(encoding="utf-8")
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            self.assertIn("MetadataProbeEnabled = true", config)
+            self.assertIn("MetadataProbeLogOnStart = true", config)
+            self.assertIn("SendSyntheticEventOnStart = true", config)
+            self.assertNotIn(_safe_log_text(), completed.stdout)
+
 
 def _fake_game(root: Path) -> Path:
     game = root / "steamapps" / "common" / "Disco Elysium"
@@ -272,6 +382,22 @@ def _safe_log_text() -> str:
         "counters.synthetic_events=0, counters.metadata_snapshot_created_count=1, "
         "counters.health_check_observed_count=1, "
         "counters.synthetic_send_configured_count=0."
+    )
+
+
+def _safe_companion_connected_log_text() -> str:
+    return (
+        _safe_log_text()
+        .replace(
+            "synthetic_event_send_configured=false",
+            "synthetic_event_send_configured=true",
+        )
+        .replace(
+            "counters.synthetic_send_configured_count=0.",
+            "counters.synthetic_send_configured_count=1.\n"
+            "Synthetic provider event sent: event_id=synthetic.event.bepinex.4a.001, "
+            "line_id=synthetic.bepinex.4a.001, status=200.",
+        )
     )
 
 

@@ -131,6 +131,15 @@ For a manual smoke only, set it to true in local BepInEx config:
 SendSyntheticEventOnStart = true
 ```
 
+The local helper can toggle this existing key without adding new C# behavior:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --enable-probe `
+  --enable-synthetic-send
+```
+
 Expected accepted synthetic-send log signal:
 
 ```text
@@ -143,9 +152,16 @@ Expected rejected synthetic-send warning signal:
 Synthetic provider event was not accepted: event_id=synthetic.event.bepinex.4a.001, line_id=synthetic.bepinex.4a.001, status=
 ```
 
-On the companion server, verify that a synthetic provider event was received by checking the server
-console or by querying latest provider state with existing local companion client commands. Do not
-paste or commit local runtime logs. If you record the result, use only a redacted report under:
+On the companion server, verify that a synthetic provider event was received by querying latest
+provider state with existing local companion client commands:
+
+```powershell
+python scripts/run_companion_client.py latest-provider-context
+python scripts/run_companion_client.py latest-provider-annotation
+```
+
+Do not paste or commit local runtime logs or companion response payloads. If you record the result,
+use only a redacted report under:
 
 ```text
 workspace/synthetic-slice/bepinex-bridge/runtime-smoke/
@@ -157,7 +173,15 @@ current-line capture, hooks, OCR, extraction, or companion contract changes.
 
 ## Cleanup
 
-1. Set `SendSyntheticEventOnStart = false`.
+1. Restore local bridge config:
+
+   ```powershell
+   python scripts/run_bepinex_metadata_probe_local_smoke.py `
+     --auto-discover `
+     --disable-probe `
+     --disable-synthetic-send
+   ```
+
 2. Remove the bridge DLL from the local `BepInEx/plugins/` folder if the smoke is complete.
 3. Stop the companion server.
 4. Leave generated build reports and outputs under ignored `workspace/`, `bin/`, or `obj/`.

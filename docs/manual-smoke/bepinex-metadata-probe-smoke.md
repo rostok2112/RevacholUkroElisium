@@ -137,6 +137,68 @@ Disable the probe again after the smoke:
 python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --disable-probe
 ```
 
+## Companion-Connected Synthetic Smoke Prep
+
+The same helper can prepare a synthetic/manual companion-connected smoke without launching the game.
+This uses only the existing bridge config key `SendSyntheticEventOnStart`; no C# behavior or
+companion HTTP contract changes are required.
+
+In terminal A, start the local companion server:
+
+```powershell
+python scripts/run_companion_server.py
+```
+
+In terminal B, verify health:
+
+```powershell
+python scripts/run_companion_client.py health
+```
+
+Before manually launching the game, build/install the bridge if possible, enable the metadata
+snapshot, and temporarily enable the existing synthetic send-on-start flag:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --enable-probe `
+  --enable-synthetic-send
+```
+
+Then launch and close the game yourself. After closing the game, read only allowlisted bridge-owned
+markers from `BepInEx/LogOutput.log` and write the redacted workspace report:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --check-log `
+  --write-report
+```
+
+The redacted helper output may report only booleans for companion health and synthetic provider send
+markers, including whether the expected synthetic `event_id`, `line_id`, and HTTP status were
+present. It must not print raw log lines, payloads, response bodies, private paths, or game text.
+
+If the synthetic send was observed, you may query the running companion server with existing local
+client commands:
+
+```powershell
+python scripts/run_companion_client.py latest-provider-context
+python scripts/run_companion_client.py latest-provider-annotation
+```
+
+Do not commit or paste the returned payloads as runtime evidence. Use them only for local
+confirmation that the companion received the invented synthetic provider event.
+
+Cleanup must restore both local config switches:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --disable-probe `
+  --disable-synthetic-send
+```
+
 The helper may copy the built bridge DLL only to `BepInEx/plugins/`, edit only the bridge config
 under `BepInEx/config/`, and read only `BepInEx/LogOutput.log`. It must not print raw log lines,
 store raw logs, recursively scan drives, parse dialogue, read arbitrary game files, inspect

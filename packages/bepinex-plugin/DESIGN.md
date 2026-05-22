@@ -178,8 +178,15 @@ The verification path does not change C# behavior, does not approve capture, and
 companion metadata payloads or endpoints.
 
 The local preparation helper is `scripts/run_bepinex_metadata_probe_local_smoke.py`. It may perform
-bounded Steam autodiscovery, build/install the existing bridge DLL, toggle only
-`MetadataProbeEnabled` and `MetadataProbeLogOnStart` in the bridge config, and read only
-`BepInEx/LogOutput.log` after the user manually launches and closes the game. It never launches the
-game, recursively scans drives, stores or prints raw logs, parses dialogue, reads arbitrary game
-files, calls providers, scans Unity objects, or changes the companion HTTP contract.
+bounded Steam autodiscovery, build/install the existing bridge DLL, toggle
+`MetadataProbeEnabled`, `MetadataProbeLogOnStart`, and the existing `SendSyntheticEventOnStart`
+bridge config key, and read only `BepInEx/LogOutput.log` after the user manually launches and
+closes the game. It never launches the game, recursively scans drives, stores or prints raw logs,
+parses dialogue, reads arbitrary game files, calls providers, scans Unity objects, or changes the
+companion HTTP contract.
+
+For companion-connected synthetic smoke, the helper may summarize only bridge-owned companion
+health and synthetic-send markers as redacted booleans. The companion server/client stay the
+existing localhost tools (`scripts/run_companion_server.py` and `scripts/run_companion_client.py`);
+there are no new endpoints, provider calls, or C# behavior changes. The local config toggle flags
+are `--enable-synthetic-send` before the manual run and `--disable-synthetic-send` during cleanup.

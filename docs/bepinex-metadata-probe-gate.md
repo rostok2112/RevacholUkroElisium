@@ -258,3 +258,21 @@ synthetic_send_configured_count
 The report checker and reviewer keep those counters as metadata-only evidence. They still reject
 capture flags set to true, raw logs, screenshots, private paths, stack traces, payload dumps, real
 game text, OCR output, hooks, extraction markers, provider calls, and companion contract changes.
+
+## Companion-Connected Synthetic Smoke Prep
+
+After the redacted local metadata-probe smoke, the next local preparation step may run the existing
+localhost companion server and use the same helper to toggle the already-defined
+`SendSyntheticEventOnStart` config key. This is still synthetic/manual only.
+
+Use:
+
+```text
+scripts/run_bepinex_metadata_probe_local_smoke.py
+--enable-synthetic-send
+--disable-synthetic-send
+```
+
+The helper may summarize only bridge-owned companion health and synthetic provider send markers as
+redacted booleans. It must not add C# behavior, call real providers, change companion endpoints,
+print raw logs, parse dialogue, or treat synthetic send success as current-line capture.
