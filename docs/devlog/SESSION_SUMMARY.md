@@ -1,5 +1,28 @@
 # Session Summary
 
+Milestone 4M minimal inert metadata-only C# extension is implemented.
+
+Completed in the latest session:
+- Extended `packages/bepinex-plugin/src/MetadataProbe.cs` with inert local metadata counters:
+  `metadata_snapshot_created_count`, `health_check_observed_count`, and
+  `synthetic_send_configured_count`.
+- Kept the existing metadata probe config defaults disabled:
+  `MetadataProbeEnabled=false` and `MetadataProbeLogOnStart=false`.
+- Kept all capture/probe expansion flags explicit false values:
+  `real_text_captured=false`, `current_line_capture_enabled=false`, `ui_probe_attempted=false`,
+  and `scene_probe_attempted=false`.
+- Updated the metadata probe report template/fixture and 4L scope fixture so the new counters are
+  part of the synthetic metadata-only contract.
+- Hardened bridge safety checks/tests to require the new counter markers and to keep
+  `MetadataProbe.cs` free of companion calls, payload builders, file/log reads, hooks, OCR,
+  extraction, and runtime inspection.
+- Updated bridge docs, metadata probe gate docs, package README/DESIGN, and devlog handoff notes.
+- Did not change companion HTTP contracts, provider behavior, shell behavior, or default runtime
+  enablement.
+- Did not add current-line capture, real text capture, UI text reading, Unity scanning, game hooks,
+  Harmony patches, OCR, extraction, decompiled game-code work, frontend/shell work, keyboard hooks,
+  clipboard writes, downloads, web calls, or new dependencies.
+
 Milestone 4L metadata-only extension scope contract is implemented.
 
 Completed in the latest session:

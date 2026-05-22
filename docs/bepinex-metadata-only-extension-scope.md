@@ -5,6 +5,10 @@ docs/static-contract work only. It does not implement runtime behavior, current-
 text capture, UI text reading, Unity scanning, hooks, OCR, extraction, companion endpoints, provider
 calls, shell work, or new dependencies.
 
+Milestone 4M implements only this inert scope: local in-memory counters and booleans in the disabled
+metadata probe snapshot. It does not expand the companion contract, read runtime/game data, capture
+text, or enable UI or scene probes.
+
 ## Decision
 
 Milestone 4M may be planned without a reviewed local metadata probe report because the allowed
@@ -40,6 +44,16 @@ Allowed metadata fields are listed in:
 ```text
 tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json
 ```
+
+The 4M implementation adds only these inert counter fields to the safe metadata snapshot/report
+shape:
+
+- `metadata_snapshot_created_count`;
+- `health_check_observed_count`;
+- `synthetic_send_configured_count`.
+
+Those counters are derived from existing startup booleans, stay in memory only, and are logged only
+when the disabled metadata probe is manually enabled with `MetadataProbeLogOnStart=true`.
 
 ## Forbidden 4M Behavior
 

@@ -33,6 +33,9 @@ class BepInExMetadataProbeReportTests(unittest.TestCase):
         self.assertFalse(report["synthetic_event_send_configured"])
         self.assertFalse(report["real_text_captured"])
         self.assertFalse(report["current_line_capture_enabled"])
+        self.assertEqual(0, report["counters"]["metadata_snapshot_created_count"])
+        self.assertEqual(0, report["counters"]["health_check_observed_count"])
+        self.assertEqual(0, report["counters"]["synthetic_send_configured_count"])
 
     def test_default_template_contains_safe_manual_fields(self) -> None:
         report = default_metadata_probe_report_template()
@@ -46,6 +49,9 @@ class BepInExMetadataProbeReportTests(unittest.TestCase):
         self.assertFalse(report["current_line_capture_enabled"])
         self.assertFalse(report["ui_probe_attempted"])
         self.assertFalse(report["scene_probe_attempted"])
+        self.assertEqual(0, report["counters"]["metadata_snapshot_created_count"])
+        self.assertEqual(0, report["counters"]["health_check_observed_count"])
+        self.assertEqual(0, report["counters"]["synthetic_send_configured_count"])
         self.assertTrue(report["evidence_summary_redacted"])
         self.assertIn("not_run_reason", report)
         self.assertIn("next_step_notes", report)

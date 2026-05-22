@@ -156,3 +156,13 @@ must remain disabled by default.
 The scope still forbids current-line capture, real text capture, UI text reading, Unity scanning,
 hooks, OCR, extraction, provider execution, companion HTTP contract changes, companion metadata
 payloads, private paths, raw payload logging, and runtime scene or object names.
+
+## Milestone 4M inert metadata extension posture
+
+The C# probe now implements only the inert 4L-approved snapshot extension: local counters for
+metadata snapshot creation, health-check observation, and synthetic-send configuration. These
+counters are derived from existing startup booleans and are not persisted or sent anywhere.
+
+The probe remains disabled by default and still does not read runtime text, inspect game/UI state,
+scan Unity objects, parse logs, read files, capture screenshots, call new companion endpoints, or
+create metadata payloads. All capture flags remain explicit false values.

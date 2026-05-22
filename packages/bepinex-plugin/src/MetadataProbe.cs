@@ -8,6 +8,7 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         public const bool SceneProbeAttempted = false;
         public const int DefaultSafeStatusEvents = 0;
         public const int DefaultSyntheticEvents = 0;
+        public const int DefaultMetadataSnapshotCreatedCount = 1;
 
         public static MetadataProbeSnapshot BuildSnapshot(
             bool probeEnabled,
@@ -30,8 +31,16 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 UiProbeAttempted,
                 SceneProbeAttempted,
                 DefaultSafeStatusEvents,
-                DefaultSyntheticEvents
+                DefaultSyntheticEvents,
+                probeEnabled ? DefaultMetadataSnapshotCreatedCount : 0,
+                CountWhen(companionHealthChecked),
+                CountWhen(syntheticEventSendConfigured)
             );
+        }
+
+        private static int CountWhen(bool observed)
+        {
+            return observed ? 1 : 0;
         }
     }
 
@@ -50,7 +59,10 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
             bool uiProbeAttempted,
             bool sceneProbeAttempted,
             int safeStatusEvents,
-            int syntheticEvents
+            int syntheticEvents,
+            int metadataSnapshotCreatedCount,
+            int healthCheckObservedCount,
+            int syntheticSendConfiguredCount
         )
         {
             ProbeEnabled = probeEnabled;
@@ -66,6 +78,9 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
             SceneProbeAttempted = sceneProbeAttempted;
             SafeStatusEvents = safeStatusEvents;
             SyntheticEvents = syntheticEvents;
+            MetadataSnapshotCreatedCount = metadataSnapshotCreatedCount;
+            HealthCheckObservedCount = healthCheckObservedCount;
+            SyntheticSendConfiguredCount = syntheticSendConfiguredCount;
         }
 
         public bool ProbeEnabled { get; }
@@ -81,6 +96,9 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         public bool SceneProbeAttempted { get; }
         public int SafeStatusEvents { get; }
         public int SyntheticEvents { get; }
+        public int MetadataSnapshotCreatedCount { get; }
+        public int HealthCheckObservedCount { get; }
+        public int SyntheticSendConfiguredCount { get; }
 
         public string ToLogLine()
         {
@@ -111,6 +129,12 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 + SafeStatusEvents
                 + ", counters.synthetic_events="
                 + SyntheticEvents
+                + ", counters.metadata_snapshot_created_count="
+                + MetadataSnapshotCreatedCount
+                + ", counters.health_check_observed_count="
+                + HealthCheckObservedCount
+                + ", counters.synthetic_send_configured_count="
+                + SyntheticSendConfiguredCount
                 + ".";
         }
 

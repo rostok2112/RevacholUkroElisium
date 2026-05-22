@@ -559,6 +559,9 @@ def collect_metadata_only_extension_scope_errors(
         "synthetic_event_sent",
         "probe_attempted",
         "probe_completed",
+        "metadata_snapshot_created_count",
+        "health_check_observed_count",
+        "synthetic_send_configured_count",
         "safe_status_events",
         "synthetic_events",
         "real_text_captured_false",
@@ -724,10 +727,14 @@ def _check_source_contract() -> list[str]:
         "SceneProbeAttempted = false",
         "DefaultSafeStatusEvents = 0",
         "DefaultSyntheticEvents = 0",
+        "DefaultMetadataSnapshotCreatedCount = 1",
         "real_text_captured=",
         "current_line_capture_enabled=",
         "ui_probe_attempted=",
         "scene_probe_attempted=",
+        "metadata_snapshot_created_count=",
+        "health_check_observed_count=",
+        "synthetic_send_configured_count=",
     ):
         if marker not in metadata_probe_source:
             errors.append(f"Metadata probe source missing required safe marker: {marker}")

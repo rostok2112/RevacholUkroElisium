@@ -1,5 +1,14 @@
 # Known Risks
 
+- Milestone 4M implements inert metadata counters, but they are still not runtime capture evidence.
+  Do not treat `metadata_snapshot_created_count`, `health_check_observed_count`, or
+  `synthetic_send_configured_count` as current-line, UI, scene, or game-state observation.
+- The metadata probe remains disabled by default. Any manual enabled run must stay local, redacted,
+  and ignored; completed real reports, logs, screenshots, payloads, and private paths must not be
+  committed.
+- Any future expansion beyond the 4M counters must update the bridge safety checker before or with
+  implementation and still keep capture/provider/contract permissions closed unless a later safety
+  review explicitly changes them.
 - Milestone 4L allows planning a minimal 4M inert metadata implementation without a reviewed local
   report. That waiver is narrow and must not be reused for UI/scene probes, capture, hooks, OCR,
   extraction, provider calls, or companion contract changes.

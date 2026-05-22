@@ -269,6 +269,12 @@ The 4M scope may add only safe counters and booleans, disabled by default. It do
 current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction,
 provider calls, companion payloads, new companion endpoints, or production overlay behavior.
 
+Milestone 4M implements that inert scope only. The metadata snapshot can now include
+`metadata_snapshot_created_count`, `health_check_observed_count`, and
+`synthetic_send_configured_count`, all derived from existing startup booleans and held in memory
+only. The probe remains disabled by default and still does not read game state, UI text, scene or
+object names, files, logs, screenshots, OCR output, or companion payloads.
+
 ## Current-Line Capture Research
 
 Milestone 4E records the future capture decision in:

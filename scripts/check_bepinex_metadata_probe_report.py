@@ -223,6 +223,9 @@ def default_metadata_probe_report_template() -> dict[str, object]:
         "counters": {
             "safe_status_events": 0,
             "synthetic_events": 0,
+            "metadata_snapshot_created_count": 0,
+            "health_check_observed_count": 0,
+            "synthetic_send_configured_count": 0,
         },
         "blockers": [],
         "next_step_notes": "Fill with a short redacted next-step note if useful.",

@@ -211,6 +211,9 @@ def _ready_report() -> dict[str, object]:
             "current_line_capture_enabled": False,
             "real_text_captured": False,
             "counters": {
+                "metadata_snapshot_created_count": 1,
+                "health_check_observed_count": 1,
+                "synthetic_send_configured_count": 0,
                 "safe_status_events": 1,
                 "synthetic_events": 0,
             },

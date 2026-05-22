@@ -111,6 +111,18 @@ scene_probe_attempted=false
 It does not call new companion endpoints, create payloads, read runtime text, inspect game objects,
 read files, parse logs, capture screenshots, or enable future text capture.
 
+Milestone 4M extends the snapshot with inert local counters only:
+
+```text
+metadata_snapshot_created_count
+health_check_observed_count
+synthetic_send_configured_count
+```
+
+The counters are derived from existing startup booleans, stay in memory only, and are emitted only
+inside the manually enabled metadata snapshot log. They do not read game state or send companion
+payloads.
+
 Manual metadata probe verification is documented in:
 
 ```text

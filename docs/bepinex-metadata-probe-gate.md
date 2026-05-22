@@ -226,3 +226,19 @@ probe report only because the allowed 4M scope is inert, disabled by default, an
 counters and booleans. The fixture may set `implementation_allowed_next=true`, but it must keep text
 capture, current-line capture, UI text reading, Unity scanning, hooks, OCR, extraction, provider
 calls, and companion contract changes false.
+
+## Milestone 4M Inert Metadata Extension
+
+Milestone 4M implements only the 4L-approved inert metadata snapshot fields. The disabled probe can
+now include local in-memory counters for `metadata_snapshot_created_count`,
+`health_check_observed_count`, and `synthetic_send_configured_count` when a user manually enables
+metadata probe logging.
+
+The 4M extension still does not read runtime text, inspect game or UI state, call companion
+endpoints, create metadata payloads, add hooks, run OCR, extract data, or approve current-line
+capture. The defaults remain:
+
+```text
+MetadataProbeEnabled = false
+MetadataProbeLogOnStart = false
+```

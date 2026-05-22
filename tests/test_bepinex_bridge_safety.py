@@ -231,6 +231,9 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertFalse(scope["provider_calls_allowed"])
         self.assertEqual("4M", scope["required_next_milestone"])
         self.assertIn("probe_execution_count", scope["allowed_future_fields"])
+        self.assertIn("metadata_snapshot_created_count", scope["allowed_future_fields"])
+        self.assertIn("health_check_observed_count", scope["allowed_future_fields"])
+        self.assertIn("synthetic_send_configured_count", scope["allowed_future_fields"])
         self.assertIn("companion_payload", scope["forbidden_future_fields"])
 
     def test_metadata_only_extension_scope_rejects_forbidden_permissions(self) -> None:
@@ -316,10 +319,14 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
             "SceneProbeAttempted = false",
             "DefaultSafeStatusEvents = 0",
             "DefaultSyntheticEvents = 0",
+            "DefaultMetadataSnapshotCreatedCount = 1",
             "real_text_captured=",
             "current_line_capture_enabled=",
             "ui_probe_attempted=",
             "scene_probe_attempted=",
+            "metadata_snapshot_created_count=",
+            "health_check_observed_count=",
+            "synthetic_send_configured_count=",
             "Metadata probe snapshot: synthetic_manual=true",
         ):
             with self.subTest(marker=marker):

@@ -1,7 +1,7 @@
 # Decisions Pending
 
-- Milestone 4L defined the exact scope for a possible 4M inert metadata-only C# extension. Decide in
-  4M whether to implement only that scoped counter/boolean extension now.
+- Milestone 4M implemented only the 4L-scoped inert metadata counters/booleans. Decide later whether
+  user-local evidence is sufficient to discuss any broader metadata-only extension.
 - Milestone 4L waived the reviewed local metadata report requirement only for the minimal 4M inert
   scope. Decide later whether any broader probe requires a ready reviewed report before
   implementation.
