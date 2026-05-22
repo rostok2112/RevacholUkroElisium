@@ -1,5 +1,33 @@
 # Session Summary
 
+Local in-game metadata probe smoke preparation helper is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_bepinex_metadata_probe_local_smoke.py`, a stdlib-only helper for bounded Steam
+  autodiscovery, optional bridge build/install, metadata probe config enable/disable, redacted log
+  checks, and workspace-only metadata probe report writing.
+- The helper operates on the user-owned local Steam install only when run manually. Automated tests
+  use fake temporary Steam/BepInEx structures and do not require the real game install.
+- The helper may copy only the built bridge DLL to `BepInEx/plugins/`, edit only the bridge config
+  under `BepInEx/config/`, and read only `BepInEx/LogOutput.log` for allowlisted metadata markers.
+- Added `tests/test_bepinex_metadata_probe_local_smoke.py` for fake Steam discovery, reference DLL
+  discovery, install path safety, config enable/disable, safe/unsafe log checks, redacted report
+  generation, and quiet/verbose CLI behavior.
+- Updated bridge safety checks/tests so the local helper is registered without making `check_all`
+  require a real Steam install or a real runtime report.
+- Updated manual smoke docs, bridge docs, package README/DESIGN, and devlog handoff notes.
+- Validation passed: `python scripts/check_all.py`, `python scripts/validate_schemas.py`,
+  `python -m unittest discover -s tests -p "test_*.py"`, `npm run check`,
+  `python scripts/check_bepinex_bridge_safety.py --quiet`,
+  `python scripts/check_bepinex_metadata_probe_report.py --quiet`,
+  `python scripts/build_bepinex_bridge.py --quiet`, and a redacted local discovery smoke with
+  `python scripts/run_bepinex_metadata_probe_local_smoke.py --print-discovery --quiet`.
+- Did not change C# behavior, companion HTTP contracts, provider behavior, shell behavior, or
+  metadata probe runtime behavior.
+- Did not launch the game, recursively scan drives, parse dialogue, read arbitrary game files, store
+  or print raw logs, commit runtime reports, add hooks, add OCR/extraction, call providers, or add
+  dependencies.
+
 Milestone 4N inert metadata implementation manual verification workflow is implemented.
 
 Completed in the latest session:

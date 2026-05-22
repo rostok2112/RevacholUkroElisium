@@ -176,3 +176,10 @@ logs, screenshots, private paths, payload dumps, real game text, or completed re
 
 The verification path does not change C# behavior, does not approve capture, and does not add
 companion metadata payloads or endpoints.
+
+The local preparation helper is `scripts/run_bepinex_metadata_probe_local_smoke.py`. It may perform
+bounded Steam autodiscovery, build/install the existing bridge DLL, toggle only
+`MetadataProbeEnabled` and `MetadataProbeLogOnStart` in the bridge config, and read only
+`BepInEx/LogOutput.log` after the user manually launches and closes the game. It never launches the
+game, recursively scans drives, stores or prints raw logs, parses dialogue, reads arbitrary game
+files, calls providers, scans Unity objects, or changes the companion HTTP contract.

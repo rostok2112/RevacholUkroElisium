@@ -155,6 +155,33 @@ python scripts/review_bepinex_metadata_probe_report.py `
   --quiet
 ```
 
+For the real local in-game smoke, the helper can prepare the Steam-installed game without launching
+it:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --enable-probe
+```
+
+After you manually launch and close the game, it can read only `BepInEx/LogOutput.log` for
+allowlisted metadata markers and write the redacted workspace report:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --check-log `
+  --write-report
+```
+
+Disable the probe flags after the smoke:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --disable-probe
+```
+
+The helper never launches the game, recursively scans drives, prints raw logs, stores raw logs,
+parses dialogue, reads arbitrary game files, calls providers, or changes the companion HTTP
+contract.
+
 Completed reports must stay local and ignored. Passing validation does not approve current-line
 capture or any broader runtime probing. A ready review means only that a later metadata-only
 extension can be discussed.

@@ -1,5 +1,17 @@
 # Known Risks
 
+- The local metadata probe smoke helper can edit the user-owned BepInEx config and copy the bridge
+  DLL into `BepInEx/plugins/`. Keep those writes bounded to the discovered/provided install and use
+  `--disable-probe` after the smoke.
+- The helper reads only `BepInEx/LogOutput.log`, but that file remains a raw local runtime artifact.
+  Do not commit it, paste it into docs, or store it under tracked paths.
+- Redacted log checks can miss useful debugging nuance. If a startup issue needs deeper analysis,
+  inspect raw logs locally and translate findings into redacted booleans/categories before sharing.
+- Steam autodiscovery is best-effort and bounded. If it fails, pass `--game-dir` and explicit
+  BepInEx reference DLL paths rather than broadening discovery to drive-wide scans.
+- A generated metadata probe report proves only allowlisted startup markers were observed. It does
+  not prove current-line capture, UI visibility, scene state, game-state detection, or translation
+  readiness.
 - Milestone 4N makes the 4M counters manually verifiable, but verified counters still prove only
   startup metadata posture. They are not evidence of current-line capture, UI visibility, scene
   state, or game-state detection.

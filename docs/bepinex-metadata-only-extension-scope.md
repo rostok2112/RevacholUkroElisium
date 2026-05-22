@@ -60,6 +60,18 @@ local and redacted: users may summarize the observed counter values in a workspa
 probe report, but must not commit raw BepInEx logs, game logs, screenshots, private paths, payload
 dumps, or real runtime reports.
 
+The local preparation helper for that real in-game smoke is:
+
+```text
+scripts/run_bepinex_metadata_probe_local_smoke.py
+```
+
+It may discover the user-owned Steam install, copy the built bridge DLL to `BepInEx/plugins/`, set
+the two metadata probe config flags, read only `BepInEx/LogOutput.log` after the user manually runs
+the game, and write a redacted metadata probe report under the ignored workspace. It must not launch
+the game, recursively scan drives, parse dialogue, store raw logs, read arbitrary game files, or
+change the companion HTTP contract.
+
 ## Forbidden 4M Behavior
 
 The 4M implementation must not:

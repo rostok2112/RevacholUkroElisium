@@ -212,6 +212,33 @@ python scripts/review_bepinex_metadata_probe_report.py `
   --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json
 ```
 
+Prepare a real local in-game metadata-probe smoke with the bounded helper:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --enable-probe
+```
+
+After manually launching and closing the game, check only `BepInEx/LogOutput.log` for allowlisted
+metadata markers and write the redacted report:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --check-log `
+  --write-report
+```
+
+Then disable the local probe flags:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --disable-probe
+```
+
+The helper is local-test preparation only. It may discover Steam library paths, build/install the
+bridge, toggle bridge config flags, and summarize allowlisted metadata markers. It never launches
+the game, recursively scans drives, prints or stores raw logs, parses dialogue, reads arbitrary game
+files, calls providers, or changes the companion HTTP contract.
+
 The manual metadata probe smoke checklist is:
 
 ```text

@@ -26,6 +26,7 @@ from scripts.check_bepinex_bridge_safety import (
     METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
     METADATA_PROBE_FIXTURE_PATH,
     METADATA_PROBE_GATE_DOC,
+    METADATA_PROBE_LOCAL_SMOKE_HELPER,
     METADATA_PROBE_REPORT_ROOT,
     METADATA_PROBE_REVIEWER,
     METADATA_PROBE_SMOKE_DOC,
@@ -290,6 +291,56 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         ):
             with self.subTest(marker=marker):
                 self.assertIn(marker, text)
+
+    def test_local_metadata_probe_smoke_helper_is_registered_and_documented(self) -> None:
+        helper_ref = "scripts/run_bepinex_metadata_probe_local_smoke.py"
+
+        self.assertTrue(METADATA_PROBE_LOCAL_SMOKE_HELPER.exists())
+        for doc_path in (
+            METADATA_PROBE_SMOKE_DOC,
+            ROOT / "docs/bepinex-bridge.md",
+            METADATA_ONLY_EXTENSION_SCOPE_DOC,
+            PACKAGE_DIR / "README.md",
+            PACKAGE_DIR / "DESIGN.md",
+        ):
+            with self.subTest(doc_path=doc_path.relative_to(ROOT)):
+                self.assertIn(helper_ref, _read(doc_path))
+        self.assertNotIn(helper_ref, _read(CHECK_ALL))
+
+    def test_local_metadata_probe_smoke_helper_keeps_real_run_bounded(self) -> None:
+        helper = _read(METADATA_PROBE_LOCAL_SMOKE_HELPER)
+
+        for marker in (
+            "--auto-discover",
+            "--enable-probe",
+            "--disable-probe",
+            "--check-log",
+            "--write-report",
+            "libraryfolders.vdf",
+            "appmanifest_*.acf",
+            "LogOutput.log",
+            "MetadataProbeEnabled",
+            "MetadataProbeLogOnStart",
+            "no_game_launch_performed",
+            "raw_log_included",
+            "private_paths_redacted",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, helper)
+
+        for marker in (
+            "subprocess.Popen",
+            "os.system",
+            "Start-Process",
+            "steam://",
+            "rungameid",
+            "os.walk",
+            "shutil.rmtree",
+            "requests.",
+            "urllib.request",
+        ):
+            with self.subTest(marker=marker):
+                self.assertNotIn(marker, helper)
 
     def test_current_line_capture_research_adr_is_registered(self) -> None:
         self.assertTrue(CURRENT_LINE_CAPTURE_ADR.exists())

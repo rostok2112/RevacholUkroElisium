@@ -93,6 +93,57 @@ booleans and counters you observed, including the three 4M counters above.
 
 ## Report Template
 
+## Local Smoke Helper
+
+For the real local in-game smoke, use the bounded helper:
+
+```text
+scripts/run_bepinex_metadata_probe_local_smoke.py
+```
+
+It prefers Steam autodiscovery, then bounded common Steam locations, and it never launches the game.
+Explicit paths override discovery when needed. Before launching the game manually, prepare the local
+install and enable the probe:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --enable-probe
+```
+
+Then launch and close the game yourself. After closing the game, read only the discovered
+`BepInEx/LogOutput.log` for allowlisted metadata markers and write a redacted workspace report:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --check-log `
+  --write-report
+```
+
+Validate and review the report:
+
+```powershell
+python scripts/check_bepinex_metadata_probe_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json `
+  --quiet
+
+python scripts/review_bepinex_metadata_probe_report.py `
+  --report workspace/synthetic-slice/bepinex-bridge/metadata-probe/report.json `
+  --quiet
+```
+
+Disable the probe again after the smoke:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py --auto-discover --disable-probe
+```
+
+The helper may copy the built bridge DLL only to `BepInEx/plugins/`, edit only the bridge config
+under `BepInEx/config/`, and read only `BepInEx/LogOutput.log`. It must not print raw log lines,
+store raw logs, recursively scan drives, parse dialogue, read arbitrary game files, inspect
+screenshots, run OCR, launch the game, call providers, or change the companion HTTP contract.
+
+## Manual Report Template
+
 Write a blank redacted local template under the ignored workspace report root:
 
 ```powershell

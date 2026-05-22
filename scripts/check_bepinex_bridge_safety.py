@@ -58,6 +58,7 @@ RUNTIME_REPORT_REVIEWER = ROOT / "scripts/review_bepinex_runtime_smoke_report.py
 METADATA_PROBE_CHECKER = ROOT / "scripts/check_bepinex_metadata_probe_report.py"
 METADATA_PROBE_WRITER = ROOT / "scripts/write_bepinex_metadata_probe_report.py"
 METADATA_PROBE_REVIEWER = ROOT / "scripts/review_bepinex_metadata_probe_report.py"
+METADATA_PROBE_LOCAL_SMOKE_HELPER = ROOT / "scripts/run_bepinex_metadata_probe_local_smoke.py"
 METADATA_EXTENSION_GATE_FIXTURE = (
     ROOT / "tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json"
 )
@@ -205,6 +206,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_metadata_probe_contract())
     errors.extend(_check_metadata_extension_gate_contract())
     errors.extend(_check_metadata_only_extension_scope_contract())
+    errors.extend(_check_local_metadata_probe_smoke_helper())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
     errors.extend(_check_ignored_output_roots())
@@ -240,6 +242,7 @@ def _check_required_files() -> list[str]:
         METADATA_PROBE_CHECKER,
         METADATA_PROBE_WRITER,
         METADATA_PROBE_REVIEWER,
+        METADATA_PROBE_LOCAL_SMOKE_HELPER,
         METADATA_EXTENSION_GATE_FIXTURE,
         METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
     ]
@@ -364,6 +367,78 @@ def _check_metadata_probe_contract() -> list[str]:
         errors.append(
             f"Metadata probe report root {report_root} must stay under ignored workspace/."
         )
+    return errors
+
+
+def _check_local_metadata_probe_smoke_helper() -> list[str]:
+    errors: list[str] = []
+    if not METADATA_PROBE_LOCAL_SMOKE_HELPER.exists():
+        return [
+            f"Missing required local smoke helper: "
+            f"{METADATA_PROBE_LOCAL_SMOKE_HELPER.relative_to(ROOT)}"
+        ]
+
+    text = _read_text(METADATA_PROBE_LOCAL_SMOKE_HELPER)
+    relative = METADATA_PROBE_LOCAL_SMOKE_HELPER.relative_to(ROOT)
+    required_markers = (
+        "--auto-discover",
+        "--enable-probe",
+        "--disable-probe",
+        "--check-log",
+        "--write-report",
+        "libraryfolders.vdf",
+        "appmanifest_*.acf",
+        "COMMON_STEAM_ROOTS",
+        "BepInEx",
+        "plugins",
+        "config",
+        "LogOutput.log",
+        "MetadataProbeEnabled",
+        "MetadataProbeLogOnStart",
+        "build_bepinex_bridge_report",
+        "default_metadata_probe_report_template",
+        "collect_metadata_probe_report_errors",
+        "no_game_launch_performed",
+        "raw_log_included",
+        "private_paths_redacted",
+        "forbidden_marker_detected",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(f"{relative}: local smoke helper missing marker {marker!r}.")
+
+    forbidden_runtime_markers = (
+        "subprocess.Popen",
+        "os.system",
+        "Start-Process",
+        "ShellExecute",
+        "CreateProcess",
+        "steam://",
+        "rungameid",
+        "os.walk",
+        "shutil.rmtree",
+        "webbrowser",
+        "requests.",
+        "urllib.request",
+    )
+    for marker in forbidden_runtime_markers:
+        if marker in text:
+            errors.append(f"{relative}: local smoke helper contains forbidden marker {marker!r}.")
+
+    helper_ref = str(METADATA_PROBE_LOCAL_SMOKE_HELPER.relative_to(ROOT)).replace("\\", "/")
+    docs_to_link = (
+        METADATA_PROBE_SMOKE_DOC,
+        ROOT / "docs/bepinex-bridge.md",
+        METADATA_ONLY_EXTENSION_SCOPE_DOC,
+        PACKAGE_DIR / "README.md",
+        PACKAGE_DIR / "DESIGN.md",
+    )
+    for doc_path in docs_to_link:
+        if not doc_path.exists():
+            continue
+        doc_text = _read_text(doc_path).replace("\\", "/")
+        if helper_ref not in doc_text:
+            errors.append(f"{doc_path.relative_to(ROOT)} must point to {helper_ref}.")
     return errors
 
 
@@ -779,6 +854,8 @@ def _check_check_all_smoke() -> list[str]:
         return ["scripts/check_all.py must include the BepInEx bridge safety smoke."]
     if "scripts/build_bepinex_bridge.py" in text:
         return ["scripts/check_all.py must not require the optional BepInEx bridge build helper."]
+    if "scripts/run_bepinex_metadata_probe_local_smoke.py" in text:
+        return ["scripts/check_all.py must not require the local metadata probe smoke helper."]
     return []
 
 

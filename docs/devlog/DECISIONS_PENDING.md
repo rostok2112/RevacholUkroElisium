@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- After the user runs the local metadata probe smoke helper against the Steam install, decide whether
+  the redacted report is enough to debug setup/build/install/config issues or whether another local
+  smoke pass is needed.
+- Decide whether Steam/BepInEx autodiscovery needs more bounded install-location candidates after
+  the first real local test. Do not replace bounded discovery with recursive drive scanning.
 - Milestone 4N aligned manual verification for the 4M counters. Decide in 4O whether a redacted
   local report containing those counters is sufficient for later metadata-only discussion.
 - Milestone 4M implemented only the 4L-scoped inert metadata counters/booleans. Decide later whether
