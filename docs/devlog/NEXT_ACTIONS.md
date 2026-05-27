@@ -1,5 +1,31 @@
 # Next Actions
 
+After the bridge-to-overlay synthetic smoke passed:
+
+1. Treat the successful smoke as evidence only for the synthetic/manual path from
+   game/BepInEx/bridge synthetic event to companion mock provider state to overlay
+   state-source/view-model/review validation.
+2. Keep workspace reports, generated overlay HTML, raw `LogOutput.log`, companion/provider
+   payloads, screenshots, private paths, game files, logs, and runtime artifacts out of git.
+3. Do not infer current-line capture, real text capture, UI text reading, Unity scanning,
+   hooks/Harmony, OCR, extraction, real provider execution, production overlay readiness, or
+   companion HTTP contract readiness from this result.
+4. Keep `MetadataProbeEnabled=false`, `MetadataProbeLogOnStart=false`, and
+   `SendSyntheticEventOnStart=false` restored after smoke testing.
+
+Recommended next safe decision step:
+
+- Decide in docs whether the synthetic/manual bridge-to-overlay path is sufficient to begin planning
+  a later metadata-only overlay refresh/readiness contract, still with no current-line capture, no
+  real text capture, no UI text reading, no Unity scanning, no hooks, no OCR, no extraction, no real
+  provider execution, and no companion HTTP contract changes.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after the redacted bridge-to-overlay synthetic smoke passed. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, docs/bepinex-bridge.md, docs/overlay-prototype.md, scripts/run_bridge_to_overlay_synthetic_smoke.py, scripts/run_bepinex_metadata_probe_local_smoke.py, scripts/overlay_state_source.py, and scripts/local_overlay_prototype.py. Use only tracked redacted evidence notes, not raw logs, provider payloads, report contents, screenshots, generated HTML, private paths, game files, or runtime artifacts. Decide the next safe synthetic/manual bridge-to-overlay planning step after successful companion mock provider state and overlay state/view/review validation, still without current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution, companion HTTP contract changes, production overlay shell work, committed logs, committed screenshots, committed reports, downloads, or new dependencies.`
+
+---
+
 After bridge-to-overlay synthetic smoke prep:
 
 1. Start the localhost companion server with `python scripts/run_companion_server.py`.

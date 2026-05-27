@@ -1,5 +1,26 @@
 # Session Summary
 
+Redacted bridge-to-overlay synthetic smoke evidence is recorded.
+
+Completed in the latest session:
+- Recorded a tracked redacted evidence note in `docs/manual-smoke/bepinex-metadata-probe-smoke.md`.
+- The redacted result says the bridge plugin loaded, metadata snapshot was observed, localhost
+  companion health was observed, synthetic send was observed, latest provider context and annotation
+  existed, overlay state-source was ready, overlay view model was valid, overlay HTML was valid, and
+  the accessibility check passed.
+- The report was written only under ignored workspace paths, forbidden markers were not detected,
+  and `MetadataProbeEnabled`, `MetadataProbeLogOnStart`, and `SendSyntheticEventOnStart` were
+  restored to false.
+- The note intentionally excludes raw `LogOutput.log` lines, provider payload contents, report
+  contents, screenshots, private paths, game text, generated HTML, logs, and runtime artifacts.
+- This evidence proves only the synthetic/manual path from game/BepInEx/bridge synthetic event to
+  companion mock provider state to overlay state/view/review.
+- It does not prove or approve current-line capture, real text capture, UI text reading, Unity
+  scanning, hooks/Harmony, OCR, extraction, real provider execution, production overlay behavior, or
+  companion HTTP contract changes.
+- Did not read raw logs, read raw provider payloads, change C# behavior, add hooks/OCR/scanning,
+  add current-line capture, change companion HTTP contracts, or commit runtime artifacts.
+
 Bridge-to-overlay synthetic smoke preparation is implemented.
 
 Completed in the latest session:

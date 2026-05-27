@@ -376,6 +376,40 @@ capture flags false. It does not prove or approve current-line capture, real tex
 reading, Unity object scanning, hooks, OCR, extraction, provider execution with real providers, or
 companion HTTP contract changes.
 
+## Redacted Bridge-To-Overlay Synthetic Smoke Result
+
+A bridge-to-overlay synthetic smoke was completed and recorded only as redacted evidence. No raw
+`LogOutput.log` lines, provider payload contents, report contents, screenshots, private paths, game
+text, generated HTML, logs, or runtime artifacts are committed.
+
+Observed redacted result:
+
+- `plugin_loaded_observed`: yes
+- `metadata_snapshot_observed`: yes
+- `companion_health_available_observed`: yes
+- `synthetic_send_observed`: yes
+- provider context exists: yes
+- provider annotation exists: yes
+- overlay state-source ready: yes
+- overlay view model valid: yes
+- overlay HTML valid: yes
+- accessibility check passed: yes
+- `forbidden_marker_detected`: no
+- report written: yes, under ignored workspace only
+- `MetadataProbeEnabled=false` restored: yes
+- `MetadataProbeLogOnStart=false` restored: yes
+- `SendSyntheticEventOnStart=false` restored: yes
+
+This proves only the synthetic/manual bridge-to-overlay path:
+
+```text
+game/BepInEx/bridge synthetic event -> companion mock provider state -> overlay state/view/review
+```
+
+It does not prove or approve current-line capture, real text capture, UI text reading, Unity object
+scanning, hooks/Harmony, OCR, extraction, real provider execution, production overlay behavior, or
+companion HTTP contract changes.
+
 ## Cleanup
 
 After the manual smoke, restore the local config:
