@@ -1,5 +1,28 @@
 # Session Summary
 
+Milestone 4 closeout local bridge workflow smoke is recorded.
+
+Completed in the latest session:
+- Recorded a wrapper-based local bridge workflow smoke using only redacted observations in
+  `docs/local-workflow.md`.
+- The redacted result says plugin load, metadata snapshot, companion health, synthetic send,
+  provider context/annotation presence, overlay state-source readiness, view-model validation, HTML
+  validation, and accessibility validation all passed.
+- Forbidden markers were not detected, the workspace-only report was written, and
+  `MetadataProbeEnabled`, `MetadataProbeLogOnStart`, and `SendSyntheticEventOnStart` were restored
+  to false.
+- This closes the expanded Milestone 4 bridge/workflow validation. The BepInEx bridge skeleton is
+  completed and over-validated by redacted runtime smoke and synthetic bridge-to-overlay workflow
+  evidence.
+- True Milestone 5A has not started yet. Milestone 5A remains: real extraction/indexing adapter,
+  local-only.
+- This does not prove or approve current-line capture, real text capture, UI text reading, Unity
+  scanning, hooks/Harmony, OCR, extraction, real provider execution, production overlay shell
+  behavior, or companion HTTP contract changes.
+- Did not read raw logs, read raw provider payloads, commit workspace reports, commit generated
+  HTML, change C# behavior, add companion endpoints, add hooks/OCR/scanning/capture, or commit
+  runtime artifacts.
+
 Local bridge workflow polish is implemented.
 
 Completed in the latest session:

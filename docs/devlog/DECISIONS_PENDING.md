@@ -1,5 +1,7 @@
 # Decisions Pending
 
+- Expanded Milestone 4 bridge/workflow validation is closed. Decide the exact Milestone 5A
+  extraction/indexing adapter plan only when explicitly starting true Milestone 5A.
 - Milestone naming is corrected: local bridge workflow polish is Milestone 4 closeout, not
   top-level Milestone 5A. True Milestone 5A has not started yet and remains the real
   extraction/indexing adapter, local-only.

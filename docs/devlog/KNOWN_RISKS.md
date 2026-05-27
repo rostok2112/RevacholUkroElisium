@@ -1,5 +1,12 @@
 # Known Risks
 
+- Milestone 4 closeout workflow smoke proves only the redacted synthetic/manual bridge-to-overlay
+  path and local workflow repeatability. It still does not prove current-line capture, real text
+  capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution,
+  production overlay shell behavior, or companion HTTP contract changes.
+- True Milestone 5A remains unstarted. When it begins, local extraction/indexing outputs must stay
+  ignored/private and must not introduce committed game dialogue, assets, screenshots, raw logs,
+  private paths, extracted databases, provider payloads, or workspace artifacts.
 - Do not mislabel Milestone 4 closeout / local bridge workflow polish as top-level Milestone 5A.
   True Milestone 5A has not started yet and should remain reserved for the real extraction/indexing
   adapter, local-only.

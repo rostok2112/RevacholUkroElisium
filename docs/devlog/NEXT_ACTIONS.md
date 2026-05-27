@@ -1,5 +1,30 @@
 # Next Actions
 
+After Milestone 4 closeout workflow smoke:
+
+1. Treat expanded Milestone 4 bridge/workflow validation as closed. The BepInEx bridge skeleton has
+   been over-validated through redacted runtime smoke, companion-connected synthetic smoke,
+   bridge-to-overlay synthetic smoke, overlay refresh readiness, and the local workflow wrapper.
+2. True Milestone 5A has not started yet. Milestone 5A remains: real extraction/indexing adapter,
+   local-only.
+3. Keep workspace reports, generated HTML, raw logs, screenshots, `bin/`, `obj/`, game files,
+   provider payloads, and private paths out of git.
+4. Do not infer current-line capture, real text capture, UI text reading, Unity scanning,
+   hooks/Harmony, OCR, extraction, real provider execution, production overlay shell behavior, or
+   companion HTTP contract changes from the Milestone 4 closeout smoke.
+
+Recommended next safe step:
+
+- Start true Milestone 5A only when explicitly requested: real extraction/indexing adapter,
+  local-only, with a fresh plan that keeps committed data synthetic/redacted and private local
+  extraction artifacts ignored.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after expanded Milestone 4 bridge/workflow validation was closed. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/local-workflow.md, docs/bepinex-bridge.md, and docs/09-legal-and-data-safety.md. True Milestone 5A has not started yet. Plan Milestone 5A: real extraction/indexing adapter, local-only. Keep committed data limited to schemas, tooling, docs, and synthetic fixtures; keep local extraction outputs ignored/private. Do not commit game dialogue, assets, audio, screenshots, extracted databases, private paths, raw logs, provider payloads, workspace artifacts, bin, or obj. Do not add current-line capture, UI text reading, Unity scanning, hooks/Harmony, OCR, companion HTTP contract changes, real provider execution, production overlay shell behavior, downloads, or new dependencies without an explicit safety plan.`
+
+---
+
 After local bridge workflow polish:
 
 Milestone naming correction: local bridge workflow polish is Milestone 4 closeout, not top-level

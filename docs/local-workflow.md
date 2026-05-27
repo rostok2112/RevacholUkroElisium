@@ -148,3 +148,38 @@ Do not commit local runtime artifacts:
 - screenshots;
 - game files;
 - private local paths.
+
+## Redacted Milestone 4 Closeout Smoke Result
+
+A wrapper-based local bridge workflow smoke passed using only redacted observations. No raw logs,
+provider payloads, report contents, generated HTML, screenshots, private paths, game files, `bin/`,
+`obj/`, or workspace artifacts are committed.
+
+Observed redacted result:
+
+- `plugin_loaded_observed`: yes
+- `metadata_snapshot_observed`: yes
+- `companion_health_available_observed`: yes
+- `synthetic_send_observed`: yes
+- provider context exists: yes
+- provider annotation exists: yes
+- overlay state-source ready: yes
+- overlay view model valid: yes
+- overlay HTML valid: yes
+- accessibility check passed: yes
+- `forbidden_marker_detected`: no
+- report written: yes, under ignored workspace only
+- `MetadataProbeEnabled=false` restored: yes
+- `MetadataProbeLogOnStart=false` restored: yes
+- `SendSyntheticEventOnStart=false` restored: yes
+
+This closes the expanded Milestone 4 bridge/workflow validation. The BepInEx bridge skeleton is
+completed and over-validated through redacted runtime smoke, companion-connected synthetic smoke,
+bridge-to-overlay synthetic smoke, overlay refresh readiness, and the local workflow wrapper.
+
+True Milestone 5A has not started yet. Milestone 5A remains: real extraction/indexing adapter,
+local-only.
+
+This result still does not prove or approve current-line capture, real text capture, UI text
+reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution, production overlay
+shell behavior, or companion HTTP contract changes.
