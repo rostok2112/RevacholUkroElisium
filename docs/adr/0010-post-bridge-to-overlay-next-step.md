@@ -84,6 +84,14 @@ The committed decision fixture is:
 tests/fixtures/post_bridge_to_overlay_next_step.synthetic.json
 ```
 
+The follow-up metadata-only refresh/readiness contract is:
+
+```text
+docs/overlay-refresh-readiness-contract.md
+tests/fixtures/overlay_refresh_readiness_contract.synthetic.json
+scripts/check_overlay_refresh_readiness_contract.py
+```
+
 ## Consequences
 
 Pros:

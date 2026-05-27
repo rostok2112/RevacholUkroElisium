@@ -369,6 +369,21 @@ metadata-only refresh contract defines safe readiness states. Current-line captu
 capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution,
 production overlay shell behavior, and companion HTTP contract changes remain unapproved.
 
+## Overlay Refresh Readiness Contract
+
+The metadata-only refresh/readiness contract is:
+
+```text
+docs/overlay-refresh-readiness-contract.md
+tests/fixtures/overlay_refresh_readiness_contract.synthetic.json
+scripts/check_overlay_refresh_readiness_contract.py
+```
+
+It defines safe readiness labels around companion health, latest provider-state presence, existing
+`overlay-state-source.v1` results, view-model validation, and in-memory HTML/accessibility checks.
+It does not implement polling, timers, background workers, production overlay behavior, provider
+calls, capture, or companion HTTP contract changes.
+
 ## Current Limits
 
 - Synthetic-only public data.

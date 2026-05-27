@@ -1,5 +1,21 @@
 # Session Summary
 
+Metadata-only overlay refresh/readiness contract is implemented.
+
+Completed in the latest session:
+- Added `docs/overlay-refresh-readiness-contract.md`, a static contract for future overlay refresh
+  readiness after the successful bridge-to-overlay synthetic smoke.
+- Added `tests/fixtures/overlay_refresh_readiness_contract.synthetic.json`, a metadata-only fixture
+  that records stable readiness states and keeps current-line capture, real text capture, UI text
+  reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution, companion
+  contract changes, production shell behavior, polling loops, timers, and background workers closed.
+- Added `scripts/check_overlay_refresh_readiness_contract.py` and wired it into `scripts/check_all.py`.
+- Added focused tests for fixture shape, readiness state stability, dangerous permission flags, unsafe
+  marker rejection, and docs links.
+- Updated bridge and overlay docs to link the contract and checker.
+- Did not change C#, companion server/client code, provider behavior, overlay renderer behavior,
+  smoke helpers, runtime capture behavior, or companion HTTP contracts.
+
 Post bridge-to-overlay next-step decision gate is implemented.
 
 Completed in the latest session:

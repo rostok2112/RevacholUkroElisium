@@ -323,6 +323,19 @@ supporting packaging/manual workflow polish. It does not approve current-line ca
 capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution,
 production overlay shell behavior, or companion HTTP contract changes.
 
+The metadata-only overlay refresh/readiness contract is:
+
+```text
+docs/overlay-refresh-readiness-contract.md
+tests/fixtures/overlay_refresh_readiness_contract.synthetic.json
+scripts/check_overlay_refresh_readiness_contract.py
+```
+
+It maps only redacted readiness metadata across companion health, latest synthetic provider-state
+presence, overlay state-source validation, view-model validation, and in-memory HTML/accessibility
+checks. It does not approve current-line capture, real text capture, companion contract changes, or
+production overlay shell behavior.
+
 ## Metadata-Only Extension Decision Gate
 
 Milestone 4K records the extension gate in:

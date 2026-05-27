@@ -1,5 +1,12 @@
 # Known Risks
 
+- The overlay refresh/readiness contract is metadata-only and static. Do not treat it as approval for
+  polling loops, timers, background workers, production shell behavior, real provider execution,
+  companion HTTP contract changes, current-line capture, real text capture, UI text reading, Unity
+  scanning, hooks/Harmony, OCR, or extraction.
+- The refresh readiness fixture records `bridge_to_overlay_smoke_passed=true`, but all dangerous
+  permissions remain false. Future edits to the fixture are contract decisions and must be reviewed
+  with docs and tests.
 - ADR 0010 allows only metadata-only overlay refresh/readiness contract planning. Do not treat the
   passed bridge-to-overlay smoke as permission for runtime implementation, current-line capture, real
   text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider

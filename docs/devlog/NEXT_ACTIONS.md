@@ -1,5 +1,28 @@
 # Next Actions
 
+After the metadata-only overlay refresh/readiness contract:
+
+1. Treat the contract as a static handoff only. It defines readiness labels and safe metadata inputs;
+   it does not implement polling, timers, retries, background workers, production shell behavior, or
+   companion HTTP changes.
+2. Use `docs/overlay-refresh-readiness-contract.md`,
+   `tests/fixtures/overlay_refresh_readiness_contract.synthetic.json`, and
+   `scripts/check_overlay_refresh_readiness_contract.py` as the current guardrail.
+3. Keep current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony,
+   OCR, extraction, real provider execution, and production overlay shell work closed.
+
+Recommended next safe step:
+
+- Scope a small metadata-only overlay refresh helper that summarizes the contract states from
+  existing companion/state-source/view-model/review checks, still without runtime capture,
+  companion contract changes, polling loops, timers, or production shell behavior.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after the metadata-only overlay refresh/readiness contract. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/overlay-refresh-readiness-contract.md, docs/overlay-prototype.md, docs/bepinex-bridge.md, scripts/check_overlay_refresh_readiness_contract.py, scripts/overlay_state_source.py, scripts/local_overlay_prototype.py, scripts/run_bridge_to_overlay_synthetic_smoke.py, and tests/fixtures/overlay_refresh_readiness_contract.synthetic.json. Plan or implement a metadata-only overlay refresh helper only if approved: it may summarize companion health, latest provider-state presence, overlay state-source status, view-model validation, and in-memory review/accessibility status; it must not launch the game, poll continuously, add timers/background workers, capture current lines, read UI text, scan Unity objects, use hooks/Harmony, run OCR, extract data, call real providers, change companion HTTP contracts, implement a production shell, commit runtime artifacts, print raw logs, or dump provider payloads.`
+
+---
+
 After ADR 0010:
 
 1. Treat the successful bridge-to-overlay synthetic smoke as sufficient evidence to plan only a

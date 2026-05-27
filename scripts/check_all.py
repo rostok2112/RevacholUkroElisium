@@ -156,6 +156,14 @@ def main() -> int:
             ],
         ),
         (
+            "overlay refresh readiness contract",
+            [
+                sys.executable,
+                "scripts/check_overlay_refresh_readiness_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,
