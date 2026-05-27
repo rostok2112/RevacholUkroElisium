@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- Milestone 5A.2 now has a private input adapter contract. Decide whether to implement the next
+  step as a dry-run metadata adapter that reads one explicit workspace-private input and emits only
+  redacted booleans, counts, hashes, schema status, and blocker categories.
+- Decide the exact dry-run summary fields, file/directory traversal bounds under the selected input,
+  deletion/regeneration workflow, and checker rules before any real input reads occur.
+- Decide whether support for external absolute input paths should remain deferred or require a
+  separate safety contract after the workspace-private dry-run path is proven.
 - Milestone 5A.1 now has a synthetic indexer/private index contract. Decide the next 5A step as a
   user-selected private input adapter contract before any real local input reads.
 - Decide whether future private inputs must be copied under `workspace/local-private/` first or may

@@ -1,0 +1,46 @@
+{
+  "schema_version": "extraction-private-input-adapter-scope.v1",
+  "milestone": "5A.2",
+  "scope_status": "contract_only",
+  "implementation_allowed_next": false,
+  "explicit_user_selected_input_required": true,
+  "dry_run_metadata_summary_default": true,
+  "external_absolute_input_paths_allowed": false,
+  "automatic_game_install_scanning_allowed": false,
+  "arbitrary_drive_scan_allowed": false,
+  "recursive_drive_scan_allowed": false,
+  "bepinex_log_reads_allowed": false,
+  "game_log_reads_allowed": false,
+  "save_file_parsing_allowed": false,
+  "real_game_text_commit_allowed": false,
+  "raw_localization_dump_commit_allowed": false,
+  "raw_extracted_payload_commit_allowed": false,
+  "screenshots_allowed": false,
+  "ocr_allowed": false,
+  "hooks_allowed": false,
+  "unity_scanning_allowed": false,
+  "current_line_capture_allowed": false,
+  "ui_text_reading_allowed": false,
+  "decompiled_code_allowed": false,
+  "companion_contract_change_allowed": false,
+  "real_provider_execution_allowed": false,
+  "production_overlay_shell_allowed": false,
+  "allowed_private_input_roots": [
+    "workspace/local-private/extraction-indexing/input/"
+  ],
+  "allowed_private_output_roots": [
+    "workspace/local-private/extraction-indexing/"
+  ],
+  "allowed_tracked_summary_fields": [
+    "input_exists",
+    "input_kind",
+    "file_count",
+    "byte_count",
+    "hash_summary",
+    "schema_status",
+    "blocker_categories"
+  ],
+  "recommended_next_step": "private_input_adapter_dry_run",
+  "required_next_step": "private_input_adapter_dry_run",
+  "contract_notes_redacted": true
+}

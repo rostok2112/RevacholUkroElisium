@@ -66,6 +66,18 @@ These summaries are private diagnostics. They must stay ignored unless a later c
 defines a committed synthetic/redacted form. The synthetic indexer in this milestone does not read
 real local inputs.
 
+Milestone 5A.2 defines that future private input adapter boundary in:
+
+```text
+docs/extraction-indexing-private-input-adapter-contract.md
+tests/fixtures/extraction_private_input_adapter_scope.synthetic.json
+scripts/check_extraction_private_input_adapter_contract.py
+```
+
+That contract requires future private inputs to be copied or placed under
+`workspace/local-private/extraction-indexing/input/` first. It keeps implementation blocked and
+keeps the default future mode as dry-run metadata summary only.
+
 ## Private Output Root
 
 The only allowed private index output root is:

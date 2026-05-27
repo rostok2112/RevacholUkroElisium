@@ -1,5 +1,26 @@
 # Session Summary
 
+Milestone 5A.2 private input adapter contract is implemented.
+
+Completed in the latest session:
+- Added `docs/extraction-indexing-private-input-adapter-contract.md`, defining the future
+  user-selected private input boundary before any real input reads.
+- Added `tests/fixtures/extraction_private_input_adapter_scope.synthetic.json`, a synthetic
+  machine-readable contract for the 5A.2 no-scan/no-capture/no-real-text boundary.
+- Added `scripts/check_extraction_private_input_adapter_contract.py` and wired it into
+  `scripts/check_all.py`.
+- Added focused tests for fixture shape, false dangerous permissions, unsafe private roots, unsafe
+  marker values, docs links, and check-all registration.
+- The future input model is limited to one explicit user-selected file or directory under
+  `workspace/local-private/extraction-indexing/input/`, with future output under
+  `workspace/local-private/extraction-indexing/`.
+- Implementation remains blocked. The next safe step is a separately approved dry-run private input
+  adapter that reports only redacted metadata summaries.
+- Did not read private inputs, read game files, scan installs, read BepInEx logs, parse saves, read
+  screenshots, run OCR, add current-line capture, read UI text, scan Unity objects, add
+  hooks/Harmony, use decompiled game code, change companion HTTP contracts, call providers, create
+  real indexes, or commit real extracted text.
+
 Milestone 5A.1 synthetic indexer and private index contract is implemented.
 
 Completed in the latest session:

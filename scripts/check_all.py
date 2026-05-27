@@ -189,6 +189,14 @@ def main() -> int:
             ],
         ),
         (
+            "extraction private input adapter contract",
+            [
+                sys.executable,
+                "scripts/check_extraction_private_input_adapter_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

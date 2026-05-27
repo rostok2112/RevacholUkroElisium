@@ -1,5 +1,16 @@
 # Known Risks
 
+- Milestone 5A.2 defines a private input adapter contract only. It does not prove real input
+  compatibility, extraction correctness, private index usefulness, or runtime integration.
+- The future private input root `workspace/local-private/extraction-indexing/input/` is ignored, but
+  ignored inputs can still leak if copied into tracked docs, tests, fixtures, reports, commits, or
+  chat.
+- Dry-run metadata summaries can reveal local file presence, sizes, counts, and hashes. Treat them
+  as private local diagnostics unless a later checker explicitly approves a committed redacted form.
+- Do not relax the 5A.2 fixture to allow external absolute paths, automatic game-install scanning,
+  arbitrary drive scans, BepInEx log reads, save parsing, screenshots, OCR, current-line capture, UI
+  text reading, Unity scanning, hooks/Harmony, decompiled-code details, companion HTTP contract
+  changes, real provider execution, or committed real content without a separate safety review.
 - Milestone 5A.1 proves only deterministic indexing over committed synthetic records. It does not
   prove real extraction, real file compatibility, game data shape, private index usefulness, or
   runtime integration.

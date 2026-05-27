@@ -1,5 +1,31 @@
 # Next Actions
 
+After Milestone 5A.2 private input adapter contract:
+
+1. Treat `docs/extraction-indexing-private-input-adapter-contract.md`,
+   `tests/fixtures/extraction_private_input_adapter_scope.synthetic.json`, and
+   `scripts/check_extraction_private_input_adapter_contract.py` as the current guardrail.
+2. Keep future user-selected private inputs under
+   `workspace/local-private/extraction-indexing/input/`; external absolute paths are deferred.
+3. Keep future private summaries and indexes under `workspace/local-private/extraction-indexing/`
+   and out of git.
+4. Do not add automatic game-install scanning, arbitrary drive scans, BepInEx log reads, save
+   parsing, screenshots, OCR, current-line capture, UI text reading, Unity scanning, hooks/Harmony,
+   decompiled-code work, companion HTTP contract changes, provider execution, production overlay
+   shell behavior, or committed real extracted text.
+
+Recommended next safe step:
+
+- Implement a dry-run private input adapter only if explicitly approved. It should read only one
+  explicit workspace-private input and emit redacted metadata summaries by default, not real text or
+  indexes from real content.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.2 private input adapter contract. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/adr/0011-real-extraction-indexing-scope.md, docs/extraction-indexing-private-index-contract.md, docs/extraction-indexing-private-input-adapter-contract.md, tests/fixtures/extraction_private_input_adapter_scope.synthetic.json, scripts/check_extraction_private_input_adapter_contract.py, and scripts/run_synthetic_extraction_indexer.py. Implement the next 5A step only as a private input adapter dry-run if explicitly approved: read one user-selected input under workspace/local-private/extraction-indexing/input/ and emit redacted metadata summaries under workspace/local-private/extraction-indexing/. Do not scan game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, generated real indexes, committed real extracted text, downloads, or new dependencies.`
+
+---
+
 After Milestone 5A.1 synthetic indexer and private index contract:
 
 1. Treat `scripts/run_synthetic_extraction_indexer.py` as a synthetic-only helper. It is not a real

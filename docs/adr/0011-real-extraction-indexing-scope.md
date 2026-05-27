@@ -125,6 +125,36 @@ real extraction from game files, automatic game-install scanning, current-line c
 reading, Unity scanning, hooks/Harmony, OCR, decompiled game-code work, companion HTTP contract
 changes, provider execution, or committed real extracted text.
 
+## Milestone 5A.2 Private Input Adapter Contract
+
+Milestone 5A.2 defines the user-selected private input adapter boundary in:
+
+```text
+docs/extraction-indexing-private-input-adapter-contract.md
+tests/fixtures/extraction_private_input_adapter_scope.synthetic.json
+scripts/check_extraction_private_input_adapter_contract.py
+```
+
+The contract remains docs/static-contract only. It does not read private inputs and does not
+implement extraction. A later adapter may be planned only around one explicit user-selected file or
+directory placed under:
+
+```text
+workspace/local-private/extraction-indexing/input/
+```
+
+Any future output remains limited to:
+
+```text
+workspace/local-private/extraction-indexing/
+```
+
+The default future mode is dry-run metadata summary only: redacted booleans, counts, hashes, schema
+status, and blocker categories. External absolute input paths, automatic game-install scanning,
+arbitrary drive scans, BepInEx log reads, screenshots, OCR, save parsing, current-line capture, UI
+text reading, Unity scanning, hooks/Harmony, decompiled game-code work, companion HTTP contract
+changes, real provider execution, and committed real extracted text remain closed.
+
 ## Consequences
 
 Pros:
