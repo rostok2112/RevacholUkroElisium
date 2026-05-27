@@ -354,6 +354,21 @@ This still proves only a synthetic/manual bridge-to-companion-to-overlay path. I
 current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction,
 real provider calls, companion HTTP contract changes, or a production overlay shell.
 
+## Post Bridge-To-Overlay Decision
+
+ADR 0010 records the next safe step after the successful redacted bridge-to-overlay synthetic smoke:
+
+```text
+docs/adr/0010-post-bridge-to-overlay-next-step.md
+tests/fixtures/post_bridge_to_overlay_next_step.synthetic.json
+```
+
+The accepted next step is `metadata_only_overlay_refresh_readiness_contract`, with packaging/manual
+workflow polish allowed as support work. Companion polling/readiness is deferred until the
+metadata-only refresh contract defines safe readiness states. Current-line capture, real text
+capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution,
+production overlay shell behavior, and companion HTTP contract changes remain unapproved.
+
 ## Current Limits
 
 - Synthetic-only public data.

@@ -42,6 +42,8 @@ from scripts.check_bepinex_bridge_safety import (
     RUNTIME_SMOKE_DOC,
     PACKAGE_DIR,
     PROJECT_FILE,
+    POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR,
+    POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE,
     RAW_PAYLOAD_LOG_PATTERNS,
     SECRET_VALUE_PATTERN,
     SOURCE_DIR,
@@ -50,6 +52,7 @@ from scripts.check_bepinex_bridge_safety import (
     collect_bepinex_bridge_safety_errors,
     collect_metadata_extension_gate_errors,
     collect_metadata_only_extension_scope_errors,
+    collect_post_bridge_to_overlay_next_step_errors,
 )
 from scripts.schema_validator import collect_errors, load_json
 
@@ -266,6 +269,80 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertIn("must not", scope_doc)
         self.assertIn("does not approve current-line capture", normalized_bridge_doc)
         self.assertNotIn("current-line capture is approved", scope_doc.lower())
+
+    def test_post_bridge_to_overlay_next_step_is_registered(self) -> None:
+        adr_ref = "docs/adr/0010-post-bridge-to-overlay-next-step.md"
+        fixture_ref = "tests/fixtures/post_bridge_to_overlay_next_step.synthetic.json"
+
+        self.assertTrue(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR.exists())
+        self.assertTrue(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE.exists())
+        self.assertEqual(
+            [],
+            collect_post_bridge_to_overlay_next_step_errors(
+                POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE
+            ),
+        )
+        self.assertIn(fixture_ref, _read(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR))
+        self.assertIn(adr_ref, _read(ROOT / "docs/bepinex-bridge.md"))
+        self.assertIn(fixture_ref, _read(ROOT / "docs/bepinex-bridge.md"))
+        self.assertIn(adr_ref, _read(ROOT / "docs/overlay-prototype.md"))
+        self.assertIn(fixture_ref, _read(ROOT / "docs/overlay-prototype.md"))
+
+    def test_post_bridge_to_overlay_next_step_fixture_keeps_runtime_implementation_closed(
+        self,
+    ) -> None:
+        decision = load_json(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE)
+
+        self.assertTrue(decision["bridge_to_overlay_smoke_passed"])
+        self.assertEqual(
+            "metadata_only_overlay_refresh_readiness_contract",
+            decision["recommended_next_step"],
+        )
+        self.assertFalse(decision["implementation_allowed_next"])
+        self.assertTrue(decision["docs_static_contract_work_allowed"])
+        self.assertTrue(decision["packaging_manual_workflow_polish_allowed"])
+        self.assertFalse(decision["current_line_capture_allowed"])
+        self.assertFalse(decision["real_text_capture_allowed"])
+        self.assertFalse(decision["ui_text_reading_allowed"])
+        self.assertFalse(decision["unity_scanning_allowed"])
+        self.assertFalse(decision["hooks_allowed"])
+        self.assertFalse(decision["ocr_allowed"])
+        self.assertFalse(decision["extraction_allowed"])
+        self.assertFalse(decision["real_provider_execution_allowed"])
+        self.assertFalse(decision["companion_contract_change_allowed"])
+        self.assertFalse(decision["production_overlay_shell_allowed"])
+
+    def test_post_bridge_to_overlay_next_step_rejects_forbidden_permissions(self) -> None:
+        decision = load_json(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE)
+        for field in (
+            "current_line_capture_allowed",
+            "real_text_capture_allowed",
+            "ui_text_reading_allowed",
+            "unity_scanning_allowed",
+            "hooks_allowed",
+            "ocr_allowed",
+            "extraction_allowed",
+            "real_provider_execution_allowed",
+            "companion_contract_change_allowed",
+            "production_overlay_shell_allowed",
+            "implementation_allowed_next",
+        ):
+            with self.subTest(field=field):
+                mutated = dict(decision)
+                mutated[field] = True
+
+                self.assertNotEqual([], _post_bridge_to_overlay_next_step_errors_for(mutated))
+
+    def test_post_bridge_to_overlay_docs_do_not_approve_capture(self) -> None:
+        adr_text = _read(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR)
+        bridge_doc = _read(ROOT / "docs/bepinex-bridge.md")
+        overlay_doc = _read(ROOT / "docs/overlay-prototype.md")
+        combined = " ".join([adr_text, bridge_doc, overlay_doc]).lower()
+
+        self.assertIn("does not approve current-line capture", adr_text)
+        self.assertIn("metadata_only_overlay_refresh_readiness_contract", adr_text)
+        self.assertNotIn("current-line capture is approved", combined)
+        self.assertNotIn("real text capture is approved", combined)
 
     def test_metadata_probe_manual_smoke_doc_documents_safe_observations(self) -> None:
         text = _read(METADATA_PROBE_SMOKE_DOC)
@@ -600,6 +677,17 @@ def _metadata_only_extension_scope_errors_for(scope: dict[str, object]) -> list[
     path.write_text(json.dumps(scope, indent=2, ensure_ascii=False), encoding="utf-8")
     try:
         return collect_metadata_only_extension_scope_errors(path)
+    finally:
+        if path.exists():
+            path.unlink()
+
+
+def _post_bridge_to_overlay_next_step_errors_for(decision: dict[str, object]) -> list[str]:
+    path = ROOT / "workspace/synthetic-slice/bepinex-bridge/unit-post-bridge-next-step.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(decision, indent=2, ensure_ascii=False), encoding="utf-8")
+    try:
+        return collect_post_bridge_to_overlay_next_step_errors(path)
     finally:
         if path.exists():
             path.unlink()

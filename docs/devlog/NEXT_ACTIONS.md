@@ -1,5 +1,30 @@
 # Next Actions
 
+After ADR 0010:
+
+1. Treat the successful bridge-to-overlay synthetic smoke as sufficient evidence to plan only a
+   metadata-only overlay refresh/readiness contract.
+2. Keep packaging/manual workflow polish allowed as support work, but do not turn the smoke wrapper
+   into a production overlay shell.
+3. Do not infer current-line capture, real text capture, UI text reading, Unity scanning,
+   hooks/Harmony, OCR, extraction, real provider execution, production overlay readiness, or
+   companion HTTP contract readiness from the passed smoke.
+4. Keep the post-smoke decision gate tracked in
+   `docs/adr/0010-post-bridge-to-overlay-next-step.md` and
+   `tests/fixtures/post_bridge_to_overlay_next_step.synthetic.json`.
+
+Recommended next safe step:
+
+- Define the metadata-only overlay refresh/readiness contract: safe states, stale/no-provider
+  behavior, redacted status fields, and boundaries for a future shell handoff, still with no runtime
+  implementation, no capture, no real provider calls, and no companion HTTP contract changes.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after ADR 0010 accepted the post bridge-to-overlay next step. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/adr/0010-post-bridge-to-overlay-next-step.md, docs/overlay-prototype.md, docs/bepinex-bridge.md, scripts/overlay_state_source.py, scripts/local_overlay_prototype.py, scripts/run_bridge_to_overlay_synthetic_smoke.py, scripts/check_bepinex_bridge_safety.py, and tests/fixtures/post_bridge_to_overlay_next_step.synthetic.json. Implement the metadata-only overlay refresh/readiness contract as docs/static-contract work only: define safe ready/stale/no-provider/error refresh states and handoff fields for a future overlay shell, still without current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution, companion HTTP contract changes, production shell work, committed runtime artifacts, raw logs, raw provider payloads, screenshots, downloads, or new dependencies.`
+
+---
+
 After the bridge-to-overlay synthetic smoke passed:
 
 1. Treat the successful smoke as evidence only for the synthetic/manual path from

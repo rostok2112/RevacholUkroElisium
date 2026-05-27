@@ -1,8 +1,8 @@
 # Decisions Pending
 
-- After the bridge-to-overlay synthetic smoke runs, decide whether redacted evidence of latest
-  provider state and overlay state-source/view-model/review validation is sufficient to keep
-  hardening the synthetic/manual path, or whether another companion-connected smoke pass is needed.
+- ADR 0010 decided that the redacted bridge-to-overlay synthetic smoke is sufficient to plan the
+  next metadata-only overlay refresh/readiness contract. Decide the exact safe refresh states,
+  stale/no-provider behavior, and handoff fields in that next contract.
 - Decide whether the bridge-to-overlay wrapper should remain a smoke helper only, or whether later
   overlay-shell planning needs a separate contract artifact. Do not treat the helper as a production
   overlay shell.

@@ -309,6 +309,20 @@ report is complete enough to discuss a later metadata-only extension. It does no
 capture, UI text reading, real text capture, hooks, OCR, extraction, provider execution, or companion
 contract changes.
 
+## Post Bridge-To-Overlay Decision
+
+ADR 0010 records the next decision after the successful redacted bridge-to-overlay synthetic smoke:
+
+```text
+docs/adr/0010-post-bridge-to-overlay-next-step.md
+tests/fixtures/post_bridge_to_overlay_next_step.synthetic.json
+```
+
+The decision keeps the next step limited to `metadata_only_overlay_refresh_readiness_contract` and
+supporting packaging/manual workflow polish. It does not approve current-line capture, real text
+capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution,
+production overlay shell behavior, or companion HTTP contract changes.
+
 ## Metadata-Only Extension Decision Gate
 
 Milestone 4K records the extension gate in:

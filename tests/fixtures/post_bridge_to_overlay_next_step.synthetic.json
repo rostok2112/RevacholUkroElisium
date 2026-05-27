@@ -1,0 +1,24 @@
+{
+  "schema_version": "post-bridge-to-overlay-next-step.v1",
+  "bridge_to_overlay_smoke_passed": true,
+  "recommended_next_step": "metadata_only_overlay_refresh_readiness_contract",
+  "implementation_allowed_next": false,
+  "docs_static_contract_work_allowed": true,
+  "packaging_manual_workflow_polish_allowed": true,
+  "current_line_capture_allowed": false,
+  "real_text_capture_allowed": false,
+  "ui_text_reading_allowed": false,
+  "unity_scanning_allowed": false,
+  "hooks_allowed": false,
+  "ocr_allowed": false,
+  "extraction_allowed": false,
+  "real_provider_execution_allowed": false,
+  "companion_contract_change_allowed": false,
+  "production_overlay_shell_allowed": false,
+  "required_next_step": "Document metadata-only overlay refresh/readiness states before runtime implementation.",
+  "blockers": [
+    "Current-line capture remains unproven and forbidden.",
+    "Real text capture remains forbidden.",
+    "Companion polling/readiness semantics are not documented yet."
+  ]
+}

@@ -45,6 +45,7 @@ BUILD_HELPER = ROOT / "scripts/build_bepinex_bridge.py"
 GITIGNORE = ROOT / ".gitignore"
 CURRENT_LINE_CAPTURE_ADR = ROOT / "docs/adr/0008-current-line-capture-research.md"
 METADATA_EXTENSION_GATE_ADR = ROOT / "docs/adr/0009-metadata-only-extension-gate.md"
+POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR = ROOT / "docs/adr/0010-post-bridge-to-overlay-next-step.md"
 METADATA_PROBE_GATE_DOC = ROOT / "docs/bepinex-metadata-probe-gate.md"
 METADATA_ONLY_EXTENSION_SCOPE_DOC = ROOT / "docs/bepinex-metadata-only-extension-scope.md"
 MANUAL_SMOKE_DIR = ROOT / "docs/manual-smoke"
@@ -65,6 +66,9 @@ METADATA_EXTENSION_GATE_FIXTURE = (
 )
 METADATA_ONLY_EXTENSION_SCOPE_FIXTURE = (
     ROOT / "tests/fixtures/bepinex_bridge.metadata_only_extension_scope.synthetic.json"
+)
+POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE = (
+    ROOT / "tests/fixtures/post_bridge_to_overlay_next_step.synthetic.json"
 )
 
 DEFAULT_URL = "http://127.0.0.1:8765"
@@ -207,6 +211,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_metadata_probe_contract())
     errors.extend(_check_metadata_extension_gate_contract())
     errors.extend(_check_metadata_only_extension_scope_contract())
+    errors.extend(_check_post_bridge_to_overlay_next_step_contract())
     errors.extend(_check_local_metadata_probe_smoke_helper())
     errors.extend(_check_bridge_to_overlay_smoke_helper())
     errors.extend(_check_source_contract())
@@ -230,6 +235,7 @@ def _check_required_files() -> list[str]:
         BUILD_HELPER,
         CURRENT_LINE_CAPTURE_ADR,
         METADATA_EXTENSION_GATE_ADR,
+        POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR,
         METADATA_PROBE_GATE_DOC,
         METADATA_ONLY_EXTENSION_SCOPE_DOC,
         RUNTIME_SMOKE_DOC,
@@ -248,6 +254,7 @@ def _check_required_files() -> list[str]:
         BRIDGE_TO_OVERLAY_SMOKE_HELPER,
         METADATA_EXTENSION_GATE_FIXTURE,
         METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
+        POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE,
     ]
     return [
         f"Missing required bridge file: {path.relative_to(ROOT)}"
@@ -788,6 +795,145 @@ def _check_metadata_only_extension_scope_contract() -> list[str]:
         for ref in (scope_ref, fixture_ref):
             if ref not in text:
                 errors.append(f"{doc_path.relative_to(ROOT)} must point to {ref}.")
+    return errors
+
+
+def collect_post_bridge_to_overlay_next_step_errors(
+    path: Path = POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE,
+) -> list[str]:
+    errors: list[str] = []
+    try:
+        decision = load_json(path)
+    except Exception as exc:
+        return [f"Could not load post bridge-to-overlay next-step fixture: {exc}"]
+
+    if not isinstance(decision, dict):
+        return ["Post bridge-to-overlay next-step fixture must be a JSON object."]
+
+    if decision.get("schema_version") != "post-bridge-to-overlay-next-step.v1":
+        errors.append("Post bridge-to-overlay next-step fixture has the wrong schema_version.")
+    if decision.get("bridge_to_overlay_smoke_passed") is not True:
+        errors.append("Post bridge-to-overlay next-step fixture must record smoke passed=true.")
+    if decision.get("recommended_next_step") != "metadata_only_overlay_refresh_readiness_contract":
+        errors.append(
+            "Post bridge-to-overlay next-step fixture must recommend the metadata-only "
+            "overlay refresh/readiness contract."
+        )
+
+    required_bool_fields = (
+        "bridge_to_overlay_smoke_passed",
+        "implementation_allowed_next",
+        "docs_static_contract_work_allowed",
+        "packaging_manual_workflow_polish_allowed",
+        "current_line_capture_allowed",
+        "real_text_capture_allowed",
+        "ui_text_reading_allowed",
+        "unity_scanning_allowed",
+        "hooks_allowed",
+        "ocr_allowed",
+        "extraction_allowed",
+        "real_provider_execution_allowed",
+        "companion_contract_change_allowed",
+        "production_overlay_shell_allowed",
+    )
+    for field in required_bool_fields:
+        if not isinstance(decision.get(field), bool):
+            errors.append(f"Post bridge-to-overlay next-step field {field!r} must be a boolean.")
+
+    if decision.get("implementation_allowed_next") is not False:
+        errors.append(
+            "Post bridge-to-overlay next-step fixture must keep implementation_allowed_next=false."
+        )
+    if decision.get("docs_static_contract_work_allowed") is not True:
+        errors.append(
+            "Post bridge-to-overlay next-step fixture must allow docs/static-contract work."
+        )
+
+    forbidden_permissions = (
+        "current_line_capture_allowed",
+        "real_text_capture_allowed",
+        "ui_text_reading_allowed",
+        "unity_scanning_allowed",
+        "hooks_allowed",
+        "ocr_allowed",
+        "extraction_allowed",
+        "real_provider_execution_allowed",
+        "companion_contract_change_allowed",
+        "production_overlay_shell_allowed",
+    )
+    for field in forbidden_permissions:
+        if decision.get(field) is not False:
+            errors.append(f"Post bridge-to-overlay next-step fixture must keep {field}=false.")
+
+    if decision.get("bridge_to_overlay_smoke_passed") and any(
+        decision.get(field) for field in forbidden_permissions
+    ):
+        errors.append(
+            "Bridge-to-overlay smoke success cannot imply capture, provider execution, "
+            "production shell, or companion contract permission."
+        )
+    if decision.get("implementation_allowed_next") and any(
+        decision.get(field) for field in forbidden_permissions
+    ):
+        errors.append(
+            "Post bridge-to-overlay implementation permission cannot imply forbidden scope."
+        )
+
+    if not isinstance(decision.get("required_next_step"), str) or not decision.get(
+        "required_next_step"
+    ):
+        errors.append("Post bridge-to-overlay next-step fixture must include required_next_step.")
+    blockers = decision.get("blockers")
+    if not isinstance(blockers, list) or not all(isinstance(item, str) for item in blockers):
+        errors.append("Post bridge-to-overlay next-step blockers must be a list of strings.")
+
+    rendered = json.dumps(decision, ensure_ascii=False, sort_keys=True)
+    errors.extend(_check_urls(rendered, path.relative_to(ROOT)))
+    errors.extend(_check_secret_values(rendered, path.relative_to(ROOT)))
+    errors.extend(
+        _check_forbidden_markers(rendered, path.relative_to(ROOT), FORBIDDEN_GAME_CONTENT_MARKERS)
+    )
+    return errors
+
+
+def _check_post_bridge_to_overlay_next_step_contract() -> list[str]:
+    errors = collect_post_bridge_to_overlay_next_step_errors(
+        POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE
+    )
+
+    if POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR.exists():
+        adr_text = _read_text(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR).replace("\\", "/")
+        fixture_ref = str(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE.relative_to(ROOT)).replace(
+            "\\", "/"
+        )
+        for marker in (
+            "metadata_only_overlay_refresh_readiness_contract",
+            "Current-line capture implementation",
+            "disallowed",
+            "does not approve current-line capture",
+            fixture_ref,
+        ):
+            if marker not in adr_text:
+                errors.append(
+                    f"{POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR.relative_to(ROOT)} "
+                    f"must mention {marker}."
+                )
+
+    docs_to_link = (
+        ROOT / "docs/bepinex-bridge.md",
+        ROOT / "docs/overlay-prototype.md",
+        ROOT / "docs/devlog/NEXT_ACTIONS.md",
+    )
+    adr_ref = str(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_ADR.relative_to(ROOT)).replace("\\", "/")
+    fixture_ref = str(POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE.relative_to(ROOT)).replace("\\", "/")
+    for doc_path in docs_to_link:
+        if not doc_path.exists():
+            continue
+        text = _read_text(doc_path).replace("\\", "/")
+        if adr_ref not in text:
+            errors.append(f"{doc_path.relative_to(ROOT)} must point to ADR 0010.")
+        if fixture_ref not in text:
+            errors.append(f"{doc_path.relative_to(ROOT)} must point to the ADR 0010 fixture.")
     return errors
 
 

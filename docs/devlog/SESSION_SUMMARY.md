@@ -1,5 +1,20 @@
 # Session Summary
 
+Post bridge-to-overlay next-step decision gate is implemented.
+
+Completed in the latest session:
+- Added `docs/adr/0010-post-bridge-to-overlay-next-step.md`, an accepted ADR recording the next
+  safe step after the successful redacted bridge-to-overlay synthetic smoke.
+- Added `tests/fixtures/post_bridge_to_overlay_next_step.synthetic.json`, a machine-readable gate
+  fixture that records the synthetic smoke passed while keeping runtime implementation, current-line
+  capture, real text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real
+  provider execution, production overlay shell behavior, and companion HTTP contract changes closed.
+- Extended the bridge safety checker and tests so the ADR and fixture are required and validated.
+- Updated bridge, overlay, and devlog handoff notes to point to the metadata-only overlay
+  refresh/readiness contract as the next safe planning step.
+- Did not change C# behavior, companion HTTP contracts, overlay runtime behavior, provider
+  execution, helper behavior, or committed runtime artifacts.
+
 Redacted bridge-to-overlay synthetic smoke evidence is recorded.
 
 Completed in the latest session:

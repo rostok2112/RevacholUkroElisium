@@ -1,5 +1,12 @@
 # Known Risks
 
+- ADR 0010 allows only metadata-only overlay refresh/readiness contract planning. Do not treat the
+  passed bridge-to-overlay smoke as permission for runtime implementation, current-line capture, real
+  text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider
+  execution, production overlay shell behavior, or companion HTTP contract changes.
+- The post bridge-to-overlay decision fixture records `bridge_to_overlay_smoke_passed=true`, but all
+  capture/provider/contract/shell permissions remain false. Future edits to that fixture are
+  contract decisions and must be reviewed with docs and tests.
 - The bridge-to-overlay smoke wrapper summarizes latest provider state without printing payloads.
   If overlay construction fails, keep debugging evidence redacted into blocker categories instead of
   committing companion payloads, generated HTML, or raw logs.
