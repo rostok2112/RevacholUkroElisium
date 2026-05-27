@@ -104,8 +104,43 @@ python scripts/check_overlay_refresh_readiness_contract.py --quiet
 The fixture records that the bridge-to-overlay smoke passed and that the contract is metadata-only.
 All capture, scanning, provider, shell, polling, and companion-contract permissions remain false.
 
+## Metadata-Only Helper
+
+The approved helper for this contract is:
+
+```text
+scripts/run_overlay_refresh_readiness.py
+```
+
+Run it against a local companion server with:
+
+```powershell
+python scripts/run_overlay_refresh_readiness.py --quiet
+```
+
+Run the fixture-only self-test used by `check_all` with:
+
+```powershell
+python scripts/run_overlay_refresh_readiness.py --self-test --quiet
+```
+
+The helper summarizes only redacted readiness metadata: companion health status, latest provider
+context/annotation existence, state-source status, view-model validation, in-memory HTML review
+readiness, and accessibility-check status. It may write a redacted JSON summary only under:
+
+```text
+workspace/synthetic-slice/overlay-refresh-readiness/
+```
+
+The helper does not include raw provider payloads, raw logs, generated HTML, screenshots, private
+paths, game text, or report contents in stdout or written summaries. It does not implement polling,
+timers, retries, background workers, production shell behavior, provider execution, companion HTTP
+changes, current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, or
+extraction.
+
 ## Next Step
 
-The next safe step after this contract is a separately approved metadata-only overlay refresh helper.
-That helper may summarize readiness using the states above, but it must still avoid capture, real
-provider execution, production shell behavior, and companion HTTP contract changes.
+The next safe step after the helper is local/manual use of the redacted summary to decide whether a
+future production overlay shell contract is worth scoping. That later decision must still avoid
+capture, real provider execution, production shell behavior, polling loops, and companion HTTP
+contract changes unless a separate approved milestone changes those boundaries.

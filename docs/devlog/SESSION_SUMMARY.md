@@ -1,5 +1,23 @@
 # Session Summary
 
+Metadata-only overlay refresh readiness helper is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_overlay_refresh_readiness.py`, a stdlib-only helper that summarizes companion
+  health, latest provider-state presence, overlay state-source status, view-model validation,
+  in-memory HTML review readiness, and accessibility-check status as redacted booleans/status.
+- Added a `--self-test` path backed by committed synthetic fixtures so `check_all` can validate the
+  helper without a real companion server, Steam install, game launch, BepInEx runtime, logs, or
+  provider calls.
+- Added `tests/test_overlay_refresh_readiness_helper.py` for ready, no-companion, no-provider,
+  partial/invalid provider-state, unsafe output, redaction, quiet CLI, and workspace-only report
+  behavior.
+- Wired the helper self-test into `scripts/check_all.py`.
+- Updated overlay, bridge, and refresh-readiness docs to document the helper and its workspace-only
+  redacted output policy.
+- Did not change C#, companion HTTP contracts, provider behavior, overlay renderer behavior, polling
+  loops, timers, background workers, production shell behavior, or runtime capture behavior.
+
 Metadata-only overlay refresh/readiness contract is implemented.
 
 Completed in the latest session:

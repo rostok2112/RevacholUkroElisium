@@ -329,12 +329,23 @@ The metadata-only overlay refresh/readiness contract is:
 docs/overlay-refresh-readiness-contract.md
 tests/fixtures/overlay_refresh_readiness_contract.synthetic.json
 scripts/check_overlay_refresh_readiness_contract.py
+scripts/run_overlay_refresh_readiness.py
 ```
 
 It maps only redacted readiness metadata across companion health, latest synthetic provider-state
 presence, overlay state-source validation, view-model validation, and in-memory HTML/accessibility
 checks. It does not approve current-line capture, real text capture, companion contract changes, or
 production overlay shell behavior.
+
+After a synthetic bridge-to-overlay smoke, summarize the companion/overlay side with:
+
+```powershell
+python scripts/run_overlay_refresh_readiness.py --quiet
+```
+
+The helper may write a redacted JSON summary only under
+`workspace/synthetic-slice/overlay-refresh-readiness/`. It must not print or store raw logs,
+provider payloads, generated HTML, screenshots, private paths, or game text.
 
 ## Metadata-Only Extension Decision Gate
 

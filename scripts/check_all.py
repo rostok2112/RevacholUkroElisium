@@ -164,6 +164,15 @@ def main() -> int:
             ],
         ),
         (
+            "overlay refresh readiness helper smoke",
+            [
+                sys.executable,
+                "scripts/run_overlay_refresh_readiness.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

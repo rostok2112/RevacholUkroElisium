@@ -377,12 +377,27 @@ The metadata-only refresh/readiness contract is:
 docs/overlay-refresh-readiness-contract.md
 tests/fixtures/overlay_refresh_readiness_contract.synthetic.json
 scripts/check_overlay_refresh_readiness_contract.py
+scripts/run_overlay_refresh_readiness.py
 ```
 
 It defines safe readiness labels around companion health, latest provider-state presence, existing
 `overlay-state-source.v1` results, view-model validation, and in-memory HTML/accessibility checks.
 It does not implement polling, timers, background workers, production overlay behavior, provider
 calls, capture, or companion HTTP contract changes.
+
+The metadata-only readiness helper summarizes those states without dumping companion payloads or
+generated HTML:
+
+```powershell
+python scripts/run_overlay_refresh_readiness.py --quiet
+python scripts/run_overlay_refresh_readiness.py --self-test --quiet
+```
+
+Optional redacted summaries are local artifacts only under:
+
+```text
+workspace/synthetic-slice/overlay-refresh-readiness/
+```
 
 ## Current Limits
 

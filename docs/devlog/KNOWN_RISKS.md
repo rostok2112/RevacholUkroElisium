@@ -1,5 +1,14 @@
 # Known Risks
 
+- The overlay refresh readiness helper summarizes metadata only. Do not treat
+  `overlay_html_review_ready` as approval for a production overlay shell, polling loop, timer,
+  background worker, current-line capture, real text capture, UI text reading, Unity scanning,
+  hooks/Harmony, OCR, extraction, real provider execution, or companion HTTP contract changes.
+- Helper self-test mode uses committed synthetic provider fixtures and proves only the readiness
+  summarizer path. It does not prove a running companion server, a real game launch, BepInEx runtime
+  behavior, or real provider integration.
+- Written overlay refresh readiness summaries are workspace-only artifacts under
+  `workspace/synthetic-slice/overlay-refresh-readiness/` and must not be committed.
 - The overlay refresh/readiness contract is metadata-only and static. Do not treat it as approval for
   polling loops, timers, background workers, production shell behavior, real provider execution,
   companion HTTP contract changes, current-line capture, real text capture, UI text reading, Unity

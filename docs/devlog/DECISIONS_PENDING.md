@@ -1,8 +1,10 @@
 # Decisions Pending
 
-- The metadata-only overlay refresh/readiness contract is now defined. Decide whether a later helper
-  should summarize those states from existing companion/state-source/view-model/review checks, or
-  whether more docs/static review is needed first.
+- The metadata-only overlay refresh readiness helper is now implemented. Decide whether its redacted
+  summary is enough to scope a future production-overlay shell contract, or whether another
+  docs/static review gate is needed first.
+- Decide whether future overlay shell planning should consume the helper summary directly or define
+  a separate shell-readiness fixture before any runtime shell work begins.
 - Decide whether the bridge-to-overlay wrapper should remain a smoke helper only, or whether later
   overlay-shell planning needs a separate contract artifact. Do not treat the helper as a production
   overlay shell.

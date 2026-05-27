@@ -1,5 +1,31 @@
 # Next Actions
 
+After the metadata-only overlay refresh readiness helper:
+
+1. Treat `scripts/run_overlay_refresh_readiness.py` as a redacted readiness summarizer only. It is
+   not a polling loop, timer, background worker, production overlay shell, provider runner, or
+   capture path.
+2. Use `python scripts/run_overlay_refresh_readiness.py --quiet` only when a local companion server
+   is intentionally running, and use `--self-test --quiet` for fixture-only validation.
+3. Keep any written summaries under `workspace/synthetic-slice/overlay-refresh-readiness/`; do not
+   commit workspace summaries, provider payloads, generated HTML, logs, screenshots, or private
+   paths.
+4. Keep current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony,
+   OCR, extraction, real provider execution, companion HTTP contract changes, polling loops, timers,
+   background workers, and production overlay shell work closed.
+
+Recommended next safe step:
+
+- Decide whether the redacted helper summary is enough to scope a future production-overlay shell
+  contract, still as docs/static-contract work first and still without capture, polling, provider
+  execution, or companion contract changes.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after the metadata-only overlay refresh readiness helper. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/overlay-refresh-readiness-contract.md, docs/overlay-prototype.md, docs/bepinex-bridge.md, scripts/run_overlay_refresh_readiness.py, scripts/overlay_state_source.py, scripts/local_overlay_prototype.py, scripts/check_overlay_review_accessibility.py, and tests/test_overlay_refresh_readiness_helper.py. Use only redacted helper summaries, not raw provider payloads, generated HTML, logs, screenshots, private paths, game files, or workspace artifacts. Decide the next safe step for production-overlay shell contract planning, still without current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution, companion HTTP contract changes, polling loops, timers, background workers, downloads, or new dependencies.`
+
+---
+
 After the metadata-only overlay refresh/readiness contract:
 
 1. Treat the contract as a static handoff only. It defines readiness labels and safe metadata inputs;
