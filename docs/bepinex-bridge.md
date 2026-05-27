@@ -347,6 +347,31 @@ The helper may write a redacted JSON summary only under
 `workspace/synthetic-slice/overlay-refresh-readiness/`. It must not print or store raw logs,
 provider payloads, generated HTML, screenshots, private paths, or game text.
 
+## Local Workflow Wrapper
+
+The practical repeatable local workflow is documented in:
+
+```text
+docs/local-workflow.md
+scripts/run_local_bridge_workflow.py
+```
+
+Use the wrapper as a thin coordinator around the existing redacted helpers:
+
+```powershell
+python scripts/run_local_bridge_workflow.py --phase doctor --auto-discover
+python scripts/run_local_bridge_workflow.py --phase prepare-bridge-to-overlay-smoke --auto-discover
+# manually launch and close the game
+python scripts/run_local_bridge_workflow.py --phase post-bridge-to-overlay-smoke --auto-discover --write-report
+python scripts/run_local_bridge_workflow.py --phase cleanup --auto-discover
+python scripts/run_overlay_refresh_readiness.py --quiet
+```
+
+It also supports `--phase prepare-metadata-smoke` and `--phase prepare-companion-smoke` for narrower
+local checks. The wrapper reports redacted booleans/status only, checks that runtime artifacts are
+not staged, and never launches the game, prints raw logs, dumps provider payloads, changes C#
+behavior, adds companion endpoints, or implements capture.
+
 ## Metadata-Only Extension Decision Gate
 
 Milestone 4K records the extension gate in:

@@ -18,6 +18,8 @@ from scripts.check_bepinex_bridge_safety import (
     FORBIDDEN_HOOK_OR_EXTRACTION_MARKERS,
     FORBIDDEN_DOWNLOAD_OR_INSTALL_MARKERS,
     GITIGNORE,
+    LOCAL_BRIDGE_WORKFLOW_HELPER,
+    LOCAL_WORKFLOW_DOC,
     LOG_CONTRACT_DOC,
     LOG_CONTRACT_PATH,
     METADATA_PROBE_CHECKER,
@@ -471,6 +473,65 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         for marker in (
             "subprocess.Popen",
             "subprocess.run",
+            "os.system",
+            "Start-Process",
+            "steam://",
+            "rungameid",
+            "os.walk",
+            "shutil.rmtree",
+            "provider_annotate",
+            "post_synthetic_event",
+            "run_companion_client",
+        ):
+            with self.subTest(marker=marker):
+                self.assertNotIn(marker, helper)
+
+    def test_local_bridge_workflow_helper_is_registered_and_documented(self) -> None:
+        helper_ref = "scripts/run_local_bridge_workflow.py"
+
+        self.assertTrue(LOCAL_BRIDGE_WORKFLOW_HELPER.exists())
+        self.assertTrue(LOCAL_WORKFLOW_DOC.exists())
+        for doc_path in (
+            LOCAL_WORKFLOW_DOC,
+            METADATA_PROBE_SMOKE_DOC,
+            ROOT / "docs/bepinex-bridge.md",
+        ):
+            with self.subTest(doc_path=doc_path.relative_to(ROOT)):
+                text = _read(doc_path)
+                self.assertIn(helper_ref, text)
+                self.assertIn("--phase doctor", text)
+                self.assertIn("--phase prepare-bridge-to-overlay-smoke", text)
+                self.assertIn("--phase post-bridge-to-overlay-smoke", text)
+                self.assertIn("--phase cleanup", text)
+        self.assertNotIn(helper_ref, _read(CHECK_ALL))
+
+    def test_local_bridge_workflow_helper_is_redacted_and_bounded(self) -> None:
+        helper = _read(LOCAL_BRIDGE_WORKFLOW_HELPER)
+
+        for marker in (
+            "doctor",
+            "prepare-metadata-smoke",
+            "prepare-companion-smoke",
+            "prepare-bridge-to-overlay-smoke",
+            "post-bridge-to-overlay-smoke",
+            "cleanup",
+            "CompanionClient",
+            "discover_local_smoke_paths",
+            "discovery_summary",
+            "enable_probe_flow",
+            "set_synthetic_send_config_action",
+            "run_bridge_to_overlay_smoke",
+            "no_raw_logs_reports_staged",
+            "no_game_launch_performed",
+            "raw_log_included",
+            "raw_provider_payload_included",
+            "companion_contract_changed",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, helper)
+
+        for marker in (
+            "subprocess.Popen",
             "os.system",
             "Start-Process",
             "steam://",

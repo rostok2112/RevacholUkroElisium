@@ -1,5 +1,17 @@
 # Known Risks
 
+- The local bridge workflow wrapper is a convenience coordinator only. Do not treat a green doctor or
+  post phase as approval for current-line capture, real text capture, UI text reading, Unity
+  scanning, hooks/Harmony, OCR, extraction, real provider execution, companion HTTP contract
+  changes, polling loops, timers, background workers, or production overlay shell behavior.
+- The doctor phase can report setup readiness, but it cannot prove the user-local game launch or
+  BepInEx runtime behavior happened. Runtime evidence must still remain redacted and ignored.
+- The workflow wrapper may edit user-local BepInEx config through existing helpers. Always run
+  `python scripts/run_local_bridge_workflow.py --phase cleanup --auto-discover` after local smoke
+  runs to restore metadata probe and synthetic send flags to false.
+- Staged-artifact detection is a guardrail, not a substitute for reviewing `git status` before
+  committing. Keep workspace outputs, reports, generated HTML, logs, screenshots, `bin/`, `obj/`,
+  game files, provider payloads, and private paths out of git.
 - The overlay refresh readiness helper summarizes metadata only. Do not treat
   `overlay_html_review_ready` as approval for a production overlay shell, polling loop, timer,
   background worker, current-line capture, real text capture, UI text reading, Unity scanning,

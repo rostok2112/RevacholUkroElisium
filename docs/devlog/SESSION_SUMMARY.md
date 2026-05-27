@@ -1,5 +1,23 @@
 # Session Summary
 
+Local bridge workflow polish is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_local_bridge_workflow.py`, a stdlib-only wrapper that coordinates existing
+  metadata-smoke, companion-smoke, bridge-to-overlay smoke, cleanup, and doctor checks.
+- The `doctor` phase reports redacted booleans for git cleanliness, staged runtime artifacts,
+  BepInEx reference discovery, Steam/game discovery, `BepInEx/plugins` presence, companion health,
+  bridge build helper availability, and bridge DLL presence.
+- The prepare/post/cleanup phases delegate to existing redacted helpers instead of duplicating
+  bridge, companion, provider-state, or overlay logic.
+- Added `docs/local-workflow.md` and linked it from the bridge and manual-smoke docs.
+- Added fake-only tests for doctor summaries, config prep, bridge-to-overlay delegation, cleanup,
+  artifact staging detection, and redaction.
+- Did not change C#, companion HTTP contracts, provider behavior, overlay runtime behavior,
+  production shell behavior, or capture behavior.
+- Did not launch the game, print raw logs, dump provider payloads, scan Unity objects, add hooks,
+  run OCR, perform extraction, call real providers, or commit runtime artifacts.
+
 Metadata-only overlay refresh readiness helper is implemented.
 
 Completed in the latest session:

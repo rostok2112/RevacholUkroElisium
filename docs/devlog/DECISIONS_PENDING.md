@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- Decide whether `scripts/run_local_bridge_workflow.py` is sufficient as the repeatable local smoke
+  entrypoint, or whether future packaging should add a higher-level shell script after another
+  redacted local pass.
+- Decide whether the workflow doctor summary is enough to support a production-overlay shell
+  contract planning decision, still as docs/static-contract work first and still without capture,
+  polling, provider execution, or companion contract changes.
 - The metadata-only overlay refresh readiness helper is now implemented. Decide whether its redacted
   summary is enough to scope a future production-overlay shell contract, or whether another
   docs/static review gate is needed first.

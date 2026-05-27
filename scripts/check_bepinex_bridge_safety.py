@@ -53,6 +53,7 @@ RUNTIME_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke.md"
 LOG_CONTRACT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-log-contract.md"
 RUNTIME_REPORT_DOC = MANUAL_SMOKE_DIR / "bepinex-bridge-runtime-smoke-report.md"
 METADATA_PROBE_SMOKE_DOC = MANUAL_SMOKE_DIR / "bepinex-metadata-probe-smoke.md"
+LOCAL_WORKFLOW_DOC = ROOT / "docs/local-workflow.md"
 RUNTIME_REPORT_CHECKER = ROOT / "scripts/check_bepinex_runtime_smoke_report.py"
 RUNTIME_REPORT_WRITER = ROOT / "scripts/write_bepinex_runtime_smoke_report.py"
 RUNTIME_REPORT_REVIEWER = ROOT / "scripts/review_bepinex_runtime_smoke_report.py"
@@ -61,6 +62,7 @@ METADATA_PROBE_WRITER = ROOT / "scripts/write_bepinex_metadata_probe_report.py"
 METADATA_PROBE_REVIEWER = ROOT / "scripts/review_bepinex_metadata_probe_report.py"
 METADATA_PROBE_LOCAL_SMOKE_HELPER = ROOT / "scripts/run_bepinex_metadata_probe_local_smoke.py"
 BRIDGE_TO_OVERLAY_SMOKE_HELPER = ROOT / "scripts/run_bridge_to_overlay_synthetic_smoke.py"
+LOCAL_BRIDGE_WORKFLOW_HELPER = ROOT / "scripts/run_local_bridge_workflow.py"
 METADATA_EXTENSION_GATE_FIXTURE = (
     ROOT / "tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json"
 )
@@ -214,6 +216,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_post_bridge_to_overlay_next_step_contract())
     errors.extend(_check_local_metadata_probe_smoke_helper())
     errors.extend(_check_bridge_to_overlay_smoke_helper())
+    errors.extend(_check_local_bridge_workflow_helper())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
     errors.extend(_check_ignored_output_roots())
@@ -242,6 +245,7 @@ def _check_required_files() -> list[str]:
         LOG_CONTRACT_DOC,
         RUNTIME_REPORT_DOC,
         METADATA_PROBE_SMOKE_DOC,
+        LOCAL_WORKFLOW_DOC,
         RUNTIME_REPORT_FIXTURE_PATH,
         RUNTIME_REPORT_CHECKER,
         RUNTIME_REPORT_WRITER,
@@ -252,6 +256,7 @@ def _check_required_files() -> list[str]:
         METADATA_PROBE_REVIEWER,
         METADATA_PROBE_LOCAL_SMOKE_HELPER,
         BRIDGE_TO_OVERLAY_SMOKE_HELPER,
+        LOCAL_BRIDGE_WORKFLOW_HELPER,
         METADATA_EXTENSION_GATE_FIXTURE,
         METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
         POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE,
@@ -542,6 +547,83 @@ def _check_bridge_to_overlay_smoke_helper() -> list[str]:
                 errors.append(
                     f"{doc_path.relative_to(ROOT)} must document bridge-to-overlay flag {marker}."
                 )
+    return errors
+
+
+def _check_local_bridge_workflow_helper() -> list[str]:
+    errors: list[str] = []
+    if not LOCAL_BRIDGE_WORKFLOW_HELPER.exists():
+        return [
+            f"Missing required local bridge workflow helper: "
+            f"{LOCAL_BRIDGE_WORKFLOW_HELPER.relative_to(ROOT)}"
+        ]
+
+    text = _read_text(LOCAL_BRIDGE_WORKFLOW_HELPER)
+    relative = LOCAL_BRIDGE_WORKFLOW_HELPER.relative_to(ROOT)
+    required_markers = (
+        "doctor",
+        "prepare-metadata-smoke",
+        "prepare-companion-smoke",
+        "prepare-bridge-to-overlay-smoke",
+        "post-bridge-to-overlay-smoke",
+        "cleanup",
+        "CompanionClient",
+        "discover_local_smoke_paths",
+        "discovery_summary",
+        "enable_probe_flow",
+        "set_synthetic_send_config_action",
+        "run_bridge_to_overlay_smoke",
+        "git",
+        "no_raw_logs_reports_staged",
+        "no_game_launch_performed",
+        "raw_log_included",
+        "raw_provider_payload_included",
+        "companion_contract_changed",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(f"{relative}: local workflow helper missing marker {marker!r}.")
+
+    forbidden_runtime_markers = (
+        "subprocess.Popen",
+        "os.system",
+        "Start-Process",
+        "ShellExecute",
+        "CreateProcess",
+        "steam://",
+        "rungameid",
+        "os.walk",
+        "shutil.rmtree",
+        "provider_annotate",
+        "post_synthetic_event",
+        "run_companion_client",
+    )
+    for marker in forbidden_runtime_markers:
+        if marker in text:
+            errors.append(
+                f"{relative}: local workflow helper contains forbidden marker {marker!r}."
+            )
+
+    helper_ref = str(LOCAL_BRIDGE_WORKFLOW_HELPER.relative_to(ROOT)).replace("\\", "/")
+    docs_to_link = (
+        LOCAL_WORKFLOW_DOC,
+        METADATA_PROBE_SMOKE_DOC,
+        ROOT / "docs/bepinex-bridge.md",
+    )
+    for doc_path in docs_to_link:
+        if not doc_path.exists():
+            continue
+        doc_text = _read_text(doc_path).replace("\\", "/")
+        if helper_ref not in doc_text:
+            errors.append(f"{doc_path.relative_to(ROOT)} must point to {helper_ref}.")
+        for marker in (
+            "--phase doctor",
+            "--phase prepare-bridge-to-overlay-smoke",
+            "--phase post-bridge-to-overlay-smoke",
+            "--phase cleanup",
+        ):
+            if marker not in doc_text:
+                errors.append(f"{doc_path.relative_to(ROOT)} must document {marker}.")
     return errors
 
 
@@ -1100,6 +1182,8 @@ def _check_check_all_smoke() -> list[str]:
         return ["scripts/check_all.py must not require the local metadata probe smoke helper."]
     if "scripts/run_bridge_to_overlay_synthetic_smoke.py" in text:
         return ["scripts/check_all.py must not require the bridge-to-overlay smoke helper."]
+    if "scripts/run_local_bridge_workflow.py" in text:
+        return ["scripts/check_all.py must not require the local bridge workflow helper."]
     return []
 
 

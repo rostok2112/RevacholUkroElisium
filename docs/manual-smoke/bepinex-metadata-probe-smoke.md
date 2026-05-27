@@ -269,6 +269,65 @@ does not prove or approve current-line capture, real text capture, UI text readi
 hooks, OCR, extraction, real provider execution, production overlay behavior, or companion HTTP
 contract changes.
 
+## Repeatable Local Workflow Wrapper
+
+For day-to-day local smoke prep, use:
+
+```text
+docs/local-workflow.md
+scripts/run_local_bridge_workflow.py
+```
+
+Start with the redacted doctor:
+
+```powershell
+python scripts/run_local_bridge_workflow.py --phase doctor --auto-discover
+```
+
+Prepare a narrow metadata smoke:
+
+```powershell
+python scripts/run_local_bridge_workflow.py --phase prepare-metadata-smoke --auto-discover
+```
+
+Prepare a companion-connected synthetic smoke:
+
+```powershell
+python scripts/run_local_bridge_workflow.py --phase prepare-companion-smoke --auto-discover
+```
+
+Prepare the full bridge-to-overlay synthetic smoke:
+
+```powershell
+python scripts/run_local_bridge_workflow.py --phase prepare-bridge-to-overlay-smoke --auto-discover
+```
+
+Then manually launch and close the game yourself. After closing the game:
+
+```powershell
+python scripts/run_local_bridge_workflow.py `
+  --phase post-bridge-to-overlay-smoke `
+  --auto-discover `
+  --write-report
+```
+
+Clean up all local bridge flags:
+
+```powershell
+python scripts/run_local_bridge_workflow.py --phase cleanup --auto-discover
+```
+
+Then, with the companion server intentionally running, check the metadata-only overlay readiness
+summary:
+
+```powershell
+python scripts/run_overlay_refresh_readiness.py --quiet
+```
+
+The wrapper does not replace the safety rules above. It must not launch the game, print raw
+`LogOutput.log`, dump provider payloads, commit workspace artifacts, add C# behavior, add companion
+endpoints, or implement capture.
+
 ## Manual Report Template
 
 Write a blank redacted local template under the ignored workspace report root:

@@ -1,5 +1,33 @@
 # Next Actions
 
+After local bridge workflow polish:
+
+1. Use `python scripts/run_local_bridge_workflow.py --phase doctor --auto-discover` before local
+   smoke runs to catch missing setup and staged runtime artifacts without exposing private paths by
+   default.
+2. For the current synthetic path, use the wrapper sequence:
+   `--phase prepare-bridge-to-overlay-smoke`, manual game launch/close,
+   `--phase post-bridge-to-overlay-smoke --write-report`, then `--phase cleanup`.
+3. Keep `scripts/run_overlay_refresh_readiness.py --quiet` as the final metadata-only readiness
+   summary after a successful local smoke.
+4. Do not commit `workspace/synthetic-slice/`, reports, generated HTML, logs, screenshots, `bin/`,
+   `obj/`, game files, provider payloads, or private paths.
+5. Keep current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony,
+   OCR, extraction, real provider execution, companion HTTP contract changes, polling loops, timers,
+   background workers, and production overlay shell work closed.
+
+Recommended next safe step:
+
+- Run the polished wrapper locally for the next synthetic bridge-to-overlay pass, or decide whether
+  its redacted doctor/post summaries are enough to scope a production-overlay shell contract as
+  docs/static-contract work first.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after local bridge workflow polish. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/local-workflow.md, docs/bepinex-bridge.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, scripts/run_local_bridge_workflow.py, scripts/run_bridge_to_overlay_synthetic_smoke.py, and scripts/run_overlay_refresh_readiness.py. Use the workflow wrapper only for redacted local synthetic smoke orchestration; do not launch the game automatically, print raw logs, dump provider payloads, commit workspace artifacts, add C# behavior, add companion HTTP endpoints, call real providers, implement polling/timers/background workers, implement production overlay shell behavior, or add current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, downloads, or new dependencies.`
+
+---
+
 After the metadata-only overlay refresh readiness helper:
 
 1. Treat `scripts/run_overlay_refresh_readiness.py` as a redacted readiness summarizer only. It is
