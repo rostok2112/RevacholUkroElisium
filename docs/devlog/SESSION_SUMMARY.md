@@ -1,5 +1,24 @@
 # Session Summary
 
+Milestone 5A extraction/indexing scope contract is implemented.
+
+Completed in the latest session:
+- Added `docs/adr/0011-real-extraction-indexing-scope.md`, the canonical true Milestone 5A
+  scope/safety record.
+- Added `tests/fixtures/extraction_indexing_scope.synthetic.json`, a synthetic machine-readable
+  contract that keeps implementation blocked while allowing only local-only, user-selected,
+  ignored/private future extraction/indexing inputs and indexes.
+- Added `scripts/check_extraction_indexing_scope.py` and wired it into `scripts/check_all.py`.
+- Added focused tests for fixture shape, false dangerous permissions, unsafe private output roots,
+  unsafe marker values, docs links, and check-all registration.
+- The allowed future private index root is `workspace/local-private/extraction-indexing/`, which is
+  under ignored `workspace/`.
+- Real extraction/indexing implementation has not started. The next step is a separate synthetic
+  indexer and private index contract.
+- Did not read game files, scan installs, create indexes, add C#/bridge behavior, change companion
+  HTTP contracts, call providers, add current-line capture, read UI text, scan Unity objects, add
+  hooks/Harmony, run OCR, or commit real game/runtime artifacts.
+
 Milestone 4 closeout local bridge workflow smoke is recorded.
 
 Completed in the latest session:

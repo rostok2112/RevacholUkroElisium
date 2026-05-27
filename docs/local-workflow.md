@@ -8,6 +8,20 @@ This is Milestone 4 closeout / bridge workflow polish. It is not top-level Miles
 bridge skeleton is completed and over-validated by redacted runtime smoke evidence. The true next
 top-level milestone remains Milestone 5A: real extraction/indexing adapter, local-only.
 
+Milestone 5A now begins with a scope/safety contract only:
+
+```text
+docs/adr/0011-real-extraction-indexing-scope.md
+tests/fixtures/extraction_indexing_scope.synthetic.json
+scripts/check_extraction_indexing_scope.py
+```
+
+The 5A contract permits only a future local-only, user-selected, ignored/private extraction/indexing
+path. Real extraction/indexing implementation remains blocked until a later synthetic indexer and
+private index contract is approved. It does not approve automatic game-install scanning, committed
+game text, current-line capture, UI text reading, Unity scanning, hooks/Harmony, OCR, decompiled
+game code, companion HTTP contract changes, or real provider execution.
+
 The wrapper exists to reduce command sprawl. It delegates to the existing redacted helpers:
 
 - `scripts/run_bepinex_metadata_probe_local_smoke.py`

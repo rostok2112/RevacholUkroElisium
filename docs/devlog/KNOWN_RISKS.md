@@ -1,5 +1,18 @@
 # Known Risks
 
+- Milestone 5A currently defines only the extraction/indexing scope contract. Real
+  extraction/indexing implementation remains blocked until a later synthetic indexer and private
+  index contract is approved.
+- The future private index root `workspace/local-private/extraction-indexing/` is ignored, but
+  ignored paths can still leak if copied into docs, tests, fixtures, reports, commits, or chat.
+  Keep raw extracted text, localization dumps, game logs, screenshots, save data, private paths, and
+  generated indexes out of tracked files.
+- Metadata-only file summaries and hashes can still reveal local file presence. Treat them as
+  private local diagnostics unless a later checker explicitly approves a redacted synthetic form.
+- Do not relax the 5A scope fixture to allow automatic game-install scanning, current-line capture,
+  UI text reading, Unity scanning, hooks/Harmony, OCR, decompiled game-code details, companion HTTP
+  contract changes, real provider execution, or committed real content without a separate safety
+  review.
 - Milestone 4 closeout workflow smoke proves only the redacted synthetic/manual bridge-to-overlay
   path and local workflow repeatability. It still does not prove current-line capture, real text
   capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution,

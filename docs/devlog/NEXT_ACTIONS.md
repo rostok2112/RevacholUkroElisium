@@ -1,5 +1,30 @@
 # Next Actions
 
+After the Milestone 5A extraction/indexing scope contract:
+
+1. Treat true Milestone 5A as started only at the docs/static-contract layer. Real
+   extraction/indexing implementation remains blocked.
+2. Use `docs/adr/0011-real-extraction-indexing-scope.md`,
+   `tests/fixtures/extraction_indexing_scope.synthetic.json`, and
+   `scripts/check_extraction_indexing_scope.py` as the current guardrail.
+3. Keep future private indexes under `workspace/local-private/extraction-indexing/`; do not commit
+   private indexes, raw extracted text, localization dumps, game logs, screenshots, save files,
+   private paths, or generated real-input reports.
+4. Do not add automatic game-install scanning, current-line capture, UI text reading, Unity
+   scanning, hooks/Harmony, OCR, decompiled game-code work, companion HTTP contract changes, real
+   provider execution, production overlay shell behavior, downloads, or new dependencies.
+
+Recommended next safe step:
+
+- Define the synthetic indexer and private index contract before any adapter touches user-selected
+  private inputs.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after the Milestone 5A extraction/indexing scope contract. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/adr/0011-real-extraction-indexing-scope.md, tests/fixtures/extraction_indexing_scope.synthetic.json, scripts/check_extraction_indexing_scope.py, docs/local-workflow.md, and docs/09-legal-and-data-safety.md. Implement the next 5A step only as a synthetic indexer and private index contract unless explicitly approved otherwise. Keep committed data synthetic/redacted; keep private outputs under workspace/local-private/extraction-indexing/. Do not read real game files, scan the game install automatically, commit game text or localization dumps, read BepInEx logs, read saves, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, OCR, decompiled game-code work, companion HTTP contract changes, real provider execution, production overlay shell work, downloads, or new dependencies.`
+
+---
+
 After Milestone 4 closeout workflow smoke:
 
 1. Treat expanded Milestone 4 bridge/workflow validation as closed. The BepInEx bridge skeleton has

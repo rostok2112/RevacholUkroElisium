@@ -173,6 +173,14 @@ def main() -> int:
             ],
         ),
         (
+            "extraction/indexing scope contract",
+            [
+                sys.executable,
+                "scripts/check_extraction_indexing_scope.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,
