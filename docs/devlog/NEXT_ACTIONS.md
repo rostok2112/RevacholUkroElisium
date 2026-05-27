@@ -1,5 +1,28 @@
 # Next Actions
 
+After Milestone 5A.1 synthetic indexer and private index contract:
+
+1. Treat `scripts/run_synthetic_extraction_indexer.py` as a synthetic-only helper. It is not a real
+   extraction adapter and must not be pointed at game files.
+2. Validate the contract with `python scripts/check_extraction_index_contract.py --quiet`.
+3. Keep generated private index output under `workspace/local-private/extraction-indexing/` and out
+   of git.
+4. Do not add automatic game-install scanning, BepInEx log reads, screenshots, OCR, current-line
+   capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP
+   contract changes, provider execution, or production overlay shell behavior.
+
+Recommended next safe step:
+
+- Define a user-selected private input adapter contract. It should describe how a user will
+  explicitly place or point to private local inputs under ignored workspace paths before any real
+  adapter reads them.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.1 synthetic indexer/private index contract. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/adr/0011-real-extraction-indexing-scope.md, docs/extraction-indexing-private-index-contract.md, scripts/run_synthetic_extraction_indexer.py, scripts/check_extraction_index_contract.py, and tests/fixtures/extraction_index.synthetic.json. Implement the next 5A step only as a user-selected private input adapter contract unless explicitly approved otherwise. Keep committed data synthetic/redacted; keep private outputs under workspace/local-private/extraction-indexing/. Do not read real game files, scan the game install automatically, commit game text or localization dumps, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled game-code work, companion HTTP contract changes, real provider execution, production overlay shell work, downloads, or new dependencies.`
+
+---
+
 After the Milestone 5A extraction/indexing scope contract:
 
 1. Treat true Milestone 5A as started only at the docs/static-contract layer. Real

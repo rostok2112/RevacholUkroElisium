@@ -1,5 +1,27 @@
 # Session Summary
 
+Milestone 5A.1 synthetic indexer and private index contract is implemented.
+
+Completed in the latest session:
+- Added `docs/extraction-indexing-private-index-contract.md`, defining the synthetic source-record
+  shape, `schema_version: "extraction-index.v1"` private index shape, redaction rules, and the
+  ignored private output root.
+- Added synthetic-only fixtures:
+  `tests/fixtures/extraction_index_source_records.synthetic.json` and
+  `tests/fixtures/extraction_index.synthetic.json`.
+- Added `scripts/run_synthetic_extraction_indexer.py`, a stdlib-only deterministic helper that
+  reads synthetic source records, builds a term index, prints a redacted summary, and may write only
+  under `workspace/local-private/extraction-indexing/`.
+- Added `scripts/check_extraction_index_contract.py` and wired it into `scripts/check_all.py`.
+- Added focused tests for fixture validation, deterministic output, unsafe output rejection,
+  marker rejection, quiet CLI behavior, and private workspace output handling.
+- Updated ADR 0011 to point to the 5A.1 contract, fixtures, indexer, and checker.
+- Real extraction from game files remains unimplemented and blocked. The next safe step is a
+  user-selected private input adapter contract before any real local input reads.
+- Did not read real game files, scan installs, read BepInEx logs, read screenshots, run OCR, add
+  current-line capture, read UI text, scan Unity objects, add hooks/Harmony, use decompiled game
+  code, change companion HTTP contracts, call providers, or commit real extracted text.
+
 Milestone 5A extraction/indexing scope contract is implemented.
 
 Completed in the latest session:

@@ -1,0 +1,74 @@
+{
+  "schema_version": "extraction-index-source-records.v1",
+  "source_kind": "synthetic_fixture",
+  "generated_from_synthetic_fixture": true,
+  "records": [
+    {
+      "record_id": "synthetic.extract.001",
+      "source_text": "The brass kettle hummed politely while the clerk counted imaginary raindrops.",
+      "speaker_label": "synthetic_clerk",
+      "context_tags": [
+        "synthetic-office",
+        "dry-humor"
+      ],
+      "glossary_tokens": [
+        "kettle",
+        "raindrops"
+      ],
+      "redacted_metadata": {
+        "fixture_only": true,
+        "real_game_text": false
+      }
+    },
+    {
+      "record_id": "synthetic.extract.002",
+      "source_text": "A paper lantern blinked twice and the committee approved another pause.",
+      "speaker_label": "synthetic_committee",
+      "context_tags": [
+        "invented-meeting",
+        "bureaucratic-joke"
+      ],
+      "glossary_tokens": [
+        "lantern",
+        "pause"
+      ],
+      "redacted_metadata": {
+        "fixture_only": true,
+        "real_game_text": false
+      }
+    },
+    {
+      "record_id": "synthetic.extract.003",
+      "source_text": "The ferry bell practiced patience beside a map of invented streets.",
+      "speaker_label": "synthetic_bell",
+      "context_tags": [
+        "imaginary-harbor",
+        "quiet-absurdity"
+      ],
+      "glossary_tokens": [
+        "ferry",
+        "patience"
+      ],
+      "redacted_metadata": {
+        "fixture_only": true,
+        "real_game_text": false
+      }
+    }
+  ],
+  "safety_flags": {
+    "real_game_text_included": false,
+    "raw_payloads_included": false,
+    "automatic_game_install_scanning": false,
+    "game_files_read": false,
+    "bepinex_logs_read": false,
+    "screenshots_read": false,
+    "ocr_used": false,
+    "hooks_used": false,
+    "unity_scanning_used": false,
+    "current_line_capture_used": false,
+    "ui_text_reading_used": false,
+    "decompiled_code_used": false,
+    "companion_contract_changed": false,
+    "provider_called": false
+  }
+}

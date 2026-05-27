@@ -1,8 +1,19 @@
 # Known Risks
 
-- Milestone 5A currently defines only the extraction/indexing scope contract. Real
-  extraction/indexing implementation remains blocked until a later synthetic indexer and private
-  index contract is approved.
+- Milestone 5A.1 proves only deterministic indexing over committed synthetic records. It does not
+  prove real extraction, real file compatibility, game data shape, private index usefulness, or
+  runtime integration.
+- The synthetic index fixture contains invented text by design. Do not replace it with real
+  extracted text, raw localization rows, screenshots, OCR output, BepInEx logs, save data, private
+  paths, provider payloads, or decompiled game-code details.
+- `scripts/run_synthetic_extraction_indexer.py --output` can write under
+  `workspace/local-private/extraction-indexing/`. That directory is ignored, but generated private
+  indexes still must not be copied into tracked docs, tests, fixtures, reports, commits, or chat.
+- A future user-selected private input adapter must define input placement, validation, deletion,
+  and redacted reporting before any real local input reads occur.
+- Milestone 5A has a scope contract and a synthetic indexer/private index contract only. Real
+  extraction/indexing implementation remains blocked until a user-selected private input adapter
+  contract is approved.
 - The future private index root `workspace/local-private/extraction-indexing/` is ignored, but
   ignored paths can still leak if copied into docs, tests, fixtures, reports, commits, or chat.
   Keep raw extracted text, localization dumps, game logs, screenshots, save data, private paths, and

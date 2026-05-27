@@ -1,8 +1,14 @@
 # Decisions Pending
 
-- Milestone 5A now has a scope/safety contract. Decide the next 5A step as a synthetic indexer and
-  private index contract before any adapter reads user-selected private inputs or writes private
-  indexes.
+- Milestone 5A.1 now has a synthetic indexer/private index contract. Decide the next 5A step as a
+  user-selected private input adapter contract before any real local input reads.
+- Decide whether future private inputs must be copied under `workspace/local-private/` first or may
+  be referenced by explicit user-provided paths with redacted summaries only.
+- Decide the private input summary fields, deletion/regeneration workflow, and checker rules before
+  implementing any real input adapter.
+- Milestone 5A scope/safety was followed by the synthetic indexer/private index contract. The next
+  decision is the user-selected private input adapter contract before any adapter reads real local
+  inputs.
 - Decide the private index shape, redacted summary fields, deletion/regeneration behavior, and
   checker rules for `workspace/local-private/extraction-indexing/` before implementation.
 - Expanded Milestone 4 bridge/workflow validation is closed. Decide the exact Milestone 5A

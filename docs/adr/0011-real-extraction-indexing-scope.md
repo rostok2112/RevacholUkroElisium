@@ -100,6 +100,31 @@ python scripts/check_extraction_indexing_scope.py --quiet
 The fixture is synthetic-only. It records the 5A local-only boundary, the ignored private output
 root, and the rule that implementation is not yet approved.
 
+## Milestone 5A.1 Synthetic Indexer Contract
+
+Milestone 5A.1 defines the synthetic indexer and private index contract in:
+
+```text
+docs/extraction-indexing-private-index-contract.md
+tests/fixtures/extraction_index_source_records.synthetic.json
+tests/fixtures/extraction_index.synthetic.json
+scripts/run_synthetic_extraction_indexer.py
+scripts/check_extraction_index_contract.py
+```
+
+The indexer reads only committed synthetic source records by default, builds a deterministic
+`schema_version: "extraction-index.v1"` index, and can write generated private-index output only
+under:
+
+```text
+workspace/local-private/extraction-indexing/
+```
+
+This satisfies the synthetic indexer/private index contract prerequisite only. It does not approve
+real extraction from game files, automatic game-install scanning, current-line capture, UI text
+reading, Unity scanning, hooks/Harmony, OCR, decompiled game-code work, companion HTTP contract
+changes, provider execution, or committed real extracted text.
+
 ## Consequences
 
 Pros:

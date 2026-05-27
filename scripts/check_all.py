@@ -181,6 +181,14 @@ def main() -> int:
             ],
         ),
         (
+            "synthetic extraction index contract",
+            [
+                sys.executable,
+                "scripts/check_extraction_index_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

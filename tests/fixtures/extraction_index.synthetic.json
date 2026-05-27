@@ -1,0 +1,261 @@
+{
+  "generated_from_synthetic_fixture": true,
+  "private_index_root": "workspace/local-private/extraction-indexing/",
+  "record_count": 3,
+  "records": [
+    {
+      "context_tags": [
+        "dry-humor",
+        "synthetic-office"
+      ],
+      "glossary_tokens": [
+        "kettle",
+        "raindrops"
+      ],
+      "record_id": "synthetic.extract.001",
+      "source_kind": "synthetic_fixture",
+      "term_count": 8,
+      "terms": [
+        "brass",
+        "clerk",
+        "counted",
+        "hummed",
+        "imaginary",
+        "kettle",
+        "politely",
+        "raindrops"
+      ],
+      "text_digest": "843993f3612e328cde54b5d55be4426f4d64b1d23808399a9403b5862db6a7a0"
+    },
+    {
+      "context_tags": [
+        "bureaucratic-joke",
+        "invented-meeting"
+      ],
+      "glossary_tokens": [
+        "lantern",
+        "pause"
+      ],
+      "record_id": "synthetic.extract.002",
+      "source_kind": "synthetic_fixture",
+      "term_count": 7,
+      "terms": [
+        "approved",
+        "blinked",
+        "committee",
+        "lantern",
+        "paper",
+        "pause",
+        "twice"
+      ],
+      "text_digest": "b8cbcd2ba8ab1f4037714a4835e37d84bb61f39e7f31132608c9c79eb57f4093"
+    },
+    {
+      "context_tags": [
+        "imaginary-harbor",
+        "quiet-absurdity"
+      ],
+      "glossary_tokens": [
+        "ferry",
+        "patience"
+      ],
+      "record_id": "synthetic.extract.003",
+      "source_kind": "synthetic_fixture",
+      "term_count": 8,
+      "terms": [
+        "bell",
+        "beside",
+        "ferry",
+        "invented",
+        "map",
+        "patience",
+        "practiced",
+        "streets"
+      ],
+      "text_digest": "0fba309c6dbc3b45d062124f4514977c20acf485a97ccd6811943871a2ea7281"
+    }
+  ],
+  "safety_flags": {
+    "automatic_game_install_scanning": false,
+    "bepinex_logs_read": false,
+    "companion_contract_changed": false,
+    "current_line_capture_used": false,
+    "decompiled_code_used": false,
+    "game_files_read": false,
+    "hooks_used": false,
+    "ocr_used": false,
+    "provider_called": false,
+    "raw_payloads_included": false,
+    "real_game_text_included": false,
+    "screenshots_read": false,
+    "ui_text_reading_used": false,
+    "unity_scanning_used": false
+  },
+  "schema_version": "extraction-index.v1",
+  "source_digest": "bf52808ac2671740cc8476015bcd6f2be4f1a941e5e71747c767cd395929eee2",
+  "source_fixture": "tests/fixtures/extraction_index_source_records.synthetic.json",
+  "source_schema_version": "extraction-index-source-records.v1",
+  "terms": [
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.002"
+      ],
+      "term": "approved"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.003"
+      ],
+      "term": "bell"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.003"
+      ],
+      "term": "beside"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.002"
+      ],
+      "term": "blinked"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.001"
+      ],
+      "term": "brass"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.001"
+      ],
+      "term": "clerk"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.002"
+      ],
+      "term": "committee"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.001"
+      ],
+      "term": "counted"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.003"
+      ],
+      "term": "ferry"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.001"
+      ],
+      "term": "hummed"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.001"
+      ],
+      "term": "imaginary"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.003"
+      ],
+      "term": "invented"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.001"
+      ],
+      "term": "kettle"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.002"
+      ],
+      "term": "lantern"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.003"
+      ],
+      "term": "map"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.002"
+      ],
+      "term": "paper"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.003"
+      ],
+      "term": "patience"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.002"
+      ],
+      "term": "pause"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.001"
+      ],
+      "term": "politely"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.003"
+      ],
+      "term": "practiced"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.001"
+      ],
+      "term": "raindrops"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.003"
+      ],
+      "term": "streets"
+    },
+    {
+      "record_count": 1,
+      "record_ids": [
+        "synthetic.extract.002"
+      ],
+      "term": "twice"
+    }
+  ]
+}
