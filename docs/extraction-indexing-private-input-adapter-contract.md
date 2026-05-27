@@ -85,6 +85,42 @@ python scripts/check_extraction_private_input_adapter_contract.py --quiet
 The fixture records that implementation remains blocked and that a later private input adapter must
 be explicit, dry-run-first, local-only, and workspace-private.
 
+## Milestone 5A.3 Dry-Run Helper
+
+Milestone 5A.3 implements the first private input adapter dry-run helper:
+
+```powershell
+python scripts/run_private_input_adapter_dry_run.py --input workspace/local-private/extraction-indexing/input/<selected-file-or-directory>
+```
+
+The helper reads only filesystem metadata for the one explicit selected path. It accepts input only
+under `workspace/local-private/extraction-indexing/input/` and may write a redacted JSON summary only
+under `workspace/local-private/extraction-indexing/`.
+
+The dry-run summary uses:
+
+```text
+schema_version: "private-input-adapter-dry-run-summary.v1"
+```
+
+It may report only:
+
+- whether the input exists;
+- `input_kind`: file, directory, missing, or unsupported;
+- file count;
+- directory count;
+- total size in bytes;
+- the allowed private input/output roots;
+- redacted blocker categories;
+- explicit false safety flags for raw text, raw payloads, automatic scanning, logs, screenshots,
+  OCR, saves, hooks, Unity scanning, current-line capture, UI text reading, decompiled code,
+  companion contract changes, and provider calls.
+
+Although the 5A.2 contract allows future hash summaries, 5A.3 deliberately defers hashes. The helper
+sets `hashes_computed=false`, does not read file contents, and does not build an index from private
+input. Default output redacts private absolute paths. `--verbose` may show local paths for the user,
+but it still must not print file contents.
+
 ## Relationship To 5A.1
 
 Milestone 5A.1 produced the synthetic indexer/private index contract:

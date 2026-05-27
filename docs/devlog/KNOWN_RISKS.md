@@ -1,5 +1,14 @@
 # Known Risks
 
+- Milestone 5A.3 reads filesystem metadata for one explicit workspace-private input. It still can
+  reveal local file existence, counts, sizes, and directory structure in ignored local summaries.
+- `scripts/run_private_input_adapter_dry_run.py --verbose` may show private local paths for the
+  user's own debugging. Do not paste verbose output into tracked docs, tests, fixtures, commits, or
+  chat.
+- The dry-run helper deliberately does not compute hashes. Adding hashes later is a privacy decision
+  because hashes can still identify known private files.
+- A future private index construction step must not treat a successful dry-run as approval to read,
+  store, or commit real extracted text.
 - Milestone 5A.2 defines a private input adapter contract only. It does not prove real input
   compatibility, extraction correctness, private index usefulness, or runtime integration.
 - The future private input root `workspace/local-private/extraction-indexing/input/` is ignored, but

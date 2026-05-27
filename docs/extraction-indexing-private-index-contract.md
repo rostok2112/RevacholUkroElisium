@@ -78,6 +78,10 @@ That contract requires future private inputs to be copied or placed under
 `workspace/local-private/extraction-indexing/input/` first. It keeps implementation blocked and
 keeps the default future mode as dry-run metadata summary only.
 
+Milestone 5A.3 adds `scripts/run_private_input_adapter_dry_run.py`, which reads only metadata for one
+explicit workspace-private input. It does not compute content hashes yet, does not read file
+contents, and does not build private indexes from real input.
+
 ## Private Output Root
 
 The only allowed private index output root is:

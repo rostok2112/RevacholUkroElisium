@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- Milestone 5A.3 now has a private input adapter dry-run. Decide whether the metadata-only summaries
+  are sufficient to scope a later private index construction contract.
+- Decide whether content hashes should remain deferred, become opt-in, or require a separate
+  privacy review before any real private input hash is computed.
+- Decide the next private-index construction boundary before any helper reads file contents or
+  builds indexes from real input.
 - Milestone 5A.2 now has a private input adapter contract. Decide whether to implement the next
   step as a dry-run metadata adapter that reads one explicit workspace-private input and emits only
   redacted booleans, counts, hashes, schema status, and blocker categories.

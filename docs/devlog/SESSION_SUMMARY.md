@@ -1,5 +1,23 @@
 # Session Summary
 
+Milestone 5A.3 private input adapter dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_private_input_adapter_dry_run.py`, a stdlib-only helper that accepts one
+  explicit input under `workspace/local-private/extraction-indexing/input/` and emits only a
+  redacted metadata summary.
+- The dry-run summary reports existence, input kind, file count, directory count, total size, allowed
+  roots, redacted blockers, and explicit false safety flags.
+- The helper does not read file contents, compute hashes, build indexes from private input, scan game
+  installs, read BepInEx logs, parse saves, read screenshots, run OCR, add current-line capture, read
+  UI text, scan Unity objects, add hooks/Harmony, use decompiled game code, change companion HTTP
+  contracts, call providers, or commit real extracted text.
+- Added `tests/test_private_input_adapter_dry_run.py` with fake temp workspaces only.
+- Wired `python scripts/run_private_input_adapter_dry_run.py --self-test --quiet` into
+  `scripts/check_all.py` so normal validation does not require real private inputs.
+- Updated the private input and private index contracts to document the 5A.3 no-content/no-hash
+  boundary.
+
 Milestone 5A.2 private input adapter contract is implemented.
 
 Completed in the latest session:

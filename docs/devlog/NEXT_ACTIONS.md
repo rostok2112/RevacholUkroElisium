@@ -1,5 +1,30 @@
 # Next Actions
 
+After Milestone 5A.3 private input adapter dry-run:
+
+1. Use `scripts/run_private_input_adapter_dry_run.py` only for one explicit file or directory under
+   `workspace/local-private/extraction-indexing/input/`.
+2. Treat the summary as private local metadata. It can reveal file existence, counts, and sizes even
+   though it does not include contents or hashes.
+3. Keep any `--output` summaries under `workspace/local-private/extraction-indexing/` and out of git.
+4. Do not add automatic game-install scanning, arbitrary drive scans, BepInEx log reads, save
+   parsing, screenshots, OCR, content hashing, private index construction from real input,
+   current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work,
+   companion HTTP contract changes, provider execution, production overlay shell behavior, or
+   committed real extracted text.
+
+Recommended next safe step:
+
+- Decide whether dry-run metadata summaries are sufficient to approve a later private index
+  construction contract. That next decision should still happen before any real input text is read or
+  indexed.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.3 private input adapter dry-run. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/adr/0011-real-extraction-indexing-scope.md, docs/extraction-indexing-private-index-contract.md, docs/extraction-indexing-private-input-adapter-contract.md, scripts/run_private_input_adapter_dry_run.py, scripts/run_synthetic_extraction_indexer.py, and tests/test_private_input_adapter_dry_run.py. Decide the next 5A step only as a private index construction contract or another metadata-only review gate unless explicitly approved otherwise. Do not scan game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, content hashing, generated real indexes from private text, committed real extracted text, downloads, or new dependencies.`
+
+---
+
 After Milestone 5A.2 private input adapter contract:
 
 1. Treat `docs/extraction-indexing-private-input-adapter-contract.md`,
