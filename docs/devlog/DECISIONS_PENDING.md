@@ -1,5 +1,8 @@
 # Decisions Pending
 
+- Milestone naming is corrected: local bridge workflow polish is Milestone 4 closeout, not
+  top-level Milestone 5A. True Milestone 5A has not started yet and remains the real
+  extraction/indexing adapter, local-only.
 - Decide whether `scripts/run_local_bridge_workflow.py` is sufficient as the repeatable local smoke
   entrypoint, or whether future packaging should add a higher-level shell script after another
   redacted local pass.

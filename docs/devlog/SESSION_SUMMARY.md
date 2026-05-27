@@ -3,6 +3,10 @@
 Local bridge workflow polish is implemented.
 
 Completed in the latest session:
+- Recorded this work as Milestone 4 closeout / bridge workflow polish, not top-level Milestone 5A.
+- The BepInEx bridge skeleton is completed and over-validated by redacted runtime smoke evidence.
+- True Milestone 5A has not started yet; the next top-level milestone remains real
+  extraction/indexing adapter, local-only.
 - Added `scripts/run_local_bridge_workflow.py`, a stdlib-only wrapper that coordinates existing
   metadata-smoke, companion-smoke, bridge-to-overlay smoke, cleanup, and doctor checks.
 - The `doctor` phase reports redacted booleans for git cleanliness, staged runtime artifacts,

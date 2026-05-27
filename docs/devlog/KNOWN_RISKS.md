@@ -1,5 +1,8 @@
 # Known Risks
 
+- Do not mislabel Milestone 4 closeout / local bridge workflow polish as top-level Milestone 5A.
+  True Milestone 5A has not started yet and should remain reserved for the real extraction/indexing
+  adapter, local-only.
 - The local bridge workflow wrapper is a convenience coordinator only. Do not treat a green doctor or
   post phase as approval for current-line capture, real text capture, UI text reading, Unity
   scanning, hooks/Harmony, OCR, extraction, real provider execution, companion HTTP contract

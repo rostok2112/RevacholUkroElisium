@@ -2,6 +2,11 @@
 
 After local bridge workflow polish:
 
+Milestone naming correction: local bridge workflow polish is Milestone 4 closeout, not top-level
+Milestone 5A. The BepInEx bridge skeleton is completed and over-validated by redacted runtime smoke.
+True Milestone 5A has not started yet; the next top-level milestone after bridge closeout remains
+Milestone 5A: real extraction/indexing adapter, local-only.
+
 1. Use `python scripts/run_local_bridge_workflow.py --phase doctor --auto-discover` before local
    smoke runs to catch missing setup and staged runtime artifacts without exposing private paths by
    default.
@@ -18,13 +23,12 @@ After local bridge workflow polish:
 
 Recommended next safe step:
 
-- Run the polished wrapper locally for the next synthetic bridge-to-overlay pass, or decide whether
-  its redacted doctor/post summaries are enough to scope a production-overlay shell contract as
-  docs/static-contract work first.
+- Finish any remaining bridge closeout cleanup with the polished wrapper, then start true Milestone
+  5A only when explicitly requested: real extraction/indexing adapter, local-only.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after local bridge workflow polish. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/local-workflow.md, docs/bepinex-bridge.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, scripts/run_local_bridge_workflow.py, scripts/run_bridge_to_overlay_synthetic_smoke.py, and scripts/run_overlay_refresh_readiness.py. Use the workflow wrapper only for redacted local synthetic smoke orchestration; do not launch the game automatically, print raw logs, dump provider payloads, commit workspace artifacts, add C# behavior, add companion HTTP endpoints, call real providers, implement polling/timers/background workers, implement production overlay shell behavior, or add current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, downloads, or new dependencies.`
+`Continue in revachol-ukro-elisium after Milestone 4 closeout / local bridge workflow polish. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/local-workflow.md, docs/bepinex-bridge.md, docs/manual-smoke/bepinex-metadata-probe-smoke.md, scripts/run_local_bridge_workflow.py, scripts/run_bridge_to_overlay_synthetic_smoke.py, and scripts/run_overlay_refresh_readiness.py. Treat the BepInEx bridge skeleton as completed and over-validated by redacted runtime smoke. Do not call this top-level Milestone 5A. True Milestone 5A has not started yet and is real extraction/indexing adapter, local-only. Use the workflow wrapper only for redacted local synthetic smoke orchestration; do not launch the game automatically, print raw logs, dump provider payloads, commit workspace artifacts, add C# behavior, add companion HTTP endpoints, call real providers, implement polling/timers/background workers, implement production overlay shell behavior, or add current-line capture, real text capture, UI text reading, Unity scanning, hooks/Harmony, OCR, extraction, downloads, or new dependencies.`
 
 ---
 

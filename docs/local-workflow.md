@@ -4,6 +4,10 @@
 bridge workflow. It does not launch the game, read arbitrary game files, print raw logs, dump
 provider payloads, change C# behavior, add companion endpoints, or implement capture.
 
+This is Milestone 4 closeout / bridge workflow polish. It is not top-level Milestone 5A. The BepInEx
+bridge skeleton is completed and over-validated by redacted runtime smoke evidence. The true next
+top-level milestone remains Milestone 5A: real extraction/indexing adapter, local-only.
+
 The wrapper exists to reduce command sprawl. It delegates to the existing redacted helpers:
 
 - `scripts/run_bepinex_metadata_probe_local_smoke.py`
