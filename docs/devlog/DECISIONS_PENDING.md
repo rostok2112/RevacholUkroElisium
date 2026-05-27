@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- After the bridge-to-overlay synthetic smoke runs, decide whether redacted evidence of latest
+  provider state and overlay state-source/view-model/review validation is sufficient to keep
+  hardening the synthetic/manual path, or whether another companion-connected smoke pass is needed.
+- Decide whether the bridge-to-overlay wrapper should remain a smoke helper only, or whether later
+  overlay-shell planning needs a separate contract artifact. Do not treat the helper as a production
+  overlay shell.
 - After the companion-connected synthetic smoke runs, decide whether redacted evidence of companion
   health availability and the invented synthetic provider send is sufficient for the next
   synthetic/manual bridge step.

@@ -1,5 +1,30 @@
 # Next Actions
 
+After bridge-to-overlay synthetic smoke prep:
+
+1. Start the localhost companion server with `python scripts/run_companion_server.py`.
+2. Run `python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase prepare --auto-discover`
+   before manually launching the game.
+3. Manually launch and close the game; do not paste or commit raw logs.
+4. Run
+   `python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase post --auto-discover --write-report`.
+5. Review only the redacted bridge-to-overlay summary. Do not commit workspace reports, generated
+   overlay HTML, raw provider payloads, raw BepInEx logs, screenshots, private paths, or game text.
+6. Restore local config with
+   `python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase cleanup --auto-discover`.
+
+Recommended next step:
+
+- Run the bridge-to-overlay synthetic smoke locally and record only a redacted result note if the
+  wrapper reports bridge log readiness, latest provider state presence, overlay state-source
+  validity, view-model validity, and in-memory review accessibility validity.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after bridge-to-overlay synthetic smoke prep. First inspect git status and use only redacted helper output, not raw logs, report contents, companion payloads, screenshots, private paths, generated HTML, or runtime artifacts. Start/verify the local companion server, run python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase prepare --auto-discover, wait for the user to manually launch and close the game, then run python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase post --auto-discover --write-report and python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase cleanup --auto-discover. Report only redacted booleans for bridge log readiness, latest provider state, overlay state-source/view-model/review validation, and cleanup; still do not add current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction, real provider execution, companion HTTP contract changes, committed logs, screenshots, reports, generated HTML, downloads, or dependencies.`
+
+---
+
 After the companion-connected synthetic bridge smoke passed:
 
 1. Treat the successful smoke as evidence only for localhost companion availability, invented

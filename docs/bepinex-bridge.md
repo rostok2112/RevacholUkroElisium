@@ -271,6 +271,32 @@ The manual metadata probe smoke checklist is:
 docs/manual-smoke/bepinex-metadata-probe-smoke.md
 ```
 
+After the companion-connected synthetic smoke passes, the next synthetic/manual wrapper is:
+
+```text
+scripts/run_bridge_to_overlay_synthetic_smoke.py
+```
+
+It prepares the same bridge config flags, reads only the existing redacted metadata-probe log/report
+flow after the user manually closes the game, checks companion latest provider state as booleans,
+and validates that the synthetic provider state can build an overlay state-source, view model, and
+review HTML in memory.
+
+Manual flow:
+
+```powershell
+python scripts/run_companion_server.py
+python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase prepare --auto-discover
+# manually launch and close the game
+python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase post --auto-discover --write-report
+python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase cleanup --auto-discover
+```
+
+The wrapper must not launch the game, print raw logs, dump provider payloads, call real providers,
+change companion endpoints, or commit workspace artifacts. Optional summary output is restricted to
+`workspace/synthetic-slice/bepinex-bridge/bridge-to-overlay-smoke/`; optional generated overlay HTML
+is restricted to `workspace/synthetic-slice/overlay-prototype/bridge-to-overlay-smoke/`.
+
 Optional local metadata probe reports must remain ignored under:
 
 ```text

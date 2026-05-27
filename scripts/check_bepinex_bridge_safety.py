@@ -59,6 +59,7 @@ METADATA_PROBE_CHECKER = ROOT / "scripts/check_bepinex_metadata_probe_report.py"
 METADATA_PROBE_WRITER = ROOT / "scripts/write_bepinex_metadata_probe_report.py"
 METADATA_PROBE_REVIEWER = ROOT / "scripts/review_bepinex_metadata_probe_report.py"
 METADATA_PROBE_LOCAL_SMOKE_HELPER = ROOT / "scripts/run_bepinex_metadata_probe_local_smoke.py"
+BRIDGE_TO_OVERLAY_SMOKE_HELPER = ROOT / "scripts/run_bridge_to_overlay_synthetic_smoke.py"
 METADATA_EXTENSION_GATE_FIXTURE = (
     ROOT / "tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json"
 )
@@ -207,6 +208,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_metadata_extension_gate_contract())
     errors.extend(_check_metadata_only_extension_scope_contract())
     errors.extend(_check_local_metadata_probe_smoke_helper())
+    errors.extend(_check_bridge_to_overlay_smoke_helper())
     errors.extend(_check_source_contract())
     errors.extend(_check_text_safety())
     errors.extend(_check_ignored_output_roots())
@@ -243,6 +245,7 @@ def _check_required_files() -> list[str]:
         METADATA_PROBE_WRITER,
         METADATA_PROBE_REVIEWER,
         METADATA_PROBE_LOCAL_SMOKE_HELPER,
+        BRIDGE_TO_OVERLAY_SMOKE_HELPER,
         METADATA_EXTENSION_GATE_FIXTURE,
         METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
     ]
@@ -450,6 +453,87 @@ def _check_local_metadata_probe_smoke_helper() -> list[str]:
             if marker not in doc_text:
                 errors.append(
                     f"{doc_path.relative_to(ROOT)} must document local helper flag {marker}."
+                )
+    return errors
+
+
+def _check_bridge_to_overlay_smoke_helper() -> list[str]:
+    errors: list[str] = []
+    if not BRIDGE_TO_OVERLAY_SMOKE_HELPER.exists():
+        return [
+            f"Missing required bridge-to-overlay smoke helper: "
+            f"{BRIDGE_TO_OVERLAY_SMOKE_HELPER.relative_to(ROOT)}"
+        ]
+
+    text = _read_text(BRIDGE_TO_OVERLAY_SMOKE_HELPER)
+    relative = BRIDGE_TO_OVERLAY_SMOKE_HELPER.relative_to(ROOT)
+    required_markers = (
+        "--phase",
+        "prepare",
+        "post",
+        "cleanup",
+        "CompanionClient",
+        "latest_provider_context",
+        "latest_provider_annotation",
+        "build_overlay_state_source",
+        "build_overlay_view_model",
+        "render_overlay_html",
+        "collect_overlay_review_accessibility_errors",
+        "check_metadata_probe_log_action",
+        "write_metadata_probe_report",
+        "set_probe_config_action",
+        "set_synthetic_send_config_action",
+        "workspace/synthetic-slice/bepinex-bridge/bridge-to-overlay-smoke",
+        "workspace/synthetic-slice/overlay-prototype/bridge-to-overlay-smoke",
+        "no_game_launch_performed",
+        "raw_log_included",
+        "raw_provider_payload_included",
+        "provider_called",
+        "companion_contract_changed",
+    )
+    for marker in required_markers:
+        if marker not in text:
+            errors.append(f"{relative}: bridge-to-overlay helper missing marker {marker!r}.")
+
+    forbidden_runtime_markers = (
+        "subprocess.Popen",
+        "subprocess.run",
+        "os.system",
+        "Start-Process",
+        "ShellExecute",
+        "CreateProcess",
+        "steam://",
+        "rungameid",
+        "os.walk",
+        "shutil.rmtree",
+        "provider_annotate",
+        "post_synthetic_event",
+        "run_companion_client",
+        "LogOutput.log",
+        "ReadAllText",
+    )
+    for marker in forbidden_runtime_markers:
+        if marker in text:
+            errors.append(
+                f"{relative}: bridge-to-overlay helper contains forbidden marker {marker!r}."
+            )
+
+    helper_ref = str(BRIDGE_TO_OVERLAY_SMOKE_HELPER.relative_to(ROOT)).replace("\\", "/")
+    docs_to_link = (
+        METADATA_PROBE_SMOKE_DOC,
+        ROOT / "docs/bepinex-bridge.md",
+        ROOT / "docs/overlay-prototype.md",
+    )
+    for doc_path in docs_to_link:
+        if not doc_path.exists():
+            continue
+        doc_text = _read_text(doc_path).replace("\\", "/")
+        if helper_ref not in doc_text:
+            errors.append(f"{doc_path.relative_to(ROOT)} must point to {helper_ref}.")
+        for marker in ("--phase prepare", "--phase post", "--phase cleanup"):
+            if marker not in doc_text:
+                errors.append(
+                    f"{doc_path.relative_to(ROOT)} must document bridge-to-overlay flag {marker}."
                 )
     return errors
 
@@ -868,6 +952,8 @@ def _check_check_all_smoke() -> list[str]:
         return ["scripts/check_all.py must not require the optional BepInEx bridge build helper."]
     if "scripts/run_bepinex_metadata_probe_local_smoke.py" in text:
         return ["scripts/check_all.py must not require the local metadata probe smoke helper."]
+    if "scripts/run_bridge_to_overlay_synthetic_smoke.py" in text:
+        return ["scripts/check_all.py must not require the bridge-to-overlay smoke helper."]
     return []
 
 

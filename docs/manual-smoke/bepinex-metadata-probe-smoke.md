@@ -204,6 +204,71 @@ under `BepInEx/config/`, and read only `BepInEx/LogOutput.log`. It must not prin
 store raw logs, recursively scan drives, parse dialogue, read arbitrary game files, inspect
 screenshots, run OCR, launch the game, call providers, or change the companion HTTP contract.
 
+## Bridge-To-Overlay Synthetic Smoke Prep
+
+After the companion-connected synthetic smoke passes, use the redacted wrapper to prove the next
+synthetic-only path into the overlay state-source and review renderer:
+
+```text
+scripts/run_bridge_to_overlay_synthetic_smoke.py
+```
+
+In terminal A, start the local companion server:
+
+```powershell
+python scripts/run_companion_server.py
+```
+
+Prepare the local bridge config before manually launching the game:
+
+```powershell
+python scripts/run_bridge_to_overlay_synthetic_smoke.py `
+  --phase prepare `
+  --auto-discover
+```
+
+Then launch and close the game yourself. After closing the game, run the redacted post-run bridge to
+overlay check:
+
+```powershell
+python scripts/run_bridge_to_overlay_synthetic_smoke.py `
+  --phase post `
+  --auto-discover `
+  --write-report
+```
+
+The post phase reads bridge evidence only through the existing redacted metadata probe helper,
+queries only the companion latest provider context/annotation presence, builds the overlay
+state-source and view model in memory, renders HTML in memory, and reports booleans/status only.
+It must not print raw BepInEx logs, provider payloads, report contents, private paths, screenshots,
+or game text.
+
+Cleanup restores all local flags:
+
+```powershell
+python scripts/run_bridge_to_overlay_synthetic_smoke.py `
+  --phase cleanup `
+  --auto-discover
+```
+
+Optional redacted summaries belong only under:
+
+```text
+workspace/synthetic-slice/bepinex-bridge/bridge-to-overlay-smoke/
+```
+
+Optional generated overlay review HTML belongs only under:
+
+```text
+workspace/synthetic-slice/overlay-prototype/bridge-to-overlay-smoke/
+```
+
+Passing this smoke proves only the invented synthetic bridge event can be observed through companion
+latest provider state and transformed into an overlay state-source/view-model/review validation. It
+does not prove or approve current-line capture, real text capture, UI text reading, Unity scanning,
+hooks, OCR, extraction, real provider execution, production overlay behavior, or companion HTTP
+contract changes.
+
 ## Manual Report Template
 
 Write a blank redacted local template under the ignored workspace report root:

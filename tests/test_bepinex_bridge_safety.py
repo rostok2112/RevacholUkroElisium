@@ -8,6 +8,7 @@ import unittest
 from scripts.check_bepinex_bridge_safety import (
     ALLOWED_URLS,
     BUILD_HELPER,
+    BRIDGE_TO_OVERLAY_SMOKE_HELPER,
     CHECK_ALL,
     CURRENT_LINE_CAPTURE_ADR,
     DEFAULT_URL,
@@ -345,6 +346,63 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
             "shutil.rmtree",
             "requests.",
             "urllib.request",
+        ):
+            with self.subTest(marker=marker):
+                self.assertNotIn(marker, helper)
+
+    def test_bridge_to_overlay_smoke_helper_is_registered_and_documented(self) -> None:
+        helper_ref = "scripts/run_bridge_to_overlay_synthetic_smoke.py"
+
+        self.assertTrue(BRIDGE_TO_OVERLAY_SMOKE_HELPER.exists())
+        for doc_path in (
+            METADATA_PROBE_SMOKE_DOC,
+            ROOT / "docs/bepinex-bridge.md",
+            ROOT / "docs/overlay-prototype.md",
+        ):
+            with self.subTest(doc_path=doc_path.relative_to(ROOT)):
+                text = _read(doc_path)
+                self.assertIn(helper_ref, text)
+                self.assertIn("--phase prepare", text)
+                self.assertIn("--phase post", text)
+                self.assertIn("--phase cleanup", text)
+        self.assertNotIn(helper_ref, _read(CHECK_ALL))
+
+    def test_bridge_to_overlay_smoke_helper_is_redacted_and_bounded(self) -> None:
+        helper = _read(BRIDGE_TO_OVERLAY_SMOKE_HELPER)
+
+        for marker in (
+            "CompanionClient",
+            "latest_provider_context",
+            "latest_provider_annotation",
+            "build_overlay_state_source",
+            "build_overlay_view_model",
+            "render_overlay_html",
+            "collect_overlay_review_accessibility_errors",
+            "check_metadata_probe_log_action",
+            "write_metadata_probe_report",
+            "set_probe_config_action",
+            "set_synthetic_send_config_action",
+            "no_game_launch_performed",
+            "raw_log_included",
+            "raw_provider_payload_included",
+            "provider_called",
+            "companion_contract_changed",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, helper)
+
+        for marker in (
+            "subprocess.Popen",
+            "subprocess.run",
+            "os.system",
+            "Start-Process",
+            "steam://",
+            "rungameid",
+            "os.walk",
+            "shutil.rmtree",
+            "provider_annotate",
+            "post_synthetic_event",
+            "run_companion_client",
         ):
             with self.subTest(marker=marker):
                 self.assertNotIn(marker, helper)

@@ -1,5 +1,15 @@
 # Known Risks
 
+- The bridge-to-overlay smoke wrapper summarizes latest provider state without printing payloads.
+  If overlay construction fails, keep debugging evidence redacted into blocker categories instead of
+  committing companion payloads, generated HTML, or raw logs.
+- A successful bridge-to-overlay synthetic smoke proves only the invented bridge event can reach
+  companion latest provider state and build current overlay contracts. It is not evidence of
+  current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction,
+  real provider execution, or production overlay readiness.
+- Optional bridge-to-overlay smoke summaries and generated HTML are local workspace artifacts only;
+  do not commit files under `workspace/synthetic-slice/bepinex-bridge/bridge-to-overlay-smoke/` or
+  `workspace/synthetic-slice/overlay-prototype/bridge-to-overlay-smoke/`.
 - The companion-connected synthetic smoke temporarily enables the existing
   `SendSyntheticEventOnStart` config key. Always restore it with `--disable-synthetic-send` after
   the local run.

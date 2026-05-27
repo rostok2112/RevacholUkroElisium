@@ -315,6 +315,45 @@ This is a future-shell handoff contract. It is not a daemon, live polling loop, 
 JavaScript runtime, keyboard hook, clipboard integration, always-on-top overlay, provider execution,
 or production UI.
 
+## Bridge-To-Overlay Synthetic Smoke
+
+After the BepInEx companion-connected synthetic smoke passes, use the redacted wrapper to prove the
+synthetic latest-provider state can feed the overlay contracts:
+
+```text
+scripts/run_bridge_to_overlay_synthetic_smoke.py
+```
+
+The manual flow is:
+
+```powershell
+python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase prepare --auto-discover
+# manually launch and close the game
+python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase post --auto-discover --write-report
+python scripts/run_bridge_to_overlay_synthetic_smoke.py --phase cleanup --auto-discover
+```
+
+The post phase builds the state-source, validates the view model, renders review HTML in memory, and
+runs the existing structural accessibility guardrails. It prints only redacted booleans/status and
+must not print raw BepInEx logs, provider payloads, report contents, private paths, screenshots, game
+text, or generated HTML.
+
+Optional redacted summaries belong only under:
+
+```text
+workspace/synthetic-slice/bepinex-bridge/bridge-to-overlay-smoke/
+```
+
+Optional generated HTML belongs only under:
+
+```text
+workspace/synthetic-slice/overlay-prototype/bridge-to-overlay-smoke/
+```
+
+This still proves only a synthetic/manual bridge-to-companion-to-overlay path. It does not implement
+current-line capture, real text capture, UI text reading, Unity scanning, hooks, OCR, extraction,
+real provider calls, companion HTTP contract changes, or a production overlay shell.
+
 ## Current Limits
 
 - Synthetic-only public data.

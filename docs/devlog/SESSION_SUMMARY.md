@@ -1,5 +1,28 @@
 # Session Summary
 
+Bridge-to-overlay synthetic smoke preparation is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_bridge_to_overlay_synthetic_smoke.py`, a stdlib-only wrapper for the next
+  synthetic/manual bridge-to-overlay smoke.
+- The wrapper has `prepare`, `post`, and `cleanup` phases. It reuses the existing BepInEx metadata
+  probe helper for bridge install/config/log/report handling, uses the existing companion client for
+  latest provider state, and uses the existing overlay state-source, view-model, renderer, and
+  accessibility checks.
+- The wrapper prints only redacted booleans/status and can write optional redacted summaries under
+  `workspace/synthetic-slice/bepinex-bridge/bridge-to-overlay-smoke/`.
+- Optional generated overlay HTML is restricted to
+  `workspace/synthetic-slice/overlay-prototype/bridge-to-overlay-smoke/`.
+- Added fake-only tests for prepare/post/cleanup, redaction, unsafe output paths, missing provider
+  state, invalid overlay state, and no dependency on a real Steam install, game launch, BepInEx
+  runtime, or long-running companion server.
+- Updated bridge/manual-smoke/overlay docs, bridge safety registration, and devlog notes.
+- Did not change C# behavior, companion HTTP contracts, provider behavior, or overlay shell
+  behavior.
+- Did not launch the game, print raw logs, dump provider payloads, add current-line capture, read UI
+  text, scan Unity objects, add hooks, run OCR, perform extraction, call real providers, or commit
+  runtime artifacts.
+
 Redacted companion-connected synthetic bridge smoke evidence is recorded.
 
 Completed in the latest session:
