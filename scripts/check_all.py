@@ -206,6 +206,15 @@ def main() -> int:
             ],
         ),
         (
+            "private input adapter dry-run review smoke",
+            [
+                sys.executable,
+                "scripts/review_private_input_adapter_dry_run.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

@@ -1,5 +1,22 @@
 # Session Summary
 
+Milestone 5A.4 private input dry-run evidence and hash/index decision gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_private_input_adapter_dry_run.py`, a stdlib-only helper that reviews only
+  redacted dry-run summary JSON under `workspace/local-private/extraction-indexing/`.
+- Added `tests/fixtures/private_input_dry_run_decision.synthetic.json`, recording that hash work is
+  still decision-pending and private index construction remains blocked.
+- Added fake-workspace tests for valid and malformed summaries, unsafe paths, redaction, raw marker
+  rejection, `hashes_computed=true` rejection, decision fixture safety, and `check_all` registration.
+- Wired `python scripts/review_private_input_adapter_dry_run.py --self-test --quiet` into
+  `scripts/check_all.py`.
+- Updated the private input and private index contracts to document the 5A.4 review workflow.
+- Did not read original private inputs, read file contents, compute hashes, build private indexes,
+  scan game installs, read BepInEx logs, parse saves, read screenshots, run OCR, add current-line
+  capture, read UI text, scan Unity objects, add hooks/Harmony, use decompiled game code, change
+  companion HTTP contracts, call providers, or commit real extracted text.
+
 Milestone 5A.3 private input adapter dry-run is implemented.
 
 Completed in the latest session:

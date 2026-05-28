@@ -1,5 +1,13 @@
 # Known Risks
 
+- Milestone 5A.4 reviews private dry-run summaries only. It cannot prove private input content shape,
+  extraction correctness, index usefulness, or game data compatibility.
+- `ready_for_hash_decision=true` means only that a later hash decision contract can be discussed. It
+  must not be treated as approval to compute hashes, read contents, or build private indexes.
+- Local review JSON/Markdown under `workspace/local-private/extraction-indexing/review/` is ignored,
+  but it can still reveal private metadata counts and sizes if copied into tracked files or chat.
+- A malformed or verbose dry-run summary can contain private paths. Keep review outputs redacted and
+  do not commit private summaries or reviews.
 - Milestone 5A.3 reads filesystem metadata for one explicit workspace-private input. It still can
   reveal local file existence, counts, sizes, and directory structure in ignored local summaries.
 - `scripts/run_private_input_adapter_dry_run.py --verbose` may show private local paths for the

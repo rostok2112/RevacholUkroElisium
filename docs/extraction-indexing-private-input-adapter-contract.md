@@ -121,6 +121,44 @@ sets `hashes_computed=false`, does not read file contents, and does not build an
 input. Default output redacts private absolute paths. `--verbose` may show local paths for the user,
 but it still must not print file contents.
 
+## Milestone 5A.4 Dry-Run Evidence Review
+
+Milestone 5A.4 adds a redacted local review helper for dry-run summaries:
+
+```powershell
+python scripts/review_private_input_adapter_dry_run.py --summary workspace/local-private/extraction-indexing/<dry-run-summary>.json
+```
+
+The review helper reads only the dry-run summary JSON. It never reopens the selected private input,
+never reads file contents, and never builds an index. The summary must live under
+`workspace/local-private/extraction-indexing/`; optional JSON or Markdown review output may be
+written only under:
+
+```text
+workspace/local-private/extraction-indexing/review/
+```
+
+Review output uses:
+
+```text
+schema_version: "private-input-adapter-dry-run-review.v1"
+```
+
+It reports only redacted validity, counts, total size from the summary, blocker categories, and
+decision readiness flags. `ready_for_hash_decision=true` means only that a later hash decision
+contract can be discussed. It does not approve hashing. `ready_for_private_index_decision` remains
+false in 5A.4.
+
+The machine-readable 5A.4 decision fixture is:
+
+```text
+tests/fixtures/private_input_dry_run_decision.synthetic.json
+```
+
+It keeps real extraction, private index construction, automatic game-install scanning, current-line
+capture, UI text reading, Unity scanning, hooks/Harmony, OCR, decompiled-code work, companion
+contract changes, provider execution, and committed real text closed.
+
 ## Relationship To 5A.1
 
 Milestone 5A.1 produced the synthetic indexer/private index contract:

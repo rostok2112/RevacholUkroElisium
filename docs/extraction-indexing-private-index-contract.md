@@ -82,6 +82,11 @@ Milestone 5A.3 adds `scripts/run_private_input_adapter_dry_run.py`, which reads 
 explicit workspace-private input. It does not compute content hashes yet, does not read file
 contents, and does not build private indexes from real input.
 
+Milestone 5A.4 adds `scripts/review_private_input_adapter_dry_run.py` and
+`tests/fixtures/private_input_dry_run_decision.synthetic.json`. The review can make a redacted
+summary ready for a later hash decision discussion, but private index construction remains blocked.
+No private input text is read, hashed, indexed, or approved for committed artifacts.
+
 ## Private Output Root
 
 The only allowed private index output root is:

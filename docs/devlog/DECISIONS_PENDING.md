@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- Milestone 5A.4 now has a dry-run evidence review and decision fixture. Decide whether to create a
+  private input hash decision contract next.
+- Decide whether any hash style is safe for private inputs, whether hashing remains deferred, and
+  whether hashes should be opt-in even after a contract exists.
+- Decide what evidence would be required before private index construction can move from blocked to
+  discussion-ready; 5A.4 keeps it blocked.
 - Milestone 5A.3 now has a private input adapter dry-run. Decide whether the metadata-only summaries
   are sufficient to scope a later private index construction contract.
 - Decide whether content hashes should remain deferred, become opt-in, or require a separate

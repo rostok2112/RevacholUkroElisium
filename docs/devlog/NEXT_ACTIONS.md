@@ -1,5 +1,32 @@
 # Next Actions
 
+After Milestone 5A.4 private input dry-run evidence review:
+
+1. Use `scripts/review_private_input_adapter_dry_run.py` only on dry-run summary JSON under
+   `workspace/local-private/extraction-indexing/`.
+2. Keep optional review JSON/Markdown under `workspace/local-private/extraction-indexing/review/`
+   and out of git.
+3. Treat `ready_for_hash_decision=true` as permission to discuss a later hash decision contract
+   only. It does not approve content hashing.
+4. Keep `ready_for_private_index_decision=false`; private index construction from real input remains
+   blocked.
+5. Do not add automatic game-install scanning, arbitrary drive scans, BepInEx log reads, save
+   parsing, screenshots, OCR, current-line capture, UI text reading, Unity scanning, hooks/Harmony,
+   decompiled-code work, companion HTTP contract changes, provider execution, production overlay
+   shell behavior, committed real extracted text, or private index construction.
+
+Recommended next safe step:
+
+- Define a private input hash decision contract. It should decide whether hashes are allowed, what
+  kind of hashes are safe, and how to avoid identifying or exposing private files before any hash is
+  computed.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.4 private input dry-run evidence review. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-private-input-adapter-contract.md, docs/extraction-indexing-private-index-contract.md, scripts/run_private_input_adapter_dry_run.py, scripts/review_private_input_adapter_dry_run.py, tests/fixtures/private_input_dry_run_decision.synthetic.json, and tests/test_private_input_adapter_dry_run_review.py. Implement the next 5A step only as a private input hash decision contract unless explicitly approved otherwise. Do not compute hashes, read file contents, build indexes from real input, scan game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, committed real extracted text, downloads, or new dependencies.`
+
+---
+
 After Milestone 5A.3 private input adapter dry-run:
 
 1. Use `scripts/run_private_input_adapter_dry_run.py` only for one explicit file or directory under

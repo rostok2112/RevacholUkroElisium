@@ -1,0 +1,23 @@
+{
+  "schema_version": "private-input-dry-run-decision.v1",
+  "milestone": "5A.4",
+  "decision_status": "decision_gate_only",
+  "dry_run_evidence_required": true,
+  "hashes_allowed_next": "decision_pending",
+  "private_index_construction_allowed_next": false,
+  "real_extraction_allowed": false,
+  "automatic_game_install_scanning_allowed": false,
+  "real_game_text_commit_allowed": false,
+  "current_line_capture_allowed": false,
+  "ui_text_reading_allowed": false,
+  "unity_scanning_allowed": false,
+  "hooks_allowed": false,
+  "ocr_allowed": false,
+  "decompiled_code_allowed": false,
+  "companion_contract_change_allowed": false,
+  "provider_execution_allowed": false,
+  "bepinex_log_reads_allowed": false,
+  "screenshots_allowed": false,
+  "recommended_next_step": "private_input_hash_decision_contract",
+  "tracked_artifacts_redacted": true
+}
