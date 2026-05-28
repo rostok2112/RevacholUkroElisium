@@ -25,7 +25,7 @@ The default future mode is dry-run metadata summary only. A dry-run summary may 
 - input kind: file/directory/unsupported;
 - file count;
 - byte count;
-- stable hash summaries;
+- stable hash summaries only after a later hash contract explicitly allows them;
 - schema/version compatibility status;
 - redacted blocker categories.
 
@@ -158,6 +158,24 @@ tests/fixtures/private_input_dry_run_decision.synthetic.json
 It keeps real extraction, private index construction, automatic game-install scanning, current-line
 capture, UI text reading, Unity scanning, hooks/Harmony, OCR, decompiled-code work, companion
 contract changes, provider execution, and committed real text closed.
+
+## Milestone 5A.5 Hash Decision Contract
+
+Milestone 5A.5 defines the private input hash decision boundary in:
+
+```text
+docs/extraction-indexing-private-input-hash-contract.md
+tests/fixtures/private_input_hash_decision.synthetic.json
+scripts/check_private_input_hash_decision_contract.py
+```
+
+The decision remains contract-only. Hash implementation is not allowed in 5A.5. File content
+hashing and path string hashing remain forbidden, and private index construction from private input
+remains blocked.
+
+The only future hash topic left open is a later contract for hashing an already-redacted dry-run
+summary object that passed the 5A.4 review helper. That later contract must define canonical JSON,
+excluded fields, and private output rules before any hash is computed.
 
 ## Relationship To 5A.1
 

@@ -215,6 +215,14 @@ def main() -> int:
             ],
         ),
         (
+            "private input hash decision contract",
+            [
+                sys.executable,
+                "scripts/check_private_input_hash_decision_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

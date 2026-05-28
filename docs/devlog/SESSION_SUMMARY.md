@@ -1,5 +1,26 @@
 # Session Summary
 
+Milestone 5A.5 private input hash decision contract is implemented.
+
+Completed in the latest session:
+- Added `docs/extraction-indexing-private-input-hash-contract.md`, recording that hash
+  implementation is still blocked after the 5A.4 dry-run review gate.
+- Added `tests/fixtures/private_input_hash_decision.synthetic.json`, a synthetic decision fixture
+  that keeps file content hashing, path string hashing, private index construction, real
+  extraction, capture paths, provider execution, and companion contract changes closed.
+- Added `scripts/check_private_input_hash_decision_contract.py` and wired it into
+  `scripts/check_all.py`.
+- Added tests for fixture shape, false dangerous permissions, hash/private-index approval rejection,
+  unsafe marker rejection, docs links, and check-all registration.
+- Updated ADR 0011, the private input adapter contract, and the private index contract to point to
+  the 5A.5 decision gate.
+- The next safe step is a dry-run summary hash contract. It is not hash implementation and does not
+  approve file content hashing, path string hashing, real extraction, or private index construction.
+- Did not compute hashes, read file contents, build private indexes, scan game installs, read
+  BepInEx logs, parse saves, read screenshots, run OCR, add current-line capture, read UI text, scan
+  Unity objects, add hooks/Harmony, use decompiled game code, change companion HTTP contracts, call
+  providers, or commit real extracted text.
+
 Milestone 5A.4 private input dry-run evidence and hash/index decision gate is implemented.
 
 Completed in the latest session:

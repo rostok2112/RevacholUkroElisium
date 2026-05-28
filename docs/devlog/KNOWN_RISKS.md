@@ -1,5 +1,15 @@
 # Known Risks
 
+- Milestone 5A.5 is a hash decision contract only. It does not approve hash implementation, file
+  content hashing, path string hashing, private index construction, real extraction, or committed
+  real text.
+- Even a future hash of redacted dry-run metadata can become a stable private identifier if the
+  canonical input includes enough file counts, sizes, blockers, or timing-like fields. Define exact
+  included and excluded fields before computing any hash.
+- File content hashes and path string hashes remain especially risky because they can identify known
+  private files or local layouts even when raw text is absent.
+- Do not treat `dry_run_summary_hashing_allowed_next="decision_pending"` as implementation approval.
+  It only means a later dry-run summary hash contract can be discussed.
 - Milestone 5A.4 reviews private dry-run summaries only. It cannot prove private input content shape,
   extraction correctness, index usefulness, or game data compatibility.
 - `ready_for_hash_decision=true` means only that a later hash decision contract can be discussed. It

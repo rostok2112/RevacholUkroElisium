@@ -1,9 +1,16 @@
 # Decisions Pending
 
-- Milestone 5A.4 now has a dry-run evidence review and decision fixture. Decide whether to create a
-  private input hash decision contract next.
-- Decide whether any hash style is safe for private inputs, whether hashing remains deferred, and
-  whether hashes should be opt-in even after a contract exists.
+- Milestone 5A.5 now has a private input hash decision contract. Decide whether to define a dry-run
+  summary hash contract next.
+- Decide the canonical redacted summary fields, excluded fields, private output path, review helper
+  behavior, and fixture/checker rules before any dry-run summary hash is computed.
+- File content hashing, path string hashing, real extraction, and private index construction remain
+  blocked.
+- Milestone 5A.4 has a dry-run evidence review and decision fixture. Its hash decision follow-up is
+  now closed by the 5A.5 contract; future hash work must start with the dry-run summary hash
+  contract.
+- Decide whether any redacted dry-run summary hash style is safe for private inputs, whether hashing
+  remains deferred, and whether hashes should be opt-in even after a later contract exists.
 - Decide what evidence would be required before private index construction can move from blocked to
   discussion-ready; 5A.4 keeps it blocked.
 - Milestone 5A.3 now has a private input adapter dry-run. Decide whether the metadata-only summaries

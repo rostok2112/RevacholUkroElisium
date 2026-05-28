@@ -87,6 +87,18 @@ Milestone 5A.4 adds `scripts/review_private_input_adapter_dry_run.py` and
 summary ready for a later hash decision discussion, but private index construction remains blocked.
 No private input text is read, hashed, indexed, or approved for committed artifacts.
 
+Milestone 5A.5 adds the hash decision contract:
+
+```text
+docs/extraction-indexing-private-input-hash-contract.md
+tests/fixtures/private_input_hash_decision.synthetic.json
+scripts/check_private_input_hash_decision_contract.py
+```
+
+It keeps hash implementation blocked. File content hashing and path string hashing remain forbidden.
+Only a later dry-run summary hash contract may be discussed, and private index construction from
+private input remains blocked.
+
 ## Private Output Root
 
 The only allowed private index output root is:

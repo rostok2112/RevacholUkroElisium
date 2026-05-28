@@ -149,11 +149,32 @@ Any future output remains limited to:
 workspace/local-private/extraction-indexing/
 ```
 
-The default future mode is dry-run metadata summary only: redacted booleans, counts, hashes, schema
-status, and blocker categories. External absolute input paths, automatic game-install scanning,
-arbitrary drive scans, BepInEx log reads, screenshots, OCR, save parsing, current-line capture, UI
-text reading, Unity scanning, hooks/Harmony, decompiled game-code work, companion HTTP contract
-changes, real provider execution, and committed real extracted text remain closed.
+The default future mode is dry-run metadata summary only: redacted booleans, counts, schema status,
+and blocker categories. Hashes require a later hash contract before any implementation. External
+absolute input paths, automatic game-install scanning, arbitrary drive scans, BepInEx log reads,
+screenshots, OCR, save parsing, current-line capture, UI text reading, Unity scanning,
+hooks/Harmony, decompiled game-code work, companion HTTP contract changes, real provider execution,
+and committed real extracted text remain closed.
+
+## Milestone 5A.5 Private Input Hash Decision Contract
+
+Milestone 5A.5 defines the hash decision boundary in:
+
+```text
+docs/extraction-indexing-private-input-hash-contract.md
+tests/fixtures/private_input_hash_decision.synthetic.json
+scripts/check_private_input_hash_decision_contract.py
+```
+
+The decision remains contract-only. Hash implementation is not approved. File content hashing and
+path string hashing remain forbidden because they can become stable identifiers for private files
+or local structures. The only future hash topic left open is a later contract for hashing an
+already-redacted dry-run summary object that passed the 5A.4 review helper.
+
+Private index construction from real input remains blocked. The 5A.5 contract does not approve real
+extraction from game files, automatic game-install scanning, current-line capture, UI text reading,
+Unity scanning, hooks/Harmony, OCR, decompiled game-code work, companion HTTP contract changes,
+provider execution, or committed real extracted text.
 
 ## Consequences
 
