@@ -231,6 +231,14 @@ def main() -> int:
             ],
         ),
         (
+            "private index construction contract",
+            [
+                sys.executable,
+                "scripts/check_private_index_construction_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "dry-run summary hash smoke",
             [
                 sys.executable,

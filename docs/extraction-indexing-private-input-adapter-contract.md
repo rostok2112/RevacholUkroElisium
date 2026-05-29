@@ -189,6 +189,20 @@ It defines canonical redacted summary metadata as the only possible future hash 
 does not implement hashing. File content hashing, path string hashing, filename hashing, raw
 payload/log hashing, real extraction, and private index construction remain blocked.
 
+Milestone 5A.9 defines the private index construction contract in:
+
+```text
+docs/extraction-indexing-private-index-construction-contract.md
+tests/fixtures/private_index_construction_contract.synthetic.json
+scripts/check_private_index_construction_contract.py
+```
+
+The 5A.9 contract does not implement a private index builder. It limits any future private index
+inputs to synthetic indexes, redacted dry-run metadata summaries, and reviewed dry-run summary hash
+evidence. File contents, real game text, filenames, path strings, raw payloads/logs, screenshots,
+OCR, save data, decompiled data, provider payloads, companion runtime data, and game-install scans
+remain forbidden.
+
 ## Relationship To 5A.1
 
 Milestone 5A.1 produced the synthetic indexer/private index contract:

@@ -1,5 +1,31 @@
 # Next Actions
 
+After Milestone 5A.9 private index construction contract:
+
+1. Treat `docs/extraction-indexing-private-index-construction-contract.md`,
+   `tests/fixtures/private_index_construction_contract.synthetic.json`, and
+   `scripts/check_private_index_construction_contract.py` as the current guardrail.
+2. Keep future private index output under `workspace/local-private/extraction-indexing/index/` and
+   out of git.
+3. Treat `private_index_construction_allowed_next="contract_defined_only"` as contract scope only.
+   It does not approve a builder implementation.
+4. Keep real extraction, file content reads, file content hashing, path string hashing, filename
+   hashing, automatic game-install scanning, BepInEx log reads, screenshots, OCR, current-line
+   capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP
+   contract changes, provider execution, generated real indexes, and committed real extracted text
+   blocked.
+
+Recommended next safe step:
+
+- Plan a private index builder dry-run that consumes only synthetic/redacted fixtures and still does
+  not read private file contents.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.9 private index construction contract. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-private-index-construction-contract.md, docs/extraction-indexing-private-index-contract.md, scripts/check_private_index_construction_contract.py, scripts/run_synthetic_extraction_indexer.py, and tests/fixtures/private_index_construction_contract.synthetic.json. Implement the next 5A step only as a private index builder dry-run if explicitly approved: it may consume synthetic/redacted fixture evidence and write only under workspace/local-private/extraction-indexing/index/. Do not read private file contents, build indexes from real text, hash file contents, hash paths, hash filenames, scan game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, committed real extracted text, downloads, or new dependencies.`
+
+---
+
 After Milestone 5A.8 dry-run summary hash evidence gate:
 
 1. Use `scripts/review_dry_run_summary_hash.py` only on hash output JSON under

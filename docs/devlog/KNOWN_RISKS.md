@@ -1,5 +1,13 @@
 # Known Risks
 
+- Milestone 5A.9 defines private index construction only as a contract. A future builder dry-run
+  must not be mistaken for permission to read private file contents or build an index from real
+  text.
+- Even under `workspace/local-private/extraction-indexing/index/`, generated private indexes can
+  leak private metadata if copied into tracked files, chat, reports, or commits.
+- Future private indexes must not include filenames, path strings, raw payloads/logs, screenshots,
+  OCR, save data, decompiled data, provider payloads, companion runtime data, or game-install scan
+  evidence.
 - Milestone 5A.8 reviews dry-run summary hash outputs only. A passing review does not approve
   private index construction, real extraction, file content reads, file content hashes, path hashes,
   filename hashes, or committed extracted text.

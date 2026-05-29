@@ -195,6 +195,19 @@ The fixture keeps private index construction blocked. A valid hash review may on
 ready to discuss a later `private_index_construction_contract`; it does not approve private index
 implementation.
 
+Milestone 5A.9 records that contract in:
+
+```text
+docs/extraction-indexing-private-index-construction-contract.md
+tests/fixtures/private_index_construction_contract.synthetic.json
+scripts/check_private_index_construction_contract.py
+```
+
+The 5A.9 contract still keeps private index builder implementation blocked. It defines only the
+future boundary for private index construction and keeps file contents, paths, filenames, real game
+text, raw payloads/logs, generated tracked indexes, provider payloads, companion runtime data, and
+game-install scans outside the approved input set.
+
 ## Relationship To 5A.5
 
 Milestone 5A.5 is recorded in:

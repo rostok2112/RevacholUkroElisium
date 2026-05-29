@@ -1,5 +1,25 @@
 # Session Summary
 
+Milestone 5A.9 private index construction contract is implemented.
+
+Completed in the latest session:
+- Added `docs/extraction-indexing-private-index-construction-contract.md`, defining the future
+  private index construction boundary.
+- Added `tests/fixtures/private_index_construction_contract.synthetic.json`, recording that builder
+  implementation remains blocked and future private index output is limited to
+  `workspace/local-private/extraction-indexing/index/`.
+- Added `scripts/check_private_index_construction_contract.py` and wired it into
+  `scripts/check_all.py`.
+- Added focused tests for fixture shape, false dangerous permissions, unsafe output roots, unsafe
+  marker rejection, docs links, and check-all registration.
+- Updated ADR 0011, the private index contract, the private input adapter contract, and the dry-run
+  summary hash contract to point to the 5A.9 gate.
+- Did not implement private index construction, read private file contents, hash file contents,
+  hash paths, hash filenames, scan game installs, read BepInEx logs, parse saves, read screenshots,
+  run OCR, add current-line capture, read UI text, scan Unity objects, add hooks/Harmony, use
+  decompiled game code, change companion HTTP contracts, call providers, or commit real extracted
+  text.
+
 Milestone 5A.8 dry-run summary hash evidence gate is implemented.
 
 Completed in the latest session:

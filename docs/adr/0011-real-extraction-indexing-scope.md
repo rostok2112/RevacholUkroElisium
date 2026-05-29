@@ -193,6 +193,29 @@ current-line capture, UI text reading, Unity scanning, hooks/Harmony, OCR, decom
 work, companion HTTP contract changes, provider execution, and committed real extracted text remain
 closed.
 
+## Milestone 5A.9 Private Index Construction Contract
+
+Milestone 5A.9 defines the private index construction contract in:
+
+```text
+docs/extraction-indexing-private-index-construction-contract.md
+tests/fixtures/private_index_construction_contract.synthetic.json
+scripts/check_private_index_construction_contract.py
+```
+
+The contract defines only the future construction boundary. It keeps
+`private_index_builder_allowed_next=false` and
+`private_index_construction_allowed_next="contract_defined_only"`. Any future private index output
+is limited to:
+
+```text
+workspace/local-private/extraction-indexing/index/
+```
+
+File contents, real game text, filenames, path strings, raw payloads/logs, screenshots, OCR, save
+data, decompiled data, provider payloads, companion runtime data, game-install scans, and committed
+real extracted text remain forbidden.
+
 ## Consequences
 
 Pros:

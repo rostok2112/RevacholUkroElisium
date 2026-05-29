@@ -121,6 +121,20 @@ evidence ready for a later private index construction contract discussion, but
 `private_index_construction_allowed_next` remains false. No private input text is read, hashed,
 indexed, or approved for committed artifacts.
 
+Milestone 5A.9 defines the private index construction contract in:
+
+```text
+docs/extraction-indexing-private-index-construction-contract.md
+tests/fixtures/private_index_construction_contract.synthetic.json
+scripts/check_private_index_construction_contract.py
+```
+
+The contract limits any future private index output to
+`workspace/local-private/extraction-indexing/index/`, keeps builder implementation blocked, and
+keeps file contents, real game text, filenames, path strings, raw payloads/logs, screenshots, OCR,
+save data, decompiled data, provider payloads, companion runtime data, and game-install scans out
+of private index inputs and tracked artifacts.
+
 ## Private Output Root
 
 The only allowed private index output root is:

@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- Milestone 5A.9 now has a private index construction contract. Decide whether to implement a
+  private index builder dry-run that consumes only synthetic/redacted fixture evidence.
+- Decide the exact dry-run builder input fixture, output summary shape, deletion/regeneration
+  workflow, and checker rules before any private index builder code is added.
+- Real extraction, private file content reads, generated real indexes, path/filename hashes,
+  automatic game-install scanning, and committed real text remain blocked.
 - Milestone 5A.8 now has a dry-run summary hash evidence gate. Decide whether to define a private
   index construction contract next.
 - Decide what private index construction would be allowed to consume from private inputs, what
