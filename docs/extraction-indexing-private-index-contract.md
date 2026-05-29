@@ -111,6 +111,16 @@ The contract permits only future discussion of hashing canonical redacted summar
 review. It still does not implement hashes and does not allow private index construction from
 private input.
 
+Milestone 5A.7 adds `scripts/run_dry_run_summary_hash.py`, which computes a SHA-256 digest only over
+canonical redacted dry-run summary metadata. It does not read original private input, file contents,
+paths, filenames, payloads, logs, provider data, generated indexes, or real game text.
+
+Milestone 5A.8 adds `scripts/review_dry_run_summary_hash.py` and
+`tests/fixtures/dry_run_summary_hash_decision.synthetic.json`. The review can make redacted hash
+evidence ready for a later private index construction contract discussion, but
+`private_index_construction_allowed_next` remains false. No private input text is read, hashed,
+indexed, or approved for committed artifacts.
+
 ## Private Output Root
 
 The only allowed private index output root is:

@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- Milestone 5A.8 now has a dry-run summary hash evidence gate. Decide whether to define a private
+  index construction contract next.
+- Decide what private index construction would be allowed to consume from private inputs, what
+  content remains forbidden, and what redacted evidence is required before any implementation.
+- Private index implementation, real extraction, file content hashes, path hashes, filename hashes,
+  automatic game-install scanning, BepInEx log reads, and committed real text remain blocked.
 - Milestone 5A.7 now has a dry-run summary hash helper. Decide whether to add a redacted review gate
   for hash outputs before any private index construction discussion.
 - Decide what evidence a hash-output review must include and whether repeated private summary hashes

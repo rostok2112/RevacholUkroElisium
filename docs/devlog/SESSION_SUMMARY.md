@@ -1,5 +1,26 @@
 # Session Summary
 
+Milestone 5A.8 dry-run summary hash evidence gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_dry_run_summary_hash.py`, a stdlib-only helper that reviews only
+  `dry-run-summary-hash.v1` JSON under `workspace/local-private/extraction-indexing/hash/`.
+- Added `tests/fixtures/dry_run_summary_hash_decision.synthetic.json`, recording that private index
+  construction remains blocked and only a later private index construction contract may be
+  discussed.
+- Added focused tests for valid and malformed hash outputs, path bounds, unsafe markers, false
+  safety flags, redacted JSON/Markdown review output, decision fixture safety, quiet CLI, and
+  self-test mode.
+- Wired `python scripts/review_dry_run_summary_hash.py --self-test --quiet` into
+  `scripts/check_all.py`.
+- Updated the dry-run summary hash contract and private index contract to document the 5A.8
+  evidence/review gate.
+- Did not read original private inputs, read file contents, read original dry-run summaries, hash
+  file contents, hash paths, hash filenames, build private indexes, scan game installs, read BepInEx
+  logs, parse saves, read screenshots, run OCR, add current-line capture, read UI text, scan Unity
+  objects, add hooks/Harmony, use decompiled game code, change companion HTTP contracts, call
+  providers, or commit real extracted text.
+
 Milestone 5A.7 dry-run summary hash dry-run is implemented.
 
 Completed in the latest session:

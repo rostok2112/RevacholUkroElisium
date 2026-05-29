@@ -1,5 +1,30 @@
 # Next Actions
 
+After Milestone 5A.8 dry-run summary hash evidence gate:
+
+1. Use `scripts/review_dry_run_summary_hash.py` only on hash output JSON under
+   `workspace/local-private/extraction-indexing/hash/`.
+2. Keep optional review JSON/Markdown under
+   `workspace/local-private/extraction-indexing/hash-review/` and out of git.
+3. Treat `ready_for_private_index_decision=true` as permission to discuss a later private index
+   construction contract only. It does not approve private index implementation.
+4. Keep private index construction, real extraction, file content hashing, path string hashing,
+   filename hashing, automatic game-install scanning, BepInEx log reads, screenshots, OCR,
+   current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work,
+   companion HTTP contract changes, provider execution, generated real indexes, and committed real
+   extracted text blocked.
+
+Recommended next safe step:
+
+- Define a private index construction contract before any helper reads private file contents or
+  builds an index from private input.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.8 dry-run summary hash evidence gate. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-private-index-contract.md, docs/extraction-indexing-dry-run-summary-hash-contract.md, scripts/review_dry_run_summary_hash.py, scripts/run_dry_run_summary_hash.py, and tests/fixtures/dry_run_summary_hash_decision.synthetic.json. Implement the next 5A step only as a private index construction contract unless explicitly approved otherwise. Do not build private indexes, read original private input contents, hash file contents, hash paths, hash filenames, scan game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, committed real extracted text, downloads, or new dependencies.`
+
+---
+
 After Milestone 5A.7 dry-run summary hash dry-run:
 
 1. Use `scripts/run_dry_run_summary_hash.py` only on reviewed dry-run summary JSON under

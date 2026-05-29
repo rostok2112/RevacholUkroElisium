@@ -1,5 +1,12 @@
 # Known Risks
 
+- Milestone 5A.8 reviews dry-run summary hash outputs only. A passing review does not approve
+  private index construction, real extraction, file content reads, file content hashes, path hashes,
+  filename hashes, or committed extracted text.
+- Hash review JSON/Markdown under `workspace/local-private/extraction-indexing/hash-review/` is
+  ignored, but it can still expose local readiness decisions if copied into tracked files or chat.
+- `ready_for_private_index_decision=true` means only that a later private index construction
+  contract can be discussed. It must not be treated as implementation approval.
 - Milestone 5A.7 computes a SHA-256 digest only over canonical redacted dry-run summary metadata.
   The digest is still private metadata and can identify repeated or distinctive local summaries.
 - Hash output under `workspace/local-private/extraction-indexing/hash/` is ignored, but it must not

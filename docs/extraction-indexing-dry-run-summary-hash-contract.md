@@ -153,6 +153,48 @@ The synthetic expected hash fixture is:
 tests/fixtures/dry_run_summary_hash.synthetic.json
 ```
 
+## Milestone 5A.8 Dry-Run Summary Hash Evidence Review
+
+Milestone 5A.8 adds a redacted review gate for hash outputs:
+
+```powershell
+python scripts/review_dry_run_summary_hash.py --hash workspace/local-private/extraction-indexing/hash/<hash-output>.json
+```
+
+The review helper accepts only `schema_version: "dry-run-summary-hash.v1"` JSON under:
+
+```text
+workspace/local-private/extraction-indexing/hash/
+```
+
+Optional review JSON or Markdown may be written only under:
+
+```text
+workspace/local-private/extraction-indexing/hash-review/
+```
+
+The review output uses:
+
+```text
+schema_version: "dry-run-summary-hash-review.v1"
+```
+
+It reports only redacted booleans, blocker categories, and the next decision step. It does not read
+the original private input, does not read file contents, does not read the original dry-run summary,
+and does not copy the digest source path, canonical JSON, summary contents, private paths,
+filenames, payloads, logs, generated indexes, screenshots, OCR output, provider payloads, or real
+game text into stdout or review files.
+
+The machine-readable 5A.8 decision fixture is:
+
+```text
+tests/fixtures/dry_run_summary_hash_decision.synthetic.json
+```
+
+The fixture keeps private index construction blocked. A valid hash review may only mark the project
+ready to discuss a later `private_index_construction_contract`; it does not approve private index
+implementation.
+
 ## Relationship To 5A.5
 
 Milestone 5A.5 is recorded in:
@@ -163,6 +205,7 @@ tests/fixtures/private_input_hash_decision.synthetic.json
 scripts/check_private_input_hash_decision_contract.py
 ```
 
-5A.5 left only the dry-run summary hash contract open. 5A.6 defines that contract, but still does
-not approve hash implementation. The next safe step is a dry-run summary hash dry-run, not file
-content hashing, path hashing, private index construction, or real extraction.
+5A.5 left only the dry-run summary hash contract open. 5A.6 defines that contract, and 5A.7 adds a
+dry-run hash helper for canonical redacted summaries only. 5A.8 reviews the resulting hash evidence
+without approving private index construction. The next safe step is a private index construction
+contract, not private index implementation, file content hashing, path hashing, or real extraction.
