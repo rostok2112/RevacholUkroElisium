@@ -176,6 +176,23 @@ extraction from game files, automatic game-install scanning, current-line captur
 Unity scanning, hooks/Harmony, OCR, decompiled game-code work, companion HTTP contract changes,
 provider execution, or committed real extracted text.
 
+## Milestone 5A.6 Dry-Run Summary Hash Contract
+
+Milestone 5A.6 defines the dry-run summary hash contract in:
+
+```text
+docs/extraction-indexing-dry-run-summary-hash-contract.md
+tests/fixtures/dry_run_summary_hash_contract.synthetic.json
+scripts/check_dry_run_summary_hash_contract.py
+```
+
+The contract allows only a future dry-run over canonical redacted summary metadata. Hash
+implementation is still blocked. File content hashing, path string hashing, filename hashing, raw
+payload/log hashing, private index construction, real extraction, automatic game-install scanning,
+current-line capture, UI text reading, Unity scanning, hooks/Harmony, OCR, decompiled game-code
+work, companion HTTP contract changes, provider execution, and committed real extracted text remain
+closed.
+
 ## Consequences
 
 Pros:

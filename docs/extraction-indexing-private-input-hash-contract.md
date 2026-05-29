@@ -76,6 +76,21 @@ The fixture records that hash implementation remains blocked, file content hashi
 hashing are forbidden, and private index construction remains blocked. Its recommended next step is
 a separate dry-run summary hash contract, not hash implementation.
 
+## Milestone 5A.6 Dry-Run Summary Hash Contract
+
+Milestone 5A.6 defines that next contract in:
+
+```text
+docs/extraction-indexing-dry-run-summary-hash-contract.md
+tests/fixtures/dry_run_summary_hash_contract.synthetic.json
+scripts/check_dry_run_summary_hash_contract.py
+```
+
+The 5A.6 contract defines only what a later implementation may hash: canonical redacted summary
+metadata after the 5A.4 review rules pass. It still keeps hash implementation blocked. File content
+hashing, path string hashing, filename hashing, raw payload/log hashing, private index construction,
+real extraction, and committed real text remain forbidden.
+
 ## Relationship To Earlier 5A Contracts
 
 Milestone 5A.2 defines the explicit workspace-private input boundary in

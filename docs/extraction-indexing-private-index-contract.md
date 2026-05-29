@@ -99,6 +99,18 @@ It keeps hash implementation blocked. File content hashing and path string hashi
 Only a later dry-run summary hash contract may be discussed, and private index construction from
 private input remains blocked.
 
+Milestone 5A.6 adds that dry-run summary hash contract:
+
+```text
+docs/extraction-indexing-dry-run-summary-hash-contract.md
+tests/fixtures/dry_run_summary_hash_contract.synthetic.json
+scripts/check_dry_run_summary_hash_contract.py
+```
+
+The contract permits only future discussion of hashing canonical redacted summary metadata after
+review. It still does not implement hashes and does not allow private index construction from
+private input.
+
 ## Private Output Root
 
 The only allowed private index output root is:

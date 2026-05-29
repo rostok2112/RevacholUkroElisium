@@ -1,5 +1,14 @@
 # Known Risks
 
+- Milestone 5A.6 defines a future canonical redacted summary hash input, but does not approve hash
+  implementation. Treat it as a contract gate, not executable hashing permission.
+- Redacted dry-run summary hashes can still become stable identifiers if counts, sizes, blockers, or
+  other metadata are too distinctive. Keep the canonical field list narrow and reviewed before
+  implementation.
+- Filename hashing and path hashing remain blocked because they can reveal local layout or identify
+  private files even without raw contents.
+- Future hash dry-runs must not include timestamps, report paths, verbose path fields, generated
+  indexes, raw logs, payloads, screenshots, OCR output, save data, provider payloads, or game text.
 - Milestone 5A.5 is a hash decision contract only. It does not approve hash implementation, file
   content hashing, path string hashing, private index construction, real extraction, or committed
   real text.

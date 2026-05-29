@@ -1,5 +1,26 @@
 # Session Summary
 
+Milestone 5A.6 dry-run summary hash contract is implemented.
+
+Completed in the latest session:
+- Added `docs/extraction-indexing-dry-run-summary-hash-contract.md`, defining the future hash input
+  boundary for canonical redacted dry-run summaries.
+- Added `tests/fixtures/dry_run_summary_hash_contract.synthetic.json`, a synthetic contract fixture
+  that keeps hash implementation, file content hashing, path string hashing, filename hashing, raw
+  payload/log hashing, private index construction, real extraction, capture paths, provider
+  execution, and companion contract changes closed.
+- Added `scripts/check_dry_run_summary_hash_contract.py` and wired it into `scripts/check_all.py`.
+- Added focused tests for fixture shape, stable allowed/excluded field lists, false dangerous
+  permissions, unsafe marker rejection, docs links, and check-all registration.
+- Updated ADR 0011, the private input adapter contract, the private input hash contract, and the
+  private index contract to point to the 5A.6 gate.
+- The next safe step is a dry-run summary hash dry-run. It is still not file content hashing, path
+  hashing, filename hashing, private index construction, real extraction, or committed real text.
+- Did not compute hashes, read file contents, build private indexes, scan game installs, read
+  BepInEx logs, parse saves, read screenshots, run OCR, add current-line capture, read UI text, scan
+  Unity objects, add hooks/Harmony, use decompiled game code, change companion HTTP contracts, call
+  providers, or commit real extracted text.
+
 Milestone 5A.5 private input hash decision contract is implemented.
 
 Completed in the latest session:

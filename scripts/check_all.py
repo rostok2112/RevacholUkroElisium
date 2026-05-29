@@ -223,6 +223,14 @@ def main() -> int:
             ],
         ),
         (
+            "dry-run summary hash contract",
+            [
+                sys.executable,
+                "scripts/check_dry_run_summary_hash_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

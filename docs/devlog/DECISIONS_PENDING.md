@@ -1,9 +1,16 @@
 # Decisions Pending
 
+- Milestone 5A.6 now has a dry-run summary hash contract. Decide whether to implement the next step
+  as a dry-run summary hash dry-run.
+- Decide the dry-run hash output shape, review helper behavior, deletion/regeneration workflow, and
+  checker rules before any hash artifact is written.
+- File content hashing, path string hashing, filename hashing, raw payload/log hashing, real
+  extraction, and private index construction remain blocked.
 - Milestone 5A.5 now has a private input hash decision contract. Decide whether to define a dry-run
-  summary hash contract next.
-- Decide the canonical redacted summary fields, excluded fields, private output path, review helper
-  behavior, and fixture/checker rules before any dry-run summary hash is computed.
+  summary hash contract next. That decision is now closed by the 5A.6 contract; future work must
+  start with a dry-run summary hash dry-run if explicitly approved.
+- The canonical redacted summary fields, excluded fields, private output path, and checker rules are
+  now defined by 5A.6. Decide implementation details only within that boundary.
 - File content hashing, path string hashing, real extraction, and private index construction remain
   blocked.
 - Milestone 5A.4 has a dry-run evidence review and decision fixture. Its hash decision follow-up is

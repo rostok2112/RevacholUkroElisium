@@ -1,5 +1,32 @@
 # Next Actions
 
+After Milestone 5A.6 dry-run summary hash contract:
+
+1. Treat `docs/extraction-indexing-dry-run-summary-hash-contract.md`,
+   `tests/fixtures/dry_run_summary_hash_contract.synthetic.json`, and
+   `scripts/check_dry_run_summary_hash_contract.py` as the current summary-hash guardrail.
+2. Keep `hash_implementation_allowed_next=false`. The contract defines a future hash input shape
+   only; it does not approve hash computation.
+3. Future hash work may consider only canonical redacted dry-run summary metadata after the 5A.4
+   review rules pass.
+4. Keep file content hashing, path string hashing, filename hashing, raw payload/log hashing,
+   private index construction, real extraction, automatic game-install scanning, BepInEx log reads,
+   screenshots, OCR, current-line capture, UI text reading, Unity scanning, hooks/Harmony,
+   decompiled-code work, companion HTTP contract changes, provider execution, generated real
+   indexes, and committed real extracted text blocked.
+
+Recommended next safe step:
+
+- Implement a dry-run summary hash dry-run only if explicitly approved. It should hash only a
+  canonical redacted summary object, write only under `workspace/local-private/extraction-indexing/`,
+  and keep all file content/path/filename hashing blocked.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.6 dry-run summary hash contract. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-dry-run-summary-hash-contract.md, docs/extraction-indexing-private-input-hash-contract.md, scripts/check_dry_run_summary_hash_contract.py, scripts/run_private_input_adapter_dry_run.py, and scripts/review_private_input_adapter_dry_run.py. Implement the next 5A step only as a dry-run summary hash dry-run if explicitly approved: hash only canonical redacted dry-run summary metadata that passed review, write only under workspace/local-private/extraction-indexing/, and do not hash file contents, paths, filenames, raw payloads, logs, screenshots, OCR output, saves, decompiled output, provider payloads, generated indexes, or real game text. Do not build private indexes, scan game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, committed real extracted text, downloads, or new dependencies.`
+
+---
+
 After Milestone 5A.5 private input hash decision contract:
 
 1. Treat `docs/extraction-indexing-private-input-hash-contract.md`,

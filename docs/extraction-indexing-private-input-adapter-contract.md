@@ -177,6 +177,18 @@ The only future hash topic left open is a later contract for hashing an already-
 summary object that passed the 5A.4 review helper. That later contract must define canonical JSON,
 excluded fields, and private output rules before any hash is computed.
 
+Milestone 5A.6 defines that dry-run summary hash contract in:
+
+```text
+docs/extraction-indexing-dry-run-summary-hash-contract.md
+tests/fixtures/dry_run_summary_hash_contract.synthetic.json
+scripts/check_dry_run_summary_hash_contract.py
+```
+
+It defines canonical redacted summary metadata as the only possible future hash input, but still
+does not implement hashing. File content hashing, path string hashing, filename hashing, raw
+payload/log hashing, real extraction, and private index construction remain blocked.
+
 ## Relationship To 5A.1
 
 Milestone 5A.1 produced the synthetic indexer/private index contract:
