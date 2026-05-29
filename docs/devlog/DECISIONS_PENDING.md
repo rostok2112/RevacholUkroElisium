@@ -1,9 +1,16 @@
 # Decisions Pending
 
+- Milestone 5A.7 now has a dry-run summary hash helper. Decide whether to add a redacted review gate
+  for hash outputs before any private index construction discussion.
+- Decide what evidence a hash-output review must include and whether repeated private summary hashes
+  are useful enough to justify the remaining privacy risk.
+- Private index construction, file content reads, content hashes, path hashes, filename hashes, real
+  extraction, and committed real text remain blocked.
 - Milestone 5A.6 now has a dry-run summary hash contract. Decide whether to implement the next step
-  as a dry-run summary hash dry-run.
-- Decide the dry-run hash output shape, review helper behavior, deletion/regeneration workflow, and
-  checker rules before any hash artifact is written.
+  as a dry-run summary hash dry-run. That implementation step is now complete; future work should
+  review the hash output before broader private-index decisions.
+- Decide the hash review helper behavior, deletion/regeneration workflow, and checker rules before
+  any broader hash artifact workflow is approved.
 - File content hashing, path string hashing, filename hashing, raw payload/log hashing, real
   extraction, and private index construction remain blocked.
 - Milestone 5A.5 now has a private input hash decision contract. Decide whether to define a dry-run

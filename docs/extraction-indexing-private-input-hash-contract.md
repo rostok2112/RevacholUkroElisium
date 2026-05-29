@@ -91,6 +91,18 @@ metadata after the 5A.4 review rules pass. It still keeps hash implementation bl
 hashing, path string hashing, filename hashing, raw payload/log hashing, private index construction,
 real extraction, and committed real text remain forbidden.
 
+Milestone 5A.7 implements the dry-run helper within that boundary:
+
+```text
+scripts/run_dry_run_summary_hash.py
+tests/fixtures/dry_run_summary_hash.synthetic.json
+```
+
+The helper computes SHA-256 only over canonical redacted summary metadata and may write output only
+under `workspace/local-private/extraction-indexing/hash/`. It does not hash file contents, paths,
+filenames, raw payloads, logs, screenshots, OCR output, saves, decompiled output, provider payloads,
+generated indexes, or real game text.
+
 ## Relationship To Earlier 5A Contracts
 
 Milestone 5A.2 defines the explicit workspace-private input boundary in

@@ -1,5 +1,30 @@
 # Next Actions
 
+After Milestone 5A.7 dry-run summary hash dry-run:
+
+1. Use `scripts/run_dry_run_summary_hash.py` only on reviewed dry-run summary JSON under
+   `workspace/local-private/extraction-indexing/`.
+2. Keep optional hash output under `workspace/local-private/extraction-indexing/hash/` and out of
+   git.
+3. Treat the hash digest as private metadata. It can still identify a distinctive local summary even
+   though it does not include raw text, paths, filenames, or contents.
+4. Keep file content hashing, path string hashing, filename hashing, raw payload/log hashing,
+   private index construction, real extraction, automatic game-install scanning, BepInEx log reads,
+   screenshots, OCR, current-line capture, UI text reading, Unity scanning, hooks/Harmony,
+   decompiled-code work, companion HTTP contract changes, provider execution, generated real
+   indexes, and committed real extracted text blocked.
+
+Recommended next safe step:
+
+- Add a redacted review gate for dry-run summary hash output before deciding whether any private
+  index construction discussion can start.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.7 dry-run summary hash dry-run. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-dry-run-summary-hash-contract.md, scripts/run_dry_run_summary_hash.py, scripts/review_private_input_adapter_dry_run.py, and tests/fixtures/dry_run_summary_hash.synthetic.json. Implement the next 5A step only as a redacted dry-run summary hash review gate unless explicitly approved otherwise. Do not read original private inputs, read file contents, hash file contents, hash paths, hash filenames, build private indexes, scan game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, committed real extracted text, downloads, or new dependencies.`
+
+---
+
 After Milestone 5A.6 dry-run summary hash contract:
 
 1. Treat `docs/extraction-indexing-dry-run-summary-hash-contract.md`,

@@ -1,5 +1,26 @@
 # Session Summary
 
+Milestone 5A.7 dry-run summary hash dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_dry_run_summary_hash.py`, a stdlib-only helper that hashes only canonical
+  redacted dry-run summary metadata.
+- Added `tests/fixtures/dry_run_summary_hash.synthetic.json`, a synthetic expected hash output
+  fixture with no private paths, filenames, raw payloads, logs, game text, or extracted text.
+- Added focused tests for deterministic hashing, field-order independence, blocker sorting,
+  source-summary validation, `hashes_computed=true` rejection, excluded/unknown field rejection,
+  unsafe marker rejection, path bounds, redacted output, no file-content reads, fixture matching,
+  quiet CLI, and self-test mode.
+- Wired `python scripts/run_dry_run_summary_hash.py --self-test --quiet` into
+  `scripts/check_all.py`.
+- Updated the dry-run summary hash contract and private input hash contract to document the helper
+  and private hash output root.
+- Did not read original private inputs, read file contents, hash file contents, hash paths, hash
+  filenames, build private indexes, scan game installs, read BepInEx logs, parse saves, read
+  screenshots, run OCR, add current-line capture, read UI text, scan Unity objects, add
+  hooks/Harmony, use decompiled game code, change companion HTTP contracts, call providers, or
+  commit real extracted text.
+
 Milestone 5A.6 dry-run summary hash contract is implemented.
 
 Completed in the latest session:

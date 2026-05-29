@@ -1,5 +1,13 @@
 # Known Risks
 
+- Milestone 5A.7 computes a SHA-256 digest only over canonical redacted dry-run summary metadata.
+  The digest is still private metadata and can identify repeated or distinctive local summaries.
+- Hash output under `workspace/local-private/extraction-indexing/hash/` is ignored, but it must not
+  be copied into tracked docs, fixtures, commits, chat, or reports from real private runs.
+- The helper rejects excluded and unknown source-summary fields. Future summary shape changes must
+  update the 5A.6 contract, tests, and helper together rather than silently dropping new fields.
+- A successful hash dry-run does not approve private index construction, file content reads, content
+  hashes, path hashes, filename hashes, real extraction, or committed extracted text.
 - Milestone 5A.6 defines a future canonical redacted summary hash input, but does not approve hash
   implementation. Treat it as a contract gate, not executable hashing permission.
 - Redacted dry-run summary hashes can still become stable identifiers if counts, sizes, blockers, or

@@ -115,6 +115,44 @@ The fixture records that hash implementation remains blocked, canonical redacted
 contract-defined only, file content/path/filename/raw-payload hashing is forbidden, and private
 index construction remains blocked.
 
+## Milestone 5A.7 Dry-Run Summary Hash Helper
+
+Milestone 5A.7 implements the first dry-run hash helper:
+
+```powershell
+python scripts/run_dry_run_summary_hash.py --summary workspace/local-private/extraction-indexing/<dry-run-summary>.json
+```
+
+The helper reads only the dry-run summary JSON. It never reopens the selected private input, never
+reads file contents, and never builds a private index. The source summary must live under:
+
+```text
+workspace/local-private/extraction-indexing/
+```
+
+Optional hash output may be written only under:
+
+```text
+workspace/local-private/extraction-indexing/hash/
+```
+
+Hash output uses:
+
+```text
+schema_version: "dry-run-summary-hash.v1"
+```
+
+The output contains only a SHA-256 digest over canonical redacted summary metadata, a field count,
+and explicit false safety flags. It does not include the canonical JSON, source summary contents,
+source path, filenames, private paths, raw payloads, raw logs, screenshots, OCR output, provider
+payloads, generated indexes, file contents, or real game text.
+
+The synthetic expected hash fixture is:
+
+```text
+tests/fixtures/dry_run_summary_hash.synthetic.json
+```
+
 ## Relationship To 5A.5
 
 Milestone 5A.5 is recorded in:

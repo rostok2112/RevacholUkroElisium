@@ -231,6 +231,15 @@ def main() -> int:
             ],
         ),
         (
+            "dry-run summary hash smoke",
+            [
+                sys.executable,
+                "scripts/run_dry_run_summary_hash.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,
