@@ -257,6 +257,15 @@ def main() -> int:
             ],
         ),
         (
+            "private index builder dry-run smoke",
+            [
+                sys.executable,
+                "scripts/run_private_index_builder_dry_run.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

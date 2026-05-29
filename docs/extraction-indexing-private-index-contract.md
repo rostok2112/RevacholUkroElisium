@@ -135,6 +135,13 @@ keeps file contents, real game text, filenames, path strings, raw payloads/logs,
 save data, decompiled data, provider payloads, companion runtime data, and game-install scans out
 of private index inputs and tracked artifacts.
 
+Milestone 5A.10 adds `scripts/run_private_index_builder_dry_run.py`, which builds a
+`private-index-dry-run.v1` preview only from an already-redacted dry-run summary and an approved
+dry-run summary hash output. It writes optional local output only under
+`workspace/local-private/extraction-indexing/index/`. The helper does not read original private
+inputs, read file contents, include paths or filenames, include the digest value, copy raw summaries,
+build a real text index, or approve real extraction.
+
 ## Private Output Root
 
 The only allowed private index output root is:

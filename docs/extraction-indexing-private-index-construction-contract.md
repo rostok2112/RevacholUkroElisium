@@ -90,3 +90,35 @@ python scripts/check_private_index_construction_contract.py --quiet
 The fixture keeps builder implementation blocked, limits output roots to
 `workspace/local-private/extraction-indexing/index/`, and keeps all capture, extraction, content,
 path, provider, and companion-contract permissions false.
+
+## Milestone 5A.10 Dry-Run Helper
+
+Milestone 5A.10 adds a stdlib-only dry-run helper:
+
+```powershell
+python scripts/run_private_index_builder_dry_run.py --dry-run-summary <summary.json> --summary-hash <hash.json>
+```
+
+The helper accepts only:
+
+- a redacted private input dry-run summary under `workspace/local-private/extraction-indexing/`;
+- a redacted dry-run summary hash output under
+  `workspace/local-private/extraction-indexing/hash/`.
+
+Optional output is limited to:
+
+```text
+workspace/local-private/extraction-indexing/index/
+```
+
+The output schema is `private-index-dry-run.v1`. It records only redacted metadata: source summary
+validity, hash validity, file and directory counts, the total size value already present in the
+summary, digest presence, blocker categories, and explicit false safety flags. It does not include
+the digest value, input paths, filenames, canonical JSON, original summary contents, raw logs, raw
+payloads, screenshots, OCR output, save data, provider payloads, generated real indexes, or real
+text.
+
+This dry-run is not private index construction from real text. It still does not read original
+private inputs, read file contents, hash file contents, hash paths, hash filenames, scan game
+installs, read BepInEx logs, parse saves, call providers, change companion HTTP contracts, or approve
+real extraction.

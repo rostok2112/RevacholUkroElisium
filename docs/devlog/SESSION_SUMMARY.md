@@ -1,5 +1,26 @@
 # Session Summary
 
+Milestone 5A.10 private index builder dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_private_index_builder_dry_run.py`, a stdlib-only helper that builds a
+  `private-index-dry-run.v1` preview from a redacted private input dry-run summary and redacted
+  dry-run summary hash output.
+- The helper requires summaries under `workspace/local-private/extraction-indexing/`, hash outputs
+  under `workspace/local-private/extraction-indexing/hash/`, and optional dry-run index output under
+  `workspace/local-private/extraction-indexing/index/`.
+- Added `tests/fixtures/private_index_dry_run.synthetic.json` and focused fake-workspace tests for
+  deterministic output, invalid summary/hash rejection, path bounds, unsafe marker rejection,
+  redacted output, quiet CLI, self-test mode, and `check_all` registration.
+- Wired `python scripts/run_private_index_builder_dry_run.py --self-test --quiet` into
+  `scripts/check_all.py`.
+- Updated the 5A.9 construction contract and private index contract to document the 5A.10 helper.
+- Did not read original private inputs, read file contents, include paths or filenames, include the
+  digest value, copy raw summaries, build real text indexes, scan game installs, read BepInEx logs,
+  parse saves, read screenshots, run OCR, add current-line capture, read UI text, scan Unity
+  objects, add hooks/Harmony, use decompiled game code, change companion HTTP contracts, call
+  providers, or commit real extracted text.
+
 Milestone 5A.9 private index construction contract is implemented.
 
 Completed in the latest session:

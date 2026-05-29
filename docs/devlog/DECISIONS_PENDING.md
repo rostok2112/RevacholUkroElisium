@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- Milestone 5A.10 now has a private index builder dry-run. Decide whether the next step is a
+  redacted `private-index-dry-run.v1` review gate or a schema refinement before any broader private
+  index construction discussion.
+- Decide whether future dry-run index evidence should ever include digest linkage, and keep any such
+  decision away from paths, filenames, file contents, raw summaries, provider payloads, or real text.
+- Real extraction, private file content reads, generated real indexes, file/path/filename hashes,
+  automatic game-install scanning, and committed real text remain blocked.
 - Milestone 5A.9 now has a private index construction contract. Decide whether to implement a
   private index builder dry-run that consumes only synthetic/redacted fixture evidence.
 - Decide the exact dry-run builder input fixture, output summary shape, deletion/regeneration

@@ -1,5 +1,14 @@
 # Known Risks
 
+- Milestone 5A.10 builds only a redacted private index dry-run preview. A passing dry-run must not
+  be mistaken for permission to build an index from private file contents or real text.
+- `private-index-dry-run.v1` can still reveal metadata counts and total size values inherited from
+  the dry-run summary. Keep local outputs under
+  `workspace/local-private/extraction-indexing/index/` and out of tracked files, chat, reports, and
+  commits.
+- The 5A.10 helper deliberately does not link a summary to a hash when no safe shared identifier is
+  available. Do not add path-, filename-, content-, or digest-bearing linkage without a later safety
+  contract.
 - Milestone 5A.9 defines private index construction only as a contract. A future builder dry-run
   must not be mistaken for permission to read private file contents or build an index from real
   text.

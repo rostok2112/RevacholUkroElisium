@@ -1,5 +1,32 @@
 # Next Actions
 
+After Milestone 5A.10 private index builder dry-run:
+
+1. Use `scripts/run_private_index_builder_dry_run.py` only with a redacted dry-run summary under
+   `workspace/local-private/extraction-indexing/` and a redacted hash output under
+   `workspace/local-private/extraction-indexing/hash/`.
+2. Keep optional dry-run index output under `workspace/local-private/extraction-indexing/index/` and
+   out of git.
+3. Treat `private-index-dry-run.v1` as a redacted preview only. It does not contain text records,
+   paths, filenames, digest values, original summaries, canonical JSON, raw payloads, logs, or
+   provider data.
+4. Keep real extraction, private file content reads, generated real indexes, file content hashing,
+   path string hashing, filename hashing, automatic game-install scanning, BepInEx log reads,
+   screenshots, OCR, current-line capture, UI text reading, Unity scanning, hooks/Harmony,
+   decompiled-code work, companion HTTP contract changes, provider execution, and committed real
+   extracted text blocked.
+
+Recommended next safe step:
+
+- Add a redacted review gate for `private-index-dry-run.v1` output, or refine the private index
+  dry-run schema, before any real private index construction from content is considered.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after Milestone 5A.10 private index builder dry-run. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-private-index-construction-contract.md, docs/extraction-indexing-private-index-contract.md, scripts/run_private_index_builder_dry_run.py, scripts/review_private_input_adapter_dry_run.py, scripts/review_dry_run_summary_hash.py, and tests/fixtures/private_index_dry_run.synthetic.json. Implement the next 5A step only as a redacted private index dry-run review gate or schema refinement unless explicitly approved otherwise. Do not read original private inputs, read file contents, build indexes from real text, include paths or filenames, include digest values from private runs, hash file contents, hash paths, hash filenames, scan game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, committed real extracted text, downloads, or new dependencies.`
+
+---
+
 After Milestone 5A.9 private index construction contract:
 
 1. Treat `docs/extraction-indexing-private-index-construction-contract.md`,
