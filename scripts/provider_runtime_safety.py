@@ -155,6 +155,16 @@ def inspect_provider_cache_root(value: Any) -> dict[str, Any]:
             warnings=[],
         )
 
+    if _is_windows_absolute_path(value):
+        return _cache_status(
+            display_path=REDACTED_PATH,
+            ok=True,
+            is_private=True,
+            is_repo_ignored=False,
+            errors=[],
+            warnings=["provider_cache_root_outside_repo_assumed_private"],
+        )
+
     resolved = _resolve_repo_relative(value)
     inside_repo = _is_relative_to(resolved, ROOT.resolve(strict=False))
     approved_root = _approved_private_root(resolved)
@@ -253,6 +263,8 @@ def _cache_status(
 
 
 def _display_cache_path(raw_value: str, resolved: Path) -> str:
+    if _is_windows_absolute_path(raw_value):
+        return REDACTED_PATH
     raw_path = Path(raw_value)
     if raw_path.is_absolute():
         return REDACTED_PATH
@@ -272,6 +284,8 @@ def _approved_private_root(resolved: Path) -> Path | None:
 
 
 def _resolve_repo_relative(path: str | Path) -> Path:
+    if isinstance(path, str) and _is_windows_absolute_path(path):
+        return Path(path)
     raw = Path(path).expanduser()
     if raw.is_absolute():
         return raw.resolve(strict=False)
@@ -303,9 +317,13 @@ def _looks_secret_value(value: str) -> bool:
 
 
 def _looks_private_absolute_path(value: str) -> bool:
-    if re.match(r"^[a-zA-Z]:[\\/]", value):
+    if _is_windows_absolute_path(value):
         return True
     if value.startswith("/") and not value.startswith("//"):
         return True
     lowered = value.lower().replace("\\", "/")
     return "/users/" in lowered or "/documents/" in lowered or "/appdata/" in lowered
+
+
+def _is_windows_absolute_path(value: str) -> bool:
+    return bool(re.match(r"^[a-zA-Z]:[\\/]", value))

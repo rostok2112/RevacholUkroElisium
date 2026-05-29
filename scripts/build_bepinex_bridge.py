@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import re
 import shutil
 import subprocess
@@ -254,7 +254,9 @@ def safe_path_string_for_report(value: str) -> str:
         return normalized[len(root_normalized) + 1 :]
     if normalized.startswith("/") and "/" not in normalized[1:]:
         return normalized
-    if re.match(r"^[A-Za-z]:/", normalized) or normalized.startswith("/"):
+    if re.match(r"^[A-Za-z]:/", normalized):
+        return f"<local:{PureWindowsPath(value).name}>"
+    if normalized.startswith("/"):
         return f"<local:{Path(value).name}>"
     return value
 
