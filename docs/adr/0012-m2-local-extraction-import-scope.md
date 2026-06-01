@@ -189,3 +189,26 @@ The next allowed step is:
 ```text
 m2_synthetic_context_graph_builder_review_gate
 ```
+
+## Synthetic Context-Graph Builder Review Gate
+
+The approved redacted fixture-only review helper is:
+
+```text
+scripts/review_m2_synthetic_context_graph_builder_dry_run.py
+```
+
+It reviews only ignored synthetic context-graph dry-run output under
+`workspace/local-private/extraction-indexing/import/context-graph/`. Optional redacted JSON or
+Markdown review output remains private under
+`workspace/local-private/extraction-indexing/import/context-graph-review/`.
+
+A passing review means only that a later static explicit-local-import adapter contract may be
+defined. It does not approve local-export reads, private-input reads, adapter implementation, or
+completion of any original M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_adapter_contract
+```

@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- The M2 synthetic context-graph builder review gate is implemented. Define
+  `m2_explicit_local_import_adapter_contract` next without reading a local export or implementing
+  the adapter.
+- Keep every original M2 completion flag false. A passing review authorizes only static contract
+  design for one explicit workspace-private local export.
 - The M2 synthetic context-graph builder dry-run is implemented. Define
   `m2_synthetic_context_graph_builder_review_gate` next using redacted synthetic evidence only.
 - Keep original M2 context-graph completion false. The dry-run projects committed invented fixture

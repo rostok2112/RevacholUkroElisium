@@ -333,6 +333,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 synthetic context-graph builder review smoke",
+            [
+                sys.executable,
+                "scripts/review_m2_synthetic_context_graph_builder_dry_run.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

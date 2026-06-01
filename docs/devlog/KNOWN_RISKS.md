@@ -1,5 +1,11 @@
 # Known Risks
 
+- The M2 synthetic context-graph builder review gate is redacted evidence only. A passing review is
+  permission to define `m2_explicit_local_import_adapter_contract`, not to read a local export or
+  implement an adapter.
+- Keep generated context-graph review JSON and Markdown under
+  `workspace/local-private/extraction-indexing/import/context-graph-review/` and out of tracked
+  files, chat, reports, and commits.
 - The M2 synthetic context-graph builder dry-run projects committed invented fixture metadata only.
   Do not describe it as a graph built from a local export or completion of the original M2 graph
   criterion.

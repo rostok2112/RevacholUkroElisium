@@ -1,5 +1,17 @@
 # Session Summary
 
+Original M2 synthetic context-graph builder review gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_m2_synthetic_context_graph_builder_dry_run.py` and
+  `tests/fixtures/m2_synthetic_context_graph_builder_review_decision.synthetic.json`.
+- The review helper reads only generated synthetic context-graph dry-run output under the ignored
+  private workspace root and emits redacted evidence.
+- Wired a temp-workspace review self-test into `scripts/check_all.py`.
+- The review preserves spoiler budget `none`, keeps local-import adapter implementation blocked,
+  and does not mark any original M2 criterion complete.
+- The only approved next step is `m2_explicit_local_import_adapter_contract`.
+
 Original M2 synthetic context-graph builder dry-run is implemented.
 
 Completed in the latest session:
