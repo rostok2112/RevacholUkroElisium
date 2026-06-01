@@ -1,5 +1,13 @@
 # Known Risks
 
+- The M2 synthetic context-graph builder dry-run projects committed invented fixture metadata only.
+  Do not describe it as a graph built from a local export or completion of the original M2 graph
+  criterion.
+- Keep optional context-graph builder output under
+  `workspace/local-private/extraction-indexing/import/context-graph/` and out of tracked files,
+  chat, reports, and commits.
+- A future `m2_synthetic_context_graph_builder_review_gate` must emit redacted evidence only and
+  must not approve arbitrary future branches or graph construction from private input.
 - The M2 synthetic context-graph fixture is static metadata-only contract evidence. Do not
   describe it as a built context graph or completion of the original M2 graph criterion.
 - A future `m2_synthetic_context_graph_builder_dry_run` must remain invented-fixture-only, preserve

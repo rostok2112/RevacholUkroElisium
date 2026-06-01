@@ -1,5 +1,20 @@
 # Next Actions
 
+After the original M2 synthetic context-graph builder dry-run:
+
+1. Treat `scripts/run_m2_synthetic_context_graph_builder_dry_run.py` as an invented-fixture-only
+   metadata projection helper.
+2. Keep real DB import, private-input reads, original M2 context-graph completion, arbitrary future
+   branches, and runtime behavior blocked.
+3. Keep generated dry-run output private under
+   `workspace/local-private/extraction-indexing/import/context-graph/`.
+
+Recommended next safe step:
+
+- Define `m2_synthetic_context_graph_builder_review_gate`.
+
+---
+
 After the original M2 synthetic context-graph contract:
 
 1. Treat `docs/m2-synthetic-context-graph-contract.md`,

@@ -1,5 +1,18 @@
 # Session Summary
 
+Original M2 synthetic context-graph builder dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m2_synthetic_context_graph_builder_dry_run.py`.
+- The helper validates one explicit invented import JSON and one explicit metadata-only synthetic
+  line index, then deterministically projects the committed synthetic context graph.
+- Optional output is restricted to the ignored private root
+  `workspace/local-private/extraction-indexing/import/context-graph/`.
+- Wired a quiet fixture-match smoke into `scripts/check_all.py`.
+- The helper preserves spoiler budget `none`, keeps `graph_constructed=false`, and does not mark
+  any original M2 criterion complete.
+- The only approved next step is `m2_synthetic_context_graph_builder_review_gate`.
+
 Original M2 synthetic context-graph contract is implemented.
 
 Completed in the latest session:

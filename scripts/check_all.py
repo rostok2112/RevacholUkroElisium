@@ -324,6 +324,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 synthetic context-graph builder dry-run smoke",
+            [
+                sys.executable,
+                "scripts/run_m2_synthetic_context_graph_builder_dry_run.py",
+                "--check-fixture",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

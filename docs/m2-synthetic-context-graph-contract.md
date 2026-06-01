@@ -76,8 +76,30 @@ python scripts/check_m2_synthetic_context_graph_contract.py --quiet
 ```
 
 The fixture maps nodes to the committed synthetic line index and edges to invented import
-relations. It is contract evidence only. The next allowed step is:
+relations. It is contract evidence only.
+
+## Synthetic Builder Dry-Run
+
+The approved fixture-only projection helper is:
 
 ```text
-m2_synthetic_context_graph_builder_dry_run
+scripts/run_m2_synthetic_context_graph_builder_dry_run.py
+```
+
+It validates one explicit invented synthetic import JSON and one explicit metadata-only synthetic
+line index. It projects only sorted synthetic nodes and invented relation edges. Optional generated
+output remains ignored and private under
+`workspace/local-private/extraction-indexing/import/context-graph/`.
+
+The helper preserves spoiler budget `none`, keeps `graph_constructed=false`, and does not complete
+the original M2 context-graph criterion. Validate the deterministic fixture projection with:
+
+```powershell
+python scripts/run_m2_synthetic_context_graph_builder_dry_run.py --check-fixture --quiet
+```
+
+The next allowed step is:
+
+```text
+m2_synthetic_context_graph_builder_review_gate
 ```

@@ -11,12 +11,20 @@ try:
         ALLOWED_RELATIONS,
         load_and_validate_m2_synthetic_import,
     )
+    from scripts.run_m2_synthetic_context_graph_builder_dry_run import (
+        RELATION_TO_BUCKET,
+        build_m2_synthetic_context_graph,
+    )
     from scripts.schema_validator import collect_errors, load_json
     from scripts.synthetic_slice import ROOT
 except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
     from m2_synthetic_import_validator import (
         ALLOWED_RELATIONS,
         load_and_validate_m2_synthetic_import,
+    )
+    from run_m2_synthetic_context_graph_builder_dry_run import (
+        RELATION_TO_BUCKET,
+        build_m2_synthetic_context_graph,
     )
     from schema_validator import collect_errors, load_json
     from synthetic_slice import ROOT
@@ -33,12 +41,7 @@ LINE_INDEX_DOC_PATH = ROOT / "docs/m2-synthetic-line-index-contract.md"
 SESSION_SUMMARY_PATH = ROOT / "docs/devlog/SESSION_SUMMARY.md"
 NEXT_ACTIONS_PATH = ROOT / "docs/devlog/NEXT_ACTIONS.md"
 SCHEMA_VERSION = "m2-synthetic-context-graph.v1"
-RECOMMENDED_NEXT_STEP = "m2_synthetic_context_graph_builder_dry_run"
-RELATION_TO_BUCKET = {
-    "previous_visible": "visible_history",
-    "nearby_branch": "nearby_tree",
-    "player_option": "player_options",
-}
+RECOMMENDED_NEXT_STEP = "m2_synthetic_context_graph_builder_review_gate"
 SAFETY_FLAG_FIELDS = (
     "real_game_text_included",
     "source_text_included",
@@ -134,7 +137,7 @@ def main(argv: list[str] | None = None) -> int:
                     "ok": True,
                     "schema_version": "m2-synthetic-context-graph-contract-check.v1",
                     "fixture_schema_version": SCHEMA_VERSION,
-                    "builder_added": False,
+                    "builder_added": True,
                     "recommended_next_step": RECOMMENDED_NEXT_STEP,
                 },
                 indent=2,
@@ -161,6 +164,8 @@ def collect_m2_synthetic_context_graph_contract_errors(path: Path = FIXTURE_PATH
     else:
         errors.extend(_node_errors(payload, line_index))
         errors.extend(_edge_errors(payload, source))
+        if payload != build_m2_synthetic_context_graph(source, line_index):
+            errors.append("$: must match deterministic synthetic context-graph builder output.")
     errors.extend(_safety_errors(payload))
     if path == FIXTURE_PATH:
         errors.extend(_doc_errors())

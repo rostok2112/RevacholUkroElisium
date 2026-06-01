@@ -1,5 +1,9 @@
 # Decisions Pending
 
+- The M2 synthetic context-graph builder dry-run is implemented. Define
+  `m2_synthetic_context_graph_builder_review_gate` next using redacted synthetic evidence only.
+- Keep original M2 context-graph completion false. The dry-run projects committed invented fixture
+  metadata only; it is not a graph built from a local export.
 - The M2 synthetic context-graph contract is defined. Implement
   `m2_synthetic_context_graph_builder_dry_run` next using committed invented fixture relations only.
 - Keep graph construction from private input, arbitrary future-branch traversal, and all original
