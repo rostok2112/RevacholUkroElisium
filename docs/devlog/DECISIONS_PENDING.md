@@ -1,10 +1,13 @@
 # Decisions Pending
 
-- Milestone 5A.11 closes submilestone 5A at the local-only, redacted dry-run evidence level.
-  Top-level Milestone 5 remains open. Decide the scope of submilestone 5B next.
-- Do not skip directly to Milestone 6. Define 5B before adding any runtime behavior, real
-  extraction, private file-content reads, game-file reads, scanning, capture, provider execution,
-  or companion contract changes.
+- `tasks/milestones.md` remains the unchanged canonical roadmap. Original `M0 - Repo and contracts`
+  and `M1 - Synthetic vertical slice` are complete. Original `M2 - Local extraction import` is
+  active.
+- Milestone 5A.11 closes the internal 5A safety-preparation workstream at the local-only, redacted
+  dry-run evidence level. Retire the undefined `milestone_5b_planning` placeholder.
+- Define the original M2 local extraction import scope contract before adding any runtime behavior,
+  real extraction, private file-content reads, game-file reads, scanning, capture, provider
+  execution, or companion contract changes.
 - Do not treat the 5A closeout as approval for generated real indexes or committed extracted text.
 - Milestone 5A.10 now has a private index builder dry-run. Decide whether the next step is a
   redacted `private-index-dry-run.v1` review gate or a schema refinement before any broader private

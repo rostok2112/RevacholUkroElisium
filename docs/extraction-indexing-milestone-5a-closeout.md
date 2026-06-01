@@ -1,5 +1,9 @@
 # Extraction Indexing Milestone 5A Closeout
 
+The unchanged canonical roadmap remains `tasks/milestones.md`. In that original roadmap, this
+5A-labelled work is an internal safety-preparation workstream inside active
+`M2 - Local extraction import`. It is not the original top-level `M5 - Maximum quality pipeline`.
+
 Milestone 5A closes with a local-only, redacted evidence path. It established scope contracts,
 synthetic fixtures, metadata-only dry-runs, and private workspace boundaries before any real
 extraction/indexing behavior is approved.
@@ -76,9 +80,11 @@ tracked evidence stays redacted, and the recommended next step remains narrow.
 The recorded next step is:
 
 ```text
-milestone_5b_planning
+m2_local_extraction_import_scope_contract
 ```
 
-This means submilestone 5A is closed and top-level Milestone 5 remains open. The next task is to
-define the scope of submilestone 5B. It does not approve real extraction, game-file reads, private
-file-content reads, capture, scanning, hooks, OCR, provider execution, or committed real text.
+This means the internal 5A safety-preparation workstream is closed while original
+`M2 - Local extraction import` remains active. The undefined `milestone_5b_planning` placeholder is
+retired because it was never part of the original roadmap. The next task is an M2 local extraction
+import scope contract. It does not approve real extraction, game-file reads, private file-content
+reads, capture, scanning, hooks, OCR, provider execution, or committed real text.

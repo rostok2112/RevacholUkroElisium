@@ -1,6 +1,17 @@
 # Session Summary
 
-Milestone 5A.11 closes Milestone 5A at the local-only, redacted evidence level.
+Roadmap hierarchy recovery:
+
+- `tasks/milestones.md` remains the unchanged canonical roadmap from the initial scaffold.
+- Original `M0 - Repo and contracts` and `M1 - Synthetic vertical slice` are complete.
+- Original `M2 - Local extraction import` is active.
+- The completed 5A-labelled series is an internal M2 safety-preparation workstream, not original
+  `M5 - Maximum quality pipeline`. Original M5 has not started.
+- The undefined `milestone_5b_planning` placeholder is retired. The next safe decision is
+  `m2_local_extraction_import_scope_contract`.
+
+Milestone 5A.11 closes the internal 5A safety-preparation workstream at the local-only, redacted
+evidence level.
 
 Completed in the latest session:
 - Added `docs/extraction-indexing-milestone-5a-closeout.md`, summarizing the safe Milestone 5A path
@@ -13,8 +24,9 @@ Completed in the latest session:
   `scripts/check_all.py`.
 - Added focused tests for fixture shape, missing safe evidence, forbidden capabilities, unsafe
   markers, docs links, and check-all registration.
-- Submilestone 5A closes without claiming real extraction. Top-level Milestone 5 remains open, and
-  the next safe decision is `milestone_5b_planning`.
+- The internal 5A workstream closes without claiming real extraction. Original
+  `M2 - Local extraction import` remains active, and the next safe decision is
+  `m2_local_extraction_import_scope_contract`.
 - Did not add extraction/indexing behavior, read private file contents, read game files, scan
   Steam/game installs, read BepInEx logs, add current-line capture, read UI text, scan Unity
   objects, add hooks/Harmony, run OCR, use decompiled code, change companion HTTP contracts, call

@@ -1,13 +1,22 @@
 # Next Actions
 
+Canonical roadmap recovery:
+
+1. Treat `tasks/milestones.md` as the unchanged original roadmap.
+2. Treat original `M0 - Repo and contracts` and `M1 - Synthetic vertical slice` as complete.
+3. Treat original `M2 - Local extraction import` as active.
+4. Treat the completed 5A-labelled series as an internal M2 safety-preparation workstream.
+5. Do not use the retired `milestone_5b_planning` placeholder. Original
+   `M5 - Maximum quality pipeline` has not started.
+
 After Milestone 5A.11 closeout:
 
 1. Treat `docs/extraction-indexing-milestone-5a-closeout.md`,
    `tests/fixtures/extraction_indexing_5a_closeout.synthetic.json`, and
    `scripts/check_extraction_indexing_5a_closeout.py` as the Milestone 5A closeout record.
-2. Treat submilestone 5A as closed at the local-only, redacted dry-run evidence level. Top-level
-   Milestone 5 remains open. The 5A closeout does not claim real extraction or approve reading game
-   files or private file contents.
+2. Treat the internal 5A safety-preparation workstream as closed at the local-only, redacted dry-run
+   evidence level. Original `M2 - Local extraction import` remains active. The 5A closeout does not
+   claim real extraction or approve reading game files or private file contents.
 3. Keep real extraction, automatic game-install scanning, BepInEx log reads, current-line capture,
    UI text reading, Unity scanning, hooks/Harmony, OCR, save parsing, decompiled-code work, companion
    HTTP contract changes, provider execution, generated real indexes, and committed real extracted
@@ -15,12 +24,12 @@ After Milestone 5A.11 closeout:
 
 Recommended next safe step:
 
-- Define the scope of submilestone 5B. Do not skip from the 5A closeout to Milestone 6 and do not
-  start real extraction implicitly.
+- Define the original M2 local extraction import scope contract. Do not start real extraction
+  implicitly.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 5A.11 closed submilestone 5A at the local-only, redacted dry-run evidence level. Top-level Milestone 5 remains open. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-milestone-5a-closeout.md, tests/fixtures/extraction_indexing_5a_closeout.synthetic.json, and scripts/check_extraction_indexing_5a_closeout.py. Define the scope of submilestone 5B before implementing it. Do not skip to Milestone 6. Do not implement real extraction, read private file contents, read game files, scan Steam/game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, generated real indexes, committed real extracted text, downloads, or new dependencies without a separate approved scope.`
+`Continue in revachol-ukro-elisium after the internal 5A safety-preparation workstream closed at the local-only, redacted dry-run evidence level. The unchanged original roadmap in tasks/milestones.md controls: M0 and M1 are complete, and M2 - Local extraction import is active. First inspect git status and read AGENTS.md, tasks/milestones.md, docs/devlog/*.md, docs/extraction-indexing-milestone-5a-closeout.md, tests/fixtures/extraction_indexing_5a_closeout.synthetic.json, and scripts/check_extraction_indexing_5a_closeout.py. Define the M2 local extraction import scope contract before implementing it. Do not implement real extraction, read private file contents, read game files, scan Steam/game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, generated real indexes, committed real extracted text, downloads, or new dependencies without a separate approved scope.`
 
 ---
 

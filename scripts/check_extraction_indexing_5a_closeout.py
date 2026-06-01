@@ -21,7 +21,7 @@ SESSION_SUMMARY_PATH = ROOT / "docs/devlog/SESSION_SUMMARY.md"
 NEXT_ACTIONS_PATH = ROOT / "docs/devlog/NEXT_ACTIONS.md"
 SCHEMA_VERSION = "extraction-indexing-5a-closeout.v1"
 MILESTONE = "5A"
-RECOMMENDED_NEXT_STEP = "milestone_5b_planning"
+RECOMMENDED_NEXT_STEP = "m2_local_extraction_import_scope_contract"
 
 COMPLETED_SAFE_FIELDS = (
     "scope_contract_done",

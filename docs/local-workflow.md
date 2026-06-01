@@ -4,9 +4,11 @@
 bridge workflow. It does not launch the game, read arbitrary game files, print raw logs, dump
 provider payloads, change C# behavior, add companion endpoints, or implement capture.
 
-This is Milestone 4 closeout / bridge workflow polish. It is not top-level Milestone 5A. The BepInEx
-bridge skeleton is completed and over-validated by redacted runtime smoke evidence. The true next
-top-level milestone remains Milestone 5A: real extraction/indexing adapter, local-only.
+This is Milestone 4 closeout / bridge workflow polish. The BepInEx bridge skeleton is completed and
+over-validated by redacted runtime smoke evidence. The unchanged canonical roadmap is
+`tasks/milestones.md`: original `M0` and `M1` are complete, and original
+`M2 - Local extraction import` is active. The later 5A-labelled work is an internal M2
+safety-preparation workstream, not original `M5 - Maximum quality pipeline`.
 
 Milestone 5A now begins with a scope/safety contract only:
 
@@ -191,8 +193,8 @@ This closes the expanded Milestone 4 bridge/workflow validation. The BepInEx bri
 completed and over-validated through redacted runtime smoke, companion-connected synthetic smoke,
 bridge-to-overlay synthetic smoke, overlay refresh readiness, and the local workflow wrapper.
 
-True Milestone 5A has not started yet. Milestone 5A remains: real extraction/indexing adapter,
-local-only.
+At the time of this closeout, the next extraction/indexing work was still pending. The canonical
+roadmap now records that work under active `M2 - Local extraction import`.
 
 This result still does not prove or approve current-line capture, real text capture, UI text
 reading, Unity scanning, hooks/Harmony, OCR, extraction, real provider execution, production overlay

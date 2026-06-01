@@ -1,11 +1,13 @@
 # Known Risks
 
-- Milestone 5A.11 closes submilestone 5A at the redacted dry-run evidence level only. Top-level
-  Milestone 5 remains open. Do not summarize 5A as completed real extraction or completed real
-  indexing, and do not skip directly to Milestone 6.
-- Submilestone 5B needs a separate scope. Do not let the 5A closeout fixture become implicit
-  permission to read game files, private file contents, BepInEx logs, screenshots, saves, or
-  decompiled output.
+- `tasks/milestones.md` is the unchanged canonical roadmap. Original `M2 - Local extraction import`
+  is active. Do not confuse the internal 5A-labelled safety-preparation series with original
+  `M5 - Maximum quality pipeline`, which has not started.
+- Milestone 5A.11 closes the internal 5A workstream at the redacted dry-run evidence level only. Do
+  not summarize it as completed real extraction or completed real indexing.
+- The retired `milestone_5b_planning` placeholder was never part of the original roadmap. Do not
+  let the 5A closeout fixture become implicit permission to read game files, private file contents,
+  BepInEx logs, screenshots, saves, or decompiled output.
 - Local summaries, hashes, reviews, and dry-run index previews remain private even when they contain
   only counts, sizes, booleans, and redacted evidence. Keep them out of tracked files and chat.
 - Milestone 5A.10 builds only a redacted private index dry-run preview. A passing dry-run must not

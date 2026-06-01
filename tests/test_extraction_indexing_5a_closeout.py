@@ -114,6 +114,9 @@ class ExtractionIndexing5ACloseoutTests(unittest.TestCase):
         self.assertNotIn("ocr is approved", combined)
         self.assertNotIn("provider execution is approved", combined)
         self.assertIn("does not claim real extraction", combined)
+        self.assertIn("m2 - local extraction import", combined)
+        self.assertNotIn("next safe decision is `milestone_5b_planning`", combined)
+        self.assertIn("`milestone_5b_planning` placeholder is retired", combined)
 
     def test_check_all_registers_closeout_checker(self) -> None:
         text = (ROOT / "scripts/check_all.py").read_text(encoding="utf-8")

@@ -1,5 +1,12 @@
 # ADR 0011: Real extraction/indexing scope
 
+## Roadmap Placement
+
+The unchanged canonical roadmap is `tasks/milestones.md`. This ADR and the later 5A-labelled
+contracts form an internal safety-preparation workstream inside active
+`M2 - Local extraction import`. They are not the original top-level
+`M5 - Maximum quality pipeline`, which has not started.
+
 ## Status
 
 Accepted.
@@ -13,9 +20,9 @@ synthetic/manual path:
 real local game launch -> BepInEx bridge -> synthetic send -> companion mock provider state -> overlay readiness
 ```
 
-True Milestone 5A is the real extraction/indexing adapter, local-only. Before any adapter reads user
-files or writes private indexes, the project needs a scope and safety contract that keeps public
-repo data synthetic and keeps user-owned extraction output ignored.
+The internal 5A-labelled workstream prepares the real extraction/indexing adapter, local-only.
+Before any adapter reads user files or writes private indexes, the project needs a scope and safety
+contract that keeps public repo data synthetic and keeps user-owned extraction output ignored.
 
 This decision is docs/static-contract work only. It does not implement extraction, indexing,
 current-line capture, UI text reading, Unity scanning, hooks/Harmony, OCR, production overlay shell
