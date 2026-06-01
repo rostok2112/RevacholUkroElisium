@@ -212,3 +212,23 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_adapter_contract
 ```
+
+## Explicit Local-Import Adapter Contract
+
+The next contract-only boundary is documented in:
+
+```text
+docs/m2-explicit-local-import-adapter-contract.md
+tests/fixtures/m2_explicit_local_import_adapter_scope.synthetic.json
+scripts/check_m2_explicit_local_import_adapter_contract.py
+```
+
+It limits a future adapter to one explicitly supplied workspace-private export file and a
+metadata-summary-first dry-run. It does not read or parse a local export, import a DB, build an
+index, construct a graph, or complete any original M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_adapter_dry_run
+```

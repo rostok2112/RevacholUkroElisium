@@ -342,6 +342,14 @@ def main() -> int:
             ],
         ),
         (
+            "M2 explicit local-import adapter contract",
+            [
+                sys.executable,
+                "scripts/check_m2_explicit_local_import_adapter_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

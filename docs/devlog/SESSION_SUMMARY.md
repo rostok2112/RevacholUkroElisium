@@ -1,5 +1,18 @@
 # Session Summary
 
+Original M2 explicit local-import adapter contract is implemented.
+
+Completed in the latest session:
+- Added `docs/m2-explicit-local-import-adapter-contract.md`,
+  `tests/fixtures/m2_explicit_local_import_adapter_scope.synthetic.json`, and
+  `scripts/check_m2_explicit_local_import_adapter_contract.py`.
+- The contract limits a future adapter dry-run to one explicitly supplied workspace-private export
+  file under `workspace/local-private/extraction-indexing/input/`.
+- The contract keeps implementation, local-export reads, parsing, real DB import, index
+  construction, graph construction, and every original M2 completion flag blocked.
+- Wired the fixture-only checker into `scripts/check_all.py`.
+- The only approved next step is `m2_explicit_local_import_adapter_dry_run`.
+
 Original M2 synthetic context-graph builder review gate is implemented.
 
 Completed in the latest session:

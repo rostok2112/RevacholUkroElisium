@@ -1,5 +1,21 @@
 # Next Actions
 
+After the original M2 explicit local-import adapter contract:
+
+1. Treat `docs/m2-explicit-local-import-adapter-contract.md`,
+   `tests/fixtures/m2_explicit_local_import_adapter_scope.synthetic.json`, and
+   `scripts/check_m2_explicit_local_import_adapter_contract.py` as the one-file private-input
+   guardrail.
+2. Keep local-export reads, parsing, real DB import, indexing, graph construction, automatic
+   discovery, and every original M2 completion flag blocked.
+3. Implement only a metadata-summary dry-run for one explicit workspace-private file next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_adapter_dry_run`.
+
+---
+
 After the original M2 synthetic context-graph builder review gate:
 
 1. Treat `scripts/review_m2_synthetic_context_graph_builder_dry_run.py` and

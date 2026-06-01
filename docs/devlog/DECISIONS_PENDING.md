@@ -1,5 +1,9 @@
 # Decisions Pending
 
+- The M2 explicit local-import adapter contract is defined. Implement
+  `m2_explicit_local_import_adapter_dry_run` next for one explicit workspace-private export file.
+- Keep file-content reads, parsing, real DB import, line-index construction, context-graph
+  construction, and every original M2 completion flag false in that dry-run.
 - The M2 synthetic context-graph builder review gate is implemented. Define
   `m2_explicit_local_import_adapter_contract` next without reading a local export or implementing
   the adapter.

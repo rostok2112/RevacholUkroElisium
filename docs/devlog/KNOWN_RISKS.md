@@ -1,5 +1,9 @@
 # Known Risks
 
+- The M2 explicit local-import adapter contract is static guardrail work only. Do not describe it
+  as permission to read or parse an export, import a DB, build an index, or construct a graph.
+- A future `m2_explicit_local_import_adapter_dry_run` must accept one explicit workspace-private
+  file only and summarize filesystem metadata without reading file contents.
 - The M2 synthetic context-graph builder review gate is redacted evidence only. A passing review is
   permission to define `m2_explicit_local_import_adapter_contract`, not to read a local export or
   implement an adapter.
