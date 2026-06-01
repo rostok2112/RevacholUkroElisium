@@ -1,5 +1,25 @@
 # Session Summary
 
+Milestone 5A.11 closes Milestone 5A at the local-only, redacted evidence level.
+
+Completed in the latest session:
+- Added `docs/extraction-indexing-milestone-5a-closeout.md`, summarizing the safe Milestone 5A path
+  from scope contract through private index builder dry-run.
+- Added `tests/fixtures/extraction_indexing_5a_closeout.synthetic.json`, which records completed
+  safe steps while keeping real extraction, real game-file reads, automatic game-install scanning,
+  BepInEx log reads, capture, UI reads, Unity scanning, hooks, OCR, provider execution, companion
+  contract changes, and committed extracted text false.
+- Added `scripts/check_extraction_indexing_5a_closeout.py` and wired it into
+  `scripts/check_all.py`.
+- Added focused tests for fixture shape, missing safe evidence, forbidden capabilities, unsafe
+  markers, docs links, and check-all registration.
+- Milestone 5A closes without claiming real extraction. The next safe decision is
+  `user_selected_private_input_adapter_review_or_milestone_6_planning`.
+- Did not add extraction/indexing behavior, read private file contents, read game files, scan
+  Steam/game installs, read BepInEx logs, add current-line capture, read UI text, scan Unity
+  objects, add hooks/Harmony, run OCR, use decompiled code, change companion HTTP contracts, call
+  providers, create generated real indexes, or commit real extracted text.
+
 Milestone 5A.10 private index builder dry-run is implemented.
 
 Completed in the latest session:

@@ -266,6 +266,14 @@ def main() -> int:
             ],
         ),
         (
+            "extraction/indexing Milestone 5A closeout",
+            [
+                sys.executable,
+                "scripts/check_extraction_indexing_5a_closeout.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

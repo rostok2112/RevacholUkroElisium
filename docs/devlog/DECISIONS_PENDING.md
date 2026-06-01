@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- Milestone 5A.11 closes Milestone 5A at the local-only, redacted dry-run evidence level. Decide
+  whether the next top-level step is another redacted user-selected private-input adapter review or
+  Milestone 6 planning.
+- Decide the scope of Milestone 6 before adding any runtime behavior, real extraction, private
+  file-content reads, game-file reads, scanning, capture, provider execution, or companion contract
+  changes.
+- Do not treat the 5A closeout as approval for generated real indexes or committed extracted text.
 - Milestone 5A.10 now has a private index builder dry-run. Decide whether the next step is a
   redacted `private-index-dry-run.v1` review gate or a schema refinement before any broader private
   index construction discussion.
