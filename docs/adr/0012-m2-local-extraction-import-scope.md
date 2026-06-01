@@ -95,3 +95,17 @@ scripts/check_m2_synthetic_import_format.py
 
 It defines invented fixture records and relation edges only. It does not implement import, line
 indexing, context-graph construction, or local-content reads.
+
+## Synthetic Line-Index Contract
+
+The next metadata-only output contract is documented in:
+
+```text
+docs/m2-synthetic-line-index-contract.md
+specs/m2-synthetic-line-index.schema.json
+tests/fixtures/m2_synthetic_line_index.synthetic.json
+scripts/check_m2_synthetic_line_index_contract.py
+```
+
+It defines a committed synthetic line-index fixture only. It does not build an index, include
+source text, import a real DB, read private input, or build a context graph.

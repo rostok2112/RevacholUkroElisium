@@ -1,5 +1,20 @@
 # Session Summary
 
+Original M2 synthetic line-index contract is implemented.
+
+Completed in the latest session:
+- Added `docs/m2-synthetic-line-index-contract.md`,
+  `specs/m2-synthetic-line-index.schema.json`, and
+  `tests/fixtures/m2_synthetic_line_index.synthetic.json`.
+- Added `scripts/check_m2_synthetic_line_index_contract.py` and wired it into
+  `scripts/check_all.py`.
+- The static fixture maps every invented synthetic import record exactly once using metadata-only
+  entries sorted by `line_id`.
+- The fixture excludes source text, graph edges, filenames, paths, hashes, payloads, logs, and
+  runtime evidence.
+- The only approved next step is `m2_synthetic_line_index_builder_dry_run`.
+- Did not add a line-index builder, import a real DB, read private input, or build a context graph.
+
 Original M2 reusable synthetic import validator is implemented.
 
 Completed in the latest session:

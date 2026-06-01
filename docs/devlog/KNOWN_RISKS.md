@@ -1,5 +1,10 @@
 # Known Risks
 
+- The M2 synthetic line-index fixture is metadata-only contract evidence. It is not an index built
+  from a local export and must not be described as completing the original M2 line-index criterion.
+- A future `m2_synthetic_line_index_builder_dry_run` must remain invented-fixture-only and must not
+  copy source text, graph edges, filenames, paths, hashes, payloads, logs, or runtime evidence into
+  output.
 - The M2 synthetic import format contract defines invented records and relation edges only. It does
   not implement real DB import, line indexing, context-graph construction, or private-content reads.
 - `m2_synthetic_import_validator_or_line_index_contract` must remain synthetic/static until a

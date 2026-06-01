@@ -1,0 +1,76 @@
+{
+  "schema_version": "m2-synthetic-line-index.v1",
+  "source_schema_version": "m2-synthetic-import-db.v1",
+  "source_kind": "synthetic_fixture",
+  "generated_from_synthetic_fixture": true,
+  "record_count": 3,
+  "entries": [
+    {
+      "line_id": "synthetic.m2.line.001",
+      "record_id": "synthetic.m2.line.001",
+      "conversation_id": "synthetic.m2.conversation.001",
+      "speaker_id": "synthetic.m2.speaker.clerk",
+      "context_placeholder": "synthetic_office_entry",
+      "context_tags": [
+        "invented-entry",
+        "synthetic-office"
+      ]
+    },
+    {
+      "line_id": "synthetic.m2.line.002",
+      "record_id": "synthetic.m2.line.002",
+      "conversation_id": "synthetic.m2.conversation.001",
+      "speaker_id": "synthetic.m2.speaker.clerk",
+      "context_placeholder": "synthetic_office_reply",
+      "context_tags": [
+        "invented-reply",
+        "synthetic-office"
+      ]
+    },
+    {
+      "line_id": "synthetic.m2.line.003",
+      "record_id": "synthetic.m2.line.003",
+      "conversation_id": "synthetic.m2.conversation.001",
+      "speaker_id": "synthetic.m2.speaker.player",
+      "context_placeholder": "synthetic_office_option",
+      "context_tags": [
+        "invented-option",
+        "synthetic-office"
+      ]
+    }
+  ],
+  "metadata": {
+    "fixture_only": true,
+    "contract_only": true,
+    "m2_import_locally_extracted_db_done": false,
+    "m2_line_index_done": false,
+    "m2_context_graph_done": false,
+    "recommended_next_step": "m2_synthetic_line_index_builder_dry_run"
+  },
+  "safety_flags": {
+    "real_game_text_included": false,
+    "source_text_included": false,
+    "file_contents_included": false,
+    "paths_included": false,
+    "filenames_included": false,
+    "hashes_included": false,
+    "raw_payloads_included": false,
+    "logs_included": false,
+    "context_edges_included": false,
+    "private_input_read": false,
+    "automatic_game_install_scanning": false,
+    "game_files_read": false,
+    "bepinex_logs_read": false,
+    "screenshots_read": false,
+    "ocr_used": false,
+    "save_files_read": false,
+    "decompiled_code_used": false,
+    "current_line_capture_used": false,
+    "ui_text_reading_used": false,
+    "unity_scanning_used": false,
+    "hooks_used": false,
+    "provider_called": false,
+    "companion_contract_changed": false,
+    "generated_index_committed": false
+  }
+}

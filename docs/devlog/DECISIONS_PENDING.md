@@ -1,5 +1,9 @@
 # Decisions Pending
 
+- The M2 synthetic line-index output contract is defined. Implement
+  `m2_synthetic_line_index_builder_dry_run` next using the committed invented import fixture only.
+- Keep original M2 line-index completion false until a separately approved real local-import path
+  and line-index implementation are designed, reviewed, and validated.
 - The M2 synthetic import format contract now defines stable synthetic line records and
   `previous_visible`, `nearby_branch`, and `player_option` edges. Define
   `m2_synthetic_import_validator_or_line_index_contract` next.

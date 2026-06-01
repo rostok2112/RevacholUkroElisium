@@ -290,6 +290,14 @@ def main() -> int:
             ],
         ),
         (
+            "M2 synthetic line-index contract",
+            [
+                sys.executable,
+                "scripts/check_m2_synthetic_line_index_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

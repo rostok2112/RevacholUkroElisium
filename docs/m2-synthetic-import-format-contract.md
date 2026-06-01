@@ -92,6 +92,15 @@ scripts/m2_synthetic_import_validator.py
 The reusable validator reads only an explicitly supplied JSON file. It does not discover local
 exports, inspect directories, or approve real-input reads.
 
+The next static line-index output contract is:
+
+```text
+docs/m2-synthetic-line-index-contract.md
+specs/m2-synthetic-line-index.schema.json
+tests/fixtures/m2_synthetic_line_index.synthetic.json
+scripts/check_m2_synthetic_line_index_contract.py
+```
+
 Original M2 remains incomplete after this contract. The only allowed next step is:
 
 ```text

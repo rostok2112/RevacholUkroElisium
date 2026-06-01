@@ -1,5 +1,22 @@
 # Next Actions
 
+After the original M2 synthetic line-index contract:
+
+1. Treat `docs/m2-synthetic-line-index-contract.md`,
+   `specs/m2-synthetic-line-index.schema.json`,
+   `tests/fixtures/m2_synthetic_line_index.synthetic.json`, and
+   `scripts/check_m2_synthetic_line_index_contract.py` as the metadata-only line-index guardrail.
+2. Keep real DB import, private-input reads, line-index building, and context-graph construction
+   blocked.
+3. Keep source text, graph edges, filenames, paths, hashes, payloads, logs, and runtime evidence
+   out of committed line-index fixtures.
+
+Recommended next safe step:
+
+- Implement `m2_synthetic_line_index_builder_dry_run`.
+
+---
+
 After the reusable M2 synthetic import validator:
 
 1. Treat `specs/m2-synthetic-import-db.schema.json`,
