@@ -76,10 +76,9 @@ tracked evidence stays redacted, and the recommended next step remains narrow.
 The recorded next step is:
 
 ```text
-user_selected_private_input_adapter_review_or_milestone_6_planning
+milestone_5b_planning
 ```
 
-This means the project may decide whether another redacted review of the explicit private-input path
-is useful or whether to plan Milestone 6. It does not approve real extraction, game-file reads,
-private file-content reads, capture, scanning, hooks, OCR, provider execution, or committed real
-text.
+This means submilestone 5A is closed and top-level Milestone 5 remains open. The next task is to
+define the scope of submilestone 5B. It does not approve real extraction, game-file reads, private
+file-content reads, capture, scanning, hooks, OCR, provider execution, or committed real text.

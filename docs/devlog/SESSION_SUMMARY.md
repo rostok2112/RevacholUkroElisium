@@ -13,8 +13,8 @@ Completed in the latest session:
   `scripts/check_all.py`.
 - Added focused tests for fixture shape, missing safe evidence, forbidden capabilities, unsafe
   markers, docs links, and check-all registration.
-- Milestone 5A closes without claiming real extraction. The next safe decision is
-  `user_selected_private_input_adapter_review_or_milestone_6_planning`.
+- Submilestone 5A closes without claiming real extraction. Top-level Milestone 5 remains open, and
+  the next safe decision is `milestone_5b_planning`.
 - Did not add extraction/indexing behavior, read private file contents, read game files, scan
   Steam/game installs, read BepInEx logs, add current-line capture, read UI text, scan Unity
   objects, add hooks/Harmony, run OCR, use decompiled code, change companion HTTP contracts, call

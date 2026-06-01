@@ -1,10 +1,11 @@
 # Known Risks
 
-- Milestone 5A.11 closes 5A at the redacted dry-run evidence level only. It must not be summarized
-  later as completed real extraction or completed real indexing.
-- The next-step choice between another private-input review and Milestone 6 planning needs a
-  separate scope. Do not let the closeout fixture become implicit permission to read game files,
-  private file contents, BepInEx logs, screenshots, saves, or decompiled output.
+- Milestone 5A.11 closes submilestone 5A at the redacted dry-run evidence level only. Top-level
+  Milestone 5 remains open. Do not summarize 5A as completed real extraction or completed real
+  indexing, and do not skip directly to Milestone 6.
+- Submilestone 5B needs a separate scope. Do not let the 5A closeout fixture become implicit
+  permission to read game files, private file contents, BepInEx logs, screenshots, saves, or
+  decompiled output.
 - Local summaries, hashes, reviews, and dry-run index previews remain private even when they contain
   only counts, sizes, booleans, and redacted evidence. Keep them out of tracked files and chat.
 - Milestone 5A.10 builds only a redacted private index dry-run preview. A passing dry-run must not

@@ -5,8 +5,9 @@ After Milestone 5A.11 closeout:
 1. Treat `docs/extraction-indexing-milestone-5a-closeout.md`,
    `tests/fixtures/extraction_indexing_5a_closeout.synthetic.json`, and
    `scripts/check_extraction_indexing_5a_closeout.py` as the Milestone 5A closeout record.
-2. Treat Milestone 5A as closed at the local-only, redacted dry-run evidence level. It does not
-   claim real extraction or approve reading game files or private file contents.
+2. Treat submilestone 5A as closed at the local-only, redacted dry-run evidence level. Top-level
+   Milestone 5 remains open. The 5A closeout does not claim real extraction or approve reading game
+   files or private file contents.
 3. Keep real extraction, automatic game-install scanning, BepInEx log reads, current-line capture,
    UI text reading, Unity scanning, hooks/Harmony, OCR, save parsing, decompiled-code work, companion
    HTTP contract changes, provider execution, generated real indexes, and committed real extracted
@@ -14,12 +15,12 @@ After Milestone 5A.11 closeout:
 
 Recommended next safe step:
 
-- Decide between another redacted user-selected private-input adapter review and Milestone 6
-  planning. Do not start real extraction implicitly.
+- Define the scope of submilestone 5B. Do not skip from the 5A closeout to Milestone 6 and do not
+  start real extraction implicitly.
 
 Exact resume prompt:
 
-`Continue in revachol-ukro-elisium after Milestone 5A.11 closed Milestone 5A at the local-only, redacted dry-run evidence level. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-milestone-5a-closeout.md, tests/fixtures/extraction_indexing_5a_closeout.synthetic.json, and scripts/check_extraction_indexing_5a_closeout.py. Decide whether the next top-level step is another redacted user-selected private-input adapter review or Milestone 6 planning. Do not implement real extraction, read private file contents, read game files, scan Steam/game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, generated real indexes, committed real extracted text, downloads, or new dependencies without a separate approved scope.`
+`Continue in revachol-ukro-elisium after Milestone 5A.11 closed submilestone 5A at the local-only, redacted dry-run evidence level. Top-level Milestone 5 remains open. First inspect git status and read AGENTS.md, docs/devlog/*.md, docs/extraction-indexing-milestone-5a-closeout.md, tests/fixtures/extraction_indexing_5a_closeout.synthetic.json, and scripts/check_extraction_indexing_5a_closeout.py. Define the scope of submilestone 5B before implementing it. Do not skip to Milestone 6. Do not implement real extraction, read private file contents, read game files, scan Steam/game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, production overlay shell work, generated real indexes, committed real extracted text, downloads, or new dependencies without a separate approved scope.`
 
 ---
 
