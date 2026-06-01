@@ -274,6 +274,14 @@ def main() -> int:
             ],
         ),
         (
+            "original M2 local extraction import scope",
+            [
+                sys.executable,
+                "scripts/check_m2_local_extraction_import_scope.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

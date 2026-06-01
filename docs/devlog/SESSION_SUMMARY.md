@@ -1,5 +1,19 @@
 # Session Summary
 
+Original M2 local extraction import scope contract is implemented.
+
+Completed in the latest session:
+- Added `docs/adr/0012-m2-local-extraction-import-scope.md`, defining the next bounded step inside
+  original `M2 - Local extraction import`.
+- Added `tests/fixtures/m2_local_extraction_import_scope.synthetic.json`, recording that original
+  M2 remains active and incomplete while all real-input, scanning, capture, provider, and committed
+  extracted-content permissions remain false.
+- Added `scripts/check_m2_local_extraction_import_scope.py` and wired it into
+  `scripts/check_all.py`.
+- The only approved next step is `m2_synthetic_import_format_contract`.
+- Did not implement an importer, parser, line index, context graph, local-content read, game scan,
+  capture path, provider execution, companion HTTP change, or committed private artifact.
+
 Roadmap hierarchy recovery:
 
 - `tasks/milestones.md` remains the unchanged canonical roadmap from the initial scaffold.

@@ -1,0 +1,39 @@
+{
+  "allowed_private_input_roots": [
+    "workspace/local-private/extraction-indexing/input/"
+  ],
+  "allowed_private_output_roots": [
+    "workspace/local-private/extraction-indexing/import/"
+  ],
+  "arbitrary_drive_scanning_allowed": false,
+  "automatic_game_install_scanning_allowed": false,
+  "bepinex_log_reads_allowed": false,
+  "companion_contract_change_allowed": false,
+  "contract_notes_redacted": true,
+  "current_line_capture_allowed": false,
+  "decompiled_code_allowed": false,
+  "explicit_user_selected_private_export_required": true,
+  "game_file_reads_allowed": false,
+  "generated_index_commit_allowed": false,
+  "hooks_allowed": false,
+  "implementation_allowed_next": false,
+  "local_only": true,
+  "m2_context_graph_done": false,
+  "m2_import_locally_extracted_db_done": false,
+  "m2_line_index_done": false,
+  "ocr_allowed": false,
+  "provider_execution_allowed": false,
+  "raw_extracted_payload_commit_allowed": false,
+  "real_extracted_text_commit_allowed": false,
+  "real_local_input_reads_allowed": false,
+  "recommended_next_step": "m2_synthetic_import_format_contract",
+  "required_next_step": "m2_synthetic_import_format_contract",
+  "roadmap_milestone": "M2",
+  "save_file_reads_allowed": false,
+  "schema_version": "m2-local-extraction-import-scope.v1",
+  "scope_status": "contract_only",
+  "screenshots_allowed": false,
+  "synthetic_fixtures_allowed": true,
+  "ui_text_reading_allowed": false,
+  "unity_scanning_allowed": false
+}

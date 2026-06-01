@@ -1,5 +1,9 @@
 # Known Risks
 
+- ADR 0012 defines only the original M2 scope. It does not implement locally extracted DB import,
+  line indexing, context graph construction, or private-content reads.
+- `m2_synthetic_import_format_contract` must remain invented-fixture-only. Do not let the next
+  contract become implicit permission to read a local export or scan a game installation.
 - `tasks/milestones.md` is the unchanged canonical roadmap. Original `M2 - Local extraction import`
   is active. Do not confuse the internal 5A-labelled safety-preparation series with original
   `M5 - Maximum quality pipeline`, which has not started.

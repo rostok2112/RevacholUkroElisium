@@ -1,5 +1,26 @@
 # Next Actions
 
+After the original M2 local extraction import scope contract:
+
+1. Treat `docs/adr/0012-m2-local-extraction-import-scope.md`,
+   `tests/fixtures/m2_local_extraction_import_scope.synthetic.json`, and
+   `scripts/check_m2_local_extraction_import_scope.py` as the active original-M2 guardrail.
+2. Keep original M2 incomplete: no locally extracted DB import, line index, or context graph exists
+   yet.
+3. Keep real local-input reads, game-file reads, automatic scanning, capture paths, OCR, hooks,
+   providers, companion contract changes, generated real indexes, and committed extracted text
+   blocked.
+
+Recommended next safe step:
+
+- Define `m2_synthetic_import_format_contract` using invented synthetic records only.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after ADR 0012 defined the original M2 local extraction import scope. First inspect git status and read AGENTS.md, tasks/milestones.md, docs/devlog/*.md, docs/adr/0012-m2-local-extraction-import-scope.md, tests/fixtures/m2_local_extraction_import_scope.synthetic.json, and scripts/check_m2_local_extraction_import_scope.py. Define the M2 synthetic import format contract only. Use invented synthetic fixtures and keep implementation blocked. Do not read real local inputs, read game files, scan Steam/game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, generated real indexes, committed extracted text, downloads, or new dependencies.`
+
+---
+
 Canonical roadmap recovery:
 
 1. Treat `tasks/milestones.md` as the unchanged original roadmap.

@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- ADR 0012 defines the original M2 local extraction import scope. Define
+  `m2_synthetic_import_format_contract` next using invented synthetic records only.
+- Decide the synthetic import envelope, record identity fields, line-index inputs, and context-graph
+  relationship fields before any importer reads a real local export.
+- Keep original M2 incomplete until locally extracted DB import, line index construction, and
+  context graph construction are separately implemented and reviewed.
 - `tasks/milestones.md` remains the unchanged canonical roadmap. Original `M0 - Repo and contracts`
   and `M1 - Synthetic vertical slice` are complete. Original `M2 - Local extraction import` is
   active.
