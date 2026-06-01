@@ -132,3 +132,21 @@ context-graph construction. The next allowed step is:
 ```text
 m2_synthetic_context_graph_contract
 ```
+
+## Synthetic Context-Graph Contract
+
+The approved metadata-only graph contract is:
+
+```text
+docs/m2-synthetic-context-graph-contract.md
+specs/m2-synthetic-context-graph.schema.json
+tests/fixtures/m2_synthetic_context_graph.synthetic.json
+scripts/check_m2_synthetic_context_graph_contract.py
+```
+
+It reuses line-index metadata nodes and invented import relations only. It does not construct a
+graph, include source text, or complete any original M2 criterion. The next allowed step is:
+
+```text
+m2_synthetic_context_graph_builder_dry_run
+```

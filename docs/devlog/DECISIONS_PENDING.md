@@ -1,5 +1,9 @@
 # Decisions Pending
 
+- The M2 synthetic context-graph contract is defined. Implement
+  `m2_synthetic_context_graph_builder_dry_run` next using committed invented fixture relations only.
+- Keep graph construction from private input, arbitrary future-branch traversal, and all original
+  M2 completion flags false until separately approved implementation slices are reviewed.
 - The M2 synthetic line-index builder review gate is implemented. Define
   `m2_synthetic_context_graph_contract` next using invented fixture relations only.
 - Keep context-graph construction and all original M2 completion flags false until separately

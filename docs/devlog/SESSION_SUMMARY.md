@@ -1,5 +1,20 @@
 # Session Summary
 
+Original M2 synthetic context-graph contract is implemented.
+
+Completed in the latest session:
+- Added `docs/m2-synthetic-context-graph-contract.md`,
+  `specs/m2-synthetic-context-graph.schema.json`, and
+  `tests/fixtures/m2_synthetic_context_graph.synthetic.json`.
+- Added `scripts/check_m2_synthetic_context_graph_contract.py` and wired it into
+  `scripts/check_all.py`.
+- The fixture maps metadata-only nodes to the synthetic line index and invented edges to
+  `visible_history`, `nearby_tree`, and `player_options` retrieval buckets.
+- Default spoiler budget remains `none`; arbitrary future-branch traversal remains blocked.
+- The only approved next step is `m2_synthetic_context_graph_builder_dry_run`.
+- Did not construct a graph, read private input, import a real DB, or mark any original M2
+  criterion complete.
+
 Original M2 synthetic line-index builder review gate is implemented.
 
 Completed in the latest session:

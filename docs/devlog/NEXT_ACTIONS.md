@@ -1,5 +1,21 @@
 # Next Actions
 
+After the original M2 synthetic context-graph contract:
+
+1. Treat `docs/m2-synthetic-context-graph-contract.md`,
+   `specs/m2-synthetic-context-graph.schema.json`,
+   `tests/fixtures/m2_synthetic_context_graph.synthetic.json`, and
+   `scripts/check_m2_synthetic_context_graph_contract.py` as the metadata-only graph guardrail.
+2. Keep graph construction, real DB import, private-input reads, arbitrary future branches, and
+   every original M2 completion flag blocked.
+3. Implement only a synthetic context-graph builder dry-run next.
+
+Recommended next safe step:
+
+- Implement `m2_synthetic_context_graph_builder_dry_run`.
+
+---
+
 After the original M2 synthetic line-index builder review gate:
 
 1. Treat `scripts/review_m2_synthetic_line_index_builder_dry_run.py` and

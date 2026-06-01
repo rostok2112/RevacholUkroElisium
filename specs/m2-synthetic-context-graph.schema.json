@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/revachol/m2-synthetic-context-graph.schema.json",
+  "title": "M2SyntheticContextGraph",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "source_import_schema_version",
+    "source_line_index_schema_version",
+    "source_kind",
+    "generated_from_synthetic_fixture",
+    "default_spoiler_budget",
+    "node_count",
+    "edge_count",
+    "nodes",
+    "edges",
+    "metadata",
+    "safety_flags"
+  ],
+  "properties": {
+    "schema_version": { "const": "m2-synthetic-context-graph.v1" },
+    "source_import_schema_version": { "const": "m2-synthetic-import-db.v1" },
+    "source_line_index_schema_version": { "const": "m2-synthetic-line-index.v1" },
+    "source_kind": { "const": "synthetic_fixture" },
+    "generated_from_synthetic_fixture": { "const": true },
+    "default_spoiler_budget": { "const": "none" },
+    "node_count": { "type": "integer", "minimum": 0 },
+    "edge_count": { "type": "integer", "minimum": 0 },
+    "nodes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "metadata": { "$ref": "#/$defs/metadata" },
+    "safety_flags": { "$ref": "#/$defs/safetyFlags" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "node": {
+      "type": "object",
+      "required": [
+        "line_id",
+        "record_id",
+        "conversation_id",
+        "speaker_id",
+        "context_placeholder",
+        "context_tags"
+      ],
+      "properties": {
+        "line_id": { "type": "string" },
+        "record_id": { "type": "string" },
+        "conversation_id": { "type": "string" },
+        "speaker_id": { "type": "string" },
+        "context_placeholder": { "type": "string" },
+        "context_tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "edge": {
+      "type": "object",
+      "required": [
+        "from_line_id",
+        "to_line_id",
+        "relation",
+        "retrieval_bucket"
+      ],
+      "properties": {
+        "from_line_id": { "type": "string" },
+        "to_line_id": { "type": "string" },
+        "relation": {
+          "enum": [
+            "previous_visible",
+            "nearby_branch",
+            "player_option"
+          ]
+        },
+        "retrieval_bucket": {
+          "enum": [
+            "visible_history",
+            "nearby_tree",
+            "player_options"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "fixture_only",
+        "contract_only",
+        "m2_import_locally_extracted_db_done",
+        "m2_line_index_done",
+        "m2_context_graph_done",
+        "recommended_next_step"
+      ],
+      "properties": {
+        "fixture_only": { "const": true },
+        "contract_only": { "const": true },
+        "m2_import_locally_extracted_db_done": { "const": false },
+        "m2_line_index_done": { "const": false },
+        "m2_context_graph_done": { "const": false },
+        "recommended_next_step": {
+          "const": "m2_synthetic_context_graph_builder_dry_run"
+        }
+      },
+      "additionalProperties": false
+    },
+    "safetyFlags": {
+      "type": "object",
+      "required": [
+        "real_game_text_included",
+        "source_text_included",
+        "file_contents_included",
+        "paths_included",
+        "filenames_included",
+        "hashes_included",
+        "raw_payloads_included",
+        "logs_included",
+        "runtime_evidence_included",
+        "private_input_read",
+        "graph_constructed",
+        "arbitrary_future_branch_traversal",
+        "automatic_game_install_scanning",
+        "game_files_read",
+        "bepinex_logs_read",
+        "screenshots_read",
+        "ocr_used",
+        "save_files_read",
+        "decompiled_code_used",
+        "current_line_capture_used",
+        "ui_text_reading_used",
+        "unity_scanning_used",
+        "hooks_used",
+        "provider_called",
+        "companion_contract_changed",
+        "generated_graph_committed"
+      ],
+      "properties": {
+        "real_game_text_included": { "const": false },
+        "source_text_included": { "const": false },
+        "file_contents_included": { "const": false },
+        "paths_included": { "const": false },
+        "filenames_included": { "const": false },
+        "hashes_included": { "const": false },
+        "raw_payloads_included": { "const": false },
+        "logs_included": { "const": false },
+        "runtime_evidence_included": { "const": false },
+        "private_input_read": { "const": false },
+        "graph_constructed": { "const": false },
+        "arbitrary_future_branch_traversal": { "const": false },
+        "automatic_game_install_scanning": { "const": false },
+        "game_files_read": { "const": false },
+        "bepinex_logs_read": { "const": false },
+        "screenshots_read": { "const": false },
+        "ocr_used": { "const": false },
+        "save_files_read": { "const": false },
+        "decompiled_code_used": { "const": false },
+        "current_line_capture_used": { "const": false },
+        "ui_text_reading_used": { "const": false },
+        "unity_scanning_used": { "const": false },
+        "hooks_used": { "const": false },
+        "provider_called": { "const": false },
+        "companion_contract_changed": { "const": false },
+        "generated_graph_committed": { "const": false }
+      },
+      "additionalProperties": false
+    }
+  }
+}

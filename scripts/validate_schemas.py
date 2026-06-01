@@ -68,6 +68,11 @@ FIXTURE_CASES = [
         ROOT / "tests/fixtures/m2_synthetic_line_index.synthetic.json",
         True,
     ),
+    FixtureCase(
+        ROOT / "specs/m2-synthetic-context-graph.schema.json",
+        ROOT / "tests/fixtures/m2_synthetic_context_graph.synthetic.json",
+        True,
+    ),
 ]
 
 

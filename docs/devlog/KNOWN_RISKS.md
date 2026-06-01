@@ -1,5 +1,9 @@
 # Known Risks
 
+- The M2 synthetic context-graph fixture is static metadata-only contract evidence. Do not
+  describe it as a built context graph or completion of the original M2 graph criterion.
+- A future `m2_synthetic_context_graph_builder_dry_run` must remain invented-fixture-only, preserve
+  spoiler budget `none`, and reject arbitrary future-branch traversal.
 - The M2 synthetic line-index builder review gate is redacted evidence only. A passing review is
   permission to define a synthetic context-graph contract, not to construct a graph or mark any
   original M2 criterion complete.

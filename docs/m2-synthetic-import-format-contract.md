@@ -106,3 +106,14 @@ Original M2 remains incomplete after this contract. The only allowed next step i
 ```text
 m2_synthetic_import_validator_or_line_index_contract
 ```
+
+The later metadata-only graph contract is:
+
+```text
+docs/m2-synthetic-context-graph-contract.md
+specs/m2-synthetic-context-graph.schema.json
+tests/fixtures/m2_synthetic_context_graph.synthetic.json
+scripts/check_m2_synthetic_context_graph_contract.py
+```
+
+It reuses invented relations only. It does not construct a graph or read private input.

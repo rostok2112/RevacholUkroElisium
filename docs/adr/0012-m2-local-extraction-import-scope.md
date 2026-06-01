@@ -146,3 +146,24 @@ The next allowed step after the review gate is:
 ```text
 m2_synthetic_context_graph_contract
 ```
+
+## Synthetic Context-Graph Contract
+
+The metadata-only context-graph contract is documented in:
+
+```text
+docs/m2-synthetic-context-graph-contract.md
+specs/m2-synthetic-context-graph.schema.json
+tests/fixtures/m2_synthetic_context_graph.synthetic.json
+scripts/check_m2_synthetic_context_graph_contract.py
+```
+
+It maps invented line-index nodes and invented import relations only. It keeps spoiler budget at
+`none`, forbids arbitrary future-branch traversal, and does not construct a graph or complete any
+original M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_synthetic_context_graph_builder_dry_run
+```
