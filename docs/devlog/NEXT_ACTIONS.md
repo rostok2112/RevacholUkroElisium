@@ -1,5 +1,20 @@
 # Next Actions
 
+After the original M2 synthetic line-index builder review gate:
+
+1. Treat `scripts/review_m2_synthetic_line_index_builder_dry_run.py` and
+   `tests/fixtures/m2_synthetic_line_index_builder_review_decision.synthetic.json` as the redacted
+   synthetic review boundary.
+2. Keep real DB import, private-input reads, original M2 line-index completion, and context-graph
+   construction blocked.
+3. Define only the synthetic context-graph contract next.
+
+Recommended next safe step:
+
+- Define `m2_synthetic_context_graph_contract`.
+
+---
+
 After the original M2 synthetic line-index builder dry-run:
 
 1. Treat `scripts/run_m2_synthetic_line_index_builder_dry_run.py` as a fixture-only metadata

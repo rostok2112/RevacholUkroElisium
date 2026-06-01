@@ -1,5 +1,18 @@
 # Session Summary
 
+Original M2 synthetic line-index builder review gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_m2_synthetic_line_index_builder_dry_run.py` and
+  `tests/fixtures/m2_synthetic_line_index_builder_review_decision.synthetic.json`.
+- The review helper reads only generated metadata-only synthetic line-index output under the
+  ignored private workspace root and emits redacted evidence.
+- Wired a temp-workspace review self-test into `scripts/check_all.py`.
+- The review keeps context-graph construction blocked and original M2 criteria incomplete.
+- The only approved next step is `m2_synthetic_context_graph_contract`.
+- Did not read private input, import a real DB, include source text or graph edges, or build a
+  context graph.
+
 Original M2 synthetic line-index builder dry-run is implemented.
 
 Completed in the latest session:

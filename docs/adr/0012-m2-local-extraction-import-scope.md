@@ -128,3 +128,21 @@ The next allowed step after this dry-run is:
 ```text
 m2_synthetic_line_index_builder_review_gate
 ```
+
+## Synthetic Line-Index Builder Review Gate
+
+The approved redacted fixture-only review helper is:
+
+```text
+scripts/review_m2_synthetic_line_index_builder_dry_run.py
+```
+
+It reviews only generated metadata-only line-index dry-run output under the ignored private
+workspace root. It does not read source text, real local exports, or runtime evidence. It does not
+complete the original M2 line-index criterion or approve context-graph construction.
+
+The next allowed step after the review gate is:
+
+```text
+m2_synthetic_context_graph_contract
+```

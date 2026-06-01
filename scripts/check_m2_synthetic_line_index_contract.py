@@ -34,7 +34,7 @@ ADR_PATH = ROOT / "docs/adr/0012-m2-local-extraction-import-scope.md"
 SESSION_SUMMARY_PATH = ROOT / "docs/devlog/SESSION_SUMMARY.md"
 NEXT_ACTIONS_PATH = ROOT / "docs/devlog/NEXT_ACTIONS.md"
 SCHEMA_VERSION = "m2-synthetic-line-index.v1"
-RECOMMENDED_NEXT_STEP = "m2_synthetic_line_index_builder_dry_run"
+RECOMMENDED_NEXT_STEP = "m2_synthetic_line_index_builder_review_gate"
 SAFETY_FLAG_FIELDS = (
     "real_game_text_included",
     "source_text_included",
@@ -124,7 +124,7 @@ def main(argv: list[str] | None = None) -> int:
                     "ok": True,
                     "schema_version": "m2-synthetic-line-index-contract-check.v1",
                     "fixture_schema_version": SCHEMA_VERSION,
-                    "builder_added": False,
+                    "builder_added": True,
                     "recommended_next_step": RECOMMENDED_NEXT_STEP,
                 },
                 indent=2,

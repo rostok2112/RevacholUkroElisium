@@ -104,3 +104,31 @@ This dry-run does not complete the original M2 line-index criterion. The next al
 ```text
 m2_synthetic_line_index_builder_review_gate
 ```
+
+## Synthetic Builder Review Gate
+
+The redacted synthetic-only review helper is:
+
+```text
+scripts/review_m2_synthetic_line_index_builder_dry_run.py
+```
+
+It reads only generated metadata-only dry-run output under the ignored private line-index root and
+emits redacted review evidence under:
+
+```text
+workspace/local-private/extraction-indexing/import/line-index-review/
+```
+
+Validate the review gate without real or private input with:
+
+```powershell
+python scripts/review_m2_synthetic_line_index_builder_dry_run.py --self-test --quiet
+```
+
+The review gate does not complete the original M2 line-index criterion and does not approve
+context-graph construction. The next allowed step is:
+
+```text
+m2_synthetic_context_graph_contract
+```

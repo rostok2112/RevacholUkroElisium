@@ -1,5 +1,11 @@
 # Known Risks
 
+- The M2 synthetic line-index builder review gate is redacted evidence only. A passing review is
+  permission to define a synthetic context-graph contract, not to construct a graph or mark any
+  original M2 criterion complete.
+- Keep generated line-index review JSON and Markdown under
+  `workspace/local-private/extraction-indexing/import/line-index-review/` and out of tracked files,
+  chat, reports, and commits.
 - The M2 synthetic line-index builder dry-run is a metadata-only projection over invented fixture
   records. Do not describe it as a line index built from a local export or as completion of the
   original M2 line-index criterion.

@@ -1,5 +1,9 @@
 # Decisions Pending
 
+- The M2 synthetic line-index builder review gate is implemented. Define
+  `m2_synthetic_context_graph_contract` next using invented fixture relations only.
+- Keep context-graph construction and all original M2 completion flags false until separately
+  approved implementation slices are designed, reviewed, and validated.
 - The M2 synthetic line-index builder dry-run is implemented. Define
   `m2_synthetic_line_index_builder_review_gate` next using redacted synthetic evidence only.
 - Keep original M2 line-index completion false. The dry-run projects committed invented fixture
