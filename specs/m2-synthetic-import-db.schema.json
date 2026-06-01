@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/revachol/m2-synthetic-import-db.schema.json",
+  "title": "M2SyntheticImportDb",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "source_kind",
+    "records",
+    "context_edges",
+    "metadata",
+    "safety_flags"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "m2-synthetic-import-db.v1"
+    },
+    "source_kind": {
+      "const": "synthetic_fixture"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/record"
+      }
+    },
+    "context_edges": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contextEdge"
+      }
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "safety_flags": {
+      "$ref": "#/$defs/safetyFlags"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "record": {
+      "type": "object",
+      "required": [
+        "record_id",
+        "line_id",
+        "conversation_id",
+        "speaker_id",
+        "speaker_label",
+        "context_placeholder",
+        "source_text",
+        "context_tags",
+        "redacted_metadata"
+      ],
+      "properties": {
+        "record_id": {
+          "type": "string"
+        },
+        "line_id": {
+          "type": "string"
+        },
+        "conversation_id": {
+          "type": "string"
+        },
+        "speaker_id": {
+          "type": "string"
+        },
+        "speaker_label": {
+          "type": "string"
+        },
+        "context_placeholder": {
+          "type": "string"
+        },
+        "source_text": {
+          "type": "string"
+        },
+        "context_tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "redacted_metadata": {
+          "$ref": "#/$defs/redactedMetadata"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contextEdge": {
+      "type": "object",
+      "required": [
+        "from_record_id",
+        "to_record_id",
+        "relation"
+      ],
+      "properties": {
+        "from_record_id": {
+          "type": "string"
+        },
+        "to_record_id": {
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "previous_visible",
+            "nearby_branch",
+            "player_option"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "fixture_only",
+        "invented_text_only",
+        "contract_only",
+        "m2_import_locally_extracted_db_done",
+        "m2_line_index_done",
+        "m2_context_graph_done",
+        "recommended_next_step"
+      ],
+      "properties": {
+        "fixture_only": {
+          "const": true
+        },
+        "invented_text_only": {
+          "const": true
+        },
+        "contract_only": {
+          "const": true
+        },
+        "m2_import_locally_extracted_db_done": {
+          "const": false
+        },
+        "m2_line_index_done": {
+          "const": false
+        },
+        "m2_context_graph_done": {
+          "const": false
+        },
+        "recommended_next_step": {
+          "const": "m2_synthetic_import_validator_or_line_index_contract"
+        }
+      },
+      "additionalProperties": false
+    },
+    "redactedMetadata": {
+      "type": "object",
+      "required": [
+        "fixture_only",
+        "invented_text_only",
+        "real_game_text"
+      ],
+      "properties": {
+        "fixture_only": {
+          "const": true
+        },
+        "invented_text_only": {
+          "const": true
+        },
+        "real_game_text": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "safetyFlags": {
+      "type": "object",
+      "required": [
+        "real_game_text_included",
+        "extracted_game_db_included",
+        "private_input_read",
+        "automatic_game_install_scanning",
+        "arbitrary_drive_scanning",
+        "game_files_read",
+        "bepinex_logs_read",
+        "screenshots_read",
+        "ocr_used",
+        "save_files_read",
+        "decompiled_code_used",
+        "current_line_capture_used",
+        "ui_text_reading_used",
+        "unity_scanning_used",
+        "hooks_used",
+        "provider_called",
+        "companion_contract_changed",
+        "extracted_text_committed",
+        "generated_index_committed",
+        "raw_payloads_included"
+      ],
+      "properties": {
+        "real_game_text_included": { "const": false },
+        "extracted_game_db_included": { "const": false },
+        "private_input_read": { "const": false },
+        "automatic_game_install_scanning": { "const": false },
+        "arbitrary_drive_scanning": { "const": false },
+        "game_files_read": { "const": false },
+        "bepinex_logs_read": { "const": false },
+        "screenshots_read": { "const": false },
+        "ocr_used": { "const": false },
+        "save_files_read": { "const": false },
+        "decompiled_code_used": { "const": false },
+        "current_line_capture_used": { "const": false },
+        "ui_text_reading_used": { "const": false },
+        "unity_scanning_used": { "const": false },
+        "hooks_used": { "const": false },
+        "provider_called": { "const": false },
+        "companion_contract_changed": { "const": false },
+        "extracted_text_committed": { "const": false },
+        "generated_index_committed": { "const": false },
+        "raw_payloads_included": { "const": false }
+      },
+      "additionalProperties": false
+    }
+  }
+}

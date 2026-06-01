@@ -1,5 +1,17 @@
 # Session Summary
 
+Original M2 reusable synthetic import validator is implemented.
+
+Completed in the latest session:
+- Added `specs/m2-synthetic-import-db.schema.json` and
+  `scripts/m2_synthetic_import_validator.py`.
+- The reusable validator exposes payload collection, assertion, and explicit-file loading helpers
+  for invented synthetic fixtures only.
+- Refactored `scripts/check_m2_synthetic_import_format.py` to reuse the validator while keeping the
+  canonical fixture and documentation gate.
+- Did not add real DB import, local-content reads, directory discovery, line-index construction,
+  context-graph construction, or runtime behavior.
+
 Original M2 synthetic import format contract is implemented.
 
 Completed in the latest session:

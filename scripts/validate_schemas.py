@@ -58,6 +58,11 @@ FIXTURE_CASES = [
         ROOT / "tests/fixtures/fake_game_event.invalid.synthetic.json",
         False,
     ),
+    FixtureCase(
+        ROOT / "specs/m2-synthetic-import-db.schema.json",
+        ROOT / "tests/fixtures/m2_synthetic_import_db.synthetic.json",
+        True,
+    ),
 ]
 
 

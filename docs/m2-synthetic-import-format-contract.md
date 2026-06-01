@@ -82,6 +82,16 @@ Validate it with:
 python scripts/check_m2_synthetic_import_format.py --quiet
 ```
 
+The portable structural schema and reusable synthetic-only validator are:
+
+```text
+specs/m2-synthetic-import-db.schema.json
+scripts/m2_synthetic_import_validator.py
+```
+
+The reusable validator reads only an explicitly supplied JSON file. It does not discover local
+exports, inspect directories, or approve real-input reads.
+
 Original M2 remains incomplete after this contract. The only allowed next step is:
 
 ```text

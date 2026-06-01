@@ -1,5 +1,16 @@
 # Next Actions
 
+After the reusable M2 synthetic import validator:
+
+1. Treat `specs/m2-synthetic-import-db.schema.json`,
+   `scripts/m2_synthetic_import_validator.py`, and
+   `scripts/check_m2_synthetic_import_format.py` as the synthetic-only input boundary.
+2. Keep private-input reads, directory discovery, real DB import, line-index construction, and
+   context-graph construction blocked.
+3. Define the synthetic line-index output contract next.
+
+---
+
 After the original M2 synthetic import format contract:
 
 1. Treat `docs/m2-synthetic-import-format-contract.md`,

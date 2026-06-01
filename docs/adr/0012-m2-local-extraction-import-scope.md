@@ -88,6 +88,8 @@ The next bounded contract is documented in:
 ```text
 docs/m2-synthetic-import-format-contract.md
 tests/fixtures/m2_synthetic_import_db.synthetic.json
+specs/m2-synthetic-import-db.schema.json
+scripts/m2_synthetic_import_validator.py
 scripts/check_m2_synthetic_import_format.py
 ```
 
