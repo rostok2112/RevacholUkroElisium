@@ -232,3 +232,24 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_adapter_dry_run
 ```
+
+## Explicit Local-Import Adapter Dry-Run
+
+The metadata-only one-file dry-run helper is:
+
+```text
+scripts/run_m2_explicit_local_import_adapter_dry_run.py
+```
+
+It reads filesystem metadata only for one explicit file under the ignored private input root.
+Directories, parsing, schema compatibility inspection, discovery, real DB import, index
+construction, graph construction, and every original M2 completion flag remain blocked.
+
+Optional redacted JSON output remains private under
+`workspace/local-private/extraction-indexing/import/adapter-dry-run/`.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_adapter_dry_run_review_gate
+```

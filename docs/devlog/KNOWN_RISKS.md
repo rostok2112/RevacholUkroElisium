@@ -1,5 +1,13 @@
 # Known Risks
 
+- The M2 explicit local-import adapter dry-run reads filesystem metadata for one selected private
+  file only. Do not describe it as parsing an export, importing a DB, building an index, or
+  constructing a graph.
+- Keep optional dry-run summaries under
+  `workspace/local-private/extraction-indexing/import/adapter-dry-run/` and out of tracked files,
+  chat, reports, and commits.
+- A future `m2_explicit_local_import_adapter_dry_run_review_gate` must inspect only redacted dry-run
+  summaries and must not reopen the selected export.
 - The M2 explicit local-import adapter contract is static guardrail work only. Do not describe it
   as permission to read or parse an export, import a DB, build an index, or construct a graph.
 - A future `m2_explicit_local_import_adapter_dry_run` must accept one explicit workspace-private

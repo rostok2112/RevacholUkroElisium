@@ -1,5 +1,17 @@
 # Session Summary
 
+Original M2 explicit local-import adapter dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m2_explicit_local_import_adapter_dry_run.py`.
+- The helper accepts one explicit workspace-private export file and reads filesystem metadata only.
+- Directory inputs are rejected with a redacted blocker; schema compatibility remains deferred.
+- Optional redacted JSON output is restricted to
+  `workspace/local-private/extraction-indexing/import/adapter-dry-run/`.
+- Wired a temp-workspace self-test into `scripts/check_all.py`.
+- No file contents are read, no DB is imported, and no original M2 completion flag is advanced.
+- The only approved next step is `m2_explicit_local_import_adapter_dry_run_review_gate`.
+
 Original M2 explicit local-import adapter contract is implemented.
 
 Completed in the latest session:

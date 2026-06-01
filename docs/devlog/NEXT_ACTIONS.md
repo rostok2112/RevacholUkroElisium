@@ -1,5 +1,19 @@
 # Next Actions
 
+After the original M2 explicit local-import adapter dry-run:
+
+1. Treat `scripts/run_m2_explicit_local_import_adapter_dry_run.py` as a one-file,
+   metadata-summary-only helper.
+2. Keep parsing, schema compatibility inspection, real DB import, line-index construction,
+   context-graph construction, discovery, and every original M2 completion flag blocked.
+3. Add only a redacted review gate for the dry-run summary next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_adapter_dry_run_review_gate`.
+
+---
+
 After the original M2 explicit local-import adapter contract:
 
 1. Treat `docs/m2-explicit-local-import-adapter-contract.md`,

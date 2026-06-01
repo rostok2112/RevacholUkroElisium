@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- The M2 explicit local-import adapter dry-run is implemented. Add
+  `m2_explicit_local_import_adapter_dry_run_review_gate` next using redacted summary evidence only.
+- Keep selected-export reopening, file-content reads, parsing, schema compatibility inspection,
+  real DB import, line-index construction, context-graph construction, and every original M2
+  completion flag false.
 - The M2 explicit local-import adapter contract is defined. Implement
   `m2_explicit_local_import_adapter_dry_run` next for one explicit workspace-private export file.
 - Keep file-content reads, parsing, real DB import, line-index construction, context-graph
