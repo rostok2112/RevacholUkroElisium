@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- The M2 synthetic import format contract now defines stable synthetic line records and
+  `previous_visible`, `nearby_branch`, and `player_option` edges. Define
+  `m2_synthetic_import_validator_or_line_index_contract` next.
+- Decide whether the next static slice should specify a reusable synthetic fixture validator or
+  the line-index output contract first. Do not read a local export in that decision slice.
+- Keep original M2 incomplete until locally extracted DB import, line index construction, and
+  context graph construction are separately implemented and reviewed.
 - ADR 0012 defines the original M2 local extraction import scope. Define
   `m2_synthetic_import_format_contract` next using invented synthetic records only.
 - Decide the synthetic import envelope, record identity fields, line-index inputs, and context-graph

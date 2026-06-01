@@ -282,6 +282,14 @@ def main() -> int:
             ],
         ),
         (
+            "M2 synthetic import format contract",
+            [
+                sys.executable,
+                "scripts/check_m2_synthetic_import_format.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

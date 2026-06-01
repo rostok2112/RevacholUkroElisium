@@ -1,5 +1,21 @@
 # Session Summary
 
+Original M2 synthetic import format contract is implemented.
+
+Completed in the latest session:
+- Added `docs/m2-synthetic-import-format-contract.md`, defining
+  `m2-synthetic-import-db.v1` as an invented-fixture-only envelope for later M2 contract work.
+- Added `tests/fixtures/m2_synthetic_import_db.synthetic.json` with three invented records,
+  synthetic placeholder fields, and synthetic context edges using `previous_visible`,
+  `nearby_branch`, and `player_option`.
+- Added `scripts/check_m2_synthetic_import_format.py` and wired it into `scripts/check_all.py`.
+- The fixture checker validates stable synthetic ids, edge references, relation values, explicit
+  incomplete-M2 metadata, false safety flags, and redaction markers.
+- The only approved next step is `m2_synthetic_import_validator_or_line_index_contract`.
+- Did not implement an importer, read local content, import a real DB, build a line index, build a
+  context graph, scan a game install, add capture behavior, call providers, or commit extracted
+  text.
+
 Original M2 local extraction import scope contract is implemented.
 
 Completed in the latest session:

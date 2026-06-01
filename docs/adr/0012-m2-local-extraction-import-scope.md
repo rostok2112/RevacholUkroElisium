@@ -80,3 +80,16 @@ m2_synthetic_import_format_contract
 
 That next step is still synthetic/docs contract work. It is not local-content reading or real
 extraction.
+
+## Synthetic Import Format Contract
+
+The next bounded contract is documented in:
+
+```text
+docs/m2-synthetic-import-format-contract.md
+tests/fixtures/m2_synthetic_import_db.synthetic.json
+scripts/check_m2_synthetic_import_format.py
+```
+
+It defines invented fixture records and relation edges only. It does not implement import, line
+indexing, context-graph construction, or local-content reads.

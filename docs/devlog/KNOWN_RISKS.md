@@ -1,5 +1,12 @@
 # Known Risks
 
+- The M2 synthetic import format contract defines invented records and relation edges only. It does
+  not implement real DB import, line indexing, context-graph construction, or private-content reads.
+- `m2_synthetic_import_validator_or_line_index_contract` must remain synthetic/static until a
+  separately approved implementation slice exists. A passing fixture checker is not permission to
+  read a local export or scan a game installation.
+- Invented fixture provenance is partly a human-review responsibility. Keep synthetic ids,
+  placeholder fields, explicit false safety flags, and denylist checks intact.
 - ADR 0012 defines only the original M2 scope. It does not implement locally extracted DB import,
   line indexing, context graph construction, or private-content reads.
 - `m2_synthetic_import_format_contract` must remain invented-fixture-only. Do not let the next

@@ -1,5 +1,24 @@
 # Next Actions
 
+After the original M2 synthetic import format contract:
+
+1. Treat `docs/m2-synthetic-import-format-contract.md`,
+   `tests/fixtures/m2_synthetic_import_db.synthetic.json`, and
+   `scripts/check_m2_synthetic_import_format.py` as the invented-fixture-only M2 format guardrail.
+2. Keep original M2 incomplete: no real DB importer, line index, or context graph exists yet.
+3. Keep local-input reads, game scans, log reads, capture behavior, provider execution, companion
+   contract changes, generated real indexes, and committed extracted text blocked.
+
+Recommended next safe step:
+
+- Define `m2_synthetic_import_validator_or_line_index_contract`.
+
+Exact resume prompt:
+
+`Continue in revachol-ukro-elisium after the M2 synthetic import format contract. First inspect git status and read AGENTS.md, tasks/milestones.md, docs/devlog/*.md, docs/adr/0012-m2-local-extraction-import-scope.md, docs/m2-synthetic-import-format-contract.md, tests/fixtures/m2_synthetic_import_db.synthetic.json, and scripts/check_m2_synthetic_import_format.py. Define the next M2 synthetic import validator or line-index contract only. Keep original M2 incomplete. Do not read real local inputs, import a real DB, read game files, scan Steam/game installs or drives, read BepInEx logs, read saves, read screenshots, run OCR, add current-line capture, UI text reading, Unity scanning, hooks/Harmony, decompiled-code work, companion HTTP contract changes, provider execution, generated real indexes, committed extracted text, downloads, or new dependencies.`
+
+---
+
 After the original M2 local extraction import scope contract:
 
 1. Treat `docs/adr/0012-m2-local-extraction-import-scope.md`,
