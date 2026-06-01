@@ -1,5 +1,18 @@
 # Session Summary
 
+Original M2 synthetic line-index builder dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m2_synthetic_line_index_builder_dry_run.py`.
+- The helper validates one explicit invented synthetic import JSON and deterministically projects
+  metadata-only entries matching `tests/fixtures/m2_synthetic_line_index.synthetic.json`.
+- Optional output is restricted to the ignored private root
+  `workspace/local-private/extraction-indexing/import/line-index/`.
+- Wired a quiet fixture-match smoke into `scripts/check_all.py`.
+- The only approved next step is `m2_synthetic_line_index_builder_review_gate`.
+- Did not import a real DB, read private input, include source text or graph edges, or build a
+  context graph.
+
 Original M2 synthetic line-index contract is implemented.
 
 Completed in the latest session:

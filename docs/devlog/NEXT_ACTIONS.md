@@ -1,5 +1,20 @@
 # Next Actions
 
+After the original M2 synthetic line-index builder dry-run:
+
+1. Treat `scripts/run_m2_synthetic_line_index_builder_dry_run.py` as a fixture-only metadata
+   projection helper.
+2. Keep real DB import, private-input reads, source text, graph edges, line-index completion, and
+   context-graph construction blocked.
+3. Keep generated dry-run output private under
+   `workspace/local-private/extraction-indexing/import/line-index/`.
+
+Recommended next safe step:
+
+- Define `m2_synthetic_line_index_builder_review_gate`.
+
+---
+
 After the original M2 synthetic line-index contract:
 
 1. Treat `docs/m2-synthetic-line-index-contract.md`,

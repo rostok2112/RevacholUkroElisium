@@ -11,6 +11,9 @@ try:
         SCHEMA_VERSION as IMPORT_SCHEMA_VERSION,
         load_and_validate_m2_synthetic_import,
     )
+    from scripts.run_m2_synthetic_line_index_builder_dry_run import (
+        build_m2_synthetic_line_index,
+    )
     from scripts.schema_validator import collect_errors, load_json
     from scripts.synthetic_slice import ROOT
 except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
@@ -18,6 +21,7 @@ except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
         SCHEMA_VERSION as IMPORT_SCHEMA_VERSION,
         load_and_validate_m2_synthetic_import,
     )
+    from run_m2_synthetic_line_index_builder_dry_run import build_m2_synthetic_line_index
     from schema_validator import collect_errors, load_json
     from synthetic_slice import ROOT
 
@@ -146,6 +150,8 @@ def collect_m2_synthetic_line_index_contract_errors(path: Path = FIXTURE_PATH) -
         source = None
     if source is not None:
         errors.extend(_mapping_errors(payload, source))
+        if payload != build_m2_synthetic_line_index(source):
+            errors.append("$: must match deterministic synthetic line-index builder output.")
     errors.extend(_safety_errors(payload))
     if path == FIXTURE_PATH:
         errors.extend(_doc_errors())

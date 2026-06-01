@@ -1,5 +1,11 @@
 # Known Risks
 
+- The M2 synthetic line-index builder dry-run is a metadata-only projection over invented fixture
+  records. Do not describe it as a line index built from a local export or as completion of the
+  original M2 line-index criterion.
+- Keep optional builder output under
+  `workspace/local-private/extraction-indexing/import/line-index/` and out of tracked files, chat,
+  reports, and commits.
 - The M2 synthetic line-index fixture is metadata-only contract evidence. It is not an index built
   from a local export and must not be described as completing the original M2 line-index criterion.
 - A future `m2_synthetic_line_index_builder_dry_run` must remain invented-fixture-only and must not

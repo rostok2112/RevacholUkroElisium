@@ -76,3 +76,31 @@ Original M2 remains incomplete after this contract. The only allowed next step i
 ```text
 m2_synthetic_line_index_builder_dry_run
 ```
+
+## Synthetic Builder Dry-Run
+
+The approved synthetic-only builder is:
+
+```text
+scripts/run_m2_synthetic_line_index_builder_dry_run.py
+```
+
+It reads one explicit invented synthetic import JSON, validates it with
+`scripts/m2_synthetic_import_validator.py`, and projects only the metadata fields defined above.
+It does not include source text or context edges. Optional generated output is allowed only under:
+
+```text
+workspace/local-private/extraction-indexing/import/line-index/
+```
+
+Validate the committed invented fixture mapping with:
+
+```powershell
+python scripts/run_m2_synthetic_line_index_builder_dry_run.py --check-fixture --quiet
+```
+
+This dry-run does not complete the original M2 line-index criterion. The next allowed step is:
+
+```text
+m2_synthetic_line_index_builder_review_gate
+```

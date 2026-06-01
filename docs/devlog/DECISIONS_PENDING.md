@@ -1,5 +1,9 @@
 # Decisions Pending
 
+- The M2 synthetic line-index builder dry-run is implemented. Define
+  `m2_synthetic_line_index_builder_review_gate` next using redacted synthetic evidence only.
+- Keep original M2 line-index completion false. The dry-run projects committed invented fixture
+  metadata only; it is not a line index built from a local export.
 - The M2 synthetic line-index output contract is defined. Implement
   `m2_synthetic_line_index_builder_dry_run` next using the committed invented import fixture only.
 - Keep original M2 line-index completion false until a separately approved real local-import path

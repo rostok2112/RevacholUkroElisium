@@ -298,6 +298,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 synthetic line-index builder dry-run smoke",
+            [
+                sys.executable,
+                "scripts/run_m2_synthetic_line_index_builder_dry_run.py",
+                "--check-fixture",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

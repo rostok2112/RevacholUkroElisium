@@ -109,3 +109,22 @@ scripts/check_m2_synthetic_line_index_contract.py
 
 It defines a committed synthetic line-index fixture only. It does not build an index, include
 source text, import a real DB, read private input, or build a context graph.
+
+## Synthetic Line-Index Builder Dry-Run
+
+The approved fixture-only projection helper is:
+
+```text
+scripts/run_m2_synthetic_line_index_builder_dry_run.py
+```
+
+It validates one explicit invented synthetic import JSON and produces metadata-only line-index
+entries. Optional output remains ignored and private under
+`workspace/local-private/extraction-indexing/import/line-index/`. It does not read a private local
+export, include source text or graph edges, or complete the original M2 line-index criterion.
+
+The next allowed step after this dry-run is:
+
+```text
+m2_synthetic_line_index_builder_review_gate
+```
