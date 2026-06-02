@@ -1,5 +1,14 @@
 # Known Risks
 
+- The M2 explicit local-import record-shape dry-run reopens one explicit private UTF-8 JSON export,
+  decodes it with no size cap, and checks all record objects in memory. A large selected file may
+  consume substantial memory.
+- Keep optional record-shape dry-run JSON under
+  `workspace/local-private/extraction-indexing/import/record-shape/` and out of tracked files,
+  chat, reports, and commits.
+- A future `m2_explicit_local_import_record_shape_dry_run_review_gate` must read redacted summary
+  JSON only. It must not reopen the selected export or traverse record values, tags, metadata, or
+  context edges.
 - The M2 explicit local-import record-shape contract is static policy only. Do not describe it as
   reopening or decoding an export, inspecting real records, importing a DB, building an index, or
   constructing a graph.

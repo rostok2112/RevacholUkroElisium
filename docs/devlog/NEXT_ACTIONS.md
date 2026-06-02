@@ -1,5 +1,19 @@
 # Next Actions
 
+After the original M2 explicit local-import record-shape dry-run:
+
+1. Treat `scripts/run_m2_explicit_local_import_record_shape_dry_run.py` as the one-file,
+   all-record top-level shape helper.
+2. Keep record-value emission, tag traversal, metadata traversal, context-edge traversal, real DB
+   import, index construction, graph construction, and every original M2 completion flag blocked.
+3. Add only a redacted review gate for the record-shape summary next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_record_shape_dry_run_review_gate`.
+
+---
+
 After the original M2 explicit local-import record-shape contract:
 
 1. Treat `docs/m2-explicit-local-import-record-shape-contract.md`,

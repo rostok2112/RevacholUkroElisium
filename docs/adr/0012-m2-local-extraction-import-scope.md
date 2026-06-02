@@ -364,3 +364,27 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_record_shape_dry_run
 ```
+
+## Explicit Local-Import Record-Shape Dry-Run
+
+The bounded record-only helper is:
+
+```text
+scripts/run_m2_explicit_local_import_record_shape_dry_run.py
+```
+
+It reopens one explicitly selected workspace-private UTF-8 JSON export, requires the approved
+top-level envelope, and checks every object in `records` for exact top-level keys and immediate
+value types only. It does not emit, log, hash, compare, normalize, or traverse private record
+values. It does not inspect context-edge contents or complete any original M2 criterion.
+
+Optional redacted output remains private under
+`workspace/local-private/extraction-indexing/import/record-shape/`. The helper intentionally
+applies no decode-size cap, so a large explicitly selected JSON file may consume substantial
+memory.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_record_shape_dry_run_review_gate
+```

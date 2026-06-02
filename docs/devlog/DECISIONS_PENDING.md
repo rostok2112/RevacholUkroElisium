@@ -1,5 +1,13 @@
 # Decisions Pending
 
+- The M2 explicit local-import record-shape dry-run is implemented. Add
+  `m2_explicit_local_import_record_shape_dry_run_review_gate` next using redacted summary evidence
+  only.
+- Keep selected-export reopening during review, record-value emission, tag traversal, metadata
+  traversal, context-edge traversal, real DB import, line-index construction, context-graph
+  construction, and every original M2 completion flag false.
+- The record-shape dry-run intentionally applies no decode-size cap. Preserve that explicit
+  memory-risk tradeoff unless a later contract revisits it.
 - The M2 explicit local-import record-shape contract is defined. Implement
   `m2_explicit_local_import_record_shape_dry_run` next for all-record top-level shape checks only.
 - Keep record-value inspection, source-text emission, tag traversal, metadata traversal,

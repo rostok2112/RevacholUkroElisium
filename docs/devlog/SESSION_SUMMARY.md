@@ -1,5 +1,22 @@
 # Session Summary
 
+Original M2 explicit local-import record-shape dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m2_explicit_local_import_record_shape_dry_run.py`.
+- The helper reopens one explicitly selected workspace-private UTF-8 JSON export, requires the
+  approved envelope, and checks every record object for exact top-level keys and immediate value
+  types only.
+- Record values, source text, ids, labels, tag contents, metadata contents, context edges, paths,
+  filenames, hashes, logs, and payloads are never emitted.
+- Optional redacted JSON output is restricted to
+  `workspace/local-private/extraction-indexing/import/record-shape/`.
+- The helper intentionally applies no decode-size cap; a large selected JSON file may consume
+  substantial memory while all record shapes are checked.
+- Wired a synthetic temp-workspace self-test into `scripts/check_all.py`.
+- No DB is imported, no index or graph is constructed, and no original M2 completion flag advances.
+- The only approved next step is `m2_explicit_local_import_record_shape_dry_run_review_gate`.
+
 Original M2 explicit local-import record-shape contract is defined.
 
 Completed in the latest session:
