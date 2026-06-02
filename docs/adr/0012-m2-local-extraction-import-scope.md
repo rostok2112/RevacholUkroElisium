@@ -459,3 +459,27 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_context_edge_shape_dry_run_review_gate
 ```
+
+## Explicit Local-Import Context-Edge Shape Dry-Run Review Gate
+
+The redacted summary-only reviewer is:
+
+```text
+scripts/review_m2_explicit_local_import_context_edge_shape_dry_run.py
+```
+
+It reviews only ignored context-edge shape summary JSON under
+`workspace/local-private/extraction-indexing/import/context-edge-shape/`. Optional redacted JSON or
+Markdown review output remains private under
+`workspace/local-private/extraction-indexing/import/context-edge-shape-review/`.
+
+The review never reopens the selected export, emits edge ids, validates edge references, checks
+self-edges, deduplicates edges, traverses records, imports a DB, constructs an index, constructs a
+graph, or completes any original M2 criterion. A passing review permits only a later static
+context-edge reference contract discussion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_context_edge_reference_contract
+```

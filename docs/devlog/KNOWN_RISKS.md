@@ -1,5 +1,14 @@
 # Known Risks
 
+- The M2 context-edge shape dry-run review gate reads redacted summary JSON only. A passing review
+  permits a static context-edge reference contract discussion, not export reopening, edge id
+  emission, reference validation, self-edge checks, duplicate-edge checks, DB import, index
+  construction, or graph construction.
+- Keep optional context-edge shape review JSON and Markdown under
+  `workspace/local-private/extraction-indexing/import/context-edge-shape-review/` and out of
+  tracked files, chat, reports, and commits.
+- A future `m2_explicit_local_import_context_edge_reference_contract` must remain static policy
+  only and define a separately reviewed boundary before any edge ids are validated against records.
 - The M2 explicit local-import context-edge shape dry-run reopens one explicit private UTF-8 JSON
   export, decodes it with no size cap, and checks all context-edge objects in memory. A large
   selected file may consume substantial memory.

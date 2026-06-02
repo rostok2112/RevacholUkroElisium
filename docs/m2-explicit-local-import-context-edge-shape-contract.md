@@ -102,6 +102,24 @@ The helper intentionally applies no decode-size cap, matching the earlier privat
 A large explicitly selected JSON file may consume substantial memory while the envelope, records,
 and context-edge shapes are checked.
 
+## Dry-Run Review Gate
+
+The approved redacted summary-only review helper is:
+
+```text
+scripts/review_m2_explicit_local_import_context_edge_shape_dry_run.py
+```
+
+It reviews only ignored context-edge shape summary JSON under
+`workspace/local-private/extraction-indexing/import/context-edge-shape/`. Optional redacted JSON or
+Markdown review output remains private under
+`workspace/local-private/extraction-indexing/import/context-edge-shape-review/`.
+
+The review never reopens the selected export, emits edge ids, validates edge references, checks
+self-edges, deduplicates edges, traverses records, imports a DB, constructs an index, constructs a
+graph, or completes any original M2 criterion. A passing review permits only a later static
+context-edge reference contract discussion.
+
 ## Fixture And Checker
 
 The machine-readable scope fixture is:
@@ -121,5 +139,5 @@ python scripts/check_m2_explicit_local_import_context_edge_shape_contract.py --q
 The next allowed step is:
 
 ```text
-m2_explicit_local_import_context_edge_shape_dry_run_review_gate
+m2_explicit_local_import_context_edge_reference_contract
 ```
