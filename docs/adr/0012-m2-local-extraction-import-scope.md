@@ -297,3 +297,26 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_schema_compatibility_dry_run
 ```
+
+## Explicit Local-Import Schema Compatibility Dry-Run
+
+The bounded envelope-only helper is:
+
+```text
+scripts/run_m2_explicit_local_import_schema_compatibility_dry_run.py
+```
+
+It decodes one explicitly selected workspace-private UTF-8 JSON file, checks only the exact
+top-level envelope field set and top-level types, and reports aggregate record and edge counts.
+It does not traverse or emit nested values, import a DB, construct an index, construct a graph, or
+complete any original M2 criterion.
+
+Optional redacted output remains private under
+`workspace/local-private/extraction-indexing/import/schema-compatibility/`. The helper intentionally
+applies no decode-size cap, so a large explicitly selected JSON file may consume substantial memory.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_schema_compatibility_dry_run_review_gate
+```

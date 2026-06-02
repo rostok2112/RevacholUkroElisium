@@ -1,5 +1,19 @@
 # Next Actions
 
+After the original M2 explicit local-import schema-compatibility dry-run:
+
+1. Treat `scripts/run_m2_explicit_local_import_schema_compatibility_dry_run.py` as the one-file,
+   envelope-only private compatibility helper.
+2. Keep nested traversal, nested-value emission, real DB import, index construction, graph
+   construction, and every original M2 completion flag blocked.
+3. Add only a redacted review gate for the compatibility summary next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_schema_compatibility_dry_run_review_gate`.
+
+---
+
 After the original M2 explicit local-import schema-compatibility contract:
 
 1. Treat `docs/m2-explicit-local-import-schema-compatibility-contract.md`,

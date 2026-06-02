@@ -1,5 +1,12 @@
 # Known Risks
 
+- The M2 explicit local-import schema-compatibility dry-run decodes one explicit private UTF-8 JSON
+  file with no size cap. A large selected file may consume substantial memory.
+- Keep schema-compatibility dry-run output under
+  `workspace/local-private/extraction-indexing/import/schema-compatibility/` and out of tracked
+  files, chat, reports, and commits.
+- A future `m2_explicit_local_import_schema_compatibility_dry_run_review_gate` must inspect only a
+  redacted compatibility summary. It must not reopen the selected export or traverse nested values.
 - The M2 explicit local-import schema-compatibility contract is static policy only. Do not describe
   it as reopening or decoding an export, parsing nested values, importing a DB, building an index,
   or constructing a graph.

@@ -1,5 +1,21 @@
 # Session Summary
 
+Original M2 explicit local-import schema-compatibility dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m2_explicit_local_import_schema_compatibility_dry_run.py`.
+- The helper decodes one explicitly selected workspace-private UTF-8 JSON file and inspects only
+  the exact top-level envelope field set, top-level types, and aggregate record and edge counts.
+- Nested record values, graph-edge values, and metadata contents are never traversed or emitted.
+- Optional redacted JSON output is restricted to
+  `workspace/local-private/extraction-indexing/import/schema-compatibility/`.
+- The helper intentionally applies no decode-size cap; a large explicitly selected JSON file may
+  consume substantial memory.
+- Wired a synthetic temp-workspace self-test into `scripts/check_all.py`.
+- No DB is imported, no index or graph is constructed, and no original M2 completion flag advances.
+- The only approved next step is
+  `m2_explicit_local_import_schema_compatibility_dry_run_review_gate`.
+
 Original M2 explicit local-import schema-compatibility contract is defined.
 
 Completed in the latest session:

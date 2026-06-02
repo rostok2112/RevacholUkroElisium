@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- The M2 explicit local-import schema-compatibility dry-run is implemented. Add
+  `m2_explicit_local_import_schema_compatibility_dry_run_review_gate` next using redacted
+  compatibility-summary evidence only.
+- Keep export reopening during review, nested traversal, nested-value emission, real DB import,
+  line-index construction, context-graph construction, and every original M2 completion flag false.
+- The compatibility dry-run intentionally applies no decode-size cap. Preserve that explicit
+  memory-risk tradeoff unless a later contract revisits it.
 - The M2 explicit local-import schema-compatibility contract is defined. Implement
   `m2_explicit_local_import_schema_compatibility_dry_run` next as an envelope-only redacted check.
 - Keep nested traversal, nested-value emission, source-text emission, metadata-content inspection,

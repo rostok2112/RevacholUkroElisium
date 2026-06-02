@@ -91,8 +91,36 @@ Validate the contract with:
 python scripts/check_m2_explicit_local_import_schema_compatibility_contract.py --quiet
 ```
 
+## Envelope-Only Dry-Run
+
+The bounded implementation is:
+
+```text
+scripts/run_m2_explicit_local_import_schema_compatibility_dry_run.py
+```
+
+It accepts one explicit private UTF-8 JSON file under the ignored input root, decodes one JSON
+value, requires a top-level object, checks the exact envelope field set and top-level types, and
+calculates only aggregate `records` and `context_edges` counts. It does not traverse or emit nested
+record values, graph-edge values, or metadata contents.
+
+Optional redacted JSON output remains private under:
+
+```text
+workspace/local-private/extraction-indexing/import/schema-compatibility/
+```
+
+The dry-run intentionally applies no decode-size cap. That keeps the envelope-only helper simple
+but means a large explicitly selected JSON file may consume substantial memory during decoding.
+
+Validate the synthetic temp-workspace smoke with:
+
+```powershell
+python scripts/run_m2_explicit_local_import_schema_compatibility_dry_run.py --self-test --quiet
+```
+
 The next allowed step is:
 
 ```text
-m2_explicit_local_import_schema_compatibility_dry_run
+m2_explicit_local_import_schema_compatibility_dry_run_review_gate
 ```

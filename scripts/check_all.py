@@ -376,6 +376,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 explicit local-import schema-compatibility dry-run smoke",
+            [
+                sys.executable,
+                "scripts/run_m2_explicit_local_import_schema_compatibility_dry_run.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,
