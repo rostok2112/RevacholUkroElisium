@@ -1,5 +1,20 @@
 # Session Summary
 
+Original M2 explicit local-import record-shape contract is defined.
+
+Completed in the latest session:
+- Added `docs/m2-explicit-local-import-record-shape-contract.md`,
+  `tests/fixtures/m2_explicit_local_import_record_shape_scope.synthetic.json`, and
+  `scripts/check_m2_explicit_local_import_record_shape_contract.py`.
+- The static contract reuses the established synthetic record vocabulary and defines a later
+  all-record top-level shape check only.
+- Source-text values, ids, labels, tag contents, metadata contents, context edges, paths,
+  filenames, hashes, logs, and payloads remain sealed.
+- This contract does not reopen or decode a selected export, inspect real records, import a DB,
+  construct an index, construct a graph, or complete any original M2 criterion.
+- Wired the fixture-only checker into `scripts/check_all.py`.
+- The only approved next step is `m2_explicit_local_import_record_shape_dry_run`.
+
 Original M2 explicit local-import schema-compatibility dry-run review gate is implemented.
 
 Completed in the latest session:

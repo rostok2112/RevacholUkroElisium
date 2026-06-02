@@ -1,5 +1,15 @@
 # Known Risks
 
+- The M2 explicit local-import record-shape contract is static policy only. Do not describe it as
+  reopening or decoding an export, inspecting real records, importing a DB, building an index, or
+  constructing a graph.
+- A future `m2_explicit_local_import_record_shape_dry_run` may inspect all record objects but must
+  check top-level keys and types only. It must not inspect, compare, normalize, hash, log, or emit
+  private record values.
+- Keep future optional record-shape summaries under
+  `workspace/local-private/extraction-indexing/import/record-shape/` and out of tracked files,
+  chat, reports, and commits.
+- Context-edge inspection remains deferred to a separate contract after record-shape review.
 - The M2 schema-compatibility dry-run review gate reads redacted summary JSON only. A passing review
   permits a static record-shape contract discussion, not export reopening, nested traversal,
   record-shape inspection, DB import, index construction, or graph construction.

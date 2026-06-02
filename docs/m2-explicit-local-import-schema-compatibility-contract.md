@@ -158,3 +158,24 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_record_shape_contract
 ```
+
+## Record-Shape Contract
+
+The static record-only boundary is documented in:
+
+```text
+docs/m2-explicit-local-import-record-shape-contract.md
+tests/fixtures/m2_explicit_local_import_record_shape_scope.synthetic.json
+scripts/check_m2_explicit_local_import_record_shape_contract.py
+```
+
+It defines a later all-record top-level shape check using the existing synthetic record vocabulary.
+It does not reopen or decode an export, inspect record values, traverse tags or metadata contents,
+traverse context edges, import a DB, build an index, construct a graph, or complete any original
+M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_record_shape_dry_run
+```

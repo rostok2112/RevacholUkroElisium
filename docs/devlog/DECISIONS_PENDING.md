@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- The M2 explicit local-import record-shape contract is defined. Implement
+  `m2_explicit_local_import_record_shape_dry_run` next for all-record top-level shape checks only.
+- Keep record-value inspection, source-text emission, tag traversal, metadata traversal,
+  context-edge inspection, real DB import, line-index construction, context-graph construction,
+  and every original M2 completion flag false.
 - The M2 explicit local-import schema-compatibility dry-run review gate is implemented. Define
   `m2_explicit_local_import_record_shape_contract` next as a static boundary only.
 - Keep selected-export reopening during review, nested traversal, record-shape inspection, real DB
