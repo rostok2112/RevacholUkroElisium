@@ -78,6 +78,30 @@ This contract does not permit:
 - provider execution or companion HTTP contract changes;
 - committed payloads, indexes, reports, or private paths.
 
+## Dry-Run Helper
+
+The approved context-edge shape dry-run helper is:
+
+```text
+scripts/run_m2_explicit_local_import_context_edge_shape_dry_run.py
+```
+
+It reopens one explicitly selected workspace-private UTF-8 JSON export, requires the approved
+top-level envelope and record-shape precondition, and checks every object in `context_edges` for
+exact top-level keys, immediate string types, and the approved relation vocabulary only. It does
+not emit edge id values, validate edge references, reject self-edges, deduplicate edges, traverse
+records, import a DB, construct an index, construct a graph, or complete any original M2 criterion.
+
+Optional redacted output remains private under:
+
+```text
+workspace/local-private/extraction-indexing/import/context-edge-shape/
+```
+
+The helper intentionally applies no decode-size cap, matching the earlier private JSON dry-runs.
+A large explicitly selected JSON file may consume substantial memory while the envelope, records,
+and context-edge shapes are checked.
+
 ## Fixture And Checker
 
 The machine-readable scope fixture is:
@@ -97,5 +121,5 @@ python scripts/check_m2_explicit_local_import_context_edge_shape_contract.py --q
 The next allowed step is:
 
 ```text
-m2_explicit_local_import_context_edge_shape_dry_run
+m2_explicit_local_import_context_edge_shape_dry_run_review_gate
 ```

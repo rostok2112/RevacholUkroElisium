@@ -1,5 +1,23 @@
 # Session Summary
 
+Original M2 explicit local-import context-edge shape dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m2_explicit_local_import_context_edge_shape_dry_run.py`.
+- The helper reopens one explicitly selected workspace-private UTF-8 JSON export, requires the
+  approved envelope and record-shape precondition, and checks every `context_edges` object for exact
+  top-level keys, immediate string types, and approved relation vocabulary only.
+- Edge id values, record values, tag contents, metadata contents, edge reference validation,
+  self-edge checks, duplicate-edge checks, paths, filenames, hashes, logs, and payloads are never
+  emitted.
+- Optional redacted JSON output is restricted to
+  `workspace/local-private/extraction-indexing/import/context-edge-shape/`.
+- The helper intentionally applies no decode-size cap; a large selected JSON file may consume
+  substantial memory while envelope, record, and context-edge shapes are checked.
+- Wired a synthetic temp-workspace self-test into `scripts/check_all.py`.
+- No DB is imported, no index or graph is constructed, and no original M2 completion flag advances.
+- The only approved next step is `m2_explicit_local_import_context_edge_shape_dry_run_review_gate`.
+
 Original M2 explicit local-import context-edge shape contract is defined.
 
 Completed in the latest session:

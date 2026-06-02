@@ -1,5 +1,14 @@
 # Known Risks
 
+- The M2 explicit local-import context-edge shape dry-run reopens one explicit private UTF-8 JSON
+  export, decodes it with no size cap, and checks all context-edge objects in memory. A large
+  selected file may consume substantial memory.
+- Keep optional context-edge shape dry-run JSON under
+  `workspace/local-private/extraction-indexing/import/context-edge-shape/` and out of tracked
+  files, chat, reports, and commits.
+- A future `m2_explicit_local_import_context_edge_shape_dry_run_review_gate` must read redacted
+  summary JSON only. It must not reopen the selected export, emit edge ids, validate references,
+  check self-edges, deduplicate edges, traverse records, or construct a graph.
 - The M2 explicit local-import context-edge shape contract is static policy only. Do not describe it
   as reopening or decoding an export, inspecting real context edges, validating references,
   importing a DB, building an index, or constructing a graph.

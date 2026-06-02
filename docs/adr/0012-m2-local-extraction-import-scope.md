@@ -433,3 +433,29 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_context_edge_shape_dry_run
 ```
+
+## Explicit Local-Import Context-Edge Shape Dry-Run
+
+The bounded context-edge-only helper is:
+
+```text
+scripts/run_m2_explicit_local_import_context_edge_shape_dry_run.py
+```
+
+It reopens one explicitly selected workspace-private UTF-8 JSON export, requires the approved
+top-level envelope and record-shape precondition, and checks every object in `context_edges` for
+exact top-level keys, immediate string types, and the approved relation vocabulary only. It does
+not emit, log, hash, normalize, or compare edge id values. It does not validate edge references,
+reject self-edges, deduplicate edges, traverse records, import a DB, construct an index, construct
+a graph, or complete any original M2 criterion.
+
+Optional redacted output remains private under
+`workspace/local-private/extraction-indexing/import/context-edge-shape/`. The helper intentionally
+applies no decode-size cap, so a large explicitly selected JSON file may consume substantial
+memory.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_context_edge_shape_dry_run_review_gate
+```
