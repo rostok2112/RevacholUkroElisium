@@ -127,3 +127,38 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_record_shape_dry_run_review_gate
 ```
+
+## Record-Shape Dry-Run Review Gate
+
+The redacted summary-only reviewer is:
+
+```text
+scripts/review_m2_explicit_local_import_record_shape_dry_run.py
+```
+
+It reviews only ignored record-shape summary JSON under
+`workspace/local-private/extraction-indexing/import/record-shape/`. It never reopens the selected
+export, traverses record values, traverses tag contents, traverses metadata contents, or inspects
+context-edge contents.
+
+Optional redacted JSON or Markdown review output remains private under:
+
+```text
+workspace/local-private/extraction-indexing/import/record-shape-review/
+```
+
+A passing review means only that a later static context-edge shape contract may be defined. It
+does not approve context-edge inspection, DB import, index construction, graph construction, or
+completion of any original M2 criterion.
+
+Validate the temp-workspace smoke with:
+
+```powershell
+python scripts/review_m2_explicit_local_import_record_shape_dry_run.py --self-test --quiet
+```
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_context_edge_shape_contract
+```

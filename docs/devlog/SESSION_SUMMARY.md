@@ -1,5 +1,20 @@
 # Session Summary
 
+Original M2 explicit local-import record-shape dry-run review gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_m2_explicit_local_import_record_shape_dry_run.py` and
+  `tests/fixtures/m2_explicit_local_import_record_shape_dry_run_review_decision.synthetic.json`.
+- The reviewer reads only ignored redacted record-shape summary JSON and never reopens the
+  selected export or traverses record values, tag contents, metadata contents, or context edges.
+- Optional redacted JSON or Markdown review output is restricted to
+  `workspace/local-private/extraction-indexing/import/record-shape-review/`.
+- Compatible evidence permits only a static context-edge shape contract discussion.
+- Wired a synthetic temp-workspace review self-test into `scripts/check_all.py`.
+- Context-edge inspection, DB import, index construction, graph construction, and every original
+  M2 completion flag remain blocked.
+- The only approved next step is `m2_explicit_local_import_context_edge_shape_contract`.
+
 Original M2 explicit local-import record-shape dry-run is implemented.
 
 Completed in the latest session:

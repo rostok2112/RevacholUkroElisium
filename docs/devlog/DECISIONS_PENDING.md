@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- The M2 explicit local-import record-shape dry-run review gate is implemented. Define
+  `m2_explicit_local_import_context_edge_shape_contract` next as a static boundary only.
+- Keep selected-export reopening during review, record-value traversal, tag traversal, metadata
+  traversal, context-edge inspection, real DB import, line-index construction, context-graph
+  construction, and every original M2 completion flag false.
 - The M2 explicit local-import record-shape dry-run is implemented. Add
   `m2_explicit_local_import_record_shape_dry_run_review_gate` next using redacted summary evidence
   only.
