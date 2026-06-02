@@ -136,3 +136,24 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_schema_compatibility_contract
 ```
+
+## Explicit Local-Import Schema Compatibility Contract
+
+The envelope-only future compatibility boundary is documented in:
+
+```text
+docs/m2-explicit-local-import-schema-compatibility-contract.md
+tests/fixtures/m2_explicit_local_import_schema_compatibility_scope.synthetic.json
+scripts/check_m2_explicit_local_import_schema_compatibility_contract.py
+```
+
+It defines one explicit UTF-8 JSON object profile and limits a later dry-run to top-level envelope
+checks plus aggregate counts. This static contract does not reopen or decode a selected export,
+traverse nested values, emit source text, import a DB, build an index, construct a graph, or
+complete any original M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_schema_compatibility_dry_run
+```

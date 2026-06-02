@@ -1,5 +1,21 @@
 # Session Summary
 
+Original M2 explicit local-import schema-compatibility contract is defined.
+
+Completed in the latest session:
+- Added `docs/m2-explicit-local-import-schema-compatibility-contract.md`,
+  `tests/fixtures/m2_explicit_local_import_schema_compatibility_scope.synthetic.json`, and
+  `scripts/check_m2_explicit_local_import_schema_compatibility_contract.py`.
+- The static contract defines one future UTF-8 JSON object profile under the ignored private input
+  root.
+- A later dry-run may check top-level envelope presence and types and calculate aggregate record
+  and edge counts only.
+- This contract does not reopen or decode a selected export, traverse nested values, emit private
+  content, import a DB, construct an index, construct a graph, or complete any original M2
+  criterion.
+- Wired the fixture-only checker into `scripts/check_all.py`.
+- The only approved next step is `m2_explicit_local_import_schema_compatibility_dry_run`.
+
 Original M2 explicit local-import adapter dry-run review gate is implemented.
 
 Completed in the latest session:

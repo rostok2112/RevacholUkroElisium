@@ -1,5 +1,21 @@
 # Next Actions
 
+After the original M2 explicit local-import schema-compatibility contract:
+
+1. Treat `docs/m2-explicit-local-import-schema-compatibility-contract.md`,
+   `tests/fixtures/m2_explicit_local_import_schema_compatibility_scope.synthetic.json`, and
+   `scripts/check_m2_explicit_local_import_schema_compatibility_contract.py` as the envelope-only
+   compatibility guardrail.
+2. Keep nested traversal, nested-value emission, parsing beyond the envelope, real DB import,
+   indexing, graph construction, and every original M2 completion flag blocked.
+3. Implement only the bounded compatibility dry-run next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_schema_compatibility_dry_run`.
+
+---
+
 After the original M2 explicit local-import adapter dry-run review gate:
 
 1. Treat `scripts/review_m2_explicit_local_import_adapter_dry_run.py` and

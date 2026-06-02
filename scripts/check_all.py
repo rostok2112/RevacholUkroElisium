@@ -368,6 +368,14 @@ def main() -> int:
             ],
         ),
         (
+            "M2 explicit local-import schema-compatibility contract",
+            [
+                sys.executable,
+                "scripts/check_m2_explicit_local_import_schema_compatibility_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

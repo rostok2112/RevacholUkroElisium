@@ -1,5 +1,13 @@
 # Known Risks
 
+- The M2 explicit local-import schema-compatibility contract is static policy only. Do not describe
+  it as reopening or decoding an export, parsing nested values, importing a DB, building an index,
+  or constructing a graph.
+- A future `m2_explicit_local_import_schema_compatibility_dry_run` may decode one explicit UTF-8
+  JSON object and inspect top-level envelope fields and aggregate counts only.
+- Keep optional compatibility summaries under
+  `workspace/local-private/extraction-indexing/import/schema-compatibility/` and out of tracked
+  files, chat, reports, and commits.
 - The M2 explicit local-import adapter dry-run review gate reads redacted summary JSON only. A
   passing review permits a static schema-compatibility contract discussion, not export reopening,
   schema inspection, parsing, or real DB import.
