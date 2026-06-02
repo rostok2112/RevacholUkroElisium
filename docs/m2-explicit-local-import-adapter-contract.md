@@ -107,3 +107,32 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_adapter_dry_run_review_gate
 ```
+
+## Explicit Local-Import Adapter Dry-Run Review Gate
+
+The approved redacted review helper is:
+
+```text
+scripts/review_m2_explicit_local_import_adapter_dry_run.py
+```
+
+It reviews only a redacted adapter dry-run summary under
+`workspace/local-private/extraction-indexing/import/adapter-dry-run/`. It never reopens the
+selected private export, reads file contents, parses private content, or inspects schema
+compatibility.
+
+Optional redacted JSON or Markdown review output remains private under:
+
+```text
+workspace/local-private/extraction-indexing/import/adapter-dry-run-review/
+```
+
+A passing review permits only a later static schema-compatibility contract discussion. It does not
+approve schema inspection, parsing, real DB import, index construction, graph construction, or
+completion of any original M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_schema_compatibility_contract
+```

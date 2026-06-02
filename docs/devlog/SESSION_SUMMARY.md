@@ -1,5 +1,19 @@
 # Session Summary
 
+Original M2 explicit local-import adapter dry-run review gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_m2_explicit_local_import_adapter_dry_run.py` and
+  `tests/fixtures/m2_explicit_local_import_adapter_dry_run_review_decision.synthetic.json`.
+- The review helper reads only ignored redacted adapter dry-run summary JSON and never reopens the
+  selected private export.
+- Optional redacted JSON or Markdown review output is restricted to
+  `workspace/local-private/extraction-indexing/import/adapter-dry-run-review/`.
+- Wired a temp-workspace review self-test into `scripts/check_all.py`.
+- Schema inspection, parsing, real DB import, index construction, graph construction, and every
+  original M2 completion flag remain blocked.
+- The only approved next step is `m2_explicit_local_import_schema_compatibility_contract`.
+
 Original M2 explicit local-import adapter dry-run is implemented.
 
 Completed in the latest session:

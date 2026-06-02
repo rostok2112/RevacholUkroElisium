@@ -1,5 +1,20 @@
 # Next Actions
 
+After the original M2 explicit local-import adapter dry-run review gate:
+
+1. Treat `scripts/review_m2_explicit_local_import_adapter_dry_run.py` and
+   `tests/fixtures/m2_explicit_local_import_adapter_dry_run_review_decision.synthetic.json` as the
+   redacted one-file metadata review boundary.
+2. Keep selected-export reopening, schema inspection, parsing, real DB import, index construction,
+   graph construction, and every original M2 completion flag blocked.
+3. Define only the static schema-compatibility contract next.
+
+Recommended next safe step:
+
+- Define `m2_explicit_local_import_schema_compatibility_contract`.
+
+---
+
 After the original M2 explicit local-import adapter dry-run:
 
 1. Treat `scripts/run_m2_explicit_local_import_adapter_dry_run.py` as a one-file,

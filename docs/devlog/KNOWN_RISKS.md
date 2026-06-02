@@ -1,5 +1,13 @@
 # Known Risks
 
+- The M2 explicit local-import adapter dry-run review gate reads redacted summary JSON only. A
+  passing review permits a static schema-compatibility contract discussion, not export reopening,
+  schema inspection, parsing, or real DB import.
+- Keep optional adapter dry-run review JSON and Markdown under
+  `workspace/local-private/extraction-indexing/import/adapter-dry-run-review/` and out of tracked
+  files, chat, reports, and commits.
+- A future `m2_explicit_local_import_schema_compatibility_contract` must define the narrowest safe
+  inspection boundary before any adapter reopens a selected export.
 - The M2 explicit local-import adapter dry-run reads filesystem metadata for one selected private
   file only. Do not describe it as parsing an export, importing a DB, building an index, or
   constructing a graph.

@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- The M2 explicit local-import adapter dry-run review gate is implemented. Define
+  `m2_explicit_local_import_schema_compatibility_contract` next as a static boundary only.
+- Keep selected-export reopening, schema compatibility inspection, file-content reads, parsing,
+  real DB import, line-index construction, context-graph construction, and every original M2
+  completion flag false.
 - The M2 explicit local-import adapter dry-run is implemented. Add
   `m2_explicit_local_import_adapter_dry_run_review_gate` next using redacted summary evidence only.
 - Keep selected-export reopening, file-content reads, parsing, schema compatibility inspection,
