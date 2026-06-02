@@ -420,6 +420,14 @@ def main() -> int:
             ],
         ),
         (
+            "M2 explicit local-import context-edge shape contract",
+            [
+                sys.executable,
+                "scripts/check_m2_explicit_local_import_context_edge_shape_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

@@ -1,5 +1,20 @@
 # Session Summary
 
+Original M2 explicit local-import context-edge shape contract is defined.
+
+Completed in the latest session:
+- Added `docs/m2-explicit-local-import-context-edge-shape-contract.md`,
+  `tests/fixtures/m2_explicit_local_import_context_edge_shape_scope.synthetic.json`, and
+  `scripts/check_m2_explicit_local_import_context_edge_shape_contract.py`.
+- The static contract reuses the existing synthetic relation vocabulary and defines a later
+  all-context-edge top-level shape check only.
+- Edge id values, record values, tag contents, metadata contents, reference validation, self-edge
+  checks, duplicate-edge checks, paths, filenames, hashes, logs, and payloads remain sealed.
+- This contract does not reopen or decode a selected export, inspect real context edges, import a
+  DB, construct an index, construct a graph, or complete any original M2 criterion.
+- Wired the fixture-only checker into `scripts/check_all.py`.
+- The only approved next step is `m2_explicit_local_import_context_edge_shape_dry_run`.
+
 Original M2 explicit local-import record-shape dry-run review gate is implemented.
 
 Completed in the latest session:

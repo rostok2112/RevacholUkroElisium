@@ -1,5 +1,22 @@
 # Next Actions
 
+After the original M2 explicit local-import context-edge shape contract:
+
+1. Treat `docs/m2-explicit-local-import-context-edge-shape-contract.md`,
+   `tests/fixtures/m2_explicit_local_import_context_edge_shape_scope.synthetic.json`, and
+   `scripts/check_m2_explicit_local_import_context_edge_shape_contract.py` as the context-edge
+   shape guardrail.
+2. Keep edge-value emission, edge-reference validation, self-edge checks, duplicate-edge checks,
+   record traversal, real DB import, index construction, graph construction, and every original M2
+   completion flag blocked.
+3. Implement only the bounded context-edge shape dry-run next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_context_edge_shape_dry_run`.
+
+---
+
 After the original M2 explicit local-import record-shape dry-run review gate:
 
 1. Treat `scripts/review_m2_explicit_local_import_record_shape_dry_run.py` and

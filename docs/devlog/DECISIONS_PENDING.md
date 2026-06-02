@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- The M2 explicit local-import context-edge shape contract is defined. Implement
+  `m2_explicit_local_import_context_edge_shape_dry_run` next for all-context-edge top-level shape
+  checks only.
+- Keep edge id emission, edge reference validation, self-edge checks, duplicate-edge checks,
+  record traversal, real DB import, line-index construction, context-graph construction, and every
+  original M2 completion flag false.
 - The M2 explicit local-import record-shape dry-run review gate is implemented. Define
   `m2_explicit_local_import_context_edge_shape_contract` next as a static boundary only.
 - Keep selected-export reopening during review, record-value traversal, tag traversal, metadata

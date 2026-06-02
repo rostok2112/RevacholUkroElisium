@@ -1,5 +1,15 @@
 # Known Risks
 
+- The M2 explicit local-import context-edge shape contract is static policy only. Do not describe it
+  as reopening or decoding an export, inspecting real context edges, validating references,
+  importing a DB, building an index, or constructing a graph.
+- A future `m2_explicit_local_import_context_edge_shape_dry_run` may inspect all context-edge
+  objects but must check top-level keys, immediate types, and relation vocabulary only. It must not
+  emit edge ids, validate record references, check self-edges, deduplicate edges, or construct a
+  graph.
+- Keep future optional context-edge shape summaries under
+  `workspace/local-private/extraction-indexing/import/context-edge-shape/` and out of tracked
+  files, chat, reports, and commits.
 - The M2 record-shape dry-run review gate reads redacted summary JSON only. A passing review
   permits a static context-edge shape contract discussion, not export reopening, edge traversal,
   DB import, index construction, or graph construction.
