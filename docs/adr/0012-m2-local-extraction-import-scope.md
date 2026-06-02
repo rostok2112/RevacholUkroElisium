@@ -320,3 +320,26 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_schema_compatibility_dry_run_review_gate
 ```
+
+## Explicit Local-Import Schema Compatibility Dry-Run Review Gate
+
+The redacted summary-only reviewer is:
+
+```text
+scripts/review_m2_explicit_local_import_schema_compatibility_dry_run.py
+```
+
+It reviews only ignored compatibility-summary JSON under
+`workspace/local-private/extraction-indexing/import/schema-compatibility/`. Optional redacted JSON
+or Markdown output remains private under
+`workspace/local-private/extraction-indexing/import/schema-compatibility-review/`.
+
+The review never reopens the selected export or traverses nested values. A passing review permits
+only a later static record-shape contract discussion; record-shape inspection, real DB import,
+index construction, graph construction, and every original M2 completion flag remain blocked.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_record_shape_contract
+```

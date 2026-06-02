@@ -124,3 +124,37 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_schema_compatibility_dry_run_review_gate
 ```
+
+## Envelope-Only Dry-Run Review Gate
+
+The redacted summary-only review helper is:
+
+```text
+scripts/review_m2_explicit_local_import_schema_compatibility_dry_run.py
+```
+
+It reviews only ignored compatibility-summary JSON under
+`workspace/local-private/extraction-indexing/import/schema-compatibility/`. It never reopens the
+selected export or traverses nested record, edge, or metadata values.
+
+Optional redacted JSON or Markdown review output remains private under:
+
+```text
+workspace/local-private/extraction-indexing/import/schema-compatibility-review/
+```
+
+A passing review means only that a later static record-shape contract may be defined. It does not
+approve record-shape inspection, nested traversal, DB import, index construction, graph
+construction, or completion of any original M2 criterion.
+
+Validate the temp-workspace smoke with:
+
+```powershell
+python scripts/review_m2_explicit_local_import_schema_compatibility_dry_run.py --self-test --quiet
+```
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_record_shape_contract
+```

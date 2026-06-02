@@ -1,5 +1,13 @@
 # Known Risks
 
+- The M2 schema-compatibility dry-run review gate reads redacted summary JSON only. A passing review
+  permits a static record-shape contract discussion, not export reopening, nested traversal,
+  record-shape inspection, DB import, index construction, or graph construction.
+- Keep optional schema-compatibility review JSON and Markdown under
+  `workspace/local-private/extraction-indexing/import/schema-compatibility-review/` and out of
+  tracked files, chat, reports, and commits.
+- A future `m2_explicit_local_import_record_shape_contract` must remain static policy only and
+  define a separately reviewed boundary before any nested record values are inspected.
 - The M2 explicit local-import schema-compatibility dry-run decodes one explicit private UTF-8 JSON
   file with no size cap. A large selected file may consume substantial memory.
 - Keep schema-compatibility dry-run output under

@@ -1,5 +1,20 @@
 # Next Actions
 
+After the original M2 explicit local-import schema-compatibility dry-run review gate:
+
+1. Treat `scripts/review_m2_explicit_local_import_schema_compatibility_dry_run.py` and
+   `tests/fixtures/m2_explicit_local_import_schema_compatibility_dry_run_review_decision.synthetic.json`
+   as the redacted compatibility-evidence boundary.
+2. Keep export reopening during review, nested traversal, record-shape inspection, real DB import,
+   index construction, graph construction, and every original M2 completion flag blocked.
+3. Define only the static record-shape contract next.
+
+Recommended next safe step:
+
+- Define `m2_explicit_local_import_record_shape_contract`.
+
+---
+
 After the original M2 explicit local-import schema-compatibility dry-run:
 
 1. Treat `scripts/run_m2_explicit_local_import_schema_compatibility_dry_run.py` as the one-file,
