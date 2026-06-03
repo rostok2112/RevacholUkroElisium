@@ -1,5 +1,22 @@
 # Next Actions
 
+After the original M2 explicit local-import context-edge integrity contract:
+
+1. Treat `docs/m2-explicit-local-import-context-edge-integrity-contract.md`,
+   `tests/fixtures/m2_explicit_local_import_context_edge_integrity_scope.synthetic.json`, and
+   `scripts/check_m2_explicit_local_import_context_edge_integrity_contract.py` as the static
+   context-edge integrity guardrail.
+2. Keep id emission, id normalization, id hashing, relation emission, retrieval-bucket mapping,
+   graph construction, real DB import, index construction, and every original M2 completion flag
+   blocked.
+3. Implement only the bounded context-edge integrity dry-run next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_context_edge_integrity_dry_run`.
+
+---
+
 After the original M2 explicit local-import context-edge reference dry-run review gate:
 
 1. Treat `scripts/review_m2_explicit_local_import_context_edge_reference_dry_run.py` and

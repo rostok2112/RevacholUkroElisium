@@ -556,3 +556,24 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_context_edge_integrity_contract
 ```
+
+## Explicit Local-Import Context-Edge Integrity Contract
+
+The static context-edge integrity boundary is documented in:
+
+```text
+docs/m2-explicit-local-import-context-edge-integrity-contract.md
+tests/fixtures/m2_explicit_local_import_context_edge_integrity_scope.synthetic.json
+scripts/check_m2_explicit_local_import_context_edge_integrity_contract.py
+```
+
+It defines only a future aggregate self-edge count and duplicate-edge count over already
+reference-compatible top-level context edges. It does not reopen or decode an export, emit ids,
+normalize ids, hash ids, emit relation values, map retrieval buckets, import a DB, construct an
+index, construct a graph, or complete any original M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_context_edge_integrity_dry_run
+```

@@ -1,5 +1,14 @@
 # Known Risks
 
+- The M2 explicit local-import context-edge integrity contract is static policy only. Do not
+  describe it as reopening or decoding an export, checking real edges, emitting ids or relation
+  values, mapping retrieval buckets, importing a DB, building an index, or constructing a graph.
+- A future `m2_explicit_local_import_context_edge_integrity_dry_run` may count self-edges and
+  duplicate edges only as aggregate redacted evidence. It must not emit duplicate tuples, normalize
+  ids, hash ids, map retrieval buckets, or construct graph edges.
+- Keep future optional context-edge integrity summaries under
+  `workspace/local-private/extraction-indexing/import/context-edge-integrity/` and out of tracked
+  files, chat, reports, and commits.
 - The M2 context-edge reference dry-run review gate reads redacted summary JSON only. A passing
   review permits a static context-edge integrity contract discussion, not export reopening, id
   emission, id normalization, id hashing, self-edge checks, duplicate-edge checks,

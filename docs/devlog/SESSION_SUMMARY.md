@@ -1,5 +1,21 @@
 # Session Summary
 
+Original M2 explicit local-import context-edge integrity contract is defined.
+
+Completed in the latest session:
+- Added `docs/m2-explicit-local-import-context-edge-integrity-contract.md`,
+  `tests/fixtures/m2_explicit_local_import_context_edge_integrity_scope.synthetic.json`, and
+  `scripts/check_m2_explicit_local_import_context_edge_integrity_contract.py`.
+- The static contract defines a later aggregate-only self-edge count and duplicate-edge count over
+  already reference-compatible context edges.
+- Duplicate edges are scoped as exact duplicate tuples of `from_record_id`, `to_record_id`, and
+  `relation`, but tuple values remain sealed.
+- Id emission, id normalization, id hashing, relation emission, retrieval-bucket mapping, DB
+  import, line-index construction, context-graph construction, and every original M2 completion
+  flag remain blocked.
+- Wired the fixture-only checker into `scripts/check_all.py`.
+- The only approved next step is `m2_explicit_local_import_context_edge_integrity_dry_run`.
+
 Original M2 explicit local-import context-edge reference dry-run review gate is implemented.
 
 Completed in the latest session:
