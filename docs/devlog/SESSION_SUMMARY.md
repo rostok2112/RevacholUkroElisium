@@ -1,5 +1,25 @@
 # Session Summary
 
+Original M2 explicit local-import context-edge integrity dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m2_explicit_local_import_context_edge_integrity_dry_run.py` and
+  `tests/test_m2_explicit_local_import_context_edge_integrity_dry_run.py`.
+- The helper reopens only one explicit workspace-private JSON export and requires the approved
+  envelope, record-shape, context-edge-shape, and context-edge-reference preconditions.
+- The dry-run reports only aggregate `self_edge_count` and `duplicate_edge_count`; record ids,
+  edge ids, relation values, duplicate tuples, source text, paths, filenames, hashes, logs,
+  payloads, and runtime evidence remain sealed.
+- Optional redacted JSON output is restricted to
+  `workspace/local-private/extraction-indexing/import/context-edge-integrity/`.
+- Wired the temp-workspace self-test into `scripts/check_all.py`.
+- Retrieval-bucket mapping, DB import, line-index construction, context-graph construction, and
+  every original M2 completion flag remain blocked.
+- The only approved next step is
+  `m2_explicit_local_import_context_edge_integrity_dry_run_review_gate`.
+
+---
+
 Original M2 explicit local-import context-edge integrity contract is defined.
 
 Completed in the latest session:

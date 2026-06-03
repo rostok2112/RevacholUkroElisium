@@ -480,6 +480,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 explicit local-import context-edge integrity dry-run smoke",
+            [
+                sys.executable,
+                "scripts/run_m2_explicit_local_import_context_edge_integrity_dry_run.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

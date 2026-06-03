@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- The M2 explicit local-import context-edge integrity dry-run is implemented. Add
+  `m2_explicit_local_import_context_edge_integrity_dry_run_review_gate` next using redacted
+  summary evidence only.
+- Keep selected-export reopening during review, id emission, relation emission, duplicate tuple
+  emission, retrieval-bucket mapping, real DB import, line-index construction, context-graph
+  construction, and every original M2 completion flag false.
 - The M2 explicit local-import context-edge integrity contract is defined. Implement
   `m2_explicit_local_import_context_edge_integrity_dry_run` next as an aggregate-only dry-run.
 - Keep id emission, id normalization, id hashing, relation emission, retrieval-bucket mapping,

@@ -1,5 +1,21 @@
 # Next Actions
 
+After the original M2 explicit local-import context-edge integrity dry-run:
+
+1. Treat `scripts/run_m2_explicit_local_import_context_edge_integrity_dry_run.py` as the
+   aggregate-only self-edge and duplicate-edge dry-run over one explicit workspace-private export.
+2. Keep ids, relation values, duplicate tuples, source text, paths, filenames, hashes, logs,
+   payloads, and runtime evidence out of stdout, output JSON, tracked files, reports, and commits.
+3. Keep retrieval-bucket mapping, real DB import, line-index construction, context-graph
+   construction, and every original M2 completion flag blocked.
+4. Add only a redacted review gate for the integrity summary next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_context_edge_integrity_dry_run_review_gate`.
+
+---
+
 After the original M2 explicit local-import context-edge integrity contract:
 
 1. Treat `docs/m2-explicit-local-import-context-edge-integrity-contract.md`,

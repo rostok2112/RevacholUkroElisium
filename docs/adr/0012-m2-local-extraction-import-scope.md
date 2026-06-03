@@ -577,3 +577,27 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_context_edge_integrity_dry_run
 ```
+
+## Explicit Local-Import Context-Edge Integrity Dry-Run
+
+The aggregate-only context-edge integrity dry-run is:
+
+```text
+scripts/run_m2_explicit_local_import_context_edge_integrity_dry_run.py
+```
+
+It reopens one explicit workspace-private JSON export under
+`workspace/local-private/extraction-indexing/input/`, requires the prior envelope, record-shape,
+context-edge-shape, and context-edge-reference compatibility gates, and reports only aggregate
+self-edge and duplicate-edge counts. Optional redacted output remains private under
+`workspace/local-private/extraction-indexing/import/context-edge-integrity/`.
+
+The helper does not emit ids, relation values, duplicate tuples, source text, paths, filenames,
+hashes, logs, payloads, or runtime evidence. It does not map retrieval buckets, import a DB,
+construct an index, construct a graph, or complete any original M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_context_edge_integrity_dry_run_review_gate
+```

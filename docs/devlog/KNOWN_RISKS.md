@@ -1,5 +1,15 @@
 # Known Risks
 
+- The M2 explicit local-import context-edge integrity dry-run reopens one explicit private UTF-8
+  JSON export, decodes it with no size cap, and counts self-edge and duplicate-edge occurrences in
+  memory. A large selected file may consume substantial memory.
+- The dry-run output is aggregate-only. Do not treat it as permission to emit ids, relation values,
+  duplicate tuples, source text, paths, filenames, hashes, logs, payloads, or runtime evidence.
+- Keep optional context-edge integrity dry-run JSON under
+  `workspace/local-private/extraction-indexing/import/context-edge-integrity/` and out of tracked
+  files, chat, reports, and commits.
+- A future `m2_explicit_local_import_context_edge_integrity_dry_run_review_gate` must read only
+  redacted integrity summary JSON and must not reopen the selected export.
 - The M2 explicit local-import context-edge integrity contract is static policy only. Do not
   describe it as reopening or decoding an export, checking real edges, emitting ids or relation
   values, mapping retrieval buckets, importing a DB, building an index, or constructing a graph.
