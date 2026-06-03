@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- The M2 local import implementation is added. Define `m2_line_index_contract` next to scope the
+  second original M2 criterion.
+- Keep generated private DB artifacts, extracted text, private paths, payloads, reports, indexes,
+  context-graph construction, retrieval-bucket mapping, game scanning, runtime reads, companion
+  changes, providers, and committed private artifacts blocked.
 - The M2 local import final approval contract is defined. Implement
   `m2_local_import_implementation` next as the first original M2 criterion slice.
 - Keep line-index construction, context-graph construction, retrieval-bucket mapping, game

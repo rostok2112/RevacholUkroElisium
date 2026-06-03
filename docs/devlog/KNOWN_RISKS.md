@@ -1,5 +1,13 @@
 # Known Risks
 
+- `scripts/run_m2_local_import.py` can write a private DB artifact containing extracted/private
+  values under `workspace/local-private/extraction-indexing/import/db/`. That directory is ignored
+  and must never be committed, pasted into chat, copied into docs, review Markdown, reports, or
+  generated indexes.
+- The local import implementation decodes the selected JSON export in memory with no size cap,
+  consistent with earlier M2 dry-runs. A large selected export can consume substantial memory.
+- The local import implementation does not build a line index or context graph. Do not treat the
+  private DB artifact as searchable index evidence.
 - The M2 local import final approval contract permits only the next local-import implementation
   slice. Do not treat it as completion of original M2 or permission to build a line index, build a
   context graph, map retrieval buckets, scan game installs, change companion contracts, or commit

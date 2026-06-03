@@ -1,5 +1,21 @@
 # Next Actions
 
+After the original M2 local import implementation:
+
+1. Treat `scripts/run_m2_local_import.py` as the first original M2 implementation slice: one
+   explicit workspace-private `m2-local-private-export.v1` JSON export to one ignored private DB
+   artifact under `workspace/local-private/extraction-indexing/import/db/`.
+2. Keep generated private DB artifacts, extracted text, private paths, payloads, reports, and
+   indexes out of tracked files, chat, review Markdown, and commits.
+3. Keep context-graph construction, retrieval-bucket mapping, game scanning, runtime reads,
+   companion changes, providers, and committed private artifacts blocked.
+
+Recommended next safe step:
+
+- Define `m2_line_index_contract`.
+
+---
+
 After the original M2 local import final approval contract:
 
 1. Treat `docs/m2-local-import-final-approval-contract.md`,

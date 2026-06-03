@@ -1,5 +1,21 @@
 # Session Summary
 
+Original M2 local import implementation is added.
+
+Completed in the latest session:
+- Added `scripts/run_m2_local_import.py` and `tests/test_m2_local_import.py`.
+- The helper reads one explicit workspace-private `m2-local-private-export.v1` JSON export and
+  writes one ignored private DB artifact under
+  `workspace/local-private/extraction-indexing/import/db/`.
+- Public stdout and summaries remain aggregate/redacted; private values are preserved only in the
+  ignored private DB artifact.
+- Wired `python scripts/run_m2_local_import.py --self-test --quiet` into `scripts/check_all.py`.
+- The first original M2 criterion now has an implementation path, but original M2 remains active
+  until line-index and context-graph work are completed.
+- The only approved next step is `m2_line_index_contract`.
+
+---
+
 Original M2 local import final approval contract is defined.
 
 Completed in the latest session:

@@ -506,6 +506,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 local import implementation smoke",
+            [
+                sys.executable,
+                "scripts/run_m2_local_import.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

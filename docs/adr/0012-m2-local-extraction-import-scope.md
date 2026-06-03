@@ -649,3 +649,31 @@ The next allowed step is:
 ```text
 m2_local_import_implementation
 ```
+
+## Local Import Implementation
+
+The approved first original-M2 implementation slice is:
+
+```text
+scripts/run_m2_local_import.py
+```
+
+It reads one explicit workspace-private `m2-local-private-export.v1` JSON export under
+`workspace/local-private/extraction-indexing/input/` and writes one ignored private DB artifact
+under `workspace/local-private/extraction-indexing/import/db/`.
+
+The implementation requires the previously approved envelope, record-shape, context-edge-shape,
+context-edge-reference, and context-edge-integrity boundaries before writing the artifact. Public
+stdout and returned summaries include only aggregate redacted status. Record ids, edge ids,
+relation values, source text, tags, metadata, private paths, filenames, logs, payloads, and runtime
+evidence remain out of public output and tracked files.
+
+The implementation does not build a line index, build a context graph, map retrieval buckets, scan
+game installs, read runtime logs, call providers, change companion contracts, or commit generated
+private artifacts.
+
+The next allowed step is:
+
+```text
+m2_line_index_contract
+```

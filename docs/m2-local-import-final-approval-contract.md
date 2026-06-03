@@ -80,3 +80,35 @@ The next allowed step is:
 ```text
 m2_local_import_implementation
 ```
+
+## Implementation Result
+
+The approved implementation is:
+
+```text
+scripts/run_m2_local_import.py
+```
+
+It accepts one explicit workspace-private `m2-local-private-export.v1` JSON file and writes one
+ignored private DB artifact under:
+
+```text
+workspace/local-private/extraction-indexing/import/db/
+```
+
+Public output remains a redacted aggregate summary. Private record values, source text, ids,
+metadata, and context edges are preserved only inside the ignored private DB artifact. The helper
+does not build a line index, build a context graph, map retrieval buckets, scan game installs, read
+runtime logs, call providers, or change companion contracts.
+
+Validate the implementation smoke with:
+
+```powershell
+python scripts/run_m2_local_import.py --self-test --quiet
+```
+
+After a successful private import, the next M2 step is:
+
+```text
+m2_line_index_contract
+```
