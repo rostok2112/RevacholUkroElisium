@@ -1,5 +1,15 @@
 # Known Risks
 
+- The M2 explicit local-import context-edge reference dry-run reopens one explicit private UTF-8
+  JSON export, decodes it with no size cap, and builds an in-memory top-level record-id set. A
+  large selected file may consume substantial memory.
+- Keep optional context-edge reference dry-run JSON under
+  `workspace/local-private/extraction-indexing/import/context-edge-reference/` and out of tracked
+  files, chat, reports, and commits.
+- A future `m2_explicit_local_import_context_edge_reference_dry_run_review_gate` must read
+  redacted summary JSON only. It must not reopen the selected export, emit ids, normalize ids, hash
+  ids, check self-edges, deduplicate edges, map retrieval buckets, import a DB, construct an index,
+  or construct a graph.
 - The M2 explicit local-import context-edge reference contract is static policy only. Do not
   describe it as reopening or decoding an export, validating real references, emitting ids,
   checking self-edges, deduplicating edges, importing a DB, building an index, or constructing a

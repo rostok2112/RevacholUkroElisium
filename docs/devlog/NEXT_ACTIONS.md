@@ -1,5 +1,20 @@
 # Next Actions
 
+After the original M2 explicit local-import context-edge reference dry-run:
+
+1. Treat `scripts/run_m2_explicit_local_import_context_edge_reference_dry_run.py` as the one-file,
+   membership-only reference helper.
+2. Keep id emission, id normalization, id hashing, self-edge checks, duplicate-edge checks,
+   retrieval-bucket mapping, graph construction, real DB import, index construction, and every
+   original M2 completion flag blocked.
+3. Add only a redacted review gate for the context-edge reference summary next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_context_edge_reference_dry_run_review_gate`.
+
+---
+
 After the original M2 explicit local-import context-edge reference contract:
 
 1. Treat `docs/m2-explicit-local-import-context-edge-reference-contract.md`,

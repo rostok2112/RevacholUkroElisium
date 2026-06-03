@@ -1,5 +1,13 @@
 # Decisions Pending
 
+- The M2 explicit local-import context-edge reference dry-run is implemented. Add
+  `m2_explicit_local_import_context_edge_reference_dry_run_review_gate` next using redacted summary
+  evidence only.
+- Keep selected-export reopening during review, id emission, id normalization, id hashing,
+  self-edge checks, duplicate-edge checks, retrieval-bucket mapping, real DB import, line-index
+  construction, context-graph construction, and every original M2 completion flag false.
+- The context-edge reference dry-run intentionally applies no decode-size cap. Preserve that
+  explicit memory-risk tradeoff unless a later contract revisits it.
 - The M2 explicit local-import context-edge reference contract is defined. Implement
   `m2_explicit_local_import_context_edge_reference_dry_run` next as a redacted membership-check
   dry-run only.

@@ -89,8 +89,38 @@ Validate the static contract with:
 python scripts/check_m2_explicit_local_import_context_edge_reference_contract.py --quiet
 ```
 
+## Context-Edge Reference Dry-Run
+
+The bounded membership-only helper is:
+
+```text
+scripts/run_m2_explicit_local_import_context_edge_reference_dry_run.py
+```
+
+It reopens one explicitly selected workspace-private UTF-8 JSON export, requires the approved
+top-level envelope, record-shape precondition, and context-edge-shape precondition, and compares
+edge references against an in-memory set of top-level record ids. It emits only aggregate counts,
+booleans, and blocker categories.
+
+Optional redacted output remains private under:
+
+```text
+workspace/local-private/extraction-indexing/import/context-edge-reference/
+```
+
+The helper intentionally applies no decode-size cap, so a large explicitly selected JSON file may
+consume substantial memory. It does not emit ids, normalize ids, hash ids, check self-edges,
+deduplicate edges, map retrieval buckets, import a DB, construct an index, construct a graph, or
+complete any original M2 criterion.
+
+Validate the dry-run smoke with:
+
+```powershell
+python scripts/run_m2_explicit_local_import_context_edge_reference_dry_run.py --self-test --quiet
+```
+
 The next allowed step is:
 
 ```text
-m2_explicit_local_import_context_edge_reference_dry_run
+m2_explicit_local_import_context_edge_reference_dry_run_review_gate
 ```

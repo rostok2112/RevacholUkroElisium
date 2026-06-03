@@ -1,5 +1,26 @@
 # Session Summary
 
+Original M2 explicit local-import context-edge reference dry-run is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m2_explicit_local_import_context_edge_reference_dry_run.py`.
+- The helper reopens one explicitly selected workspace-private UTF-8 JSON export, requires the
+  approved envelope, record-shape precondition, and context-edge-shape precondition, and performs
+  membership-only checks from `context_edges[*].from_record_id` and
+  `context_edges[*].to_record_id` to top-level `records[*].record_id` values.
+- The summary emits only aggregate counts, booleans, and blocker categories; record ids, edge ids,
+  relation values, source text, labels, tags, metadata, paths, filenames, hashes, logs, payloads,
+  and runtime evidence remain sealed.
+- Optional redacted JSON output is restricted to
+  `workspace/local-private/extraction-indexing/import/context-edge-reference/`.
+- The helper intentionally applies no decode-size cap; a large selected JSON file may consume
+  substantial memory while reference membership is checked.
+- Self-edge checks, duplicate-edge checks, retrieval-bucket mapping, DB import, line-index
+  construction, context-graph construction, and every original M2 completion flag remain blocked.
+- Wired a synthetic temp-workspace self-test into `scripts/check_all.py`.
+- The only approved next step is
+  `m2_explicit_local_import_context_edge_reference_dry_run_review_gate`.
+
 Original M2 explicit local-import context-edge reference contract is defined.
 
 Completed in the latest session:

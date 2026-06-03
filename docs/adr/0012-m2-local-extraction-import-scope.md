@@ -504,3 +504,31 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_context_edge_reference_dry_run
 ```
+
+## Explicit Local-Import Context-Edge Reference Dry-Run
+
+The bounded membership-only helper is:
+
+```text
+scripts/run_m2_explicit_local_import_context_edge_reference_dry_run.py
+```
+
+It reopens one explicitly selected workspace-private UTF-8 JSON export, requires the approved
+top-level envelope, record-shape precondition, and context-edge-shape precondition, and checks only
+whether each `context_edges[*].from_record_id` and `context_edges[*].to_record_id` value is present
+in the top-level `records[*].record_id` set. It emits aggregate counts and blocker categories only.
+
+Optional redacted output remains private under
+`workspace/local-private/extraction-indexing/import/context-edge-reference/`. The helper
+intentionally applies no decode-size cap, so a large explicitly selected JSON file may consume
+substantial memory.
+
+The helper does not emit ids, normalize ids, hash ids, check self-edges, deduplicate edges, map
+retrieval buckets, import a DB, construct an index, construct a graph, or complete any original M2
+criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_context_edge_reference_dry_run_review_gate
+```
