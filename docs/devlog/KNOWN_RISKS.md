@@ -1,5 +1,12 @@
 # Known Risks
 
+- A future `m2_line_index_implementation` may read one ignored private DB artifact and write a
+  private line-index artifact under `workspace/local-private/extraction-indexing/import/line-index/`.
+  That line index may contain private ids and source text and must never be committed, pasted into
+  chat, copied into docs, review Markdown, reports, or generated public artifacts.
+- The line-index contract approves only indexing from the selected private DB artifact. It does not
+  permit context-graph construction, retrieval-bucket mapping, game scanning, runtime reads,
+  providers, companion contract changes, or committed private artifacts.
 - `scripts/run_m2_local_import.py` can write a private DB artifact containing extracted/private
   values under `workspace/local-private/extraction-indexing/import/db/`. That directory is ignored
   and must never be committed, pasted into chat, copied into docs, review Markdown, reports, or

@@ -1,5 +1,23 @@
 # Session Summary
 
+Original M2 line-index contract is defined.
+
+Completed in the latest session:
+- Added `docs/m2-line-index-contract.md`,
+  `tests/fixtures/m2_line_index_scope.synthetic.json`, and
+  `scripts/check_m2_line_index_contract.py`.
+- The contract approves only the next `m2_line_index_implementation` slice for one explicit
+  private imported DB artifact.
+- Future private line-index output is restricted to
+  `workspace/local-private/extraction-indexing/import/line-index/`.
+- Context-graph construction, retrieval-bucket mapping, game scanning, runtime reads, companion
+  changes, provider execution, committed extracted text, private paths, payloads, private DB
+  artifacts, line indexes, graphs, and reports remain blocked.
+- Original M2 remains active until line-index implementation and context-graph work are completed.
+- The only approved next step is `m2_line_index_implementation`.
+
+---
+
 Original M2 local import implementation is added.
 
 Completed in the latest session:

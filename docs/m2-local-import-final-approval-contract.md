@@ -112,3 +112,11 @@ After a successful private import, the next M2 step is:
 ```text
 m2_line_index_contract
 ```
+
+The line-index contract is tracked in:
+
+```text
+docs/m2-line-index-contract.md
+tests/fixtures/m2_line_index_scope.synthetic.json
+scripts/check_m2_line_index_contract.py
+```

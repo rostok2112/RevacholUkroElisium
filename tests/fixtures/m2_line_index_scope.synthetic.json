@@ -1,0 +1,83 @@
+{
+  "schema_version": "m2-line-index-scope.v1",
+  "roadmap_milestone": "M2",
+  "scope_status": "line_index_contract",
+  "local_import_implementation_available": true,
+  "line_index_implementation_allowed_next": true,
+  "explicit_user_selected_private_db_required": true,
+  "single_explicit_file_required": true,
+  "future_private_db_schema_version": "m2-local-import-db.v1",
+  "future_line_index_schema_version": "m2-line-index.v1",
+  "allowed_private_input_roots": [
+    "workspace/local-private/extraction-indexing/import/db/"
+  ],
+  "allowed_private_output_roots": [
+    "workspace/local-private/extraction-indexing/import/line-index/"
+  ],
+  "allowed_next_index_inputs": [
+    "records"
+  ],
+  "allowed_private_index_fields": [
+    "schema_version",
+    "source_schema_version",
+    "source_kind",
+    "entries",
+    "metadata"
+  ],
+  "allowed_private_entry_fields": [
+    "record_id",
+    "line_id",
+    "conversation_id",
+    "speaker_id",
+    "context_placeholder",
+    "source_text",
+    "context_tags",
+    "redacted_metadata"
+  ],
+  "allowed_public_summary_fields": [
+    "input_exists",
+    "input_kind",
+    "private_db_schema_version_matches",
+    "records_count",
+    "line_index_entry_count",
+    "line_index_output_written",
+    "line_index_status",
+    "blocker_categories"
+  ],
+  "m2_import_locally_extracted_db_implementation_available": true,
+  "m2_line_index_done": false,
+  "m2_context_graph_done": false,
+  "context_graph_construction_allowed_next": false,
+  "retrieval_bucket_mapping_allowed_next": false,
+  "directory_inputs_allowed": false,
+  "external_absolute_input_paths_allowed": false,
+  "recursive_discovery_allowed": false,
+  "automatic_game_install_scanning_allowed": false,
+  "arbitrary_drive_scanning_allowed": false,
+  "game_file_reads_allowed": false,
+  "bepinex_log_reads_allowed": false,
+  "screenshots_allowed": false,
+  "ocr_allowed": false,
+  "save_file_reads_allowed": false,
+  "decompiled_code_allowed": false,
+  "current_line_capture_allowed": false,
+  "ui_text_reading_allowed": false,
+  "unity_scanning_allowed": false,
+  "hooks_allowed": false,
+  "provider_execution_allowed": false,
+  "companion_contract_change_allowed": false,
+  "real_extracted_text_commit_allowed": false,
+  "raw_extracted_payload_commit_allowed": false,
+  "generated_private_db_commit_allowed": false,
+  "generated_line_index_commit_allowed": false,
+  "generated_context_graph_commit_allowed": false,
+  "private_paths_commit_allowed": false,
+  "public_stdout_private_values_allowed": false,
+  "public_review_private_values_allowed": false,
+  "content_hashing_allowed": false,
+  "path_string_hashing_allowed": false,
+  "filename_hashing_allowed": false,
+  "id_hashing_allowed": false,
+  "recommended_next_step": "m2_line_index_implementation",
+  "required_next_step": "m2_line_index_implementation"
+}

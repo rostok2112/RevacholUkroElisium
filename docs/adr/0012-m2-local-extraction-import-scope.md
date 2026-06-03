@@ -677,3 +677,28 @@ The next allowed step is:
 ```text
 m2_line_index_contract
 ```
+
+## Line Index Contract
+
+The static approval boundary for the second original M2 criterion is:
+
+```text
+docs/m2-line-index-contract.md
+tests/fixtures/m2_line_index_scope.synthetic.json
+scripts/check_m2_line_index_contract.py
+```
+
+It approves only the next `m2_line_index_implementation` slice. That implementation may read one
+explicit private imported DB artifact under `workspace/local-private/extraction-indexing/import/db/`
+and write one ignored private line-index artifact under
+`workspace/local-private/extraction-indexing/import/line-index/`.
+
+The contract does not build the line index, build a context graph, map retrieval buckets, scan game
+installs, read runtime logs, call providers, change companion contracts, or permit committed
+extracted text, private paths, payloads, private DB artifacts, line indexes, graphs, or reports.
+
+The next allowed step is:
+
+```text
+m2_line_index_implementation
+```

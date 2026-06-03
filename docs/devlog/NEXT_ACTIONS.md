@@ -1,5 +1,23 @@
 # Next Actions
 
+After the original M2 line-index contract:
+
+1. Treat `docs/m2-line-index-contract.md`,
+   `tests/fixtures/m2_line_index_scope.synthetic.json`, and
+   `scripts/check_m2_line_index_contract.py` as the static approval boundary for the second
+   original M2 criterion.
+2. Implement only `m2_line_index_implementation` next: one explicit private imported DB artifact
+   under `workspace/local-private/extraction-indexing/import/db/` to one ignored private line-index
+   artifact under `workspace/local-private/extraction-indexing/import/line-index/`.
+3. Keep context-graph construction, retrieval-bucket mapping, game scanning, runtime reads,
+   companion changes, providers, and committed private artifacts blocked.
+
+Recommended next safe step:
+
+- Implement `m2_line_index_implementation`.
+
+---
+
 After the original M2 local import implementation:
 
 1. Treat `scripts/run_m2_local_import.py` as the first original M2 implementation slice: one
