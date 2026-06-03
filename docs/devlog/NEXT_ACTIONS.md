@@ -1,5 +1,23 @@
 # Next Actions
 
+After the original M2 local import final approval contract:
+
+1. Treat `docs/m2-local-import-final-approval-contract.md`,
+   `tests/fixtures/m2_local_import_final_approval_scope.synthetic.json`, and
+   `scripts/check_m2_local_import_final_approval_contract.py` as the final static approval boundary
+   for the first original M2 criterion.
+2. Implement only `m2_local_import_implementation` next: one explicit workspace-private
+   `m2-local-private-export.v1` JSON export to one ignored private DB artifact under
+   `workspace/local-private/extraction-indexing/import/db/`.
+3. Keep line-index construction, context-graph construction, retrieval-bucket mapping, game
+   scanning, runtime reads, companion changes, providers, and committed private artifacts blocked.
+
+Recommended next safe step:
+
+- Implement `m2_local_import_implementation`.
+
+---
+
 After the original M2 explicit local-import context-edge integrity dry-run review gate:
 
 1. Treat `scripts/review_m2_explicit_local_import_context_edge_integrity_dry_run.py` and

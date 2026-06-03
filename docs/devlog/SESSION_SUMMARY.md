@@ -1,5 +1,24 @@
 # Session Summary
 
+Original M2 local import final approval contract is defined.
+
+Completed in the latest session:
+- Added `docs/m2-local-import-final-approval-contract.md`,
+  `tests/fixtures/m2_local_import_final_approval_scope.synthetic.json`, and
+  `scripts/check_m2_local_import_final_approval_contract.py`.
+- The contract approves only the next `m2_local_import_implementation` slice for one explicit
+  workspace-private `m2-local-private-export.v1` JSON export.
+- Future private DB output is restricted to
+  `workspace/local-private/extraction-indexing/import/db/`.
+- Line-index construction, context-graph construction, retrieval-bucket mapping, game scanning,
+  runtime reads, companion changes, provider execution, committed extracted text, private paths,
+  payloads, private DB artifacts, indexes, and reports remain blocked.
+- Original M2 remains active and incomplete until the import implementation actually runs and is
+  reviewed.
+- The only approved next step is `m2_local_import_implementation`.
+
+---
+
 Original M2 explicit local-import context-edge integrity dry-run review gate is implemented.
 
 Completed in the latest session:

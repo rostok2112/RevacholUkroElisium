@@ -498,6 +498,14 @@ def main() -> int:
             ],
         ),
         (
+            "M2 local import final approval contract",
+            [
+                sys.executable,
+                "scripts/check_m2_local_import_final_approval_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

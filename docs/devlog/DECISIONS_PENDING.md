@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- The M2 local import final approval contract is defined. Implement
+  `m2_local_import_implementation` next as the first original M2 criterion slice.
+- Keep line-index construction, context-graph construction, retrieval-bucket mapping, game
+  scanning, runtime reads, companion changes, provider execution, committed extracted text, private
+  paths, payloads, private DB artifacts, indexes, and reports blocked.
 - The M2 explicit local-import context-edge integrity dry-run review gate is implemented. Define
   `m2_local_import_final_approval_contract` next as the final static approval boundary before the
   first real M2 criterion can begin.

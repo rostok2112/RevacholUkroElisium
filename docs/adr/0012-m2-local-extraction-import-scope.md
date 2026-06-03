@@ -625,3 +625,27 @@ The next allowed step is:
 ```text
 m2_local_import_final_approval_contract
 ```
+
+## Local Import Final Approval Contract
+
+The final static approval boundary before the first original M2 criterion is:
+
+```text
+docs/m2-local-import-final-approval-contract.md
+tests/fixtures/m2_local_import_final_approval_scope.synthetic.json
+scripts/check_m2_local_import_final_approval_contract.py
+```
+
+It approves only the next `m2_local_import_implementation` slice. That implementation may read one
+explicit workspace-private `m2-local-private-export.v1` JSON export and write a private imported DB
+artifact only under `workspace/local-private/extraction-indexing/import/db/`.
+
+This approval does not complete original M2, build a line index, build a context graph, map
+retrieval buckets, scan game installs, change companion contracts, or permit committed extracted
+text, private paths, payloads, private DB artifacts, indexes, or reports.
+
+The next allowed step is:
+
+```text
+m2_local_import_implementation
+```

@@ -1,5 +1,13 @@
 # Known Risks
 
+- The M2 local import final approval contract permits only the next local-import implementation
+  slice. Do not treat it as completion of original M2 or permission to build a line index, build a
+  context graph, map retrieval buckets, scan game installs, change companion contracts, or commit
+  private artifacts.
+- A future `m2_local_import_implementation` may read and parse one explicit private JSON export and
+  write private DB output under `workspace/local-private/extraction-indexing/import/db/`. That
+  private DB output must stay ignored and out of tracked files, chat, review Markdown, reports, and
+  commits.
 - The M2 context-edge integrity dry-run review gate reads redacted summary JSON only. A passing
   review permits a final local-import approval contract discussion, not DB import, line-index
   construction, context-graph construction, retrieval-bucket mapping, or any original M2 completion
