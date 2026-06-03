@@ -483,3 +483,24 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_context_edge_reference_contract
 ```
+
+## Explicit Local-Import Context-Edge Reference Contract
+
+The static context-edge reference boundary is documented in:
+
+```text
+docs/m2-explicit-local-import-context-edge-reference-contract.md
+tests/fixtures/m2_explicit_local_import_context_edge_reference_scope.synthetic.json
+scripts/check_m2_explicit_local_import_context_edge_reference_contract.py
+```
+
+It defines only a future membership check between `context_edges[*].from_record_id` /
+`context_edges[*].to_record_id` and top-level `records[*].record_id` values. It does not implement
+reference validation, emit ids, normalize ids, hash ids, check self-edges, deduplicate edges,
+construct a graph, import a DB, or complete any original M2 criterion.
+
+The next allowed step is:
+
+```text
+m2_explicit_local_import_context_edge_reference_dry_run
+```

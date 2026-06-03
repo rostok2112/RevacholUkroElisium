@@ -120,6 +120,21 @@ self-edges, deduplicates edges, traverses records, imports a DB, constructs an i
 graph, or completes any original M2 criterion. A passing review permits only a later static
 context-edge reference contract discussion.
 
+## Context-Edge Reference Contract
+
+The next static boundary is documented in:
+
+```text
+docs/m2-explicit-local-import-context-edge-reference-contract.md
+tests/fixtures/m2_explicit_local_import_context_edge_reference_scope.synthetic.json
+scripts/check_m2_explicit_local_import_context_edge_reference_contract.py
+```
+
+It defines only a future membership-check boundary for comparing `context_edges` references against
+top-level `records[*].record_id` values. It does not implement reference validation, emit ids,
+check self-edges, deduplicate edges, construct a graph, import a DB, or complete any original M2
+criterion.
+
 ## Fixture And Checker
 
 The machine-readable scope fixture is:

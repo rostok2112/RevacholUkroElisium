@@ -1,5 +1,21 @@
 # Next Actions
 
+After the original M2 explicit local-import context-edge reference contract:
+
+1. Treat `docs/m2-explicit-local-import-context-edge-reference-contract.md`,
+   `tests/fixtures/m2_explicit_local_import_context_edge_reference_scope.synthetic.json`, and
+   `scripts/check_m2_explicit_local_import_context_edge_reference_contract.py` as the static
+   context-edge reference guardrail.
+2. Keep edge id emission, record id emission, self-edge checks, duplicate-edge checks, graph
+   construction, real DB import, index construction, and every original M2 completion flag blocked.
+3. Implement only the bounded context-edge reference dry-run next.
+
+Recommended next safe step:
+
+- Implement `m2_explicit_local_import_context_edge_reference_dry_run`.
+
+---
+
 After the original M2 explicit local-import context-edge shape dry-run review gate:
 
 1. Treat `scripts/review_m2_explicit_local_import_context_edge_shape_dry_run.py` and

@@ -1,5 +1,16 @@
 # Known Risks
 
+- The M2 explicit local-import context-edge reference contract is static policy only. Do not
+  describe it as reopening or decoding an export, validating real references, emitting ids,
+  checking self-edges, deduplicating edges, importing a DB, building an index, or constructing a
+  graph.
+- A future `m2_explicit_local_import_context_edge_reference_dry_run` may compare edge ids against
+  the decoded top-level record-id set in memory only, but must emit aggregate counts and blockers
+  only. It must not emit ids, normalize ids, hash ids, check self-edges, deduplicate edges, or build
+  a graph.
+- Keep future optional context-edge reference summaries under
+  `workspace/local-private/extraction-indexing/import/context-edge-reference/` and out of tracked
+  files, chat, reports, and commits.
 - The M2 context-edge shape dry-run review gate reads redacted summary JSON only. A passing review
   permits a static context-edge reference contract discussion, not export reopening, edge id
   emission, reference validation, self-edge checks, duplicate-edge checks, DB import, index

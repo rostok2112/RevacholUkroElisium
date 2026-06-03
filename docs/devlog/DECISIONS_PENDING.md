@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- The M2 explicit local-import context-edge reference contract is defined. Implement
+  `m2_explicit_local_import_context_edge_reference_dry_run` next as a redacted membership-check
+  dry-run only.
+- Keep edge id emission, record id emission, self-edge checks, duplicate-edge checks, graph
+  construction, real DB import, line-index construction, context-graph construction, and every
+  original M2 completion flag false.
 - The M2 explicit local-import context-edge shape dry-run review gate is implemented. Define
   `m2_explicit_local_import_context_edge_reference_contract` next as a static boundary only.
 - Keep selected-export reopening during review, edge id emission, edge reference validation,

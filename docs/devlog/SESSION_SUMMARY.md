@@ -1,5 +1,22 @@
 # Session Summary
 
+Original M2 explicit local-import context-edge reference contract is defined.
+
+Completed in the latest session:
+- Added `docs/m2-explicit-local-import-context-edge-reference-contract.md`,
+  `tests/fixtures/m2_explicit_local_import_context_edge_reference_scope.synthetic.json`, and
+  `scripts/check_m2_explicit_local_import_context_edge_reference_contract.py`.
+- The static contract defines a later membership-check boundary for comparing
+  `context_edges[*].from_record_id` and `context_edges[*].to_record_id` against top-level
+  `records[*].record_id` values.
+- Edge ids, record ids, source text, relation values, paths, filenames, hashes, logs, payloads,
+  and runtime evidence remain sealed.
+- This contract does not reopen or decode a selected export, validate real references, check
+  self-edges, deduplicate edges, import a DB, construct an index, construct a graph, or complete any
+  original M2 criterion.
+- Wired the fixture-only checker into `scripts/check_all.py`.
+- The only approved next step is `m2_explicit_local_import_context_edge_reference_dry_run`.
+
 Original M2 explicit local-import context-edge shape dry-run review gate is implemented.
 
 Completed in the latest session:
