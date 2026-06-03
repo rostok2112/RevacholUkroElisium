@@ -119,8 +119,32 @@ Validate the dry-run smoke with:
 python scripts/run_m2_explicit_local_import_context_edge_reference_dry_run.py --self-test --quiet
 ```
 
+## Context-Edge Reference Dry-Run Review Gate
+
+The redacted summary-only reviewer is:
+
+```text
+scripts/review_m2_explicit_local_import_context_edge_reference_dry_run.py
+```
+
+It reviews only ignored context-edge reference summary JSON under
+`workspace/local-private/extraction-indexing/import/context-edge-reference/`. Optional redacted JSON
+or Markdown review output remains private under
+`workspace/local-private/extraction-indexing/import/context-edge-reference-review/`.
+
+The review never reopens the selected export, emits ids, normalizes ids, hashes ids, checks
+self-edges, deduplicates edges, maps retrieval buckets, imports a DB, constructs an index,
+constructs a graph, or completes any original M2 criterion. A passing review permits only a later
+static context-edge integrity contract discussion.
+
+Validate the review gate without real or private input with:
+
+```powershell
+python scripts/review_m2_explicit_local_import_context_edge_reference_dry_run.py --self-test --quiet
+```
+
 The next allowed step is:
 
 ```text
-m2_explicit_local_import_context_edge_reference_dry_run_review_gate
+m2_explicit_local_import_context_edge_integrity_contract
 ```

@@ -1,5 +1,23 @@
 # Session Summary
 
+Original M2 explicit local-import context-edge reference dry-run review gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_m2_explicit_local_import_context_edge_reference_dry_run.py` and
+  `tests/fixtures/m2_explicit_local_import_context_edge_reference_dry_run_review_decision.synthetic.json`.
+- The reviewer reads only ignored redacted context-edge reference summary JSON and never reopens
+  the selected export.
+- Optional redacted JSON or Markdown review output is restricted to
+  `workspace/local-private/extraction-indexing/import/context-edge-reference-review/`.
+- The review output contains aggregate counts and blocker categories only; record ids, edge ids,
+  relation values, source text, paths, filenames, hashes, logs, payloads, and runtime evidence
+  remain sealed.
+- A passing review permits only a static context-edge integrity contract discussion.
+- Wired a synthetic temp-workspace review self-test into `scripts/check_all.py`.
+- Self-edge checks, duplicate-edge checks, retrieval-bucket mapping, DB import, index
+  construction, graph construction, and every original M2 completion flag remain blocked.
+- The only approved next step is `m2_explicit_local_import_context_edge_integrity_contract`.
+
 Original M2 explicit local-import context-edge reference dry-run is implemented.
 
 Completed in the latest session:

@@ -1,5 +1,12 @@
 # Known Risks
 
+- The M2 context-edge reference dry-run review gate reads redacted summary JSON only. A passing
+  review permits a static context-edge integrity contract discussion, not export reopening, id
+  emission, id normalization, id hashing, self-edge checks, duplicate-edge checks,
+  retrieval-bucket mapping, DB import, index construction, or graph construction.
+- Keep optional context-edge reference review JSON and Markdown under
+  `workspace/local-private/extraction-indexing/import/context-edge-reference-review/` and out of
+  tracked files, chat, reports, and commits.
 - The M2 explicit local-import context-edge reference dry-run reopens one explicit private UTF-8
   JSON export, decodes it with no size cap, and builds an in-memory top-level record-id set. A
   large selected file may consume substantial memory.
