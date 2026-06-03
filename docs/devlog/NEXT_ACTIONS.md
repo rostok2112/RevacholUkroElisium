@@ -1,5 +1,21 @@
 # Next Actions
 
+After the original M2 explicit local-import context-edge integrity dry-run review gate:
+
+1. Treat `scripts/review_m2_explicit_local_import_context_edge_integrity_dry_run.py` and
+   `tests/fixtures/m2_explicit_local_import_context_edge_integrity_dry_run_review_decision.synthetic.json`
+   as the redacted context-edge integrity evidence boundary.
+2. Keep export reopening during review, id emission, relation emission, duplicate tuple emission,
+   retrieval-bucket mapping, real DB import, index construction, graph construction, and every
+   original M2 completion flag blocked.
+3. Define only the final local-import approval contract next.
+
+Recommended next safe step:
+
+- Define `m2_local_import_final_approval_contract`.
+
+---
+
 After the original M2 explicit local-import context-edge integrity dry-run:
 
 1. Treat `scripts/run_m2_explicit_local_import_context_edge_integrity_dry_run.py` as the

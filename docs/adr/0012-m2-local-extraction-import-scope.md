@@ -601,3 +601,27 @@ The next allowed step is:
 ```text
 m2_explicit_local_import_context_edge_integrity_dry_run_review_gate
 ```
+
+## Explicit Local-Import Context-Edge Integrity Dry-Run Review Gate
+
+The redacted summary-only context-edge integrity reviewer is:
+
+```text
+scripts/review_m2_explicit_local_import_context_edge_integrity_dry_run.py
+```
+
+It reads only ignored context-edge integrity summary JSON under
+`workspace/local-private/extraction-indexing/import/context-edge-integrity/`. Optional redacted
+review output remains private under
+`workspace/local-private/extraction-indexing/import/context-edge-integrity-review/`.
+
+The review never reopens the selected export, emits ids, emits relation values, emits duplicate
+tuples, maps retrieval buckets, imports a DB, constructs a line index, constructs a context graph,
+or completes any original M2 criterion. A passing review permits only a final local-import approval
+contract discussion before the first real M2 criterion can begin.
+
+The next allowed step is:
+
+```text
+m2_local_import_final_approval_contract
+```

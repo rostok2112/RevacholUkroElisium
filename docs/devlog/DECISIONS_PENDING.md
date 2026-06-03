@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- The M2 explicit local-import context-edge integrity dry-run review gate is implemented. Define
+  `m2_local_import_final_approval_contract` next as the final static approval boundary before the
+  first real M2 criterion can begin.
+- Keep selected-export reopening during review, id emission, relation emission, duplicate tuple
+  emission, retrieval-bucket mapping, real DB import, line-index construction, context-graph
+  construction, and every original M2 completion flag false.
 - The M2 explicit local-import context-edge integrity dry-run is implemented. Add
   `m2_explicit_local_import_context_edge_integrity_dry_run_review_gate` next using redacted
   summary evidence only.

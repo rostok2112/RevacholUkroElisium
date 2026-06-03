@@ -1,5 +1,24 @@
 # Session Summary
 
+Original M2 explicit local-import context-edge integrity dry-run review gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_m2_explicit_local_import_context_edge_integrity_dry_run.py` and
+  `tests/fixtures/m2_explicit_local_import_context_edge_integrity_dry_run_review_decision.synthetic.json`.
+- The reviewer reads only ignored redacted context-edge integrity summary JSON and never reopens
+  the selected export.
+- Optional redacted JSON or Markdown review output is restricted to
+  `workspace/local-private/extraction-indexing/import/context-edge-integrity-review/`.
+- The review output contains aggregate counts and blocker categories only; record ids, edge ids,
+  relation values, duplicate tuples, source text, paths, filenames, hashes, logs, payloads, and
+  runtime evidence remain sealed.
+- A passing review permits only `m2_local_import_final_approval_contract`.
+- Retrieval-bucket mapping, DB import, line-index construction, context-graph construction, and
+  every original M2 completion flag remain blocked.
+- The only approved next step is `m2_local_import_final_approval_contract`.
+
+---
+
 Original M2 explicit local-import context-edge integrity dry-run is implemented.
 
 Completed in the latest session:
