@@ -1,5 +1,24 @@
 # Next Actions
 
+After M4 overlay shell contract:
+
+1. Treat `docs/m4-overlay-shell-contract.md`,
+   `tests/fixtures/m4_overlay_shell_contract.synthetic.json`, and
+   `scripts/check_m4_overlay_shell_contract.py` as the shell boundary.
+2. Implement only compact translation shell rendering next.
+3. Reuse existing validated compact view models and keep generated shell output under
+   `workspace/local-private/overlay/`.
+4. Keep Genius card, hotkeys, native always-on-top packaging, Electron/Tauri setup, global keyboard
+   hooks, clipboard writes, provider execution, companion HTTP changes, OCR, Unity scanning,
+   hooks/Harmony, game-file reads, BepInEx log reads, screenshots, private paths, and committed
+   generated shell artifacts blocked.
+
+Recommended next safe step:
+
+- Implement `m4_compact_translation_shell`.
+
+---
+
 After M4 real overlay scope recovery:
 
 1. Treat `docs/m4-real-overlay-scope.md`,

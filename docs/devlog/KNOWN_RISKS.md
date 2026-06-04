@@ -1,5 +1,13 @@
 # Known Risks
 
+- M4 overlay shell contract (`docs/m4-overlay-shell-contract.md`,
+  `tests/fixtures/m4_overlay_shell_contract.synthetic.json`, and
+  `scripts/check_m4_overlay_shell_contract.py`) defines a local browser shell boundary only. It
+  does not implement compact translation, Genius card, hotkeys, native always-on-top behavior,
+  Electron/Tauri setup, global keyboard hooks, clipboard writes, provider execution, companion HTTP
+  changes, OCR, Unity scanning, hooks/Harmony, game-file reads, BepInEx log reads, screenshots,
+  private paths, or committed generated shell artifacts.
+- The next approved M4 step is `m4_compact_translation_shell`.
 - M4 scope recovery (`docs/m4-real-overlay-scope.md`,
   `tests/fixtures/m4_real_overlay_scope.synthetic.json`, and
   `scripts/check_m4_real_overlay_scope.py`) makes original `M4 - Real overlay` active, but it does

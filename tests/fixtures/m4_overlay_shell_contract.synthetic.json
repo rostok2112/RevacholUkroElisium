@@ -1,0 +1,48 @@
+{
+  "schema_version": "m4-overlay-shell-contract.v1",
+  "roadmap_milestone": "M4",
+  "scope_status": "contract_only",
+  "m4_commit_cap": 6,
+  "m4_commits_used": 2,
+  "m4_scope_recovery_done": true,
+  "browser_shell_contract_defined": true,
+  "implementation_allowed_next": false,
+  "allowed_input_schema_versions": [
+    "overlay-state-source.v1",
+    "local-overlay-prototype.v1"
+  ],
+  "required_reused_modules": [
+    "scripts/overlay_state_source.py",
+    "scripts/local_overlay_prototype.py",
+    "scripts/overlay_viewmodel_validator.py",
+    "scripts/overlay_actions.py"
+  ],
+  "allowed_private_output_roots": [
+    "workspace/local-private/overlay/"
+  ],
+  "compact_translation_allowed_next": "contract_defined_only",
+  "genius_card_allowed_next": "contract_defined_only",
+  "page_local_hotkeys_allowed_next": "contract_defined_only",
+  "m4_compact_translation_done": false,
+  "m4_genius_card_done": false,
+  "m4_hotkeys_done": false,
+  "native_always_on_top_allowed": false,
+  "electron_or_tauri_setup_allowed": false,
+  "global_keyboard_hooks_allowed": false,
+  "clipboard_writes_allowed": false,
+  "ocr_allowed": false,
+  "unity_scanning_allowed": false,
+  "hooks_allowed": false,
+  "provider_execution_allowed": false,
+  "companion_contract_change_allowed": false,
+  "game_file_reads_allowed": false,
+  "bepinex_log_reads_allowed": false,
+  "raw_provider_payload_included": false,
+  "debug_internals_in_player_view_allowed": false,
+  "generated_shell_artifact_commit_allowed": false,
+  "screenshots_commit_allowed": false,
+  "private_paths_commit_allowed": false,
+  "real_game_text_commit_allowed": false,
+  "required_next_step": "m4_compact_translation_shell",
+  "recommended_next_step": "m4_compact_translation_shell"
+}

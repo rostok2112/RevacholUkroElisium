@@ -642,6 +642,14 @@ def main() -> int:
             ],
         ),
         (
+            "M4 overlay shell contract",
+            [
+                sys.executable,
+                "scripts/check_m4_overlay_shell_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

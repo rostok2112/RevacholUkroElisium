@@ -64,3 +64,17 @@ The next bounded M4 step is:
 ```text
 m4_overlay_shell_contract
 ```
+
+That contract is tracked as:
+
+```text
+docs/m4-overlay-shell-contract.md
+tests/fixtures/m4_overlay_shell_contract.synthetic.json
+scripts/check_m4_overlay_shell_contract.py
+```
+
+The first implementation step after the contract is:
+
+```text
+m4_compact_translation_shell
+```

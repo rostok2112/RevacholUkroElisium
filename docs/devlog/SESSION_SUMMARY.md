@@ -1,5 +1,23 @@
 # Session Summary
 
+M4 overlay shell contract is defined.
+
+Completed in the latest session:
+- Added `docs/m4-overlay-shell-contract.md`.
+- Added `tests/fixtures/m4_overlay_shell_contract.synthetic.json`.
+- Added `scripts/check_m4_overlay_shell_contract.py` and wired it into `scripts/check_all.py`.
+- Defined the local browser shell boundary for original M4.
+- Required the future shell to consume existing `overlay-state-source.v1` and
+  `local-overlay-prototype.v1` contracts instead of inventing a new view model.
+- Restricted generated shell output to ignored `workspace/local-private/overlay/`.
+- Kept implementation blocked in this contract step; native always-on-top packaging, Electron/Tauri
+  setup, global keyboard hooks, clipboard writes, OCR, Unity scanning, hooks/Harmony, provider
+  execution, companion HTTP contract changes, game-file reads, BepInEx log reads, screenshots,
+  private paths, raw provider payloads, generated shell artifacts, `bin`, and `obj` remain blocked.
+- The next bounded M4 step is `m4_compact_translation_shell`.
+
+---
+
 M4 real overlay scope recovery is defined.
 
 Completed in the latest session:

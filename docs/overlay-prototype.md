@@ -426,6 +426,18 @@ M4 reuses the existing view-model fixtures, validator, state-source, action cata
 renderer, accessibility checker, and refresh-readiness helper. It must not create a duplicate
 overlay prototype or state-source path.
 
+The M4 shell contract is:
+
+```text
+docs/m4-overlay-shell-contract.md
+tests/fixtures/m4_overlay_shell_contract.synthetic.json
+scripts/check_m4_overlay_shell_contract.py
+```
+
+The contract permits only a later local browser shell implementation, starting with
+`m4_compact_translation_shell`, and keeps native always-on-top packaging, Electron/Tauri setup,
+global keyboard hooks, clipboard writes, provider execution, and companion HTTP changes blocked.
+
 ## Shell Readiness Decision
 
 ADR 0007 records the current shell-readiness decision:

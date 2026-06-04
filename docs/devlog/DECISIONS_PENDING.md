@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- M4 overlay shell contract is defined. Implement `m4_compact_translation_shell` next using
+  `docs/m4-overlay-shell-contract.md`,
+  `tests/fixtures/m4_overlay_shell_contract.synthetic.json`, and
+  `scripts/check_m4_overlay_shell_contract.py` as the shell boundary.
+- The first shell implementation must consume existing validated compact overlay view models and
+  write generated shell output only under ignored `workspace/local-private/overlay/`.
 - M4 real overlay scope recovery is defined. Define `m4_overlay_shell_contract` next, using
   `docs/m4-real-overlay-scope.md`, `tests/fixtures/m4_real_overlay_scope.synthetic.json`, and
   `scripts/check_m4_real_overlay_scope.py` as the M4 boundary.
