@@ -35,8 +35,8 @@ class M4OverlayShellContractTests(unittest.TestCase):
         self.assertEqual("m4-overlay-shell-contract.v1", fixture["schema_version"])
         self.assertEqual("M4", fixture["roadmap_milestone"])
         self.assertEqual("contract_only", fixture["scope_status"])
-        self.assertEqual(6, fixture["m4_commit_cap"])
-        self.assertEqual(2, fixture["m4_commits_used"])
+        self.assertNotIn("m4_commit_cap", fixture)
+        self.assertNotIn("m4_commits_used", fixture)
         self.assertEqual(
             ["workspace/local-private/overlay/"], fixture["allowed_private_output_roots"]
         )
@@ -60,7 +60,8 @@ class M4OverlayShellContractTests(unittest.TestCase):
     def test_rejects_contract_drift(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         for field, value in (
-            ("m4_commits_used", 3),
+            ("m4_commit_cap", 6),
+            ("m4_commits_used", 2),
             ("recommended_next_step", "m4_shell_implementation"),
             ("required_next_step", "m4_shell_implementation"),
             ("allowed_private_output_roots", ["workspace/synthetic-slice/overlay/"]),

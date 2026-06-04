@@ -10,6 +10,19 @@ Debug console.
 
 M3 is complete at the guarded implementation level.
 
+Under `docs/milestone-completion-standard.md`, guarded implementation completion is not strict full
+completion. Tracked M3 status must distinguish:
+
+```text
+automated_complete
+manual_verification_required
+manual_verification_complete
+fully_complete
+```
+
+M3 `fully_complete` remains false until the bridge/plugin load, current-line event, line-ID
+matching, and debug console are verified in a user-local runtime report.
+
 ## Completed Criteria
 
 - Current-line event: implemented by `packages/bepinex-plugin/src/CurrentLineEventFactory.cs`,

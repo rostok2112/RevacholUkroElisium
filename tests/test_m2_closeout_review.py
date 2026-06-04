@@ -173,6 +173,14 @@ class M2CloseoutReviewTests(unittest.TestCase):
 
     def test_decision_fixture_self_test_docs_and_check_all(self) -> None:
         self.assertEqual([], collect_decision_fixture_errors())
+        decision = load_json(ROOT / "tests/fixtures/m2_closeout_review_decision.synthetic.json")
+        self.assertTrue(decision["automated_complete"])
+        self.assertTrue(decision["implementation_path_complete"])
+        self.assertTrue(decision["manual_verification_required"])
+        self.assertFalse(decision["manual_verification_complete"])
+        self.assertFalse(decision["fully_complete"])
+        self.assertTrue(decision["manual_private_export_verification_required"])
+        self.assertFalse(decision["manual_private_export_verified"])
         run_self_test()
         check_all = (ROOT / "scripts/check_all.py").read_text(encoding="utf-8")
         docs = (ROOT / "docs/m2-closeout-review-gate.md").read_text(encoding="utf-8")

@@ -1,5 +1,16 @@
 # Known Risks
 
+- Strict completion now requires manual/local verification evidence in addition to automated
+  checks. `docs/milestone-completion-standard.md`,
+  `tests/fixtures/milestone_completion_status.synthetic.json`, and
+  `scripts/check_milestone_completion_status.py` keep M5 planning blocked while M0-M4 have
+  `fully_complete=false`.
+- The next approved step is `m0_manual_verification`.
+- Do not convert manual evidence into committed private paths, real extracted text, screenshots,
+  generated DBs, indexes, context graphs, logs, provider payloads, `bin`, or `obj`.
+
+---
+
 - M4 closeout (`docs/m4-closeout.md`, `tests/fixtures/m4_closeout.synthetic.json`, and
   `scripts/check_m4_closeout.py`) marks original M4 complete only at the local browser shell level.
   It does not approve native always-on-top packaging, Electron/Tauri setup, global keyboard hooks,
@@ -37,8 +48,8 @@
   Electron/Tauri setup, global keyboard hooks, clipboard writes, provider execution, companion HTTP
   changes, OCR, Unity scanning, hooks/Harmony, game-file reads, BepInEx log reads, or committed
   generated shell artifacts.
-- The next approved M4 step is `m4_overlay_shell_contract`. Keep the six-commit hard stop visible
-  so M4 does not turn into an unbounded chain.
+- The next approved M4 step is `m4_overlay_shell_contract`; keep it limited to the overlay shell
+  boundary so M4 does not turn into an unbounded chain.
 - M3 closeout (`docs/m3-closeout.md`, `tests/fixtures/m3_closeout.synthetic.json`, and
   `scripts/check_m3_closeout.py`) marks original M3 complete only under the redacted/local
   implementation boundaries. It does not approve raw text capture/dumps, provider calls, companion

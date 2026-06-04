@@ -1,0 +1,49 @@
+{
+  "schema_version": "milestone-completion-status.v1",
+  "roadmap_source": "tasks/milestones.md",
+  "strict_completion_standard": "docs/milestone-completion-standard.md",
+  "m5_planning_allowed": false,
+  "recommended_next_step": "m0_manual_verification",
+  "milestones": [
+    {
+      "roadmap_milestone": "M0",
+      "automated_complete": true,
+      "manual_verification_required": true,
+      "manual_verification_complete": false,
+      "fully_complete": false,
+      "blocking_manual_step": "owner_confirms_repo_contracts_and_safety_policy"
+    },
+    {
+      "roadmap_milestone": "M1",
+      "automated_complete": true,
+      "manual_verification_required": true,
+      "manual_verification_complete": false,
+      "fully_complete": false,
+      "blocking_manual_step": "user_reviews_synthetic_slice_and_overlay_mock"
+    },
+    {
+      "roadmap_milestone": "M2",
+      "automated_complete": true,
+      "manual_verification_required": true,
+      "manual_verification_complete": false,
+      "fully_complete": false,
+      "blocking_manual_step": "user_runs_private_export_import_index_graph_closeout"
+    },
+    {
+      "roadmap_milestone": "M3",
+      "automated_complete": true,
+      "manual_verification_required": true,
+      "manual_verification_complete": false,
+      "fully_complete": false,
+      "blocking_manual_step": "user_runs_bepinex_bridge_runtime_verification"
+    },
+    {
+      "roadmap_milestone": "M4",
+      "automated_complete": true,
+      "manual_verification_required": true,
+      "manual_verification_complete": false,
+      "fully_complete": false,
+      "blocking_manual_step": "user_reviews_local_overlay_shell_usability"
+    }
+  ]
+}

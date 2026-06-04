@@ -1,5 +1,23 @@
 # Session Summary
 
+Strict M0-M4 completion recovery is in progress.
+
+Completed in the latest session:
+- Added `docs/milestone-completion-standard.md`.
+- Added `docs/m0-closeout.md` and `docs/m1-closeout.md`.
+- Added `tests/fixtures/m0_closeout.synthetic.json`,
+  `tests/fixtures/m1_closeout.synthetic.json`, and
+  `tests/fixtures/milestone_completion_status.synthetic.json`.
+- Added `scripts/check_m0_closeout.py`, `scripts/check_m1_closeout.py`, and
+  `scripts/check_milestone_completion_status.py`.
+- Updated M2, M3, and M4 closeout status to distinguish automated/implementation completion from
+  strict manual verification completion.
+- Current strict status: M0-M4 are automated-complete where implemented, but not fully complete
+  until required manual/local verification evidence is recorded.
+- The next safe step is `m0_manual_verification`. M5 planning remains blocked.
+
+---
+
 M4 closeout is complete.
 
 Completed in the latest session:

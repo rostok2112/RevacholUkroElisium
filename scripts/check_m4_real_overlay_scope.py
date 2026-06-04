@@ -26,7 +26,6 @@ TASKS_PATH = ROOT / "tasks/milestones.md"
 SCHEMA_VERSION = "m4-real-overlay-scope.v1"
 ROADMAP_MILESTONE = "M4"
 RECOMMENDED_NEXT_STEP = "m4_overlay_shell_contract"
-M4_COMMIT_CAP = 6
 
 REQUIRED_TRUE_FIELDS = (
     "m3_closed",
@@ -154,14 +153,14 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         "schema_version": SCHEMA_VERSION,
         "roadmap_milestone": ROADMAP_MILESTONE,
         "scope_status": "active",
-        "m4_commit_cap": M4_COMMIT_CAP,
-        "m4_commits_used": 1,
         "required_next_step": RECOMMENDED_NEXT_STEP,
         "recommended_next_step": RECOMMENDED_NEXT_STEP,
     }
     for field, expected in expected_scalars.items():
         if payload.get(field) != expected:
             errors.append(f"M4 scope {field} must be {expected!r}.")
+    if "m4_commit_cap" in payload or "m4_commits_used" in payload:
+        errors.append("M4 scope fixture must not encode commit cap metadata.")
     for field in REQUIRED_TRUE_FIELDS:
         if payload.get(field) is not True:
             errors.append(f"M4 scope fixture must set {field}=true.")

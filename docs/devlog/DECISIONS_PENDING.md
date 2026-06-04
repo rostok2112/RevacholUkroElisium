@@ -1,5 +1,17 @@
 # Decisions Pending
 
+- Strict M0-M4 completion recovery is active. Use `docs/milestone-completion-standard.md`,
+  `tests/fixtures/milestone_completion_status.synthetic.json`, and
+  `scripts/check_milestone_completion_status.py` as the current completion boundary.
+- M5 planning is blocked until M0, M1, M2, M3, and M4 all have
+  `manual_verification_complete=true` and `fully_complete=true`.
+- The next decision is `m0_manual_verification`: owner confirmation that repo contracts and safety
+  policy match intended project governance.
+- Manual evidence must stay redacted and must not commit private paths, real extracted text,
+  generated DBs/indexes/context graphs, logs, screenshots, provider payloads, `bin`, or `obj`.
+
+---
+
 - M4 closeout is complete. Start original M5 with `m5_maximum_quality_pipeline_planning`, using
   `docs/m4-closeout.md`, `tests/fixtures/m4_closeout.synthetic.json`, and
   `scripts/check_m4_closeout.py` as the M4 completion boundary.

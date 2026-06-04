@@ -36,8 +36,8 @@ class M4RealOverlayScopeTests(unittest.TestCase):
         self.assertEqual("m4-real-overlay-scope.v1", fixture["schema_version"])
         self.assertEqual("M4", fixture["roadmap_milestone"])
         self.assertEqual("active", fixture["scope_status"])
-        self.assertEqual(6, fixture["m4_commit_cap"])
-        self.assertEqual(1, fixture["m4_commits_used"])
+        self.assertNotIn("m4_commit_cap", fixture)
+        self.assertNotIn("m4_commits_used", fixture)
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["recommended_next_step"])
         for field in REQUIRED_TRUE_FIELDS:
             with self.subTest(field=field):
@@ -67,8 +67,8 @@ class M4RealOverlayScopeTests(unittest.TestCase):
             mutated[field] = True
             self.assertNotEqual([], _errors_for(mutated))
         for field, value in (
-            ("m4_commit_cap", 7),
-            ("m4_commits_used", 2),
+            ("m4_commit_cap", 6),
+            ("m4_commits_used", 1),
             ("recommended_next_step", "m4_compact_shell"),
             ("required_next_step", "m4_compact_shell"),
         ):

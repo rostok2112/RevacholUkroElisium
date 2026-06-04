@@ -154,14 +154,14 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         "schema_version": SCHEMA_VERSION,
         "roadmap_milestone": ROADMAP_MILESTONE,
         "scope_status": "contract_only",
-        "m4_commit_cap": 6,
-        "m4_commits_used": 2,
         "required_next_step": RECOMMENDED_NEXT_STEP,
         "recommended_next_step": RECOMMENDED_NEXT_STEP,
     }
     for field, expected in expected_scalars.items():
         if payload.get(field) != expected:
             errors.append(f"M4 overlay shell contract {field} must be {expected!r}.")
+    if "m4_commit_cap" in payload or "m4_commits_used" in payload:
+        errors.append("M4 overlay shell contract fixture must not encode commit cap metadata.")
     if tuple(payload.get("allowed_input_schema_versions", ())) != ALLOWED_INPUT_SCHEMA_VERSIONS:
         errors.append("M4 overlay shell contract must keep the approved input schema versions.")
     if tuple(payload.get("required_reused_modules", ())) != REQUIRED_REUSED_MODULES:

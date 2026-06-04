@@ -1,0 +1,171 @@
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any
+
+try:
+    from scripts.milestone_completion_common import (
+        doc_reference_errors,
+        load_fixture,
+        strict_status_errors,
+        unsafe_value_errors,
+    )
+    from scripts.synthetic_slice import ROOT
+except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
+    from milestone_completion_common import (
+        doc_reference_errors,
+        load_fixture,
+        strict_status_errors,
+        unsafe_value_errors,
+    )
+    from synthetic_slice import ROOT
+
+
+FIXTURE_PATH = ROOT / "tests/fixtures/milestone_completion_status.synthetic.json"
+STANDARD_PATH = ROOT / "docs/milestone-completion-standard.md"
+M0_DOC_PATH = ROOT / "docs/m0-closeout.md"
+M1_DOC_PATH = ROOT / "docs/m1-closeout.md"
+M2_DOC_PATH = ROOT / "docs/m2-closeout-review-gate.md"
+M3_DOC_PATH = ROOT / "docs/m3-closeout.md"
+M4_DOC_PATH = ROOT / "docs/m4-closeout.md"
+TASKS_PATH = ROOT / "tasks/milestones.md"
+SCHEMA_VERSION = "milestone-completion-status.v1"
+RECOMMENDED_NEXT_STEP = "m0_manual_verification"
+MILESTONES = ("M0", "M1", "M2", "M3", "M4")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate strict milestone completion status.")
+    parser.add_argument("--quiet", action="store_true")
+    args = parser.parse_args(argv)
+    errors = collect_milestone_completion_status_errors()
+    if errors:
+        print("Milestone completion status check failed." if args.quiet else "\n".join(errors))
+        return 1
+    if args.quiet:
+        print("Milestone completion status check passed.")
+    else:
+        print(
+            json.dumps(
+                {
+                    "ok": True,
+                    "schema_version": "milestone-completion-status-check.v1",
+                    "recommended_next_step": RECOMMENDED_NEXT_STEP,
+                },
+                indent=2,
+                sort_keys=True,
+            )
+        )
+    return 0
+
+
+def collect_milestone_completion_status_errors(path: Path = FIXTURE_PATH) -> list[str]:
+    payload_or_errors = load_fixture(path)
+    if isinstance(payload_or_errors, list):
+        return payload_or_errors
+    payload = payload_or_errors
+    errors: list[str] = []
+    errors.extend(_shape_errors(payload))
+    errors.extend(
+        unsafe_value_errors(
+            payload,
+            label="milestone completion status",
+            allowed_values=_allowed_values(payload),
+        )
+    )
+    if path == FIXTURE_PATH:
+        errors.extend(
+            doc_reference_errors(
+                (
+                    STANDARD_PATH,
+                    M0_DOC_PATH,
+                    M1_DOC_PATH,
+                    M2_DOC_PATH,
+                    M3_DOC_PATH,
+                    M4_DOC_PATH,
+                ),
+                (
+                    "automated_complete",
+                    "manual_verification_required",
+                    "manual_verification_complete",
+                    "fully_complete",
+                ),
+            )
+        )
+        tasks = TASKS_PATH.read_text(encoding="utf-8")
+        for milestone in MILESTONES:
+            if f"## {milestone}" not in tasks:
+                errors.append(f"tasks/milestones.md must keep {milestone}.")
+    return errors
+
+
+def _shape_errors(payload: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if payload.get("schema_version") != SCHEMA_VERSION:
+        errors.append(f"Milestone completion schema_version must be {SCHEMA_VERSION!r}.")
+    if payload.get("roadmap_source") != "tasks/milestones.md":
+        errors.append("Milestone completion status must point to tasks/milestones.md.")
+    if payload.get("strict_completion_standard") != "docs/milestone-completion-standard.md":
+        errors.append("Milestone completion status must point to the strict standard doc.")
+    if payload.get("recommended_next_step") != RECOMMENDED_NEXT_STEP:
+        errors.append(f"Milestone completion next step must be {RECOMMENDED_NEXT_STEP!r}.")
+    milestones = payload.get("milestones")
+    if not isinstance(milestones, list):
+        return errors + ["Milestone completion status must include a milestones array."]
+    if [item.get("roadmap_milestone") for item in milestones if isinstance(item, dict)] != list(
+        MILESTONES
+    ):
+        errors.append("Milestone completion status must list M0-M4 in order.")
+    all_fully_complete = True
+    for item in milestones:
+        if not isinstance(item, dict):
+            errors.append("Milestone entries must be JSON objects.")
+            all_fully_complete = False
+            continue
+        label = f"{item.get('roadmap_milestone', 'unknown')} status"
+        errors.extend(strict_status_errors(item, label=label))
+        if item.get("automated_complete") is not True:
+            errors.append(f"{label} must keep automated_complete=true for recovered work.")
+        if item.get("manual_verification_required") is not True:
+            errors.append(f"{label} must require manual verification.")
+        if item.get("manual_verification_complete") is not False:
+            errors.append(
+                f"{label} must keep manual_verification_complete=false until user evidence exists."
+            )
+        if item.get("fully_complete") is not False:
+            errors.append(f"{label} must keep fully_complete=false until manual evidence exists.")
+        if (
+            not isinstance(item.get("blocking_manual_step"), str)
+            or not item["blocking_manual_step"]
+        ):
+            errors.append(f"{label} must name a blocking_manual_step.")
+        all_fully_complete = all_fully_complete and item.get("fully_complete") is True
+    if payload.get("m5_planning_allowed") is not all_fully_complete:
+        errors.append(
+            "m5_planning_allowed must equal whether all M0-M4 entries are fully complete."
+        )
+    if payload.get("m5_planning_allowed") is not False:
+        errors.append("M5 planning must remain blocked until M0-M4 strict completion is true.")
+    return errors
+
+
+def _allowed_values(payload: dict[str, Any]) -> set[str]:
+    values = {
+        SCHEMA_VERSION,
+        "tasks/milestones.md",
+        "docs/milestone-completion-standard.md",
+        RECOMMENDED_NEXT_STEP,
+        *MILESTONES,
+    }
+    milestones = payload.get("milestones")
+    if isinstance(milestones, list):
+        for item in milestones:
+            if isinstance(item, dict) and isinstance(item.get("blocking_manual_step"), str):
+                values.add(item["blocking_manual_step"])
+    return values
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

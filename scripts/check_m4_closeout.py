@@ -28,10 +28,12 @@ SCHEMA_VERSION = "m4-closeout.v1"
 ROADMAP_MILESTONE = "M4"
 NEXT_ROADMAP_MILESTONE = "M5"
 RECOMMENDED_NEXT_STEP = "m5_maximum_quality_pipeline_planning"
-M4_COMMIT_CAP = 6
 
 REQUIRED_TRUE_FIELDS = (
     "m3_closed",
+    "automated_complete",
+    "manual_verification_required",
+    "manual_overlay_usability_verification_required",
     "m4_scope_recovery_done",
     "m4_overlay_shell_contract_done",
     "m4_compact_translation_done",
@@ -41,6 +43,9 @@ REQUIRED_TRUE_FIELDS = (
 )
 
 FORBIDDEN_PERMISSION_FIELDS = (
+    "manual_verification_complete",
+    "fully_complete",
+    "manual_overlay_usability_verification_complete",
     "native_always_on_top_allowed",
     "electron_or_tauri_setup_allowed",
     "global_keyboard_hooks_allowed",
@@ -143,8 +148,6 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         "schema_version": SCHEMA_VERSION,
         "roadmap_milestone": ROADMAP_MILESTONE,
         "scope_status": "closed",
-        "m4_commit_cap": M4_COMMIT_CAP,
-        "m4_commits_used": M4_COMMIT_CAP,
         "next_roadmap_milestone": NEXT_ROADMAP_MILESTONE,
         "required_next_step": RECOMMENDED_NEXT_STEP,
         "recommended_next_step": RECOMMENDED_NEXT_STEP,
@@ -152,6 +155,8 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     for field, expected in expected_scalars.items():
         if payload.get(field) != expected:
             errors.append(f"M4 closeout {field} must be {expected!r}.")
+    if "m4_commit_cap" in payload or "m4_commits_used" in payload:
+        errors.append("M4 closeout fixture must not encode commit cap metadata.")
     for field in REQUIRED_TRUE_FIELDS:
         if payload.get(field) is not True:
             errors.append(f"M4 closeout fixture must set {field}=true.")

@@ -274,6 +274,22 @@ def main() -> int:
             ],
         ),
         (
+            "M0 strict closeout",
+            [
+                sys.executable,
+                "scripts/check_m0_closeout.py",
+                "--quiet",
+            ],
+        ),
+        (
+            "M1 strict closeout",
+            [
+                sys.executable,
+                "scripts/check_m1_closeout.py",
+                "--quiet",
+            ],
+        ),
+        (
             "original M2 local extraction import scope",
             [
                 sys.executable,
@@ -663,6 +679,14 @@ def main() -> int:
             [
                 sys.executable,
                 "scripts/check_m4_closeout.py",
+                "--quiet",
+            ],
+        ),
+        (
+            "M0-M4 strict completion status",
+            [
+                sys.executable,
+                "scripts/check_milestone_completion_status.py",
                 "--quiet",
             ],
         ),

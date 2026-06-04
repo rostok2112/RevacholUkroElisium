@@ -1,5 +1,21 @@
 # Next Actions
 
+After strict M0-M4 completion recovery:
+
+1. Treat `docs/milestone-completion-standard.md`,
+   `tests/fixtures/milestone_completion_status.synthetic.json`, and
+   `scripts/check_milestone_completion_status.py` as the active roadmap completion guardrail.
+2. M0-M4 are not fully complete under the strict definition until required manual/local
+   verification evidence is recorded.
+3. Start with M0 manual verification, then proceed sequentially through M1, M2, M3, and M4.
+4. Keep private/generated reports and artifacts out of git.
+
+Recommended next safe step:
+
+- Complete `m0_manual_verification`.
+
+---
+
 After M4 closeout:
 
 1. Treat `docs/m4-closeout.md`, `tests/fixtures/m4_closeout.synthetic.json`, and
@@ -98,7 +114,7 @@ After M4 real overlay scope recovery:
    fixtures, review renderer, accessibility checks, and refresh-readiness helper.
 3. Keep original M4 criteria incomplete until separately implemented: compact translation, Genius
    card, and hotkeys.
-4. Keep the M4 hard stop at six total atomic commits. The next step is contract-only.
+4. Keep the next step contract-only and limited to the overlay shell boundary.
 
 Recommended next safe step:
 

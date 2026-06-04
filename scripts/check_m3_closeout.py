@@ -28,6 +28,9 @@ NEXT_ROADMAP_MILESTONE = "M4"
 RECOMMENDED_NEXT_STEP = "m4_real_overlay_scope_recovery"
 REQUIRED_TRUE_FIELDS = (
     "m2_closed",
+    "automated_complete",
+    "manual_verification_required",
+    "manual_runtime_verification_required",
     "m3_scope_recovery_done",
     "m3_current_line_event_contract_done",
     "m3_current_line_event_done",
@@ -36,6 +39,9 @@ REQUIRED_TRUE_FIELDS = (
     "m3_complete",
 )
 FORBIDDEN_PERMISSION_FIELDS = (
+    "manual_verification_complete",
+    "fully_complete",
+    "manual_runtime_verification_complete",
     "raw_text_capture_allowed",
     "raw_text_dump_allowed",
     "payload_dump_allowed",

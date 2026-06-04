@@ -3,8 +3,6 @@
   "roadmap_milestone": "M4",
   "scope_status": "active",
   "m3_closed": true,
-  "m4_commit_cap": 6,
-  "m4_commits_used": 1,
   "existing_overlay_contract_reused": true,
   "overlay_viewmodel_fixtures_reused": true,
   "overlay_viewmodel_validator_reused": true,

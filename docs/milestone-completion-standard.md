@@ -1,0 +1,46 @@
+# Milestone Completion Standard
+
+The canonical roadmap is `tasks/milestones.md`.
+
+A roadmap milestone is fully complete only when:
+
+- its automated repository checks pass;
+- its required manual or local verification evidence is documented;
+- that evidence is redacted and reviewed;
+- no private/generated artifacts are committed.
+
+Tracked closeouts must distinguish these fields:
+
+```text
+automated_complete
+manual_verification_required
+manual_verification_complete
+fully_complete
+```
+
+`fully_complete=true` is forbidden while `manual_verification_required=true` and
+`manual_verification_complete=false`.
+
+## Manual Evidence Boundaries
+
+Manual evidence may be represented in tracked fixtures only as redacted booleans and short status
+labels. Do not commit private paths, real extracted text, generated DBs, indexes, context graphs,
+logs, screenshots, provider payloads, game files, `bin`, or `obj`.
+
+The aggregate guardrail is:
+
+```text
+tests/fixtures/m0_closeout.synthetic.json
+scripts/check_m0_closeout.py
+tests/fixtures/m1_closeout.synthetic.json
+scripts/check_m1_closeout.py
+tests/fixtures/milestone_completion_status.synthetic.json
+scripts/check_milestone_completion_status.py
+```
+
+Until M0-M4 are fully complete under this standard, the next step remains:
+
+```text
+m0_manual_verification
+m1_manual_synthetic_slice_review
+```

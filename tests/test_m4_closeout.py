@@ -34,8 +34,8 @@ class M4CloseoutTests(unittest.TestCase):
         self.assertEqual("m4-closeout.v1", fixture["schema_version"])
         self.assertEqual("M4", fixture["roadmap_milestone"])
         self.assertEqual("closed", fixture["scope_status"])
-        self.assertEqual(6, fixture["m4_commit_cap"])
-        self.assertEqual(6, fixture["m4_commits_used"])
+        self.assertNotIn("m4_commit_cap", fixture)
+        self.assertNotIn("m4_commits_used", fixture)
         self.assertEqual("M5", fixture["next_roadmap_milestone"])
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["recommended_next_step"])
         for field in REQUIRED_TRUE_FIELDS:
@@ -54,11 +54,11 @@ class M4CloseoutTests(unittest.TestCase):
             mutated[field] = True
             self.assertNotEqual([], _errors_for(mutated))
 
-    def test_rejects_commit_cap_or_next_step_drift(self) -> None:
+    def test_rejects_legacy_commit_cap_or_next_step_drift(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         for field, value in (
-            ("m4_commit_cap", 7),
-            ("m4_commits_used", 7),
+            ("m4_commit_cap", 6),
+            ("m4_commits_used", 6),
             ("next_roadmap_milestone", "M6"),
             ("recommended_next_step", "m5_pipeline_implementation"),
             ("required_next_step", "m5_pipeline_implementation"),

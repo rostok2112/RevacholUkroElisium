@@ -1,0 +1,17 @@
+{
+  "schema_version": "m0-closeout.v1",
+  "roadmap_milestone": "M0",
+  "scope_status": "strict_completion_pending_manual_verification",
+  "automated_complete": true,
+  "manual_verification_required": true,
+  "manual_verification_complete": false,
+  "fully_complete": false,
+  "agents_docs_done": true,
+  "json_schemas_done": true,
+  "safety_checks_done": true,
+  "owner_confirms_repo_contracts_and_safety_policy": false,
+  "private_artifact_commit_allowed": false,
+  "real_game_text_commit_allowed": false,
+  "generated_artifact_commit_allowed": false,
+  "recommended_next_step": "m0_manual_verification"
+}

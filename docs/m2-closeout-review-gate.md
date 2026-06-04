@@ -34,6 +34,19 @@ m2-context-graph-review.v1
 All three reviews must be valid, unblocked, and ready. The closeout review may then mark original
 M2 complete at the private implementation-path level without committing private artifacts.
 
+Under `docs/milestone-completion-standard.md`, that implementation-path completion is not strict
+full completion. Tracked M2 status must distinguish:
+
+```text
+automated_complete
+manual_verification_required
+manual_verification_complete
+fully_complete
+```
+
+M2 `fully_complete` remains false until the user runs one explicit private export through local
+import, line index, context graph, and closeout review.
+
 ## Output Boundary
 
 Optional closeout JSON or Markdown may be written only under:
@@ -54,6 +67,7 @@ The closeout gate is implemented by:
 ```text
 scripts/review_m2_closeout.py
 tests/fixtures/m2_closeout_review_decision.synthetic.json
+docs/milestone-completion-standard.md
 ```
 
 Validate it with:

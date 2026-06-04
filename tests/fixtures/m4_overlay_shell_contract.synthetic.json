@@ -2,8 +2,6 @@
   "schema_version": "m4-overlay-shell-contract.v1",
   "roadmap_milestone": "M4",
   "scope_status": "contract_only",
-  "m4_commit_cap": 6,
-  "m4_commits_used": 2,
   "m4_scope_recovery_done": true,
   "browser_shell_contract_defined": true,
   "implementation_allowed_next": false,

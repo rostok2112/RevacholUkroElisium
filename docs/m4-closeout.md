@@ -10,6 +10,19 @@ Hotkeys.
 
 M4 is complete at the guarded local browser shell level.
 
+Under `docs/milestone-completion-standard.md`, local browser shell completion is not strict full
+completion. Tracked M4 status must distinguish:
+
+```text
+automated_complete
+manual_verification_required
+manual_verification_complete
+fully_complete
+```
+
+M4 `fully_complete` remains false until the generated local overlay shell is opened and compact
+translation, Genius card, and page-local hotkeys are manually verified.
+
 ## Completed Criteria
 
 - Compact translation: implemented by `scripts/run_m4_overlay_shell.py`, guarded by

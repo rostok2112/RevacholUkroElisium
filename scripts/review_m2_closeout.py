@@ -361,9 +361,22 @@ def collect_decision_fixture_errors(path: Path = DECISION_FIXTURE_PATH) -> list[
         "local_import_review_required",
         "line_index_review_required",
         "context_graph_review_required",
+        "automated_complete",
+        "implementation_path_complete",
+        "manual_verification_required",
+        "manual_private_export_verification_required",
     ):
         if payload.get(field) is not True:
             errors.append(f"Decision fixture must set {field}=true.")
+    for field in (
+        "manual_verification_complete",
+        "fully_complete",
+        "manual_private_export_verified",
+    ):
+        if payload.get(field) is not False:
+            errors.append(
+                f"Decision fixture must keep {field}=false until user-local evidence exists."
+            )
     if payload.get("m2_completion_allowed_next") != "review_required":
         errors.append("Decision fixture must keep M2 completion review-gated.")
     if payload.get("recommended_next_step") != RECOMMENDED_M3_PLANNING_STEP:
