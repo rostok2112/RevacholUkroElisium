@@ -1,5 +1,29 @@
 # Session Summary
 
+Original M2 context-graph review gate is implemented.
+
+Decision:
+- `m2_context_graph_review_gate` is needed before M2 closeout.
+- Reason: the context-graph implementation writes a private graph artifact containing private ids.
+  The review gate validates only redacted context-graph summary evidence and never reopens the
+  private graph, DB, line index, or selected export.
+
+Completed in the latest session:
+- Added optional `--summary-output` support to `scripts/run_m2_context_graph.py` for redacted
+  summary JSON under `workspace/local-private/extraction-indexing/import/context-graph-summary/`.
+- Added `scripts/review_m2_context_graph.py` and
+  `tests/fixtures/m2_context_graph_review_decision.synthetic.json`.
+- The reviewer reads only redacted summary JSON and optional review outputs stay under
+  `workspace/local-private/extraction-indexing/import/context-graph-review/`.
+- Updated the context-graph contract so `m2_closeout_review_gate` requires a passing
+  `m2_context_graph_review_gate`.
+- Generated graphs, line indexes, private DB artifacts, extracted text, private paths, payloads,
+  reports, game scanning, runtime reads, companion changes, providers, and committed private
+  artifacts remain blocked.
+- The next safe step is `m2_closeout_review_gate`.
+
+---
+
 Original M2 context-graph implementation is added.
 
 Completed in the latest session:
@@ -15,7 +39,7 @@ Completed in the latest session:
 - Wired `python scripts/run_m2_context_graph.py --self-test --quiet` into `scripts/check_all.py`.
 - Original M2 now has implementation paths for import, line index, and context graph, but generated
   private artifacts remain local/ignored and uncommitted.
-- The next safe step is `m2_closeout_review_gate`.
+- The next safe step is `m2_context_graph_review_gate`.
 
 ---
 

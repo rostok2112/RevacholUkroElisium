@@ -201,13 +201,58 @@ Public stdout remains redacted aggregate status. The helper does not scan game i
 runtime logs, call providers, change companion contracts, duplicate source text into graph nodes,
 or commit generated private artifacts.
 
+Optional redacted summary output may be written only under:
+
+```text
+workspace/local-private/extraction-indexing/import/context-graph-summary/
+```
+
 Validate the implementation smoke with:
 
 ```powershell
 python scripts/run_m2_context_graph.py --self-test --quiet
 ```
 
-After a successful private context-graph build, the next safe step is:
+After a successful private context-graph build, the next safe step is a redacted review gate:
+
+```text
+m2_context_graph_review_gate
+```
+
+## Context-Graph Review Gate
+
+The required review helper is:
+
+```text
+scripts/review_m2_context_graph.py
+tests/fixtures/m2_context_graph_review_decision.synthetic.json
+```
+
+It reads only redacted `m2-context-graph-summary.v1` JSON under:
+
+```text
+workspace/local-private/extraction-indexing/import/context-graph-summary/
+```
+
+Optional review JSON or Markdown may be written only under:
+
+```text
+workspace/local-private/extraction-indexing/import/context-graph-review/
+```
+
+The review helper must never reopen the private context graph, private DB artifact, private
+line-index artifact, original selected export, game files, logs, screenshots, provider payloads, or
+runtime evidence. Review output may contain only aggregate counts, redacted blockers, readiness
+booleans, and the next safe step. It must not include paths, filenames, record ids, line ids,
+relation values, source text, tags, metadata values, hashes, logs, payloads, or runtime evidence.
+
+Validate the review smoke with:
+
+```powershell
+python scripts/review_m2_context_graph.py --self-test --quiet
+```
+
+After a passing context-graph review, the next safe step is:
 
 ```text
 m2_closeout_review_gate

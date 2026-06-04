@@ -567,6 +567,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 context-graph review smoke",
+            [
+                sys.executable,
+                "scripts/review_m2_context_graph.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

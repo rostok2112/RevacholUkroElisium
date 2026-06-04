@@ -1,5 +1,12 @@
 # Known Risks
 
+- `scripts/review_m2_context_graph.py` reviews only redacted context-graph summary JSON. It must
+  not be changed to reopen private context-graph artifacts, private DB artifacts, private line-index
+  artifacts, or selected exports unless a later contract explicitly scopes that behavior.
+- Optional context-graph summary and review output under
+  `workspace/local-private/extraction-indexing/import/context-graph-summary/` and
+  `workspace/local-private/extraction-indexing/import/context-graph-review/` must stay ignored and
+  out of tracked files, chat, reports, and review Markdown.
 - `scripts/run_m2_context_graph.py` can write a private context-graph artifact containing private
   ids under `workspace/local-private/extraction-indexing/import/context-graph/`. That output must
   never be committed, pasted into chat, copied into docs, review Markdown, reports, or public

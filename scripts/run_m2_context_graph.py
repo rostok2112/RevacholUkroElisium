@@ -73,6 +73,7 @@ except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
 
 SUMMARY_SCHEMA_VERSION = "m2-context-graph-summary.v1"
 PRIVATE_CONTEXT_GRAPH_ROOT = "workspace/local-private/extraction-indexing/import/context-graph/"
+SUMMARY_OUTPUT_ROOT = "workspace/local-private/extraction-indexing/import/context-graph-summary/"
 LINE_INDEX_REVIEW_ROOT = "workspace/local-private/extraction-indexing/import/line-index-review/"
 RELATION_TO_BUCKET = dict(
     item.split(":", maxsplit=1) for item in ALLOWED_RELATION_TO_BUCKET_MAPPINGS
@@ -103,6 +104,11 @@ def main(argv: list[str] | None = None) -> int:
         "--output",
         type=Path,
         help="Required private graph JSON output under import/context-graph/.",
+    )
+    parser.add_argument(
+        "--summary-output",
+        type=Path,
+        help="Optional redacted summary JSON under import/context-graph-summary/.",
     )
     parser.add_argument("--quiet", action="store_true")
     parser.add_argument("--self-test", action="store_true")
@@ -143,6 +149,11 @@ def main(argv: list[str] | None = None) -> int:
             args.output,
             root=ROOT,
         )
+        if args.summary_output:
+            write_summary(
+                summary,
+                resolve_context_graph_summary_output_path(args.summary_output, root=ROOT),
+            )
         if args.quiet:
             print("M2 context-graph passed.")
         else:
@@ -303,9 +314,27 @@ def resolve_context_graph_output_path(path: Path, *, root: Path = ROOT) -> Path:
     return resolved
 
 
+def resolve_context_graph_summary_output_path(path: Path, *, root: Path = ROOT) -> Path:
+    resolved = _resolve_private_path(
+        path,
+        root=root,
+        allowed_root=SUMMARY_OUTPUT_ROOT,
+        label="context-graph summary output",
+        must_exist=False,
+    )
+    if resolved.suffix.lower() != ".json":
+        raise M2ContextGraphError("Context-graph summary output path must use the .json suffix.")
+    return resolved
+
+
 def write_context_graph(graph: dict[str, Any], output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(graph, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def write_summary(summary: dict[str, Any], output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def run_self_test() -> None:

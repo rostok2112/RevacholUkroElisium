@@ -9,8 +9,28 @@ After the original M2 context-graph implementation:
 2. Keep generated graphs, line indexes, private DB artifacts, extracted text, private paths,
    payloads, reports, game scanning, runtime reads, companion changes, providers, and committed
    private artifacts blocked.
-3. Add only a redacted closeout review gate next to decide whether original M2 can be marked
-   complete at the implementation-path level without committing private artifacts.
+3. Add a redacted context-graph review gate before M2 closeout. The review must read only
+   `m2-context-graph-summary.v1` JSON under
+   `workspace/local-private/extraction-indexing/import/context-graph-summary/` and must never
+   reopen the private graph, DB, line index, or selected export.
+
+Recommended next safe step:
+
+- Implement `m2_context_graph_review_gate`.
+
+---
+
+After the original M2 context-graph review gate:
+
+1. Treat `scripts/review_m2_context_graph.py` and
+   `tests/fixtures/m2_context_graph_review_decision.synthetic.json` as the redacted review
+   boundary for the third original M2 implementation slice.
+2. The reviewer reads only ignored redacted context-graph summary JSON under
+   `workspace/local-private/extraction-indexing/import/context-graph-summary/` and never reopens
+   the selected export, private DB, private line-index, or private context-graph artifact.
+3. A passing review allows only `m2_closeout_review_gate`; generated private artifacts, game
+   scanning, runtime reads, companion changes, providers, and committed private artifacts remain
+   blocked.
 
 Recommended next safe step:
 

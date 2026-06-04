@@ -1,8 +1,13 @@
 # Decisions Pending
 
-- The M2 context-graph implementation is added. Implement `m2_closeout_review_gate` next to verify
-  the three original M2 implementation paths and decide whether original M2 can be closed at the
-  local/private implementation-path level.
+- The M2 context-graph review gate is implemented because it is needed before M2 closeout. Implement
+  `m2_closeout_review_gate` next to verify the three original M2 implementation paths and decide
+  whether original M2 can be closed at the local/private implementation-path level.
+- Keep private context-graph artifact reopening during review, ids, relation values, source text,
+  paths, payloads, reports, game scanning, runtime reads, companion changes, providers, and
+  committed private artifacts blocked.
+- The M2 context-graph implementation is added. Implement `m2_context_graph_review_gate` next before
+  M2 closeout.
 - Keep generated graphs, line indexes, private DB artifacts, extracted text, private paths,
   payloads, reports, game scanning, runtime reads, companion changes, providers, and committed
   private artifacts blocked.

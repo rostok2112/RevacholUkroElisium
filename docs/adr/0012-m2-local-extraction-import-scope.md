@@ -797,6 +797,33 @@ payloads, and runtime evidence remain out of public output and tracked files.
 The next allowed step is:
 
 ```text
+m2_context_graph_review_gate
+```
+
+## Context-Graph Review Gate
+
+The redacted review boundary for the third original-M2 implementation slice is:
+
+```text
+scripts/review_m2_context_graph.py
+tests/fixtures/m2_context_graph_review_decision.synthetic.json
+```
+
+It reads only ignored redacted summary JSON under:
+
+```text
+workspace/local-private/extraction-indexing/import/context-graph-summary/
+```
+
+It never reopens the selected export, private DB artifact, private line-index artifact, or private
+context-graph artifact. A passing review permits only the M2 closeout review gate. It does not
+approve committed private artifacts, game scanning, runtime reads, provider execution, companion
+contract changes, extracted text emission, or public review output containing ids, relation values,
+paths, filenames, hashes, logs, payloads, or runtime evidence.
+
+The next allowed step after a passing context-graph review is:
+
+```text
 m2_closeout_review_gate
 ```
 
