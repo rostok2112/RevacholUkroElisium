@@ -7,6 +7,8 @@
   `manual_verification_complete=true` and `fully_complete=true`.
 - M0 manual verification is approved and recorded as redacted status. The next decision is
   `m1_manual_synthetic_slice_review`.
+- Accepted M1 evidence form: owner chat attestation reviewed through
+  `scripts/review_m1_manual_synthetic_slice.py`.
 - Accepted evidence form: owner chat attestation matching `docs/m0-manual-verification.md`, reviewed
   through `scripts/review_m0_manual_verification.py`.
 - Roadmap governance is now explicit: `tasks/milestones.md` is the current roadmap source, but

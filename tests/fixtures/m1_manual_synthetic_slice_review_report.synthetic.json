@@ -1,0 +1,21 @@
+{
+  "schema_version": "m1-manual-synthetic-slice-review-report.v1",
+  "roadmap_milestone": "M1",
+  "evidence_kind": "chat_attestation",
+  "owner_chat_attestation_recorded": true,
+  "fake_game_event_reviewed": true,
+  "context_packet_reviewed": true,
+  "translation_orchestrator_mock_reviewed": true,
+  "overlay_mock_reviewed": true,
+  "synthetic_flow_understandable": true,
+  "synthetic_flow_non_private": true,
+  "m1_strict_completion_approved": true,
+  "private_paths_included": false,
+  "real_game_text_included": false,
+  "extracted_db_included": false,
+  "screenshots_included": false,
+  "logs_included": false,
+  "provider_payloads_included": false,
+  "generated_private_artifacts_included": false,
+  "recommended_next_step": "m2_manual_private_export_verification"
+}

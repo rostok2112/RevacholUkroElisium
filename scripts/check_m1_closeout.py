@@ -30,7 +30,8 @@ DOC_PATH = ROOT / "docs/m1-closeout.md"
 STANDARD_PATH = ROOT / "docs/milestone-completion-standard.md"
 TASKS_PATH = ROOT / "tasks/milestones.md"
 SCHEMA_VERSION = "m1-closeout.v1"
-RECOMMENDED_NEXT_STEP = "m1_manual_synthetic_slice_review"
+PENDING_NEXT_STEP = "m1_manual_synthetic_slice_review"
+COMPLETE_NEXT_STEP = "m2_manual_private_export_verification"
 REQUIRED_TRUE_FIELDS = (
     "automated_complete",
     "fake_game_event_done",
@@ -38,10 +39,7 @@ REQUIRED_TRUE_FIELDS = (
     "translation_orchestrator_mock_done",
     "overlay_mock_done",
 )
-FORBIDDEN_FALSE_FIELDS = (
-    "manual_verification_complete",
-    "fully_complete",
-    "user_reviews_synthetic_slice_and_overlay_mock",
+ALWAYS_FALSE_FIELDS = (
     "private_artifact_commit_allowed",
     "real_game_text_commit_allowed",
     "screenshots_commit_allowed",
@@ -81,7 +79,7 @@ def collect_m1_closeout_errors(path: Path = FIXTURE_PATH) -> list[str]:
                 (
                     "tests/fixtures/m1_closeout.synthetic.json",
                     "scripts/check_m1_closeout.py",
-                    RECOMMENDED_NEXT_STEP,
+                    PENDING_NEXT_STEP,
                 ),
             )
         )
@@ -102,8 +100,6 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     expected = {
         "schema_version": SCHEMA_VERSION,
         "roadmap_milestone": "M1",
-        "scope_status": "strict_completion_pending_manual_verification",
-        "recommended_next_step": RECOMMENDED_NEXT_STEP,
     }
     for field, value in expected.items():
         if payload.get(field) != value:
@@ -111,9 +107,32 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     for field in REQUIRED_TRUE_FIELDS:
         if payload.get(field) is not True:
             errors.append(f"M1 closeout must set {field}=true.")
-    errors.extend(forbidden_boolean_errors(payload, FORBIDDEN_FALSE_FIELDS, label="M1 closeout"))
+    errors.extend(forbidden_boolean_errors(payload, ALWAYS_FALSE_FIELDS, label="M1 closeout"))
     if payload.get("manual_verification_required") is not True:
         errors.append("M1 closeout must require manual verification.")
+    manual_complete = payload.get("manual_verification_complete")
+    fully_complete = payload.get("fully_complete")
+    user_reviewed = payload.get("user_reviews_synthetic_slice_and_overlay_mock")
+    if manual_complete is False:
+        if payload.get("scope_status") != "strict_completion_pending_manual_verification":
+            errors.append("Pending M1 closeout must keep pending scope_status.")
+        if fully_complete is not False:
+            errors.append("Pending M1 closeout must keep fully_complete=false.")
+        if user_reviewed is not False:
+            errors.append("Pending M1 closeout must keep user review false.")
+        if payload.get("recommended_next_step") != PENDING_NEXT_STEP:
+            errors.append(f"Pending M1 closeout next step must be {PENDING_NEXT_STEP!r}.")
+    elif manual_complete is True:
+        if payload.get("scope_status") != "strict_completion_verified":
+            errors.append("Verified M1 closeout must use strict_completion_verified scope_status.")
+        if fully_complete is not True:
+            errors.append("Verified M1 closeout must set fully_complete=true.")
+        if user_reviewed is not True:
+            errors.append("Verified M1 closeout must set user review true.")
+        if payload.get("recommended_next_step") != COMPLETE_NEXT_STEP:
+            errors.append(f"Verified M1 closeout next step must be {COMPLETE_NEXT_STEP!r}.")
+    else:
+        errors.append("M1 closeout must set manual_verification_complete to a boolean.")
     return errors
 
 
@@ -122,7 +141,9 @@ def _allowed_values() -> set[str]:
         SCHEMA_VERSION,
         "M1",
         "strict_completion_pending_manual_verification",
-        RECOMMENDED_NEXT_STEP,
+        "strict_completion_verified",
+        PENDING_NEXT_STEP,
+        COMPLETE_NEXT_STEP,
     }
 
 

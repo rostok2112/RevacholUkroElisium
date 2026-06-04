@@ -307,6 +307,15 @@ def main() -> int:
             ],
         ),
         (
+            "M1 manual synthetic slice review smoke",
+            [
+                sys.executable,
+                "scripts/review_m1_manual_synthetic_slice.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "original M2 local extraction import scope",
             [
                 sys.executable,

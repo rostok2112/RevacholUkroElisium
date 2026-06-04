@@ -3,6 +3,10 @@
 Strict M0-M4 completion recovery is in progress.
 
 Completed in the latest session:
+- Added the M1 chat-attestation manual synthetic slice review gate:
+  `tests/fixtures/m1_manual_synthetic_slice_review_report.synthetic.json` and
+  `scripts/review_m1_manual_synthetic_slice.py`.
+- M1 remains pending until the owner supplies approval text for the synthetic slice review.
 - Recorded owner chat attestation for M0 and marked `M0 - Repo and contracts` fully complete
   under the strict completion standard.
 - The next strict step is `m1_manual_synthetic_slice_review`.

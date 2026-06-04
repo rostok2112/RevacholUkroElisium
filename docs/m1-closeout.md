@@ -31,6 +31,13 @@ tests/fixtures/m1_closeout.synthetic.json
 scripts/check_m1_closeout.py
 ```
 
+Manual attestation guardrail:
+
+```text
+tests/fixtures/m1_manual_synthetic_slice_review_report.synthetic.json
+scripts/review_m1_manual_synthetic_slice.py
+```
+
 Manual verification required:
 
 ```text
@@ -43,4 +50,10 @@ The next strict completion step is:
 
 ```text
 m1_manual_synthetic_slice_review
+```
+
+After a passing chat-attestation review, the next strict completion step becomes:
+
+```text
+m2_manual_private_export_verification
 ```
