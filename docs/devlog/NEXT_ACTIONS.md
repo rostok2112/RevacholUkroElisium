@@ -1,5 +1,22 @@
 # Next Actions
 
+After M4 real overlay scope recovery:
+
+1. Treat `docs/m4-real-overlay-scope.md`,
+   `tests/fixtures/m4_real_overlay_scope.synthetic.json`, and
+   `scripts/check_m4_real_overlay_scope.py` as the M4 scope boundary.
+2. Reuse the existing overlay view-model fixtures, validators, action previews, state-source
+   fixtures, review renderer, accessibility checks, and refresh-readiness helper.
+3. Keep original M4 criteria incomplete until separately implemented: compact translation, Genius
+   card, and hotkeys.
+4. Keep the M4 hard stop at six total atomic commits. The next step is contract-only.
+
+Recommended next safe step:
+
+- Define `m4_overlay_shell_contract`.
+
+---
+
 After M3 closeout:
 
 1. Treat `docs/m3-closeout.md`, `tests/fixtures/m3_closeout.synthetic.json`, and

@@ -1,5 +1,14 @@
 # Known Risks
 
+- M4 scope recovery (`docs/m4-real-overlay-scope.md`,
+  `tests/fixtures/m4_real_overlay_scope.synthetic.json`, and
+  `scripts/check_m4_real_overlay_scope.py`) makes original `M4 - Real overlay` active, but it does
+  not implement compact translation, Genius card, hotkeys, native always-on-top behavior,
+  Electron/Tauri setup, global keyboard hooks, clipboard writes, provider execution, companion HTTP
+  changes, OCR, Unity scanning, hooks/Harmony, game-file reads, BepInEx log reads, or committed
+  generated shell artifacts.
+- The next approved M4 step is `m4_overlay_shell_contract`. Keep the six-commit hard stop visible
+  so M4 does not turn into an unbounded chain.
 - M3 closeout (`docs/m3-closeout.md`, `tests/fixtures/m3_closeout.synthetic.json`, and
   `scripts/check_m3_closeout.py`) marks original M3 complete only under the redacted/local
   implementation boundaries. It does not approve raw text capture/dumps, provider calls, companion

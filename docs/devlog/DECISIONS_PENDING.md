@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- M4 real overlay scope recovery is defined. Define `m4_overlay_shell_contract` next, using
+  `docs/m4-real-overlay-scope.md`, `tests/fixtures/m4_real_overlay_scope.synthetic.json`, and
+  `scripts/check_m4_real_overlay_scope.py` as the M4 boundary.
+- Keep original M4 criteria incomplete until implemented separately: compact translation, Genius
+  card, and hotkeys. Reuse existing overlay fixtures, validators, state-source, action previews,
+  review rendering, accessibility checks, and refresh readiness; do not create a duplicate overlay
+  path.
 - M3 closeout is complete. Start original M4 with `m4_real_overlay_scope_recovery`, using
   `docs/m3-closeout.md`, `tests/fixtures/m3_closeout.synthetic.json`, and
   `scripts/check_m3_closeout.py` as the M3 completion boundary.

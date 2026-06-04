@@ -51,3 +51,17 @@ The next bounded roadmap step is:
 ```text
 m4_real_overlay_scope_recovery
 ```
+
+The M4 scope recovery guardrail is expected to add:
+
+```text
+docs/m4-real-overlay-scope.md
+tests/fixtures/m4_real_overlay_scope.synthetic.json
+scripts/check_m4_real_overlay_scope.py
+```
+
+After that scope recovery, the next bounded M4 step is:
+
+```text
+m4_overlay_shell_contract
+```

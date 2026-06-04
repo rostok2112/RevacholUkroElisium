@@ -1,5 +1,24 @@
 # Session Summary
 
+M4 real overlay scope recovery is defined.
+
+Completed in the latest session:
+- Added `docs/m4-real-overlay-scope.md`.
+- Added `tests/fixtures/m4_real_overlay_scope.synthetic.json`.
+- Added `scripts/check_m4_real_overlay_scope.py` and wired it into `scripts/check_all.py`.
+- Recorded that original `M4 - Real overlay` is active and limited to compact translation, Genius
+  card, and hotkeys.
+- Recorded that existing overlay view-model fixtures, validators, action previews, state-source
+  fixtures, review renderer, accessibility checks, and refresh readiness are reused rather than
+  recreated.
+- Kept native always-on-top packaging, Electron/Tauri setup, global keyboard hooks, clipboard
+  writes, OCR, Unity scanning, hooks/Harmony, provider execution, companion HTTP contract changes,
+  game-file reads, BepInEx log reads, screenshots, private paths, raw provider payloads, generated
+  shell artifacts, `bin`, and `obj` blocked.
+- The next bounded M4 step is `m4_overlay_shell_contract`.
+
+---
+
 M3 closeout is complete.
 
 Completed in the latest session:

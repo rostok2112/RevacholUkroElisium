@@ -410,6 +410,22 @@ workspace/synthetic-slice/overlay-refresh-readiness/
 Future milestones can use this view-model shape as a handoff point for a real overlay shell after the
 local HTTP contract, privacy policy, and player-facing UX are more stable.
 
+## M4 Real Overlay Scope Recovery
+
+Original `M4 - Real overlay` starts from the recovered scope in:
+
+```text
+docs/m4-real-overlay-scope.md
+tests/fixtures/m4_real_overlay_scope.synthetic.json
+scripts/check_m4_real_overlay_scope.py
+```
+
+The next bounded step is `m4_overlay_shell_contract`.
+
+M4 reuses the existing view-model fixtures, validator, state-source, action catalog, review
+renderer, accessibility checker, and refresh-readiness helper. It must not create a duplicate
+overlay prototype or state-source path.
+
 ## Shell Readiness Decision
 
 ADR 0007 records the current shell-readiness decision:

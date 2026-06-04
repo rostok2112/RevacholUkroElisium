@@ -634,6 +634,14 @@ def main() -> int:
             ],
         ),
         (
+            "M4 real overlay scope",
+            [
+                sys.executable,
+                "scripts/check_m4_real_overlay_scope.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,
