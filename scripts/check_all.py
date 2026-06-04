@@ -650,6 +650,15 @@ def main() -> int:
             ],
         ),
         (
+            "M4 compact overlay shell smoke",
+            [
+                sys.executable,
+                "scripts/run_m4_overlay_shell.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

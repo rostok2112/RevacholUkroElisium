@@ -1,5 +1,23 @@
 # Session Summary
 
+M4 compact translation shell is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m4_overlay_shell.py`.
+- Added `tests/test_m4_overlay_shell.py`.
+- The helper renders compact local/private HTML from the existing validated compact overlay view
+  model fixture.
+- Generated shell output is restricted to `workspace/local-private/overlay/`.
+- Public stdout is a redacted summary/status only. The helper does not include original/source text,
+  debug internals, provider payloads, private paths, screenshots, global keyboard hooks, clipboard
+  writes, native always-on-top behavior, provider calls, or companion HTTP changes.
+- Wired `python scripts/run_m4_overlay_shell.py --self-test --quiet` into `scripts/check_all.py`.
+- Original M4 compact translation is implemented at the local browser shell level; Genius card and
+  hotkeys remain incomplete.
+- The next bounded M4 step is `m4_genius_card_shell`.
+
+---
+
 M4 overlay shell contract is defined.
 
 Completed in the latest session:

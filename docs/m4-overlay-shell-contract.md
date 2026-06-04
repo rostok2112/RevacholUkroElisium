@@ -61,3 +61,19 @@ The next bounded M4 step is:
 ```text
 m4_compact_translation_shell
 ```
+
+The compact translation shell helper is:
+
+```text
+scripts/run_m4_overlay_shell.py
+```
+
+It renders local/private compact HTML from validated compact view models and keeps original/source
+text, debug internals, provider payloads, screenshots, private paths, global keyboard hooks,
+clipboard writes, native always-on-top behavior, provider execution, and companion HTTP changes out
+of the shell summary and player-facing compact HTML. The next bounded step after the compact shell
+is:
+
+```text
+m4_genius_card_shell
+```

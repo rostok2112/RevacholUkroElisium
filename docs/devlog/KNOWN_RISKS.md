@@ -1,5 +1,11 @@
 # Known Risks
 
+- M4 compact translation shell (`scripts/run_m4_overlay_shell.py`) is a local browser HTML helper,
+  not native always-on-top packaging. It intentionally avoids duplicating original/source text in
+  player-facing compact shell HTML. Future changes must not turn compact rendering into raw text,
+  debug metadata, provider payload, private path, screenshot, clipboard, global hotkey, or companion
+  contract output.
+- The next approved M4 step is `m4_genius_card_shell`.
 - M4 overlay shell contract (`docs/m4-overlay-shell-contract.md`,
   `tests/fixtures/m4_overlay_shell_contract.synthetic.json`, and
   `scripts/check_m4_overlay_shell_contract.py`) defines a local browser shell boundary only. It

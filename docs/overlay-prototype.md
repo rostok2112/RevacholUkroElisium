@@ -438,6 +438,11 @@ The contract permits only a later local browser shell implementation, starting w
 `m4_compact_translation_shell`, and keeps native always-on-top packaging, Electron/Tauri setup,
 global keyboard hooks, clipboard writes, provider execution, and companion HTTP changes blocked.
 
+The first M4 shell helper is `scripts/run_m4_overlay_shell.py`. In its compact implementation it
+renders only player-facing compact translation metadata from the validated compact view model and
+writes generated HTML only under `workspace/local-private/overlay/`. The next bounded M4 step is
+`m4_genius_card_shell`.
+
 ## Shell Readiness Decision
 
 ADR 0007 records the current shell-readiness decision:

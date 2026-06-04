@@ -1,5 +1,22 @@
 # Next Actions
 
+After M4 compact translation shell:
+
+1. Treat `scripts/run_m4_overlay_shell.py` and `tests/test_m4_overlay_shell.py` as the compact
+   shell implementation guardrail.
+2. Compact shell rendering consumes only validated compact view models and writes generated HTML
+   only under `workspace/local-private/overlay/`.
+3. Add only Genius card rendering next, using the existing deep view model.
+4. Keep hotkeys, native always-on-top packaging, Electron/Tauri setup, global keyboard hooks,
+   clipboard writes, provider execution, companion HTTP changes, OCR, Unity scanning,
+   hooks/Harmony, screenshots, private paths, and committed generated shell artifacts blocked.
+
+Recommended next safe step:
+
+- Implement `m4_genius_card_shell`.
+
+---
+
 After M4 overlay shell contract:
 
 1. Treat `docs/m4-overlay-shell-contract.md`,

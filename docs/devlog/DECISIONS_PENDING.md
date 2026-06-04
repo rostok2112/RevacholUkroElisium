@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- M4 compact translation shell is implemented. Implement `m4_genius_card_shell` next by extending
+  `scripts/run_m4_overlay_shell.py` to render a collapsed/expandable Genius card from the existing
+  validated deep view model.
+- Keep generated shell output under ignored `workspace/local-private/overlay/` and keep hotkeys,
+  native always-on-top packaging, Electron/Tauri setup, global keyboard hooks, clipboard writes,
+  provider execution, companion HTTP changes, screenshots, private paths, and committed generated
+  shell artifacts blocked.
 - M4 overlay shell contract is defined. Implement `m4_compact_translation_shell` next using
   `docs/m4-overlay-shell-contract.md`,
   `tests/fixtures/m4_overlay_shell_contract.synthetic.json`, and
