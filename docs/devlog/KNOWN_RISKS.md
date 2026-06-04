@@ -1,5 +1,13 @@
 # Known Risks
 
+- M3 current-line event contract (`docs/m3-current-line-event-contract.md`,
+  `tests/fixtures/m3_current_line_event_contract.synthetic.json`, and
+  `scripts/check_m3_current_line_event_contract.py`) defines only a later minimal event
+  implementation. It must not be expanded into raw dialogue capture, UI text reading, broad Unity
+  scanning, hooks/Harmony, OCR, provider calls, companion HTTP contract changes, line-ID matching,
+  private line-index reads, or debug console work.
+- The next approved M3 step is `m3_current_line_event_implementation`; it is commit 3 of the
+  six-commit M3 cap.
 - M3 scope recovery (`docs/m3-bepinex-bridge-scope.md`,
   `tests/fixtures/m3_bepinex_bridge_scope.synthetic.json`, and
   `scripts/check_m3_bepinex_bridge_scope.py`) reuses former bridge/workflow work only as a

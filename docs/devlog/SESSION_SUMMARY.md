@@ -1,5 +1,21 @@
 # Session Summary
 
+M3 current-line event contract is defined.
+
+Completed in the latest session:
+- Added `docs/m3-current-line-event-contract.md`.
+- Added `tests/fixtures/m3_current_line_event_contract.synthetic.json`.
+- Added `scripts/check_m3_current_line_event_contract.py` and wired it into
+  `scripts/check_all.py`.
+- Defined the minimal future `m3-current-line-event.v1` shape.
+- Kept the event disabled by default, local-only, and redacted.
+- Kept raw text capture, UI text reading, Unity scanning, hooks, OCR, provider execution,
+  companion contract changes, line-ID matching, private line-index reads, and debug console work
+  blocked for this contract step.
+- The next safe step is `m3_current_line_event_implementation`.
+
+---
+
 M3 BepInEx bridge scope recovery is defined.
 
 Completed in the latest session:

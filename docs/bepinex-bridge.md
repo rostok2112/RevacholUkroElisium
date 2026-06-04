@@ -520,3 +520,17 @@ smoke docs and log contract fixture.
 - Keyboard hooks.
 - Clipboard writes.
 - Companion HTTP contract changes.
+
+## M3 Current-Line Event Contract
+
+The current M3 event boundary is documented in:
+
+```text
+docs/m3-current-line-event-contract.md
+tests/fixtures/m3_current_line_event_contract.synthetic.json
+scripts/check_m3_current_line_event_contract.py
+```
+
+The next bounded step is `m3_current_line_event_implementation`. Until that step is implemented
+and reviewed, the bridge still does not complete the original M3 current-line criterion. Line-ID
+matching and debug console work remain separate criteria.

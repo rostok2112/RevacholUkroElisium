@@ -19,7 +19,16 @@ Original M3 still requires:
 - match line IDs;
 - debug console.
 
-The next allowed M3 step is `m3_current_line_event_contract`.
+The first M3 criterion is scoped by:
+
+```text
+docs/m3-current-line-event-contract.md
+tests/fixtures/m3_current_line_event_contract.synthetic.json
+scripts/check_m3_current_line_event_contract.py
+```
+
+The next allowed M3 step is `m3_current_line_event_implementation`. Line-ID matching and debug
+console work remain separate criteria.
 
 ## Milestone 4A boundary
 

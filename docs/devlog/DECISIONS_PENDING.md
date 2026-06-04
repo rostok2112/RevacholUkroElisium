@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- M3 current-line event contract is defined. Implement `m3_current_line_event_implementation`
+  next, limited to the event shape and boundaries in `docs/m3-current-line-event-contract.md`,
+  `tests/fixtures/m3_current_line_event_contract.synthetic.json`, and
+  `scripts/check_m3_current_line_event_contract.py`.
+- Keep line-ID matching, private line-index reads, debug console work, raw text capture, UI text
+  reading, Unity scanning, hooks, OCR, provider execution, companion contract changes, committed
+  runtime artifacts, raw logs, screenshots, game text, private paths, `bin`, and `obj` blocked.
 - M3 BepInEx bridge scope recovery is defined. Define `m3_current_line_event_contract` next.
 - Keep current-line event implementation, line-ID matching implementation, debug console
   implementation, real text capture, UI text reading, Unity scanning, hooks, OCR, provider

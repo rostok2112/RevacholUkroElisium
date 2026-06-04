@@ -14,7 +14,18 @@ scripts/check_m3_bepinex_bridge_scope.py
 
 The existing package is reused as M3 baseline and should not be recreated. It still does not
 complete original M3. The remaining M3 criteria are current-line event emission, line-ID matching,
-and a debug console. The next allowed M3 step is `m3_current_line_event_contract`.
+and a debug console.
+
+The first M3 criterion is scoped by:
+
+```text
+docs/m3-current-line-event-contract.md
+tests/fixtures/m3_current_line_event_contract.synthetic.json
+scripts/check_m3_current_line_event_contract.py
+```
+
+The next allowed M3 step is `m3_current_line_event_implementation`. Line-ID matching and debug
+console work remain separate criteria.
 
 ## Current status
 

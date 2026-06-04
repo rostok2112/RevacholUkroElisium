@@ -66,3 +66,17 @@ The next allowed atomic M3 step is:
 ```text
 m3_current_line_event_contract
 ```
+
+That contract is now tracked in:
+
+```text
+docs/m3-current-line-event-contract.md
+tests/fixtures/m3_current_line_event_contract.synthetic.json
+scripts/check_m3_current_line_event_contract.py
+```
+
+It points to the next bounded step:
+
+```text
+m3_current_line_event_implementation
+```

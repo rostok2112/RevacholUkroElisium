@@ -593,6 +593,14 @@ def main() -> int:
             ],
         ),
         (
+            "M3 current-line event contract",
+            [
+                sys.executable,
+                "scripts/check_m3_current_line_event_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

@@ -1,5 +1,24 @@
 # Next Actions
 
+After M3 current-line event contract:
+
+1. Treat `docs/m3-current-line-event-contract.md`,
+   `tests/fixtures/m3_current_line_event_contract.synthetic.json`, and
+   `scripts/check_m3_current_line_event_contract.py` as the static guardrail for the first original
+   M3 criterion.
+2. Implement only the minimal disabled-by-default, local-only current-line event path next.
+3. Keep raw text capture, UI text reading, broad Unity scanning, hooks/Harmony, OCR, provider
+   execution, companion HTTP contract changes, line-ID matching, private line-index reads, debug
+   console work, game-file reads, BepInEx log reads, committed logs, screenshots, private paths,
+   `bin`, and `obj` blocked.
+4. Keep the M3 hard stop at six total atomic commits.
+
+Recommended next safe step:
+
+- Implement `m3_current_line_event_implementation`.
+
+---
+
 After M3 BepInEx bridge scope recovery:
 
 1. Treat `docs/m3-bepinex-bridge-scope.md`,
