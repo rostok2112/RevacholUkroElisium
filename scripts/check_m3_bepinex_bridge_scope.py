@@ -25,7 +25,6 @@ README_PATH = ROOT / "packages/bepinex-plugin/README.md"
 SCHEMA_VERSION = "m3-bepinex-bridge-scope.v1"
 ROADMAP_MILESTONE = "M3"
 RECOMMENDED_NEXT_STEP = "m3_current_line_event_contract"
-M3_COMMIT_CAP = 6
 
 REQUIRED_TRUE_FIELDS = (
     "m2_closed",
@@ -139,7 +138,6 @@ def main(argv: list[str] | None = None) -> int:
                     "ok": True,
                     "schema_version": "m3-bepinex-bridge-scope-check.v1",
                     "roadmap_milestone": ROADMAP_MILESTONE,
-                    "m3_commit_cap": M3_COMMIT_CAP,
                     "recommended_next_step": RECOMMENDED_NEXT_STEP,
                 },
                 indent=2,
@@ -175,8 +173,8 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         errors.append(f"M3 scope roadmap_milestone must be {ROADMAP_MILESTONE!r}.")
     if payload.get("scope_status") != "baseline_recovery":
         errors.append("M3 scope_status must be 'baseline_recovery'.")
-    if payload.get("m3_commit_cap") != M3_COMMIT_CAP:
-        errors.append(f"M3 scope fixture must keep m3_commit_cap={M3_COMMIT_CAP}.")
+    if "m3_commit_cap" in payload or "m3_commits_used" in payload:
+        errors.append("M3 scope fixture must not encode commit cap metadata.")
     if payload.get("recommended_next_step") != RECOMMENDED_NEXT_STEP:
         errors.append(f"M3 recommended_next_step must be {RECOMMENDED_NEXT_STEP!r}.")
     if payload.get("required_next_step") != RECOMMENDED_NEXT_STEP:

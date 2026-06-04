@@ -26,6 +26,7 @@ class M3LineIdMatchTests(unittest.TestCase):
         fixture = load_json(ROOT / "tests/fixtures/m3_line_id_matching.synthetic.json")
 
         self.assertEqual("m3-line-id-matching.v1", fixture["schema_version"])
+        self.assertNotIn("m3_commit_cap", fixture)
         self.assertIs(fixture["m3_current_line_event_done"], True)
         self.assertIs(fixture["m3_line_id_matching_done"], True)
         self.assertIs(fixture["m3_debug_console_done"], False)

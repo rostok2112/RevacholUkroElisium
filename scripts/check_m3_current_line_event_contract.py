@@ -27,7 +27,6 @@ SCHEMA_VERSION = "m3-current-line-event-contract.v1"
 EVENT_SCHEMA_VERSION = "m3-current-line-event.v1"
 ROADMAP_MILESTONE = "M3"
 RECOMMENDED_NEXT_STEP = "m3_current_line_event_implementation"
-M3_COMMIT_CAP = 6
 ALLOWED_EVENT_FIELDS = (
     "schema_version",
     "event_kind",
@@ -140,7 +139,6 @@ def main(argv: list[str] | None = None) -> int:
                     "ok": True,
                     "schema_version": "m3-current-line-event-contract-check.v1",
                     "roadmap_milestone": ROADMAP_MILESTONE,
-                    "m3_commit_cap": M3_COMMIT_CAP,
                     "recommended_next_step": RECOMMENDED_NEXT_STEP,
                 },
                 indent=2,
@@ -171,7 +169,6 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         "schema_version": SCHEMA_VERSION,
         "roadmap_milestone": ROADMAP_MILESTONE,
         "scope_status": "contract_only",
-        "m3_commit_cap": M3_COMMIT_CAP,
         "event_schema_version": EVENT_SCHEMA_VERSION,
         "event_kind": "current_line",
         "current_line_event_implementation_allowed_next": "contract_defined_only",
@@ -181,6 +178,8 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     for field, expected in expected_scalars.items():
         if payload.get(field) != expected:
             errors.append(f"M3 current-line event {field} must be {expected!r}.")
+    if "m3_commit_cap" in payload or "m3_commits_used" in payload:
+        errors.append("M3 current-line event fixture must not encode commit cap metadata.")
     if tuple(payload.get("allowed_event_fields", ())) != ALLOWED_EVENT_FIELDS:
         errors.append("M3 current-line event allowed_event_fields must match exactly.")
     if tuple(payload.get("allowed_event_sources", ())) != ALLOWED_EVENT_SOURCES:

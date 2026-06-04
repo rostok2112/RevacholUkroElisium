@@ -39,7 +39,7 @@ class M3CurrentLineEventContractTests(unittest.TestCase):
         self.assertEqual("m3-current-line-event-contract.v1", fixture["schema_version"])
         self.assertEqual("M3", fixture["roadmap_milestone"])
         self.assertEqual("contract_only", fixture["scope_status"])
-        self.assertEqual(6, fixture["m3_commit_cap"])
+        self.assertNotIn("m3_commit_cap", fixture)
         self.assertEqual("m3-current-line-event.v1", fixture["event_schema_version"])
         self.assertEqual("current_line", fixture["event_kind"])
         self.assertEqual(list(ALLOWED_EVENT_FIELDS), fixture["allowed_event_fields"])
@@ -65,12 +65,13 @@ class M3CurrentLineEventContractTests(unittest.TestCase):
                 mutated[field] = True
                 self.assertNotEqual([], _errors_for(mutated))
 
-    def test_rejects_changed_next_step_commit_cap_event_fields_and_sources(self) -> None:
+    def test_rejects_legacy_commit_cap_next_step_event_fields_and_sources(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         mutations = (
+            ("m3_commit_cap", 6),
+            ("m3_commits_used", 6),
             ("recommended_next_step", "m3_line_id_matching_contract"),
             ("required_next_step", "m3_line_id_matching_contract"),
-            ("m3_commit_cap", 7),
             ("allowed_event_fields", [*fixture["allowed_event_fields"], "raw_text"]),
             ("allowed_event_fields", fixture["allowed_event_fields"][:-1]),
             ("allowed_event_sources", [*fixture["allowed_event_sources"], "ui_text"]),

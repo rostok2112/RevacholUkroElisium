@@ -28,7 +28,6 @@ SCHEMA_VERSION = "m3-current-line-event-implementation.v1"
 EVENT_SCHEMA_VERSION = "m3-current-line-event.v1"
 ROADMAP_MILESTONE = "M3"
 RECOMMENDED_NEXT_STEP = "m3_line_id_matching"
-M3_COMMIT_CAP = 6
 REQUIRED_TRUE_FIELDS = (
     "m2_closed",
     "m3_scope_recovery_done",
@@ -122,7 +121,6 @@ def main(argv: list[str] | None = None) -> int:
                     "ok": True,
                     "schema_version": "m3-current-line-event-implementation-check.v1",
                     "roadmap_milestone": ROADMAP_MILESTONE,
-                    "m3_commit_cap": M3_COMMIT_CAP,
                     "recommended_next_step": RECOMMENDED_NEXT_STEP,
                 },
                 indent=2,
@@ -156,7 +154,6 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         "schema_version": SCHEMA_VERSION,
         "roadmap_milestone": ROADMAP_MILESTONE,
         "scope_status": "implementation_guarded",
-        "m3_commit_cap": M3_COMMIT_CAP,
         "implementation_kind": "disabled_by_default_redacted_local_event",
         "event_schema_version": EVENT_SCHEMA_VERSION,
         "event_kind": "current_line",
@@ -166,6 +163,8 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     for field, expected in expected_scalars.items():
         if payload.get(field) != expected:
             errors.append(f"M3 current-line implementation {field} must be {expected!r}.")
+    if "m3_commit_cap" in payload or "m3_commits_used" in payload:
+        errors.append("M3 current-line implementation fixture must not encode commit cap metadata.")
     if payload.get("default_current_line_event_enabled") is not False:
         errors.append("M3 current-line event must remain disabled by default.")
     if payload.get("default_emit_synthetic_current_line_event_on_start") is not False:

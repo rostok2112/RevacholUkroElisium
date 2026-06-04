@@ -8,7 +8,6 @@
   "existing_runtime_smoke_workflow_reused": true,
   "existing_metadata_probe_reused": true,
   "existing_local_workflow_wrapper_reused": true,
-  "m3_commit_cap": 6,
   "m3_scope_recovery_done": true,
   "m3_current_line_event_done": false,
   "m3_line_id_matching_done": false,

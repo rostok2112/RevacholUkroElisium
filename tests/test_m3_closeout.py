@@ -35,8 +35,8 @@ class M3CloseoutTests(unittest.TestCase):
         self.assertEqual("m3-closeout.v1", fixture["schema_version"])
         self.assertEqual("M3", fixture["roadmap_milestone"])
         self.assertEqual("closed", fixture["scope_status"])
-        self.assertEqual(6, fixture["m3_commit_cap"])
-        self.assertEqual(6, fixture["m3_commits_used"])
+        self.assertNotIn("m3_commit_cap", fixture)
+        self.assertNotIn("m3_commits_used", fixture)
         self.assertEqual("M4", fixture["next_roadmap_milestone"])
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["recommended_next_step"])
         for field in REQUIRED_TRUE_FIELDS:
@@ -57,11 +57,11 @@ class M3CloseoutTests(unittest.TestCase):
             mutated[field] = True
             self.assertNotEqual([], _errors_for(mutated))
 
-    def test_rejects_commit_cap_or_next_step_drift(self) -> None:
+    def test_rejects_legacy_commit_cap_or_next_step_drift(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         mutations = (
-            ("m3_commit_cap", 7),
-            ("m3_commits_used", 7),
+            ("m3_commit_cap", 6),
+            ("m3_commits_used", 6),
             ("next_roadmap_milestone", "M5"),
             ("recommended_next_step", "m4_implementation"),
             ("required_next_step", "m4_implementation"),

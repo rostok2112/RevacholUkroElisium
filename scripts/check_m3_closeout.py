@@ -26,7 +26,6 @@ SCHEMA_VERSION = "m3-closeout.v1"
 ROADMAP_MILESTONE = "M3"
 NEXT_ROADMAP_MILESTONE = "M4"
 RECOMMENDED_NEXT_STEP = "m4_real_overlay_scope_recovery"
-M3_COMMIT_CAP = 6
 REQUIRED_TRUE_FIELDS = (
     "m2_closed",
     "m3_scope_recovery_done",
@@ -140,8 +139,6 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         "schema_version": SCHEMA_VERSION,
         "roadmap_milestone": ROADMAP_MILESTONE,
         "scope_status": "closed",
-        "m3_commit_cap": M3_COMMIT_CAP,
-        "m3_commits_used": M3_COMMIT_CAP,
         "next_roadmap_milestone": NEXT_ROADMAP_MILESTONE,
         "required_next_step": RECOMMENDED_NEXT_STEP,
         "recommended_next_step": RECOMMENDED_NEXT_STEP,
@@ -149,6 +146,8 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     for field, expected in expected_scalars.items():
         if payload.get(field) != expected:
             errors.append(f"M3 closeout {field} must be {expected!r}.")
+    if "m3_commit_cap" in payload or "m3_commits_used" in payload:
+        errors.append("M3 closeout fixture must not encode commit cap metadata.")
     for field in REQUIRED_TRUE_FIELDS:
         if payload.get(field) is not True:
             errors.append(f"M3 closeout fixture must set {field}=true.")

@@ -3,7 +3,6 @@
   "roadmap_milestone": "M3",
   "scope_status": "contract_only",
   "m2_closed": true,
-  "m3_commit_cap": 6,
   "m3_scope_recovery_done": true,
   "m3_current_line_event_done": false,
   "m3_line_id_matching_done": false,

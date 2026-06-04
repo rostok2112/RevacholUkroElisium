@@ -10,7 +10,6 @@ from scripts.check_m3_bepinex_bridge_scope import (
     FIXTURE_PATH,
     FORBIDDEN_PERMISSION_FIELDS,
     INCOMPLETE_M3_FIELDS,
-    M3_COMMIT_CAP,
     NEXT_ACTIONS_PATH,
     RECOMMENDED_NEXT_STEP,
     REQUIRED_TRUE_FIELDS,
@@ -33,7 +32,7 @@ class M3BepInExBridgeScopeTests(unittest.TestCase):
         self.assertEqual("m3-bepinex-bridge-scope.v1", fixture["schema_version"])
         self.assertEqual("M3", fixture["roadmap_milestone"])
         self.assertEqual("baseline_recovery", fixture["scope_status"])
-        self.assertEqual(M3_COMMIT_CAP, fixture["m3_commit_cap"])
+        self.assertNotIn("m3_commit_cap", fixture)
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["recommended_next_step"])
         for field in REQUIRED_TRUE_FIELDS:
             with self.subTest(field=field):
@@ -58,10 +57,11 @@ class M3BepInExBridgeScopeTests(unittest.TestCase):
                 mutated[field] = True
                 self.assertNotEqual([], _errors_for(mutated))
 
-    def test_rejects_commit_cap_or_next_step_drift(self) -> None:
+    def test_rejects_legacy_commit_cap_or_next_step_drift(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         for mutation in (
-            {"m3_commit_cap": 7},
+            {"m3_commit_cap": 6},
+            {"m3_commits_used": 6},
             {"recommended_next_step": "m3_current_line_event_implementation"},
             {"required_next_step": "m3_current_line_event_implementation"},
         ):

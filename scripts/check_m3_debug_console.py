@@ -25,7 +25,6 @@ README_PATH = ROOT / "packages/bepinex-plugin/README.md"
 SCHEMA_VERSION = "m3-debug-console.v1"
 ROADMAP_MILESTONE = "M3"
 RECOMMENDED_NEXT_STEP = "m3_closeout"
-M3_COMMIT_CAP = 6
 ALLOWED_COMMANDS = (
     "bridge_status",
     "synthetic_send",
@@ -142,7 +141,6 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         "schema_version": SCHEMA_VERSION,
         "roadmap_milestone": ROADMAP_MILESTONE,
         "scope_status": "implementation_guarded",
-        "m3_commit_cap": M3_COMMIT_CAP,
         "implementation_kind": "disabled_by_default_redacted_debug_commands",
         "required_next_step": RECOMMENDED_NEXT_STEP,
         "recommended_next_step": RECOMMENDED_NEXT_STEP,
@@ -150,6 +148,8 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     for field, expected in expected_scalars.items():
         if payload.get(field) != expected:
             errors.append(f"M3 debug console {field} must be {expected!r}.")
+    if "m3_commit_cap" in payload or "m3_commits_used" in payload:
+        errors.append("M3 debug console fixture must not encode commit cap metadata.")
     if tuple(payload.get("allowed_commands", ())) != ALLOWED_COMMANDS:
         errors.append("M3 debug console allowed_commands must match exactly.")
     for field in REQUIRED_TRUE_FIELDS:

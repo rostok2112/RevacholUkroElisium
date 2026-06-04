@@ -38,7 +38,7 @@ class M3CurrentLineEventImplementationTests(unittest.TestCase):
         self.assertEqual("m3-current-line-event-implementation.v1", fixture["schema_version"])
         self.assertEqual("M3", fixture["roadmap_milestone"])
         self.assertEqual("implementation_guarded", fixture["scope_status"])
-        self.assertEqual(6, fixture["m3_commit_cap"])
+        self.assertNotIn("m3_commit_cap", fixture)
         self.assertIs(fixture["m3_current_line_event_done"], True)
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["recommended_next_step"])
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["required_next_step"])
@@ -62,9 +62,10 @@ class M3CurrentLineEventImplementationTests(unittest.TestCase):
         mutations = (
             ("default_current_line_event_enabled", True),
             ("default_emit_synthetic_current_line_event_on_start", True),
+            ("m3_commit_cap", 6),
+            ("m3_commits_used", 6),
             ("recommended_next_step", "m3_debug_console"),
             ("required_next_step", "m3_debug_console"),
-            ("m3_commit_cap", 7),
         )
         for field, value in mutations:
             with self.subTest(field=field):

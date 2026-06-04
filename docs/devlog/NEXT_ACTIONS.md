@@ -133,7 +133,8 @@ After M3 debug console:
 3. Keep raw text dumps, payload dumps, ID dumps, provider calls, companion HTTP contract changes,
    game-file reads, BepInEx log reads, UI text reading, Unity scanning, hooks/Harmony, OCR,
    committed generated outputs, screenshots, private paths, `bin`, and `obj` blocked.
-4. Add one M3 closeout review gate next. This is commit 6 and the hard stop for M3.
+4. Add one M3 closeout review gate next, closing M3 only if all three original criteria remain
+   implemented and guarded.
 
 Recommended next safe step:
 
@@ -153,8 +154,7 @@ After M3 line-ID matching:
    changes, game-file reads, BepInEx log reads, UI text reading, Unity scanning, hooks/Harmony,
    OCR, debug console work, committed generated outputs, screenshots, private paths, `bin`, and
    `obj` blocked.
-4. Implement only the minimal debug console next. Keep the M3 hard stop at six total atomic
-   commits.
+4. Implement only the minimal debug console next.
 
 Recommended next safe step:
 
@@ -172,7 +172,7 @@ After M3 current-line event implementation:
    metadata. It does not send providers, change companion HTTP contracts, capture raw text, read UI
    text, scan Unity objects, read game files, or read BepInEx logs.
 3. Implement only line-ID matching next, using the M2 private line-index boundary already developed.
-4. Keep debug console work separate. Keep the M3 hard stop at six total atomic commits.
+4. Keep debug console work separate.
 
 Recommended next safe step:
 
@@ -191,7 +191,7 @@ After M3 current-line event contract:
    execution, companion HTTP contract changes, line-ID matching, private line-index reads, debug
    console work, game-file reads, BepInEx log reads, committed logs, screenshots, private paths,
    `bin`, and `obj` blocked.
-4. Keep the M3 hard stop at six total atomic commits.
+4. Keep the next step limited to the current-line event implementation criterion.
 
 Recommended next safe step:
 
@@ -208,7 +208,7 @@ After M3 BepInEx bridge scope recovery:
    metadata probe workflow, bridge-to-overlay synthetic smoke, and local bridge workflow wrapper.
 3. Keep original M3 criteria incomplete until separately implemented: emit current line event,
    match line IDs, and debug console.
-4. Keep the M3 hard stop at six total atomic commits. The next step is contract-only.
+4. Keep the next step contract-only and limited to the current-line event criterion.
 
 Recommended next safe step:
 

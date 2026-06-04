@@ -50,33 +50,36 @@
   redacted command surface only. Do not expand it into raw text dumps, payload dumps, ID dumps,
   provider calls, companion HTTP contract changes, game-file reads, BepInEx log reads, UI text
   reading, Unity scanning, hooks/Harmony, OCR, or committed runtime artifacts.
-- The next approved M3 step is `m3_closeout`; it is commit 6 and the hard stop for M3.
+- The next approved M3 step is `m3_closeout`; it closes only after the three original M3
+  criteria are implemented and guarded.
 - M3 line-ID matching (`scripts/run_m3_line_id_match.py`,
   `tests/fixtures/m3_line_id_matching.synthetic.json`, and `tests/test_m3_line_id_match.py`) reads
   an ignored private line-index artifact. It must never emit line IDs, record IDs, source text,
   private paths, hashes, logs, payloads, or runtime evidence.
-- The next approved M3 step is `m3_debug_console`; it is commit 5 of the six-commit M3 cap.
+- The next approved M3 step is `m3_debug_console`; keep it limited to the original debug
+  console criterion.
 - M3 current-line event implementation (`packages/bepinex-plugin/src/CurrentLineEventFactory.cs`,
   `tests/fixtures/m3_current_line_event_implementation.synthetic.json`, and
   `scripts/check_m3_current_line_event_implementation.py`) is disabled by default and redacted.
   Do not expand it into raw text capture, UI text reading, Unity scanning, hooks/Harmony, OCR,
   provider calls, companion HTTP contract changes, line-index reads, or debug console commands.
-- The next approved M3 step is `m3_line_id_matching`; it is commit 4 of the six-commit M3 cap.
+- The next approved M3 step is `m3_line_id_matching`; keep it limited to exact line-ID
+  matching.
 - M3 current-line event contract (`docs/m3-current-line-event-contract.md`,
   `tests/fixtures/m3_current_line_event_contract.synthetic.json`, and
   `scripts/check_m3_current_line_event_contract.py`) defines only a later minimal event
   implementation. It must not be expanded into raw dialogue capture, UI text reading, broad Unity
   scanning, hooks/Harmony, OCR, provider calls, companion HTTP contract changes, line-ID matching,
   private line-index reads, or debug console work.
-- The next approved M3 step is `m3_current_line_event_implementation`; it is commit 3 of the
-  six-commit M3 cap.
+- The next approved M3 step is `m3_current_line_event_implementation`; keep it limited to the
+  current-line event criterion.
 - M3 scope recovery (`docs/m3-bepinex-bridge-scope.md`,
   `tests/fixtures/m3_bepinex_bridge_scope.synthetic.json`, and
   `scripts/check_m3_bepinex_bridge_scope.py`) reuses former bridge/workflow work only as a
   baseline. Do not treat the existing synthetic event, metadata probe, or local workflow wrapper as
   real current-line capture, line-ID matching, or debug console completion.
-- The M3 hard stop is six atomic commits. Avoid adding unbounded contract/review chains inside M3.
-  The next approved step is `m3_current_line_event_contract`.
+- Avoid adding unbounded contract/review chains inside M3. The next approved step is
+  `m3_current_line_event_contract`.
 - `scripts/review_m2_closeout.py` reviews only redacted review JSON from the M2 import, line-index,
   and context-graph review roots. It must not be changed to reopen private artifacts, selected
   exports, game files, logs, screenshots, provider payloads, or runtime evidence unless a later

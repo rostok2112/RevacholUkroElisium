@@ -36,7 +36,7 @@ class M3DebugConsoleTests(unittest.TestCase):
 
         self.assertEqual("m3-debug-console.v1", fixture["schema_version"])
         self.assertEqual("M3", fixture["roadmap_milestone"])
-        self.assertEqual(6, fixture["m3_commit_cap"])
+        self.assertNotIn("m3_commit_cap", fixture)
         self.assertIs(fixture["m3_current_line_event_done"], True)
         self.assertIs(fixture["m3_line_id_matching_done"], True)
         self.assertIs(fixture["m3_debug_console_done"], True)
@@ -53,9 +53,10 @@ class M3DebugConsoleTests(unittest.TestCase):
         fixture = load_json(FIXTURE_PATH)
         mutations = [
             ("allowed_commands", [*fixture["allowed_commands"], "dump_payload"]),
+            ("m3_commit_cap", 6),
+            ("m3_commits_used", 6),
             ("recommended_next_step", "m4_overlay"),
             ("required_next_step", "m4_overlay"),
-            ("m3_commit_cap", 7),
         ]
         for field in FORBIDDEN_PERMISSION_FIELDS:
             mutated = copy.deepcopy(fixture)
