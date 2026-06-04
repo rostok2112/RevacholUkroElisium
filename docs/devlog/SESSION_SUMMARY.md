@@ -1,5 +1,25 @@
 # Session Summary
 
+Runtime-first translation memory is now the active bridge between the blocked M2 private-export path
+and the desired in-game current-line translation flow.
+
+Completed in the latest session:
+- Added `docs/runtime-translation-memory-contract.md`,
+  `tests/fixtures/runtime_translation_memory_contract.synthetic.json`,
+  `scripts/check_runtime_translation_memory_contract.py`, and
+  `scripts/run_runtime_translation_memory.py`.
+- Runtime translation memory checks local/private cache before provider execution. Cache hits set
+  `provider_call_required=false`; cache misses remain the only path where a later provider step may
+  be needed.
+- Cache entries stay under `workspace/local-private/runtime-cache/translation-memory/`; redacted
+  summaries stay under `workspace/local-private/runtime-cache/translation-memory-summary/`.
+- Public summaries do not include source text, Ukrainian text, prompts, provider payloads, cache
+  keys, hashes, filenames, private paths, logs, or runtime evidence.
+- M2 private-export strict verification remains blocked because no real export source exists. The
+  runtime-first path is active, with `runtime_current_line_capture_contract` as the next step.
+
+---
+
 Strict M0-M4 completion recovery is in progress.
 
 Completed in the latest session:

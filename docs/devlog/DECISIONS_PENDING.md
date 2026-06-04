@@ -1,5 +1,19 @@
 # Decisions Pending
 
+- Runtime-first translation now requires local/private translation memory before provider execution.
+  Use `docs/runtime-translation-memory-contract.md`,
+  `tests/fixtures/runtime_translation_memory_contract.synthetic.json`,
+  `scripts/check_runtime_translation_memory_contract.py`, and
+  `scripts/run_runtime_translation_memory.py` as the cache boundary.
+- M2 private-export verification remains blocked because no real export source exists. Do not mark
+  M2 fully complete with synthetic/private placeholder data.
+- Next runtime-first decision: `runtime_current_line_capture_contract`.
+- Translation-memory cache entries, cache keys, hashes, summaries, source text, Ukrainian text,
+  prompts, provider payloads, filenames, private paths, logs, and runtime artifacts must remain out
+  of git.
+
+---
+
 - Strict M0-M4 completion recovery is active. Use `docs/milestone-completion-standard.md`,
   `tests/fixtures/milestone_completion_status.synthetic.json`, and
   `scripts/check_milestone_completion_status.py` as the current completion boundary.

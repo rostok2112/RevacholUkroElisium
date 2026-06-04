@@ -1,5 +1,21 @@
 # Known Risks
 
+- Runtime translation memory now writes private cache entries under
+  `workspace/local-private/runtime-cache/translation-memory/`. The cache may contain real runtime
+  source text and Ukrainian translations, so it must remain ignored and must never be copied into
+  docs, tests, reports, commits, screenshots, or logs.
+- `scripts/run_runtime_translation_memory.py` derives private cache keys internally. Public summaries
+  must not expose keys, hashes, filenames, private paths, source text, translated text, prompts, or
+  provider payloads.
+- `docs/runtime-translation-memory-contract.md`,
+  `tests/fixtures/runtime_translation_memory_contract.synthetic.json`,
+  `scripts/check_runtime_translation_memory_contract.py`, and
+  `scripts/run_runtime_translation_memory.py` do not approve provider execution; they only ensure a
+  cache hit prevents repeat translation.
+- The next safe step is `runtime_current_line_capture_contract`.
+
+---
+
 - Strict completion now requires manual/local verification evidence in addition to automated
   checks. `docs/milestone-completion-standard.md`,
   `tests/fixtures/milestone_completion_status.synthetic.json`, and

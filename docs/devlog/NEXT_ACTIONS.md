@@ -1,5 +1,23 @@
 # Next Actions
 
+After runtime translation memory:
+
+1. Treat `docs/runtime-translation-memory-contract.md`,
+   `tests/fixtures/runtime_translation_memory_contract.synthetic.json`,
+   `scripts/check_runtime_translation_memory_contract.py`, and
+   `scripts/run_runtime_translation_memory.py` as the runtime cache guardrail.
+2. Runtime translation must check local/private translation memory before any provider call.
+3. M2 private-export verification remains blocked until a real export source exists; do not fake it
+   with synthetic/private placeholder data.
+4. Keep cache entries, summaries, source text, Ukrainian text, prompts, provider payloads, keys,
+   hashes, filenames, private paths, logs, and runtime artifacts out of git.
+
+Recommended next safe step:
+
+- Define `runtime_current_line_capture_contract`.
+
+---
+
 After strict M0-M4 completion recovery:
 
 1. Treat `docs/milestone-completion-standard.md`,

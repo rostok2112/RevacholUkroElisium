@@ -40,17 +40,25 @@ Responsibilities:
 Pipeline:
 
 1. Normalize current line and metadata.
-2. Retrieve context.
-3. Apply glossary and style constraints.
-4. Generate baseline translation.
-5. Generate annotation.
-6. Run QA agents:
+2. Check runtime translation memory.
+3. Retrieve context.
+4. Apply glossary and style constraints.
+5. Generate baseline translation only on cache miss.
+6. Generate annotation only on cache miss.
+7. Run QA agents:
    - terminology consistency,
    - voice preservation,
    - spoiler safety,
    - Ukrainian idiom sanity,
    - "too literal / too free" check.
-7. Save accepted result in translation memory.
+8. Save accepted result in translation memory.
+
+Runtime translation memory is tracked by
+`docs/runtime-translation-memory-contract.md`,
+`tests/fixtures/runtime_translation_memory_contract.synthetic.json`,
+`scripts/check_runtime_translation_memory_contract.py`, and
+`scripts/run_runtime_translation_memory.py`. The next runtime-first step after that cache guardrail
+is `runtime_current_line_capture_contract`.
 
 ### 4. Overlay
 

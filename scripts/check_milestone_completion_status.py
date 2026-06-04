@@ -36,6 +36,7 @@ RECOMMENDED_NEXT_STEP = "m0_manual_verification"
 M1_RECOMMENDED_NEXT_STEP = "m1_manual_synthetic_slice_review"
 M2_RECOMMENDED_NEXT_STEP = "m2_manual_private_export_verification"
 M3_RECOMMENDED_NEXT_STEP = "m3_manual_runtime_verification"
+RUNTIME_RECOMMENDED_NEXT_STEP = "runtime_current_line_capture_contract"
 MILESTONES = ("M0", "M1", "M2", "M3", "M4")
 
 
@@ -155,10 +156,23 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         )
     if payload.get("m5_planning_allowed") is not False:
         errors.append("M5 planning must remain blocked until M0-M4 strict completion is true.")
+    if payload.get("runtime_first_path_active") is True:
+        if payload.get("m2_private_export_source_available") is not False:
+            errors.append(
+                "Runtime-first status must record m2_private_export_source_available=false."
+            )
+        if payload.get("runtime_translation_memory_done") is not True:
+            errors.append("Runtime-first status must record runtime_translation_memory_done=true.")
     return errors
 
 
 def _expected_next_step(payload: dict[str, Any]) -> str:
+    if (
+        payload.get("runtime_first_path_active") is True
+        and payload.get("runtime_translation_memory_done") is True
+        and payload.get("m2_private_export_source_available") is False
+    ):
+        return RUNTIME_RECOMMENDED_NEXT_STEP
     milestones = payload.get("milestones")
     if not isinstance(milestones, list) or not milestones:
         return RECOMMENDED_NEXT_STEP
@@ -195,6 +209,7 @@ def _allowed_values(payload: dict[str, Any]) -> set[str]:
         M1_RECOMMENDED_NEXT_STEP,
         M2_RECOMMENDED_NEXT_STEP,
         M3_RECOMMENDED_NEXT_STEP,
+        RUNTIME_RECOMMENDED_NEXT_STEP,
         *MILESTONES,
     }
     milestones = payload.get("milestones")

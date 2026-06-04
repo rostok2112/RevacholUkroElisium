@@ -94,6 +94,23 @@ def main() -> int:
             ],
         ),
         (
+            "runtime translation memory contract",
+            [
+                sys.executable,
+                "scripts/check_runtime_translation_memory_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
+            "runtime translation memory smoke",
+            [
+                sys.executable,
+                "scripts/run_runtime_translation_memory.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "local overlay prototype smoke",
             [
                 sys.executable,

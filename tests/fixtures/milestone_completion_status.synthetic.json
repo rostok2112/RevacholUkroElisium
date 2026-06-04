@@ -2,8 +2,11 @@
   "schema_version": "milestone-completion-status.v1",
   "roadmap_source": "tasks/milestones.md",
   "strict_completion_standard": "docs/milestone-completion-standard.md",
+  "runtime_first_path_active": true,
+  "m2_private_export_source_available": false,
+  "runtime_translation_memory_done": true,
   "m5_planning_allowed": false,
-  "recommended_next_step": "m2_manual_private_export_verification",
+  "recommended_next_step": "runtime_current_line_capture_contract",
   "milestones": [
     {
       "roadmap_milestone": "M0",
