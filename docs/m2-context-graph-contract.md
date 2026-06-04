@@ -14,10 +14,11 @@ This contract defines the third original M2 criterion boundary:
 Build context graph.
 ```
 
-This slice does not build the graph. It approves only the next implementation slice:
+This slice does not build the graph. It requires a redacted line-index review before the graph
+implementation slice:
 
 ```text
-m2_context_graph_implementation
+m2_line_index_review_gate
 ```
 
 ## Approved Next Implementation Boundary
@@ -34,7 +35,8 @@ The imported DB artifact must use:
 schema_version: "m2-local-import-db.v1"
 ```
 
-The next implementation may read exactly one private line-index artifact under:
+After a passing line-index review, the graph implementation may read exactly one private line-index
+artifact under:
 
 ```text
 workspace/local-private/extraction-indexing/import/line-index/
@@ -46,7 +48,14 @@ The line-index artifact must use:
 schema_version: "m2-line-index.v1"
 ```
 
-The next implementation may write one private context-graph artifact under:
+The required review helper is:
+
+```text
+scripts/review_m2_line_index.py
+tests/fixtures/m2_line_index_review_decision.synthetic.json
+```
+
+After that review, the graph implementation may write one private context-graph artifact under:
 
 ```text
 workspace/local-private/extraction-indexing/import/context-graph/
@@ -167,5 +176,5 @@ python scripts/check_m2_context_graph_contract.py --quiet
 The next allowed step is:
 
 ```text
-m2_context_graph_implementation
+m2_line_index_review_gate
 ```

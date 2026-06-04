@@ -1,5 +1,12 @@
 # Known Risks
 
+- `scripts/review_m2_line_index.py` reviews only redacted line-index summary JSON. It must not be
+  changed to reopen private line-index artifacts or private DB artifacts unless a later contract
+  explicitly scopes that behavior.
+- Optional line-index summary and review output under
+  `workspace/local-private/extraction-indexing/import/line-index-summary/` and
+  `workspace/local-private/extraction-indexing/import/line-index-review/` must stay ignored and out
+  of tracked files, chat, reports, and review Markdown.
 - A future `m2_context_graph_implementation` may read one ignored private DB artifact and one
   ignored private line-index artifact, then write a private context graph under
   `workspace/local-private/extraction-indexing/import/context-graph/`. That graph may contain

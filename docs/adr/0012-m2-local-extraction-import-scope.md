@@ -751,6 +751,26 @@ indexes, graphs, or reports.
 The next allowed step is:
 
 ```text
+m2_line_index_review_gate
+```
+
+## Line Index Review Gate
+
+The redacted line-index summary reviewer is:
+
+```text
+scripts/review_m2_line_index.py
+tests/fixtures/m2_line_index_review_decision.synthetic.json
+```
+
+It reads only ignored redacted summary JSON under
+`workspace/local-private/extraction-indexing/import/line-index-summary/`. It never reopens the
+private DB artifact or private line-index artifact. A passing review permits only the already scoped
+`m2_context_graph_implementation`.
+
+The next allowed step after a passing review is:
+
+```text
 m2_context_graph_implementation
 ```
 

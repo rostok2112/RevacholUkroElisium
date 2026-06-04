@@ -27,10 +27,11 @@ ROADMAP_MILESTONE = "M2"
 PRIVATE_DB_SCHEMA_VERSION = "m2-local-import-db.v1"
 LINE_INDEX_SCHEMA_VERSION = "m2-line-index.v1"
 CONTEXT_GRAPH_SCHEMA_VERSION = "m2-context-graph.v1"
-RECOMMENDED_NEXT_STEP = "m2_context_graph_implementation"
+RECOMMENDED_NEXT_STEP = "m2_line_index_review_gate"
 ALLOWED_PRIVATE_INPUT_ROOTS = (
     "workspace/local-private/extraction-indexing/import/db/",
     "workspace/local-private/extraction-indexing/import/line-index/",
+    "workspace/local-private/extraction-indexing/import/line-index-review/",
 )
 ALLOWED_PRIVATE_OUTPUT_ROOTS = (
     "workspace/local-private/extraction-indexing/import/context-graph/",
@@ -79,9 +80,9 @@ ALLOWED_PUBLIC_SUMMARY_FIELDS = (
 REQUIRED_TRUE_FIELDS = (
     "local_import_implementation_available",
     "line_index_implementation_available",
-    "context_graph_implementation_allowed_next",
     "explicit_user_selected_private_db_required",
     "explicit_user_selected_private_line_index_required",
+    "line_index_review_required",
     "single_explicit_db_file_required",
     "single_explicit_line_index_file_required",
     "m2_import_locally_extracted_db_implementation_available",
@@ -232,6 +233,7 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         "required_next_step": RECOMMENDED_NEXT_STEP,
         "default_spoiler_budget": "none",
         "retrieval_bucket_mapping_allowed_next": "context_graph_relation_mapping_only",
+        "context_graph_implementation_allowed_next": "line_index_review_required",
     }
     for field, expected in expected_scalars.items():
         if payload.get(field) != expected:
@@ -348,6 +350,7 @@ def _safety_errors(payload: dict[str, Any], path: Path) -> list[str]:
         "context_graph_contract",
         "none",
         "context_graph_relation_mapping_only",
+        "line_index_review_required",
         *ALLOWED_PRIVATE_INPUT_ROOTS,
         *ALLOWED_PRIVATE_OUTPUT_ROOTS,
         *ALLOWED_NEXT_GRAPH_INPUTS,
@@ -379,6 +382,8 @@ def _doc_errors() -> list[str]:
         "docs/m2-context-graph-contract.md",
         "tests/fixtures/m2_context_graph_scope.synthetic.json",
         "scripts/check_m2_context_graph_contract.py",
+        "scripts/review_m2_line_index.py",
+        "tests/fixtures/m2_line_index_review_decision.synthetic.json",
     )
     for path in (DOC_PATH, ADR_PATH, LINE_INDEX_DOC_PATH, SESSION_SUMMARY_PATH, NEXT_ACTIONS_PATH):
         if not path.exists():

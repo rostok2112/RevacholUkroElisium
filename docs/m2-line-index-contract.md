@@ -142,7 +142,14 @@ python scripts/run_m2_line_index.py --self-test --quiet
 After a successful private line-index build, the next M2 step is:
 
 ```text
-m2_context_graph_contract
+m2_line_index_review_gate
+```
+
+The redacted review helper is:
+
+```text
+scripts/review_m2_line_index.py
+tests/fixtures/m2_line_index_review_decision.synthetic.json
 ```
 
 ## Context-Graph Contract Handoff
@@ -155,7 +162,7 @@ tests/fixtures/m2_context_graph_scope.synthetic.json
 scripts/check_m2_context_graph_contract.py
 ```
 
-That contract approves only `m2_context_graph_implementation` for one explicit private DB artifact
-and one explicit private line-index artifact. It keeps source text duplication in graph output,
-arbitrary future-branch traversal, game scanning, runtime reads, companion changes, providers, and
-committed private artifacts blocked.
+That contract requires `m2_line_index_review_gate` evidence before `m2_context_graph_implementation`
+uses one explicit private DB artifact and one explicit private line-index artifact. It keeps source
+text duplication in graph output, arbitrary future-branch traversal, game scanning, runtime reads,
+companion changes, providers, and committed private artifacts blocked.

@@ -4,9 +4,10 @@
   "scope_status": "context_graph_contract",
   "local_import_implementation_available": true,
   "line_index_implementation_available": true,
-  "context_graph_implementation_allowed_next": true,
+  "context_graph_implementation_allowed_next": "line_index_review_required",
   "explicit_user_selected_private_db_required": true,
   "explicit_user_selected_private_line_index_required": true,
+  "line_index_review_required": true,
   "single_explicit_db_file_required": true,
   "single_explicit_line_index_file_required": true,
   "future_private_db_schema_version": "m2-local-import-db.v1",
@@ -14,7 +15,8 @@
   "future_context_graph_schema_version": "m2-context-graph.v1",
   "allowed_private_input_roots": [
     "workspace/local-private/extraction-indexing/import/db/",
-    "workspace/local-private/extraction-indexing/import/line-index/"
+    "workspace/local-private/extraction-indexing/import/line-index/",
+    "workspace/local-private/extraction-indexing/import/line-index-review/"
   ],
   "allowed_private_output_roots": [
     "workspace/local-private/extraction-indexing/import/context-graph/"
@@ -99,6 +101,6 @@
   "path_string_hashing_allowed": false,
   "filename_hashing_allowed": false,
   "id_hashing_allowed": false,
-  "recommended_next_step": "m2_context_graph_implementation",
-  "required_next_step": "m2_context_graph_implementation"
+  "recommended_next_step": "m2_line_index_review_gate",
+  "required_next_step": "m2_line_index_review_gate"
 }

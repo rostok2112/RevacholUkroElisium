@@ -541,6 +541,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 line-index review smoke",
+            [
+                sys.executable,
+                "scripts/review_m2_line_index.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "M2 context-graph contract",
             [
                 sys.executable,

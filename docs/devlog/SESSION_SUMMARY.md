@@ -1,13 +1,39 @@
 # Session Summary
 
+Original M2 line-index review gate is implemented.
+
+Decision:
+- `m2_line_index_review_gate` is needed before context-graph implementation.
+- Reason: the graph implementation will consume a private line-index artifact that can contain
+  private ids and source text. The review gate validates only the redacted line-index summary and
+  never reopens the private DB or line-index artifact.
+
+Completed in the latest session:
+- Added optional `--summary-output` support to `scripts/run_m2_line_index.py` for redacted summary
+  JSON under `workspace/local-private/extraction-indexing/import/line-index-summary/`.
+- Added `scripts/review_m2_line_index.py` and
+  `tests/fixtures/m2_line_index_review_decision.synthetic.json`.
+- The reviewer reads only redacted summary JSON and optional review outputs stay under
+  `workspace/local-private/extraction-indexing/import/line-index-review/`.
+- Updated the context-graph contract so `m2_context_graph_implementation` requires a passing
+  `m2_line_index_review_gate`.
+- Context-graph construction, retrieval-bucket mapping outside the graph implementation, game
+  scanning, runtime reads, companion changes, providers, committed private DB artifacts, line
+  indexes, graphs, reports, private paths, and extracted text remain blocked.
+- The only approved next step is `m2_line_index_review_gate`; after it passes, the next step is
+  `m2_context_graph_implementation`.
+
+---
+
 Original M2 context-graph contract is defined.
 
 Completed in the latest session:
 - Added `docs/m2-context-graph-contract.md`,
   `tests/fixtures/m2_context_graph_scope.synthetic.json`, and
   `scripts/check_m2_context_graph_contract.py`.
-- The contract approves only the next `m2_context_graph_implementation` slice for one explicit
-  private DB artifact and one explicit private line-index artifact.
+- The contract requires `m2_line_index_review_gate` evidence before the next
+  `m2_context_graph_implementation` slice consumes one explicit private DB artifact and one explicit
+  private line-index artifact.
 - Future private context-graph output is restricted to
   `workspace/local-private/extraction-indexing/import/context-graph/`.
 - Relation-to-retrieval-bucket mapping is limited to the context graph mappings
@@ -18,7 +44,7 @@ Completed in the latest session:
   payloads, private DB artifacts, line indexes, graphs, and reports remain blocked.
 - Original M2 still needs the context-graph implementation before all three original criteria are
   implemented.
-- The only approved next step is `m2_context_graph_implementation`.
+- The only approved next step is `m2_line_index_review_gate`.
 
 ---
 

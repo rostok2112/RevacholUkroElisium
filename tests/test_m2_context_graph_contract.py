@@ -51,6 +51,11 @@ class M2ContextGraphContractTests(unittest.TestCase):
         )
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["recommended_next_step"])
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["required_next_step"])
+        self.assertEqual(
+            "line_index_review_required",
+            fixture["context_graph_implementation_allowed_next"],
+        )
+        self.assertTrue(fixture["line_index_review_required"])
         self.assertEqual(list(ALLOWED_PRIVATE_INPUT_ROOTS), fixture["allowed_private_input_roots"])
         self.assertEqual(
             list(ALLOWED_PRIVATE_OUTPUT_ROOTS), fixture["allowed_private_output_roots"]
@@ -100,7 +105,8 @@ class M2ContextGraphContractTests(unittest.TestCase):
         fixture = load_json(FIXTURE_PATH)
         for mutation in (
             {"recommended_next_step": "m3_bepinex_bridge"},
-            {"required_next_step": "m2_context_graph_review_gate"},
+            {"required_next_step": "m2_context_graph_implementation"},
+            {"context_graph_implementation_allowed_next": True},
             {"future_private_db_schema_version": "m2-local-private-export.v1"},
             {"future_line_index_schema_version": "m2-synthetic-line-index.v1"},
             {"future_context_graph_schema_version": "m2-synthetic-context-graph.v1"},
@@ -164,6 +170,8 @@ class M2ContextGraphContractTests(unittest.TestCase):
             "docs/m2-context-graph-contract.md",
             "tests/fixtures/m2_context_graph_scope.synthetic.json",
             "scripts/check_m2_context_graph_contract.py",
+            "scripts/review_m2_line_index.py",
+            "tests/fixtures/m2_line_index_review_decision.synthetic.json",
         )
         for path in (
             DOC_PATH,

@@ -1,13 +1,32 @@
 # Next Actions
 
+After the original M2 line-index review gate:
+
+1. Treat `scripts/review_m2_line_index.py` and
+   `tests/fixtures/m2_line_index_review_decision.synthetic.json` as the redacted review boundary
+   for the second original M2 implementation slice.
+2. The reviewer reads only ignored redacted line-index summary JSON under
+   `workspace/local-private/extraction-indexing/import/line-index-summary/` and never reopens the
+   private DB or private line-index artifact.
+3. A passing review allows only the already-scoped `m2_context_graph_implementation`; generated
+   graphs, game scanning, runtime reads, companion changes, providers, and committed private
+   artifacts remain blocked.
+
+Recommended next safe step:
+
+- Implement `m2_context_graph_implementation`.
+
+---
+
 After the original M2 context-graph contract:
 
 1. Treat `docs/m2-context-graph-contract.md`,
    `tests/fixtures/m2_context_graph_scope.synthetic.json`, and
    `scripts/check_m2_context_graph_contract.py` as the static approval boundary for the third
    original M2 criterion.
-2. Implement only `m2_context_graph_implementation` next: one explicit private imported DB artifact
-   plus one explicit private line-index artifact to one ignored private context-graph artifact under
+2. Require `m2_line_index_review_gate` evidence before `m2_context_graph_implementation`: one
+   explicit private imported DB artifact plus one explicit private line-index artifact to one
+   ignored private context-graph artifact under
    `workspace/local-private/extraction-indexing/import/context-graph/`.
 3. Keep generated graphs, line indexes, private DB artifacts, extracted text, private paths,
    payloads, reports, game scanning, runtime reads, companion changes, providers, source-text
@@ -16,7 +35,7 @@ After the original M2 context-graph contract:
 
 Recommended next safe step:
 
-- Implement `m2_context_graph_implementation`.
+- Implement `m2_line_index_review_gate`.
 
 ---
 

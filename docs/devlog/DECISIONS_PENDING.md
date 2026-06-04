@@ -1,6 +1,12 @@
 # Decisions Pending
 
-- The M2 context-graph contract is defined. Implement `m2_context_graph_implementation` next as the
+- The M2 line-index review gate is implemented because it is needed before context-graph
+  implementation consumes the private line-index artifact. Implement
+  `m2_context_graph_implementation` next only after a passing redacted line-index summary review.
+- Keep private DB and line-index artifact reopening during review, ids, source text, paths,
+  payloads, reports, graphs, game scanning, runtime reads, companion changes, providers, and
+  committed private artifacts blocked.
+- The M2 context-graph contract is defined. Implement `m2_line_index_review_gate` next before the
   third original M2 criterion slice.
 - Keep generated graphs, line indexes, private DB artifacts, extracted text, private paths,
   payloads, reports, source-text duplication in graph output, arbitrary future-branch traversal,

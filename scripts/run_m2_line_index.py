@@ -53,6 +53,7 @@ SUMMARY_SCHEMA_VERSION = "m2-line-index-summary.v1"
 PRIVATE_DB_ROOT = "workspace/local-private/extraction-indexing/import/db/"
 LOCAL_IMPORT_REVIEW_ROOT = "workspace/local-private/extraction-indexing/import/db-review/"
 PRIVATE_LINE_INDEX_ROOT = "workspace/local-private/extraction-indexing/import/line-index/"
+SUMMARY_OUTPUT_ROOT = "workspace/local-private/extraction-indexing/import/line-index-summary/"
 
 
 class M2LineIndexError(RuntimeError):
@@ -76,6 +77,11 @@ def main(argv: list[str] | None = None) -> int:
         "--output",
         type=Path,
         help="Required private line-index JSON output under import/line-index/.",
+    )
+    parser.add_argument(
+        "--summary-output",
+        type=Path,
+        help="Optional redacted summary JSON output under import/line-index-summary/.",
     )
     parser.add_argument("--quiet", action="store_true", help="Print only a short pass/fail line.")
     parser.add_argument("--self-test", action="store_true")
@@ -103,6 +109,11 @@ def main(argv: list[str] | None = None) -> int:
             parser.error("--input, --import-review, and --output are required unless --self-test.")
 
         summary = run_m2_line_index(args.input, args.import_review, args.output, root=ROOT)
+        if args.summary_output:
+            write_summary(
+                summary,
+                resolve_line_index_summary_output_path(args.summary_output, root=ROOT),
+            )
         if args.quiet:
             print("M2 line-index passed.")
         else:
@@ -243,10 +254,31 @@ def resolve_line_index_output_path(path: Path, *, root: Path = ROOT) -> Path:
     return resolved
 
 
+def resolve_line_index_summary_output_path(path: Path, *, root: Path = ROOT) -> Path:
+    resolved = _resolve_private_path(
+        path,
+        root=root,
+        allowed_root=SUMMARY_OUTPUT_ROOT,
+        label="line-index summary output",
+        must_exist=False,
+    )
+    if resolved.suffix.lower() != ".json":
+        raise M2LineIndexError("Line-index summary output path must use the .json suffix.")
+    return resolved
+
+
 def write_line_index(line_index: dict[str, Any], output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
         json.dumps(line_index, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+
+def write_summary(summary: dict[str, Any], output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
+        json.dumps(summary, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
 
