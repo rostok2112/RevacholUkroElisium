@@ -534,3 +534,14 @@ scripts/check_m3_current_line_event_contract.py
 The next bounded step is `m3_current_line_event_implementation`. Until that step is implemented
 and reviewed, the bridge still does not complete the original M3 current-line criterion. Line-ID
 matching and debug console work remain separate criteria.
+
+The current-line implementation guardrail is:
+
+```text
+packages/bepinex-plugin/src/CurrentLineEventFactory.cs
+tests/fixtures/m3_current_line_event_implementation.synthetic.json
+scripts/check_m3_current_line_event_implementation.py
+```
+
+The implementation remains disabled by default and redacted. The next bounded step is
+`m3_line_id_matching`.

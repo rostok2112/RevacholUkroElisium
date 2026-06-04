@@ -27,6 +27,17 @@ scripts/check_m3_current_line_event_contract.py
 The next allowed M3 step is `m3_current_line_event_implementation`. Line-ID matching and debug
 console work remain separate criteria.
 
+The current-line event implementation is guarded by:
+
+```text
+packages/bepinex-plugin/src/CurrentLineEventFactory.cs
+tests/fixtures/m3_current_line_event_implementation.synthetic.json
+scripts/check_m3_current_line_event_implementation.py
+```
+
+It is disabled by default and emits redacted bridge-owned metadata only. The next bounded step is
+`m3_line_id_matching`.
+
 ## Current status
 
 This package is static-reviewable skeleton code. It is not wired into a real game install by the

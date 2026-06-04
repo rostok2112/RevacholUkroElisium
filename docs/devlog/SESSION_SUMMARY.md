@@ -1,5 +1,22 @@
 # Session Summary
 
+M3 current-line event implementation is added.
+
+Completed in the latest session:
+- Added `packages/bepinex-plugin/src/CurrentLineEventFactory.cs`.
+- Added disabled-by-default `CurrentLineEventEnabled` and `EmitSyntheticCurrentLineEventOnStart`
+  config gates in `packages/bepinex-plugin/src/RevacholCompanionBridgePlugin.cs`.
+- Added `tests/fixtures/m3_current_line_event_implementation.synthetic.json`.
+- Added `scripts/check_m3_current_line_event_implementation.py` and wired it into
+  `scripts/check_all.py`.
+- The event emits only redacted bridge-owned metadata and keeps `raw_text_included=false`,
+  `private_paths_included=false`, and `provider_called=false`.
+- Original M3 current-line event criterion is now implemented; line-ID matching and debug console
+  remain incomplete.
+- The next safe step is `m3_line_id_matching`.
+
+---
+
 M3 current-line event contract is defined.
 
 Completed in the latest session:

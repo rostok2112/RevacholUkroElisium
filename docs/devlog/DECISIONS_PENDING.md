@@ -1,5 +1,13 @@
 # Decisions Pending
 
+- M3 current-line event implementation is added. Implement `m3_line_id_matching` next.
+- Keep debug console work, raw text capture, UI text reading, Unity scanning, hooks, OCR, provider
+  execution, companion contract changes, game-file reads, BepInEx log reads, committed runtime
+  artifacts, raw logs, screenshots, game text, private paths, `bin`, and `obj` blocked.
+- Treat `packages/bepinex-plugin/src/CurrentLineEventFactory.cs`,
+  `tests/fixtures/m3_current_line_event_implementation.synthetic.json`, and
+  `scripts/check_m3_current_line_event_implementation.py` as the implementation guardrail for the
+  first original M3 criterion.
 - M3 current-line event contract is defined. Implement `m3_current_line_event_implementation`
   next, limited to the event shape and boundaries in `docs/m3-current-line-event-contract.md`,
   `tests/fixtures/m3_current_line_event_contract.synthetic.json`, and

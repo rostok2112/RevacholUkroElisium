@@ -19,6 +19,8 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         public const bool DefaultSendSyntheticEventOnStart = false;
         public const bool DefaultMetadataProbeEnabled = false;
         public const bool DefaultMetadataProbeLogOnStart = false;
+        public const bool DefaultCurrentLineEventEnabled = false;
+        public const bool DefaultEmitSyntheticCurrentLineEventOnStart = false;
 
         private ConfigEntry<bool>? _enabled;
         private ConfigEntry<string>? _companionServerUrl;
@@ -26,6 +28,8 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         private ConfigEntry<bool>? _sendSyntheticEventOnStart;
         private ConfigEntry<bool>? _metadataProbeEnabled;
         private ConfigEntry<bool>? _metadataProbeLogOnStart;
+        private ConfigEntry<bool>? _currentLineEventEnabled;
+        private ConfigEntry<bool>? _emitSyntheticCurrentLineEventOnStart;
         private CompanionHttpClient? _client;
 
         public override void Load()
@@ -98,6 +102,30 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
             );
         }
 
+        public void EmitSyntheticCurrentLineEventNow()
+        {
+            if (_currentLineEventEnabled == null || !_currentLineEventEnabled.Value)
+            {
+                Log.LogInfo("Current-line event skipped because the feature is disabled.");
+                return;
+            }
+
+            string eventJson = CurrentLineEventFactory.BuildSyntheticCurrentLineEventJson();
+            Log.LogInfo(
+                "Current-line event emitted: schema_version="
+                + CurrentLineEventFactory.SchemaVersion
+                + ", event_kind="
+                + CurrentLineEventFactory.EventKind
+                + ", line_id="
+                + CurrentLineEventFactory.SyntheticLineId
+                + ", source="
+                + CurrentLineEventFactory.SourceSynthetic
+                + ", raw_text_included=false, provider_called=false."
+            );
+
+            _ = eventJson.Length;
+        }
+
         private void BindConfig()
         {
             _enabled = Config.Bind(
@@ -136,6 +164,18 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 DefaultMetadataProbeLogOnStart,
                 "Log one metadata-only startup snapshot when the metadata probe is enabled."
             );
+            _currentLineEventEnabled = Config.Bind(
+                "CurrentLineEvent",
+                "CurrentLineEventEnabled",
+                DefaultCurrentLineEventEnabled,
+                "Enable the disabled-by-default redacted current-line metadata event."
+            );
+            _emitSyntheticCurrentLineEventOnStart = Config.Bind(
+                "CurrentLineEvent",
+                "EmitSyntheticCurrentLineEventOnStart",
+                DefaultEmitSyntheticCurrentLineEventOnStart,
+                "Emit the built-in redacted synthetic current-line metadata event after startup checks."
+            );
         }
 
         private async Task RunStartupChecksAsync()
@@ -170,6 +210,14 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 if (_sendSyntheticEventOnStart != null && _sendSyntheticEventOnStart.Value)
                 {
                     await SendSyntheticEventNowAsync();
+                }
+
+                if (
+                    _emitSyntheticCurrentLineEventOnStart != null
+                    && _emitSyntheticCurrentLineEventOnStart.Value
+                )
+                {
+                    EmitSyntheticCurrentLineEventNow();
                 }
 
                 LogMetadataProbeSnapshot(companionHealthChecked, companionAvailable);

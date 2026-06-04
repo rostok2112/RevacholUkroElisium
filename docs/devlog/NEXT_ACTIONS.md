@@ -1,5 +1,23 @@
 # Next Actions
 
+After M3 current-line event implementation:
+
+1. Treat `packages/bepinex-plugin/src/CurrentLineEventFactory.cs`,
+   `tests/fixtures/m3_current_line_event_implementation.synthetic.json`, and
+   `scripts/check_m3_current_line_event_implementation.py` as the guardrail for the first original
+   M3 criterion.
+2. The current-line event path remains disabled by default and emits only redacted bridge-owned
+   metadata. It does not send providers, change companion HTTP contracts, capture raw text, read UI
+   text, scan Unity objects, read game files, or read BepInEx logs.
+3. Implement only line-ID matching next, using the M2 private line-index boundary already developed.
+4. Keep debug console work separate. Keep the M3 hard stop at six total atomic commits.
+
+Recommended next safe step:
+
+- Implement `m3_line_id_matching`.
+
+---
+
 After M3 current-line event contract:
 
 1. Treat `docs/m3-current-line-event-contract.md`,

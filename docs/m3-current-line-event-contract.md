@@ -77,3 +77,18 @@ The next allowed atomic M3 step is:
 ```text
 m3_current_line_event_implementation
 ```
+
+The implementation guardrail is now tracked in:
+
+```text
+packages/bepinex-plugin/src/CurrentLineEventFactory.cs
+tests/fixtures/m3_current_line_event_implementation.synthetic.json
+scripts/check_m3_current_line_event_implementation.py
+```
+
+After this implementation, only the original M3 current-line event criterion is marked done. The
+next bounded step is:
+
+```text
+m3_line_id_matching
+```

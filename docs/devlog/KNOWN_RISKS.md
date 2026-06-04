@@ -1,5 +1,11 @@
 # Known Risks
 
+- M3 current-line event implementation (`packages/bepinex-plugin/src/CurrentLineEventFactory.cs`,
+  `tests/fixtures/m3_current_line_event_implementation.synthetic.json`, and
+  `scripts/check_m3_current_line_event_implementation.py`) is disabled by default and redacted.
+  Do not expand it into raw text capture, UI text reading, Unity scanning, hooks/Harmony, OCR,
+  provider calls, companion HTTP contract changes, line-index reads, or debug console commands.
+- The next approved M3 step is `m3_line_id_matching`; it is commit 4 of the six-commit M3 cap.
 - M3 current-line event contract (`docs/m3-current-line-event-contract.md`,
   `tests/fixtures/m3_current_line_event_contract.synthetic.json`, and
   `scripts/check_m3_current_line_event_contract.py`) defines only a later minimal event
