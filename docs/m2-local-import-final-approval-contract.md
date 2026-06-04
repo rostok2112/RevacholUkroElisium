@@ -107,10 +107,22 @@ Validate the implementation smoke with:
 python scripts/run_m2_local_import.py --self-test --quiet
 ```
 
+The helper can also write a redacted import summary under:
+
+```text
+workspace/local-private/extraction-indexing/import/db-summary/
+```
+
+Review that summary with:
+
+```powershell
+python scripts/review_m2_local_import.py --self-test --quiet
+```
+
 After a successful private import, the next M2 step is:
 
 ```text
-m2_line_index_contract
+m2_local_import_review_gate
 ```
 
 The line-index contract is tracked in:

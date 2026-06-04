@@ -1,5 +1,22 @@
 # Session Summary
 
+Original M2 local import review gate is implemented.
+
+Completed in the latest session:
+- Added `scripts/review_m2_local_import.py` and
+  `tests/fixtures/m2_local_import_review_decision.synthetic.json`.
+- Added optional `--summary-output` support to `scripts/run_m2_local_import.py` for redacted
+  summary JSON under `workspace/local-private/extraction-indexing/import/db-summary/`.
+- The reviewer reads only the redacted summary and never reopens the selected export or private DB
+  artifact.
+- A passing review permits only `m2_line_index_implementation`.
+- Context-graph construction, retrieval-bucket mapping, game scanning, runtime reads, companion
+  changes, providers, committed private DB artifacts, line indexes, graphs, reports, private paths,
+  and extracted text remain blocked.
+- The only approved next step is `m2_line_index_implementation`.
+
+---
+
 Original M2 line-index contract is defined.
 
 Completed in the latest session:
@@ -14,7 +31,7 @@ Completed in the latest session:
   changes, provider execution, committed extracted text, private paths, payloads, private DB
   artifacts, line indexes, graphs, and reports remain blocked.
 - Original M2 remains active until line-index implementation and context-graph work are completed.
-- The only approved next step is `m2_line_index_implementation`.
+- The next implementation now requires `m2_local_import_review_gate` evidence first.
 
 ---
 

@@ -16,6 +16,13 @@ This slice does not build the line index. It approves only the next implementati
 m2_line_index_implementation
 ```
 
+That implementation requires a passing local-import review from:
+
+```text
+scripts/review_m2_local_import.py
+tests/fixtures/m2_local_import_review_decision.synthetic.json
+```
+
 ## Approved Next Implementation Boundary
 
 The next implementation may read exactly one private imported DB artifact under:
@@ -103,5 +110,5 @@ python scripts/check_m2_line_index_contract.py --quiet
 The next allowed step is:
 
 ```text
-m2_line_index_implementation
+m2_local_import_review_gate
 ```

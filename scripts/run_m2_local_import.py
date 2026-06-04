@@ -80,6 +80,14 @@ def main(argv: list[str] | None = None) -> int:
             "workspace/local-private/extraction-indexing/import/db/."
         ),
     )
+    parser.add_argument(
+        "--summary-output",
+        type=Path,
+        help=(
+            "Optional redacted summary JSON under "
+            "workspace/local-private/extraction-indexing/import/db-summary/."
+        ),
+    )
     parser.add_argument("--quiet", action="store_true", help="Print only a short pass/fail line.")
     parser.add_argument(
         "--self-test",
@@ -111,6 +119,9 @@ def main(argv: list[str] | None = None) -> int:
             parser.error("--input and --output are required unless --self-test is used.")
 
         summary = run_m2_local_import(args.input, args.output, root=ROOT)
+        if args.summary_output:
+            summary_path = resolve_summary_output_path(args.summary_output, root=ROOT)
+            write_summary(summary, summary_path)
         if args.quiet:
             print("M2 local import passed.")
         else:
@@ -222,6 +233,31 @@ def resolve_output_path(output_path: Path, *, root: Path = ROOT) -> Path:
     return resolved
 
 
+def resolve_summary_output_path(output_path: Path, *, root: Path = ROOT) -> Path:
+    try:
+        resolved = resolve_private_output_path(output_path, root=root)
+        output_root = (
+            root / "workspace/local-private/extraction-indexing/import/db-summary/"
+        ).resolve(strict=False)
+        resolved.relative_to(output_root)
+    except (PrivateInputAdapterDryRunError, ValueError) as exc:
+        raise M2LocalImportError(
+            "Unsafe summary output path. Use a JSON path under "
+            "workspace/local-private/extraction-indexing/import/db-summary/."
+        ) from exc
+    if resolved.suffix.lower() != ".json":
+        raise M2LocalImportError("Summary output path must use the .json suffix.")
+    return resolved
+
+
+def write_summary(summary: dict[str, Any], output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
+        json.dumps(summary, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+
 def run_self_test() -> None:
     with tempfile.TemporaryDirectory() as tmp_dir:
         root = Path(tmp_dir) / "fake-repo"
@@ -236,6 +272,11 @@ def run_self_test() -> None:
             output_path,
             root=root,
         )
+        summary_output = resolve_summary_output_path(
+            Path("workspace/local-private/extraction-indexing/import/db-summary/self-test.json"),
+            root=root,
+        )
+        write_summary(summary, summary_output)
         rendered = json.dumps(summary, sort_keys=True)
         if (
             summary["import_status"] != "imported"
@@ -254,6 +295,9 @@ def run_self_test() -> None:
             raise M2LocalImportError("Self-test private DB did not preserve private content.")
         if private_db["line_index_constructed"] or private_db["context_graph_constructed"]:
             raise M2LocalImportError("Self-test private DB must not build index or graph.")
+        summary_written = summary_output.read_text(encoding="utf-8")
+        if private_marker in summary_written or str(root) in summary_written:
+            raise M2LocalImportError("Self-test written summary leaked private content or paths.")
 
 
 def _build_private_db(payload: dict[str, Any]) -> dict[str, Any]:

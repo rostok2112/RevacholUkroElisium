@@ -1,5 +1,12 @@
 # Known Risks
 
+- `scripts/review_m2_local_import.py` reviews only redacted import-summary JSON. It must not be
+  changed to reopen private DB artifacts or selected exports unless a later contract explicitly
+  scopes that behavior.
+- Optional local-import summary and review output under
+  `workspace/local-private/extraction-indexing/import/db-summary/` and
+  `workspace/local-private/extraction-indexing/import/db-review/` must stay ignored and out of
+  tracked files, chat, reports, and review Markdown.
 - A future `m2_line_index_implementation` may read one ignored private DB artifact and write a
   private line-index artifact under `workspace/local-private/extraction-indexing/import/line-index/`.
   That line index may contain private ids and source text and must never be committed, pasted into

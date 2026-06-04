@@ -678,6 +678,26 @@ The next allowed step is:
 m2_line_index_contract
 ```
 
+## Local Import Review Gate
+
+The redacted local-import summary reviewer is:
+
+```text
+scripts/review_m2_local_import.py
+tests/fixtures/m2_local_import_review_decision.synthetic.json
+```
+
+It reads only ignored redacted summary JSON under
+`workspace/local-private/extraction-indexing/import/db-summary/`. It never reopens the selected
+export or private DB artifact. A passing review permits only the already scoped
+`m2_line_index_implementation`.
+
+The next allowed step is:
+
+```text
+m2_line_index_implementation
+```
+
 ## Line Index Contract
 
 The static approval boundary for the second original M2 criterion is:
@@ -696,9 +716,10 @@ and write one ignored private line-index artifact under
 The contract does not build the line index, build a context graph, map retrieval buckets, scan game
 installs, read runtime logs, call providers, change companion contracts, or permit committed
 extracted text, private paths, payloads, private DB artifacts, line indexes, graphs, or reports.
+The implementation requires a passing `scripts/review_m2_local_import.py` review first.
 
 The next allowed step is:
 
 ```text
-m2_line_index_implementation
+m2_local_import_review_gate
 ```

@@ -1,20 +1,39 @@
 # Next Actions
 
+After the original M2 local import review gate:
+
+1. Treat `scripts/review_m2_local_import.py` and
+   `tests/fixtures/m2_local_import_review_decision.synthetic.json` as the redacted review boundary
+   for the first original M2 implementation slice.
+2. The reviewer reads only ignored redacted local-import summary JSON under
+   `workspace/local-private/extraction-indexing/import/db-summary/` and never reopens the selected
+   export or private DB artifact.
+3. A passing review allows only the already-scoped `m2_line_index_implementation`; context-graph
+   construction, retrieval-bucket mapping, game scanning, runtime reads, companion changes,
+   providers, and committed private artifacts remain blocked.
+
+Recommended next safe step:
+
+- Implement `m2_line_index_implementation`.
+
+---
+
 After the original M2 line-index contract:
 
 1. Treat `docs/m2-line-index-contract.md`,
    `tests/fixtures/m2_line_index_scope.synthetic.json`, and
    `scripts/check_m2_line_index_contract.py` as the static approval boundary for the second
    original M2 criterion.
-2. Implement only `m2_line_index_implementation` next: one explicit private imported DB artifact
-   under `workspace/local-private/extraction-indexing/import/db/` to one ignored private line-index
-   artifact under `workspace/local-private/extraction-indexing/import/line-index/`.
+2. Require `m2_local_import_review_gate` evidence before `m2_line_index_implementation`: one
+   explicit private imported DB artifact under `workspace/local-private/extraction-indexing/import/db/`
+   to one ignored private line-index artifact under
+   `workspace/local-private/extraction-indexing/import/line-index/`.
 3. Keep context-graph construction, retrieval-bucket mapping, game scanning, runtime reads,
    companion changes, providers, and committed private artifacts blocked.
 
 Recommended next safe step:
 
-- Implement `m2_line_index_implementation`.
+- Implement `m2_local_import_review_gate`.
 
 ---
 
@@ -30,7 +49,7 @@ After the original M2 local import implementation:
 
 Recommended next safe step:
 
-- Define `m2_line_index_contract`.
+- Implement `m2_local_import_review_gate`.
 
 ---
 

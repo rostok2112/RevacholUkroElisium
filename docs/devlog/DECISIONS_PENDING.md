@@ -1,5 +1,10 @@
 # Decisions Pending
 
+- The M2 local import review gate is implemented. Implement `m2_line_index_implementation` next
+  only after a passing redacted local-import summary review.
+- Keep context-graph construction, retrieval-bucket mapping, game scanning, runtime reads,
+  companion changes, provider execution, committed extracted text, private paths, payloads,
+  private DB artifacts, line indexes, graphs, and reports blocked.
 - The M2 line-index contract is defined. Implement `m2_line_index_implementation` next as the
   second original M2 criterion slice.
 - Keep context-graph construction, retrieval-bucket mapping, game scanning, runtime reads,

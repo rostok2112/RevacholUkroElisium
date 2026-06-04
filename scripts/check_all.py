@@ -515,6 +515,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 local import review smoke",
+            [
+                sys.executable,
+                "scripts/review_m2_local_import.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "M2 line-index contract",
             [
                 sys.executable,
