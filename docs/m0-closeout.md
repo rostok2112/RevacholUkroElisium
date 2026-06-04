@@ -30,6 +30,14 @@ tests/fixtures/m0_closeout.synthetic.json
 scripts/check_m0_closeout.py
 ```
 
+Manual attestation guardrail:
+
+```text
+docs/m0-manual-verification.md
+tests/fixtures/m0_manual_verification_report.synthetic.json
+scripts/review_m0_manual_verification.py
+```
+
 Manual verification required:
 
 ```text
@@ -42,4 +50,10 @@ The next strict completion step is:
 
 ```text
 m0_manual_verification
+```
+
+After a passing chat-attestation review, the next strict completion step becomes:
+
+```text
+m1_manual_synthetic_slice_review
 ```

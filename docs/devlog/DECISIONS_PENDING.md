@@ -7,6 +7,8 @@
   `manual_verification_complete=true` and `fully_complete=true`.
 - The next decision is `m0_manual_verification`: owner confirmation that repo contracts and safety
   policy match intended project governance.
+- Accepted evidence form: owner chat attestation matching `docs/m0-manual-verification.md`, reviewed
+  through `scripts/review_m0_manual_verification.py`.
 - Manual evidence must stay redacted and must not commit private paths, real extracted text,
   generated DBs/indexes/context graphs, logs, screenshots, provider payloads, `bin`, or `obj`.
 

@@ -3,6 +3,12 @@
 Strict M0-M4 completion recovery is in progress.
 
 Completed in the latest session:
+- Added the M0 chat-attestation manual verification gate:
+  `docs/m0-manual-verification.md`,
+  `tests/fixtures/m0_manual_verification_report.synthetic.json`, and
+  `scripts/review_m0_manual_verification.py`.
+- M0 remains pending until the owner supplies the approval text; the checker now has a verified
+  state ready for that attestation.
 - Added `docs/milestone-completion-standard.md`.
 - Added `docs/m0-closeout.md` and `docs/m1-closeout.md`.
 - Added `tests/fixtures/m0_closeout.synthetic.json`,

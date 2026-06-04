@@ -6,6 +6,9 @@
   `scripts/check_milestone_completion_status.py` keep M5 planning blocked while M0-M4 have
   `fully_complete=false`.
 - The next approved step is `m0_manual_verification`.
+- The M0 manual gate may use chat attestation as evidence, but only redacted boolean/status fields
+  may be committed. Do not commit conversation text if it includes private paths, logs,
+  screenshots, extracted text, or payload details.
 - Do not convert manual evidence into committed private paths, real extracted text, screenshots,
   generated DBs, indexes, context graphs, logs, provider payloads, `bin`, or `obj`.
 

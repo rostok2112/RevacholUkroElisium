@@ -282,6 +282,15 @@ def main() -> int:
             ],
         ),
         (
+            "M0 manual verification review smoke",
+            [
+                sys.executable,
+                "scripts/review_m0_manual_verification.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "M1 strict closeout",
             [
                 sys.executable,

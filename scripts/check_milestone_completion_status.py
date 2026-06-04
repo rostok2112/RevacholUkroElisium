@@ -33,6 +33,7 @@ M4_DOC_PATH = ROOT / "docs/m4-closeout.md"
 TASKS_PATH = ROOT / "tasks/milestones.md"
 SCHEMA_VERSION = "milestone-completion-status.v1"
 RECOMMENDED_NEXT_STEP = "m0_manual_verification"
+M1_RECOMMENDED_NEXT_STEP = "m1_manual_synthetic_slice_review"
 MILESTONES = ("M0", "M1", "M2", "M3", "M4")
 
 
@@ -109,8 +110,9 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         errors.append("Milestone completion status must point to tasks/milestones.md.")
     if payload.get("strict_completion_standard") != "docs/milestone-completion-standard.md":
         errors.append("Milestone completion status must point to the strict standard doc.")
-    if payload.get("recommended_next_step") != RECOMMENDED_NEXT_STEP:
-        errors.append(f"Milestone completion next step must be {RECOMMENDED_NEXT_STEP!r}.")
+    expected_next_step = _expected_next_step(payload)
+    if payload.get("recommended_next_step") != expected_next_step:
+        errors.append(f"Milestone completion next step must be {expected_next_step!r}.")
     milestones = payload.get("milestones")
     if not isinstance(milestones, list):
         return errors + ["Milestone completion status must include a milestones array."]
@@ -130,12 +132,13 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
             errors.append(f"{label} must keep automated_complete=true for recovered work.")
         if item.get("manual_verification_required") is not True:
             errors.append(f"{label} must require manual verification.")
-        if item.get("manual_verification_complete") is not False:
-            errors.append(
-                f"{label} must keep manual_verification_complete=false until user evidence exists."
-            )
-        if item.get("fully_complete") is not False:
-            errors.append(f"{label} must keep fully_complete=false until manual evidence exists.")
+        if item.get("manual_verification_complete") is not item.get("fully_complete"):
+            errors.append(f"{label} manual_verification_complete must match fully_complete.")
+        if (
+            item.get("fully_complete") is True
+            and item.get("manual_verification_complete") is not True
+        ):
+            errors.append(f"{label} cannot be fully complete without manual verification.")
         if (
             not isinstance(item.get("blocking_manual_step"), str)
             or not item["blocking_manual_step"]
@@ -151,12 +154,27 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _expected_next_step(payload: dict[str, Any]) -> str:
+    milestones = payload.get("milestones")
+    if not isinstance(milestones, list) or not milestones:
+        return RECOMMENDED_NEXT_STEP
+    first = milestones[0]
+    if (
+        isinstance(first, dict)
+        and first.get("roadmap_milestone") == "M0"
+        and first.get("fully_complete") is True
+    ):
+        return M1_RECOMMENDED_NEXT_STEP
+    return RECOMMENDED_NEXT_STEP
+
+
 def _allowed_values(payload: dict[str, Any]) -> set[str]:
     values = {
         SCHEMA_VERSION,
         "tasks/milestones.md",
         "docs/milestone-completion-standard.md",
         RECOMMENDED_NEXT_STEP,
+        M1_RECOMMENDED_NEXT_STEP,
         *MILESTONES,
     }
     milestones = payload.get("milestones")

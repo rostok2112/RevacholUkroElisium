@@ -12,7 +12,8 @@ After strict M0-M4 completion recovery:
 
 Recommended next safe step:
 
-- Complete `m0_manual_verification`.
+- Owner replies with the M0 approval or rejection text. If approved, record the redacted
+  attestation and advance to `m1_manual_synthetic_slice_review`.
 
 ---
 

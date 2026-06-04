@@ -42,6 +42,15 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
 
         self.assertNotEqual([], _matrix_errors_for(mutated))
 
+    def test_accepts_m0_complete_and_advances_to_m1_manual_review(self) -> None:
+        fixture = load_json(FIXTURE_PATH)
+        mutated = copy.deepcopy(fixture)
+        mutated["recommended_next_step"] = "m1_manual_synthetic_slice_review"
+        mutated["milestones"][0]["manual_verification_complete"] = True
+        mutated["milestones"][0]["fully_complete"] = True
+
+        self.assertEqual([], _matrix_errors_for(mutated))
+
     def test_rejects_m5_planning_approval(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         mutated = copy.deepcopy(fixture)
@@ -60,6 +69,7 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         text = (ROOT / "scripts/check_all.py").read_text(encoding="utf-8")
 
         self.assertIn("scripts/check_m0_closeout.py", text)
+        self.assertIn("scripts/review_m0_manual_verification.py", text)
         self.assertIn("scripts/check_m1_closeout.py", text)
         self.assertIn("scripts/check_milestone_completion_status.py", text)
 
