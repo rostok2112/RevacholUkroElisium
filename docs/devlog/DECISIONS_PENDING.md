@@ -1,5 +1,15 @@
 # Decisions Pending
 
+- Runtime-first transport is active. `POST /runtime/current-line` accepts one local/private
+  runtime event, stores it in memory, and checks translation memory before any provider work.
+- Provider execution remains blocked. A cache miss reports `provider_call_required=true`; it does
+  not call DeepL, LLMs, or any other provider.
+- BepInEx runtime current-line transport is disabled by default and currently supports only
+  synthetic/manual localhost transport. Real game capture hooks are not approved in this slice.
+- Next runtime-first decision: `runtime_current_line_capture_spike`.
+
+---
+
 - Runtime-first translation now requires local/private translation memory before provider execution.
   Use `docs/runtime-translation-memory-contract.md`,
   `tests/fixtures/runtime_translation_memory_contract.synthetic.json`,
@@ -7,7 +17,8 @@
   `scripts/run_runtime_translation_memory.py` as the cache boundary.
 - M2 private-export verification remains blocked because no real export source exists. Do not mark
   M2 fully complete with synthetic/private placeholder data.
-- Next runtime-first decision: `runtime_current_line_capture_contract`.
+- Runtime current-line transport has replaced the earlier capture-contract handoff. The next
+  decision is `runtime_current_line_capture_spike`.
 - Translation-memory cache entries, cache keys, hashes, summaries, source text, Ukrainian text,
   prompts, provider payloads, filenames, private paths, logs, and runtime artifacts must remain out
   of git.

@@ -111,6 +111,15 @@ def main() -> int:
             ],
         ),
         (
+            "runtime current-line transport smoke",
+            [
+                sys.executable,
+                "scripts/run_runtime_current_line_smoke.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "local overlay prototype smoke",
             [
                 sys.executable,

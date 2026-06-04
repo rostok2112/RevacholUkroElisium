@@ -38,6 +38,17 @@ scripts/check_m3_current_line_event_implementation.py
 It is disabled by default and emits redacted bridge-owned metadata only. The next bounded step is
 `m3_line_id_matching`.
 
+Runtime-first transport is also available for synthetic/manual localhost tests:
+
+```text
+RuntimeCurrentLineTransportEnabled = false
+POST /runtime/current-line
+```
+
+This path only proves transport into the companion and translation-memory lookup. It does not add
+real dialogue hooks, Unity scanning, OCR, BepInEx log parsing, game-file reads, provider execution,
+or automatic current-line capture.
+
 M3 line-ID matching is guarded by:
 
 ```text
@@ -71,6 +82,7 @@ What exists:
 - Config entries for enabling the bridge, companion URL, timeout, and synthetic send-on-start.
 - Localhost-only companion `/health` check.
 - Manual/synthetic fake-event send to `POST /synthetic/provider-annotate`.
+- Disabled-by-default runtime current-line send to `POST /runtime/current-line`.
 - Disabled-by-default metadata probe snapshot support.
 - Metadata-only logs for event id, line id, status, and unavailable companion states.
 

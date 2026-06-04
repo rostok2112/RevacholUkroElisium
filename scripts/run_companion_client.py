@@ -41,6 +41,7 @@ def main() -> int:
         "latest-eval-summary",
         "latest-provider-context",
         "latest-provider-annotation",
+        "latest-runtime-current-line",
         "latest-review-html",
         "run-synthetic-eval",
         "smoke-test",
@@ -67,6 +68,13 @@ def main() -> int:
         type=Path,
         required=True,
         help="Synthetic context packet JSON to annotate with the deterministic mock provider.",
+    )
+    runtime_parser = subparsers.add_parser("post-runtime-current-line")
+    runtime_parser.add_argument(
+        "--event",
+        type=Path,
+        required=True,
+        help="Runtime current-line event JSON.",
     )
 
     args = parser.parse_args()
@@ -103,6 +111,8 @@ def _run_command(client: CompanionClient, args: argparse.Namespace) -> object:
         return client.latest_provider_context()
     if args.command == "latest-provider-annotation":
         return client.latest_provider_annotation()
+    if args.command == "latest-runtime-current-line":
+        return client.latest_runtime_current_line()
     if args.command == "latest-review-html":
         return client.latest_review_html()
     if args.command == "run-synthetic-eval":
@@ -113,6 +123,8 @@ def _run_command(client: CompanionClient, args: argparse.Namespace) -> object:
         return client.provider_annotate_fake_event(load_json(args.event))
     if args.command == "provider-annotate-context":
         return client.provider_annotate_context_packet(load_json(args.context_packet))
+    if args.command == "post-runtime-current-line":
+        return client.post_runtime_current_line(load_json(args.event))
     raise CompanionClientError(f"Unknown command: {args.command}")
 
 
@@ -153,6 +165,27 @@ def run_smoke_test() -> int:
             return 1
         if "Revachol Synthetic Review" not in client.latest_review_html():
             print("Companion client smoke test failed: latest review HTML is missing.")
+            return 1
+        runtime_result = client.post_runtime_current_line(
+            {
+                "schema_version": "runtime-current-line-event.v1",
+                "event_kind": "current_line",
+                "line_id": "synthetic.runtime.client.001",
+                "source_text": "Invented runtime smoke line.",
+                "speaker": "Synthetic Speaker",
+                "conversation_id": "synthetic.runtime.conversation",
+                "source": "synthetic_runtime",
+            }
+        )
+        if runtime_result["provider_called"] or not runtime_result["event_received"]:
+            print("Companion client smoke test failed: runtime current-line receipt invalid.")
+            return 1
+        latest_runtime = client.latest_runtime_current_line()
+        if (
+            latest_runtime is None
+            or latest_runtime["event"]["line_id"] != "synthetic.runtime.client.001"
+        ):
+            print("Companion client smoke test failed: latest runtime current-line is missing.")
             return 1
         eval_summary = client.run_synthetic_eval()
         if not eval_summary["passed"]:

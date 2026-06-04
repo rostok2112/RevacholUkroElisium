@@ -10,8 +10,11 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         public const string EventKind = "current_line";
         public const string BridgeSource = "bepinex";
         public const string SourceSynthetic = "synthetic";
+        public const string SourceSyntheticRuntime = "synthetic_runtime";
         public const string SyntheticLineId = SyntheticEventFactory.SyntheticLineId;
         public const string SyntheticConversationId = SyntheticEventFactory.ConversationId;
+        public const string SyntheticRuntimeSourceText = "Invented runtime bridge smoke line.";
+        public const string SyntheticRuntimeSpeaker = "Synthetic Speaker";
 
         public static string BuildSyntheticCurrentLineEventJson()
         {
@@ -44,6 +47,59 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
             builder.Append("\"private_paths_included\":false");
             AppendComma(builder, ref first);
             builder.Append("\"provider_called\":false");
+            builder.Append("}");
+            return builder.ToString();
+        }
+
+        public static string BuildSyntheticRuntimeCurrentLineEventJson()
+        {
+            return BuildRuntimeCurrentLineEventJson(
+                SyntheticLineId,
+                SyntheticRuntimeSourceText,
+                SyntheticRuntimeSpeaker,
+                SyntheticConversationId,
+                SourceSyntheticRuntime
+            );
+        }
+
+        public static string BuildRuntimeCurrentLineEventJson(
+            string lineId,
+            string sourceText,
+            string speaker,
+            string conversationId,
+            string source
+        )
+        {
+            Dictionary<string, string> stringFields = new Dictionary<string, string>
+            {
+                { "schema_version", "runtime-current-line-event.v1" },
+                { "event_kind", EventKind },
+                { "line_id", lineId ?? string.Empty },
+                { "source_text", sourceText ?? string.Empty },
+                { "speaker", speaker ?? string.Empty },
+                { "conversation_id", conversationId ?? string.Empty },
+                { "source", source ?? "bepinex_runtime" },
+            };
+
+            StringBuilder builder = new StringBuilder();
+            builder.Append("{");
+            bool first = true;
+            foreach (KeyValuePair<string, string> field in stringFields)
+            {
+                AppendComma(builder, ref first);
+                AppendStringField(builder, field.Key, field.Value);
+            }
+
+            AppendComma(builder, ref first);
+            builder.Append("\"provider_called\":false");
+            AppendComma(builder, ref first);
+            builder.Append("\"game_file_read\":false");
+            AppendComma(builder, ref first);
+            builder.Append("\"screenshot_included\":false");
+            AppendComma(builder, ref first);
+            builder.Append("\"bepinex_log_read\":false");
+            AppendComma(builder, ref first);
+            builder.Append("\"private_path_included\":false");
             builder.Append("}");
             return builder.ToString();
         }

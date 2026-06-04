@@ -39,8 +39,10 @@ class CompanionServerTests(unittest.TestCase):
         self.assertFalse(data["latest_state"]["has_latest_context"])
         self.assertFalse(data["latest_state"]["has_latest_provider_context"])
         self.assertFalse(data["latest_state"]["has_latest_provider_annotation"])
+        self.assertFalse(data["latest_state"]["has_latest_runtime_current_line"])
         self.assertIn("GET /health", data["endpoints"])
         self.assertIn("POST /synthetic/provider-annotate", data["endpoints"])
+        self.assertIn("POST /runtime/current-line", data["endpoints"])
         self.assertIn("application/json", headers["Content-Type"])
 
     def test_valid_synthetic_event_returns_slice_outputs(self) -> None:
@@ -107,6 +109,9 @@ class CompanionServerTests(unittest.TestCase):
             provider_annotation_status, _headers, provider_annotation = server.get_json(
                 "/state/latest-provider-annotation"
             )
+            runtime_status, _headers, runtime = server.get_json(
+                "/state/latest-runtime-current-line"
+            )
 
         self.assertEqual(200, context_status)
         self.assertIsNone(context["data"])
@@ -118,6 +123,53 @@ class CompanionServerTests(unittest.TestCase):
         self.assertIsNone(provider_context["data"])
         self.assertEqual(200, provider_annotation_status)
         self.assertIsNone(provider_annotation["data"])
+        self.assertEqual(200, runtime_status)
+        self.assertIsNone(runtime["data"])
+
+    def test_runtime_current_line_event_is_stored_in_memory_only(self) -> None:
+        event = _runtime_event()
+
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json("/runtime/current-line", event)
+            latest_status, _headers, latest = server.get_json("/state/latest-runtime-current-line")
+
+        self.assertEqual(200, status)
+        self.assertTrue(payload["ok"])
+        self.assertTrue(payload["data"]["event_received"])
+        self.assertFalse(payload["data"]["provider_called"])
+        self.assertTrue(payload["data"]["translation_memory"]["provider_call_required"])
+        self.assertEqual(200, latest_status)
+        self.assertEqual(event, latest["data"]["event"])
+        self.assertTrue(latest["data"]["translation_memory"]["provider_call_required"])
+
+    def test_runtime_current_line_rejects_invalid_shape(self) -> None:
+        with ServerHarness() as server:
+            status, _headers, payload = server.post_json(
+                "/runtime/current-line",
+                {
+                    "schema_version": "runtime-current-line-event.v0",
+                    "event_kind": "current_line",
+                    "source_text": "Invented runtime line.",
+                    "source": "synthetic_runtime",
+                },
+            )
+
+        self.assertEqual(400, status)
+        self.assertFalse(payload["ok"])
+        self.assertEqual("invalid_runtime_current_line", payload["error"]["code"])
+
+    def test_runtime_current_line_does_not_update_provider_state(self) -> None:
+        with ServerHarness() as server:
+            server.post_json("/runtime/current-line", _runtime_event())
+            context_status, _headers, context = server.get_json("/state/latest-provider-context")
+            annotation_status, _headers, annotation = server.get_json(
+                "/state/latest-provider-annotation"
+            )
+
+        self.assertEqual(200, context_status)
+        self.assertIsNone(context["data"])
+        self.assertEqual(200, annotation_status)
+        self.assertIsNone(annotation["data"])
 
     def test_synthetic_eval_post_and_latest_eval_summary(self) -> None:
         with ServerHarness() as server:
@@ -371,6 +423,18 @@ class ServerHarness(AbstractContextManager["ServerHarness"]):
     @property
     def url(self) -> str:
         return f"http://{self.host}:{self.port}"
+
+
+def _runtime_event() -> dict[str, Any]:
+    return {
+        "schema_version": "runtime-current-line-event.v1",
+        "event_kind": "current_line",
+        "line_id": "synthetic.runtime.server.001",
+        "source_text": "Invented runtime line for endpoint tests.",
+        "speaker": "Synthetic Speaker",
+        "conversation_id": "synthetic.runtime.conversation",
+        "source": "synthetic_runtime",
+    }
 
 
 if __name__ == "__main__":

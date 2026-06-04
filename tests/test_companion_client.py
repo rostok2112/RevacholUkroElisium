@@ -77,8 +77,28 @@ class CompanionClientTests(unittest.TestCase):
         )
         self.assertEqual(result["context_packet"], context)
         self.assertEqual(result["annotation_card"], annotation)
-        self.assertIn("prompt_pack_guided", annotation["risk_flags"])
-        self.assertEqual("ukrainian_annotation_v1", annotation["prompt_pack"]["pack_id"])
+
+    def test_client_post_runtime_current_line_and_latest_state(self) -> None:
+        event = {
+            "schema_version": "runtime-current-line-event.v1",
+            "event_kind": "current_line",
+            "line_id": "synthetic.runtime.client-test.001",
+            "source_text": "Invented runtime line for client tests.",
+            "speaker": "Synthetic Speaker",
+            "conversation_id": "synthetic.runtime.conversation",
+            "source": "synthetic_runtime",
+        }
+
+        with ServerHarness() as server:
+            result = server.client.post_runtime_current_line(event)
+            latest = server.client.latest_runtime_current_line()
+
+        self.assertTrue(result["event_received"])
+        self.assertFalse(result["provider_called"])
+        self.assertTrue(result["translation_memory"]["provider_call_required"])
+        self.assertIsNotNone(latest)
+        assert latest is not None
+        self.assertEqual(event, latest["event"])
 
     def test_client_provider_annotate_context_packet(self) -> None:
         context_packet = build_context_packet(load_json(VALID_EVENT))

@@ -30,5 +30,5 @@
   "hash_or_key_public_output_allowed": false,
   "raw_provider_payload_public_output_allowed": false,
   "private_paths_public_output_allowed": false,
-  "recommended_next_step": "runtime_current_line_capture_contract"
+  "recommended_next_step": "runtime_current_line_capture_spike"
 }

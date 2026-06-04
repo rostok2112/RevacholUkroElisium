@@ -170,6 +170,30 @@ def run_translation_memory(
     return _finalize(summary)
 
 
+def build_lookup_summary_for_event(
+    event: dict[str, Any],
+    cache_root: Path,
+    *,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    cache_root_resolved = resolve_cache_root(cache_root, root=root)
+    summary = _base_summary("lookup")
+    summary["event_exists"] = True
+    if not isinstance(event, dict):
+        summary["blocker_categories"].append("event_json_object_required")
+        return _finalize(summary)
+    if _contains_unsafe_public_marker(event):
+        summary["blocker_categories"].append("event_unsafe_marker_detected")
+        return _finalize(summary)
+    key = _cache_key(event)
+    summary["key_kind"] = key["kind"]
+    entry_path = cache_root_resolved / key["filename"]
+    summary["cache_hit"] = (
+        entry_path.exists() and entry_path.is_file() and not entry_path.is_symlink()
+    )
+    return _finalize(summary)
+
+
 def resolve_private_file_path(
     path: Path,
     allowed_root: str,
@@ -339,7 +363,7 @@ def _base_summary(mode: str) -> dict[str, Any]:
         "provider_execution_performed": False,
         "companion_contract_changed": False,
         "cache_root_allowed": PRIVATE_CACHE_ROOT,
-        "recommended_next_step": "runtime_current_line_capture_contract",
+        "recommended_next_step": "runtime_current_line_capture_spike",
     }
 
 

@@ -41,6 +41,18 @@ scripts/check_m3_current_line_event_implementation.py
 It is disabled by default and emits redacted bridge-owned metadata only. The next bounded step is
 `m3_line_id_matching`.
 
+Runtime-first transport is now available as a disabled-by-default localhost path:
+
+```text
+RuntimeCurrentLineTransportEnabled = false
+POST /runtime/current-line
+```
+
+The helper can send a synthetic/manual runtime current-line payload to the companion so transport and
+translation-memory lookup can be tested before any real capture work. It does not add game hooks,
+Unity UI scanning, OCR, BepInEx log parsing, game-file reads, provider execution, or automatic text
+capture.
+
 M3 line-ID matching is guarded by:
 
 ```text

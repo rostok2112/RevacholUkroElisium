@@ -52,11 +52,17 @@ class CompanionClient:
     def latest_provider_annotation(self) -> dict[str, Any] | None:
         return self._request_json("GET", "/state/latest-provider-annotation")
 
+    def latest_runtime_current_line(self) -> dict[str, Any] | None:
+        return self._request_json("GET", "/state/latest-runtime-current-line")
+
     def latest_review_html(self) -> str:
         return self._request_text("GET", "/review/latest.html")
 
     def post_synthetic_event(self, event: dict[str, Any]) -> dict[str, Any]:
         return self._request_json("POST", "/synthetic/event", event)
+
+    def post_runtime_current_line(self, event: dict[str, Any]) -> dict[str, Any]:
+        return self._request_json("POST", "/runtime/current-line", event)
 
     def run_synthetic_eval(self) -> dict[str, Any]:
         return self._request_json("POST", "/synthetic/eval", {})

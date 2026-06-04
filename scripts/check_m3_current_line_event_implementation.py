@@ -169,6 +169,8 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         errors.append("M3 current-line event must remain disabled by default.")
     if payload.get("default_emit_synthetic_current_line_event_on_start") is not False:
         errors.append("M3 synthetic current-line startup event must remain disabled by default.")
+    if payload.get("default_runtime_current_line_transport_enabled") not in (None, False):
+        errors.append("Runtime current-line transport must remain disabled by default.")
     for field in REQUIRED_TRUE_FIELDS:
         if payload.get(field) is not True:
             errors.append(f"M3 current-line implementation fixture must set {field}=true.")
@@ -187,10 +189,14 @@ def _source_errors() -> list[str]:
     required_markers = (
         "DefaultCurrentLineEventEnabled = false",
         "DefaultEmitSyntheticCurrentLineEventOnStart = false",
+        "DefaultRuntimeCurrentLineTransportEnabled = false",
         "CurrentLineEventEnabled",
         "EmitSyntheticCurrentLineEventOnStart",
+        "RuntimeCurrentLineTransportEnabled",
         "EmitSyntheticCurrentLineEventNow",
+        "SendSyntheticRuntimeCurrentLineEventNowAsync",
         "CurrentLineEventFactory.BuildSyntheticCurrentLineEventJson",
+        "CurrentLineEventFactory.BuildSyntheticRuntimeCurrentLineEventJson",
         'SchemaVersion = "m3-current-line-event.v1"',
         'EventKind = "current_line"',
         'BridgeSource = "bepinex"',
@@ -222,8 +228,8 @@ def _source_errors() -> list[str]:
     for marker in forbidden_event_source_markers:
         if marker in event_source:
             errors.append(f"M3 current-line event source must not contain {marker!r}.")
-    if "PostCurrentLine" in client or "current-line" in client:
-        errors.append("M3 current-line implementation must not add companion HTTP endpoints.")
+    if "PostRuntimeCurrentLineAsync" not in client or "runtime/current-line" not in client:
+        errors.append("Runtime-first current-line transport must post to runtime/current-line.")
     if "LineIndex" in combined or "line-index" in combined:
         errors.append("M3 current-line implementation must not read or match line indexes.")
     return errors

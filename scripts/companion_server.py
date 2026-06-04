@@ -3,11 +3,16 @@ from __future__ import annotations
 from dataclasses import dataclass
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
 try:
     from scripts.provider_pipeline import ProviderPipelineError, run_provider_pipeline
+    from scripts.run_runtime_translation_memory import (
+        PRIVATE_CACHE_ROOT,
+        build_lookup_summary_for_event,
+    )
     from scripts.schema_validator import SchemaValidationError, assert_valid, load_json
     from scripts.synthetic_eval import run_synthetic_eval
     from scripts.synthetic_review_renderer import render_review_html
@@ -18,6 +23,7 @@ try:
     )
 except ModuleNotFoundError:  # pragma: no cover - used when run as a script dependency.
     from provider_pipeline import ProviderPipelineError, run_provider_pipeline
+    from run_runtime_translation_memory import PRIVATE_CACHE_ROOT, build_lookup_summary_for_event
     from schema_validator import SchemaValidationError, assert_valid, load_json
     from synthetic_eval import run_synthetic_eval
     from synthetic_review_renderer import render_review_html
@@ -37,7 +43,9 @@ ENDPOINTS = [
     "GET /state/latest-eval-summary",
     "GET /state/latest-provider-context",
     "GET /state/latest-provider-annotation",
+    "GET /state/latest-runtime-current-line",
     "GET /review/latest.html",
+    "POST /runtime/current-line",
     "POST /synthetic/event",
     "POST /synthetic/eval",
     "POST /synthetic/provider-annotate",
@@ -48,6 +56,7 @@ STABLE_ERROR_CODES = [
     "invalid_json",
     "invalid_request",
     "invalid_fake_event",
+    "invalid_runtime_current_line",
     "method_not_allowed",
     "internal_error",
 ]
@@ -59,6 +68,8 @@ class CompanionState:
     latest_eval_summary: dict[str, Any] | None = None
     latest_provider_context_packet: dict[str, Any] | None = None
     latest_provider_annotation_card: dict[str, Any] | None = None
+    latest_runtime_current_line_event: dict[str, Any] | None = None
+    latest_runtime_translation_memory_summary: dict[str, Any] | None = None
 
     def latest_context_packet(self) -> dict[str, Any] | None:
         if self.latest_slice_result is None:
@@ -80,6 +91,14 @@ class CompanionState:
 
     def latest_provider_annotation(self) -> dict[str, Any] | None:
         return self.latest_provider_annotation_card
+
+    def latest_runtime_current_line(self) -> dict[str, Any] | None:
+        if self.latest_runtime_current_line_event is None:
+            return None
+        return {
+            "event": self.latest_runtime_current_line_event,
+            "translation_memory": self.latest_runtime_translation_memory_summary,
+        }
 
 
 def make_server(
@@ -139,6 +158,8 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
                 self._send_json(200, _ok(state.latest_provider_context()))
             elif path == "/state/latest-provider-annotation":
                 self._send_json(200, _ok(state.latest_provider_annotation()))
+            elif path == "/state/latest-runtime-current-line":
+                self._send_json(200, _ok(state.latest_runtime_current_line()))
             elif path == "/review/latest.html":
                 self._handle_latest_review()
             else:
@@ -149,6 +170,8 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
 
             if path == "/synthetic/event":
                 self._handle_synthetic_event()
+            elif path == "/runtime/current-line":
+                self._handle_runtime_current_line()
             elif path == "/synthetic/eval":
                 self._handle_synthetic_eval()
             elif path == "/synthetic/provider-annotate":
@@ -183,6 +206,38 @@ def make_handler(state: CompanionState) -> type[BaseHTTPRequestHandler]:
                         "context_packet": result["context_packet"],
                         "annotation_card": result["annotation_card"],
                         "overlay_demo": result["overlay_demo"],
+                    }
+                ),
+            )
+
+        def _handle_runtime_current_line(self) -> None:
+            try:
+                event = self._read_json_body()
+            except _InvalidJson as exc:
+                self._send_error_json(400, "invalid_json", str(exc))
+                return
+
+            errors = _runtime_current_line_event_errors(event)
+            if errors:
+                self._send_error_json(
+                    400,
+                    "invalid_runtime_current_line",
+                    "; ".join(errors),
+                )
+                return
+
+            assert isinstance(event, dict)
+            translation_memory = build_lookup_summary_for_event(event, Path(PRIVATE_CACHE_ROOT))
+            state.latest_runtime_current_line_event = event
+            state.latest_runtime_translation_memory_summary = translation_memory
+            self._send_json(
+                200,
+                _ok(
+                    {
+                        "schema_version": "runtime-current-line-receipt.v1",
+                        "event_received": True,
+                        "translation_memory": translation_memory,
+                        "provider_called": False,
                     }
                 ),
             )
@@ -387,10 +442,46 @@ def _health_payload(state: CompanionState) -> dict[str, Any]:
             "has_latest_eval_summary": state.latest_eval_summary is not None,
             "has_latest_provider_context": state.latest_provider_context() is not None,
             "has_latest_provider_annotation": state.latest_provider_annotation() is not None,
+            "has_latest_runtime_current_line": state.latest_runtime_current_line() is not None,
         },
         "endpoints": ENDPOINTS,
         "stable_error_codes": STABLE_ERROR_CODES,
     }
+
+
+def _runtime_current_line_event_errors(payload: Any) -> list[str]:
+    if not isinstance(payload, dict):
+        return ["Runtime current-line event must be a JSON object."]
+    errors: list[str] = []
+    expected = {
+        "schema_version": "runtime-current-line-event.v1",
+        "event_kind": "current_line",
+    }
+    for field, value in expected.items():
+        if payload.get(field) != value:
+            errors.append(f"{field} must be {value!r}.")
+    source = payload.get("source")
+    if source not in {"bepinex_runtime", "manual_runtime", "synthetic_runtime"}:
+        errors.append("source must be bepinex_runtime, manual_runtime, or synthetic_runtime.")
+    source_text = payload.get("source_text")
+    if not isinstance(source_text, str) or not source_text:
+        errors.append("source_text must be a non-empty string.")
+    for optional in ("line_id", "speaker", "conversation_id"):
+        value = payload.get(optional)
+        if value is not None and not isinstance(value, str):
+            errors.append(f"{optional} must be a string when present.")
+    forbidden_true_fields = (
+        "provider_called",
+        "game_file_read",
+        "screenshot_included",
+        "ocr_used",
+        "bepinex_log_read",
+        "private_path_included",
+    )
+    for field in forbidden_true_fields:
+        if payload.get(field) is True:
+            errors.append(f"{field} must not be true.")
+    return errors
 
 
 def _ok(data: Any) -> dict[str, Any]:

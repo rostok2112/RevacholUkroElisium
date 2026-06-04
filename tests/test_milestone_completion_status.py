@@ -28,10 +28,11 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         fixture = load_json(FIXTURE_PATH)
 
         self.assertFalse(fixture["m5_planning_allowed"])
-        self.assertEqual("runtime_current_line_capture_contract", fixture["recommended_next_step"])
+        self.assertEqual("runtime_current_line_capture_spike", fixture["recommended_next_step"])
         self.assertTrue(fixture["runtime_first_path_active"])
         self.assertFalse(fixture["m2_private_export_source_available"])
         self.assertTrue(fixture["runtime_translation_memory_done"])
+        self.assertTrue(fixture["runtime_current_line_transport_done"])
         self.assertTrue(fixture["milestones"][0]["manual_verification_complete"])
         self.assertTrue(fixture["milestones"][0]["fully_complete"])
         self.assertTrue(fixture["milestones"][1]["manual_verification_complete"])
@@ -59,6 +60,7 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         mutated["recommended_next_step"] = "m2_manual_private_export_verification"
         mutated["runtime_first_path_active"] = False
         mutated["runtime_translation_memory_done"] = False
+        mutated["runtime_current_line_transport_done"] = False
         mutated["m2_private_export_source_available"] = True
         mutated["milestones"][1]["manual_verification_complete"] = True
         mutated["milestones"][1]["fully_complete"] = True
@@ -71,6 +73,7 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         mutated["recommended_next_step"] = "m3_manual_runtime_verification"
         mutated["runtime_first_path_active"] = False
         mutated["runtime_translation_memory_done"] = False
+        mutated["runtime_current_line_transport_done"] = False
         mutated["m2_private_export_source_available"] = True
         mutated["milestones"][2]["manual_verification_complete"] = True
         mutated["milestones"][2]["fully_complete"] = True
@@ -81,6 +84,13 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         fixture = load_json(FIXTURE_PATH)
         mutated = copy.deepcopy(fixture)
         mutated["m2_private_export_source_available"] = True
+
+        self.assertNotEqual([], _matrix_errors_for(mutated))
+
+    def test_runtime_first_requires_transport_done_marker(self) -> None:
+        fixture = load_json(FIXTURE_PATH)
+        mutated = copy.deepcopy(fixture)
+        mutated["runtime_current_line_transport_done"] = False
 
         self.assertNotEqual([], _matrix_errors_for(mutated))
 

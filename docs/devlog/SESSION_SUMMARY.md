@@ -1,5 +1,27 @@
 # Session Summary
 
+Runtime-first current-line transport is now implemented.
+
+Completed in the latest session:
+- Added `POST /runtime/current-line` and `GET /state/latest-runtime-current-line` to the
+  companion server.
+- Runtime events are accepted only as `runtime-current-line-event.v1` payloads and are stored in
+  memory only. The endpoint does not call providers and does not write runtime text to tracked
+  files.
+- Added BepInEx-side runtime current-line transport helpers:
+  `CompanionHttpClient.PostRuntimeCurrentLineAsync`,
+  `CurrentLineEventFactory.BuildRuntimeCurrentLineEventJson`, and a disabled-by-default
+  `RuntimeCurrentLineTransportEnabled` config option.
+- Added `scripts/run_runtime_current_line_smoke.py` as redacted local smoke evidence for the
+  runtime transport and translation-memory lookup.
+- Runtime translation-memory lookup now runs on runtime event ingestion. Cache hits set
+  `provider_call_required=false`; cache misses report that a later provider step may be needed.
+- M2 private-export verification remains blocked because no export source exists. The active path is
+  runtime-first transport, then local capture spike.
+- The next safe step is `runtime_current_line_capture_spike`.
+
+---
+
 Runtime-first translation memory is now the active bridge between the blocked M2 private-export path
 and the desired in-game current-line translation flow.
 
@@ -16,7 +38,7 @@ Completed in the latest session:
 - Public summaries do not include source text, Ukrainian text, prompts, provider payloads, cache
   keys, hashes, filenames, private paths, logs, or runtime evidence.
 - M2 private-export strict verification remains blocked because no real export source exists. The
-  runtime-first path is active, with `runtime_current_line_capture_contract` as the next step.
+  runtime-first path is active, with `runtime_current_line_capture_spike` as the next step.
 
 ---
 

@@ -21,6 +21,7 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         public const bool DefaultMetadataProbeLogOnStart = false;
         public const bool DefaultCurrentLineEventEnabled = false;
         public const bool DefaultEmitSyntheticCurrentLineEventOnStart = false;
+        public const bool DefaultRuntimeCurrentLineTransportEnabled = false;
         public const bool DefaultDebugConsoleEnabled = false;
 
         private ConfigEntry<bool>? _enabled;
@@ -31,6 +32,7 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         private ConfigEntry<bool>? _metadataProbeLogOnStart;
         private ConfigEntry<bool>? _currentLineEventEnabled;
         private ConfigEntry<bool>? _emitSyntheticCurrentLineEventOnStart;
+        private ConfigEntry<bool>? _runtimeCurrentLineTransportEnabled;
         private ConfigEntry<bool>? _debugConsoleEnabled;
         private CompanionHttpClient? _client;
 
@@ -128,6 +130,49 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
             _ = eventJson.Length;
         }
 
+        public async Task SendSyntheticRuntimeCurrentLineEventNowAsync()
+        {
+            if (_runtimeCurrentLineTransportEnabled == null || !_runtimeCurrentLineTransportEnabled.Value)
+            {
+                Log.LogInfo("Runtime current-line transport skipped because the feature is disabled.");
+                return;
+            }
+
+            if (_client == null)
+            {
+                Log.LogWarning("Runtime current-line transport skipped because the companion client is unavailable.");
+                return;
+            }
+
+            if (!_client.IsLocalhost)
+            {
+                Log.LogWarning("Runtime current-line transport skipped because the companion URL is not localhost.");
+                return;
+            }
+
+            string payload = CurrentLineEventFactory.BuildSyntheticRuntimeCurrentLineEventJson();
+            BridgeHttpResult result = await _client.PostRuntimeCurrentLineAsync(payload);
+            if (result.Success)
+            {
+                Log.LogInfo(
+                    "Synthetic runtime current-line event sent: line_id="
+                    + CurrentLineEventFactory.SyntheticLineId
+                    + ", status="
+                    + result.StatusCode
+                    + ", provider_called=false."
+                );
+                return;
+            }
+
+            Log.LogWarning(
+                "Synthetic runtime current-line event was not accepted: line_id="
+                + CurrentLineEventFactory.SyntheticLineId
+                + ", status="
+                + result.StatusCode
+                + "."
+            );
+        }
+
         public string RunDebugCommand(string commandName)
         {
             if (_debugConsoleEnabled == null || !_debugConsoleEnabled.Value)
@@ -196,6 +241,12 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 "EmitSyntheticCurrentLineEventOnStart",
                 DefaultEmitSyntheticCurrentLineEventOnStart,
                 "Emit the built-in redacted synthetic current-line metadata event after startup checks."
+            );
+            _runtimeCurrentLineTransportEnabled = Config.Bind(
+                "CurrentLineEvent",
+                "RuntimeCurrentLineTransportEnabled",
+                DefaultRuntimeCurrentLineTransportEnabled,
+                "Enable the disabled-by-default runtime current-line transport to localhost."
             );
             _debugConsoleEnabled = Config.Bind(
                 "DebugConsole",

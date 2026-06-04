@@ -57,8 +57,8 @@ Runtime translation memory is tracked by
 `docs/runtime-translation-memory-contract.md`,
 `tests/fixtures/runtime_translation_memory_contract.synthetic.json`,
 `scripts/check_runtime_translation_memory_contract.py`, and
-`scripts/run_runtime_translation_memory.py`. The next runtime-first step after that cache guardrail
-is `runtime_current_line_capture_contract`.
+`scripts/run_runtime_translation_memory.py`. Runtime current-line transport now exists; the next
+runtime-first step is `runtime_current_line_capture_spike`.
 
 ### 4. Overlay
 

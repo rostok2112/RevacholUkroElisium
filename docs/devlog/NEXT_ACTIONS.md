@@ -1,5 +1,24 @@
 # Next Actions
 
+After runtime current-line transport:
+
+1. Treat `POST /runtime/current-line`, `GET /state/latest-runtime-current-line`,
+   `scripts/run_runtime_current_line_smoke.py`, and the BepInEx disabled-by-default transport
+   helpers as the active runtime-first transport boundary.
+2. The transport may move one explicit runtime current-line event to the companion and check
+   translation memory, but it must not call providers, add hooks, scan Unity UI, read game files,
+   parse BepInEx logs, use OCR, or write runtime text to tracked files.
+3. M2 private-export verification remains blocked until a real export source exists; do not fake it
+   with synthetic/private placeholder data.
+4. Keep runtime source text, Ukrainian text, cache entries, provider payloads, keys, hashes,
+   filenames, private paths, logs, screenshots, and runtime artifacts out of git.
+
+Recommended next safe step:
+
+- Run `runtime_current_line_capture_spike`.
+
+---
+
 After runtime translation memory:
 
 1. Treat `docs/runtime-translation-memory-contract.md`,
@@ -14,7 +33,7 @@ After runtime translation memory:
 
 Recommended next safe step:
 
-- Define `runtime_current_line_capture_contract`.
+- Implemented by the runtime current-line transport slice above.
 
 ---
 

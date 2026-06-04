@@ -37,6 +37,11 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
             return SendAsync(HttpMethod.Post, "synthetic/provider-annotate", jsonPayload);
         }
 
+        public Task<BridgeHttpResult> PostRuntimeCurrentLineAsync(string jsonPayload)
+        {
+            return SendAsync(HttpMethod.Post, "runtime/current-line", jsonPayload);
+        }
+
         public void Dispose()
         {
             _httpClient.Dispose();

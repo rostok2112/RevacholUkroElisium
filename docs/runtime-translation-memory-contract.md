@@ -4,8 +4,8 @@ Runtime-first translation must check local translation memory before any provide
 repeated visible lines from being translated twice during play.
 
 This contract is local/private only. It does not approve provider execution, game-file extraction,
-automatic game scanning, OCR, screenshots, BepInEx log reads, companion HTTP contract changes, or
-committed runtime artifacts.
+automatic game scanning, OCR, screenshots, BepInEx log reads, game capture hooks, or committed
+runtime artifacts.
 
 ## Private Roots
 
@@ -49,8 +49,17 @@ It supports `lookup`, `store`, and `lookup-or-store` modes. It may write cache e
 `workspace/local-private/runtime-cache/translation-memory/` and may write redacted summaries only
 under `workspace/local-private/runtime-cache/translation-memory-summary/`.
 
+The companion runtime endpoint now applies this lookup when receiving:
+
+```text
+POST /runtime/current-line
+```
+
+The endpoint stores the latest runtime event in memory and returns redacted translation-memory
+status. It does not execute providers. Runtime capture hooks remain a later local spike.
+
 The next runtime-first step is:
 
 ```text
-runtime_current_line_capture_contract
+runtime_current_line_capture_spike
 ```

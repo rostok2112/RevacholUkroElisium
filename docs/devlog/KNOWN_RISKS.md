@@ -1,5 +1,17 @@
 # Known Risks
 
+- Runtime current-line transport now accepts private runtime text through
+  `POST /runtime/current-line` and keeps the latest event in companion memory. This is local-only
+  transport, not capture: no hooks, Unity scanning, OCR, game-file reads, BepInEx log reads,
+  provider execution, or tracked runtime text are approved.
+- `RuntimeCurrentLineTransportEnabled` remains disabled by default in the BepInEx config. Enabling
+  it before a local capture spike should be done only for synthetic/manual localhost tests.
+- `scripts/run_runtime_current_line_smoke.py` is redacted public evidence only. Generated/private
+  runtime reports must stay under ignored workspace roots.
+- The next safe step is `runtime_current_line_capture_spike`.
+
+---
+
 - Runtime translation memory now writes private cache entries under
   `workspace/local-private/runtime-cache/translation-memory/`. The cache may contain real runtime
   source text and Ukrainian translations, so it must remain ignored and must never be copied into
@@ -12,7 +24,8 @@
   `scripts/check_runtime_translation_memory_contract.py`, and
   `scripts/run_runtime_translation_memory.py` do not approve provider execution; they only ensure a
   cache hit prevents repeat translation.
-- The next safe step is `runtime_current_line_capture_contract`.
+- The runtime current-line transport now exists; the next safe step is
+  `runtime_current_line_capture_spike`.
 
 ---
 
