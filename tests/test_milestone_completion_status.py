@@ -28,8 +28,10 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         fixture = load_json(FIXTURE_PATH)
 
         self.assertFalse(fixture["m5_planning_allowed"])
-        self.assertEqual("m0_manual_verification", fixture["recommended_next_step"])
-        for entry in fixture["milestones"]:
+        self.assertEqual("m1_manual_synthetic_slice_review", fixture["recommended_next_step"])
+        self.assertTrue(fixture["milestones"][0]["manual_verification_complete"])
+        self.assertTrue(fixture["milestones"][0]["fully_complete"])
+        for entry in fixture["milestones"][1:]:
             self.assertTrue(entry["automated_complete"])
             self.assertTrue(entry["manual_verification_required"])
             self.assertFalse(entry["manual_verification_complete"])
@@ -38,18 +40,13 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
     def test_rejects_fully_complete_without_manual_verification(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         mutated = copy.deepcopy(fixture)
-        mutated["milestones"][0]["fully_complete"] = True
+        mutated["milestones"][1]["fully_complete"] = True
 
         self.assertNotEqual([], _matrix_errors_for(mutated))
 
     def test_accepts_m0_complete_and_advances_to_m1_manual_review(self) -> None:
         fixture = load_json(FIXTURE_PATH)
-        mutated = copy.deepcopy(fixture)
-        mutated["recommended_next_step"] = "m1_manual_synthetic_slice_review"
-        mutated["milestones"][0]["manual_verification_complete"] = True
-        mutated["milestones"][0]["fully_complete"] = True
-
-        self.assertEqual([], _matrix_errors_for(mutated))
+        self.assertEqual([], _matrix_errors_for(copy.deepcopy(fixture)))
 
     def test_rejects_m5_planning_approval(self) -> None:
         fixture = load_json(FIXTURE_PATH)

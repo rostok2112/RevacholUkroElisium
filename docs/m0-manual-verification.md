@@ -37,9 +37,9 @@ I confirm that:
 - M0 may be marked fully complete under the strict completion standard.
 ```
 
-Until that approval exists, M0 remains:
+The approval is now recorded in redacted tracked status fields:
 
 ```text
-manual_verification_complete: false
-fully_complete: false
+manual_verification_complete: true
+fully_complete: true
 ```

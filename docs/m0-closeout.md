@@ -44,15 +44,15 @@ Manual verification required:
 owner_confirms_repo_contracts_and_safety_policy
 ```
 
-M0 is not fully complete until that redacted manual confirmation is recorded.
+M0 is fully complete because the redacted owner confirmation is recorded in tracked status fields.
 
-The next strict completion step is:
+The previous strict completion step was:
 
 ```text
 m0_manual_verification
 ```
 
-After a passing chat-attestation review, the next strict completion step becomes:
+The next strict completion step is:
 
 ```text
 m1_manual_synthetic_slice_review

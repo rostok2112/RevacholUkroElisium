@@ -5,8 +5,8 @@
   `scripts/check_milestone_completion_status.py` as the current completion boundary.
 - M5 planning is blocked until M0, M1, M2, M3, and M4 all have
   `manual_verification_complete=true` and `fully_complete=true`.
-- The next decision is `m0_manual_verification`: owner confirmation that repo contracts and safety
-  policy match intended project governance.
+- M0 manual verification is approved and recorded as redacted status. The next decision is
+  `m1_manual_synthetic_slice_review`.
 - Accepted evidence form: owner chat attestation matching `docs/m0-manual-verification.md`, reviewed
   through `scripts/review_m0_manual_verification.py`.
 - Roadmap governance is now explicit: `tasks/milestones.md` is the current roadmap source, but

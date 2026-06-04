@@ -61,5 +61,5 @@
       "criteria_may_expand_if_insufficient": true
     }
   ],
-  "recommended_next_step": "m0_manual_verification"
+  "recommended_next_step": "m1_manual_synthetic_slice_review"
 }

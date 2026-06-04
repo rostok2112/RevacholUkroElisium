@@ -49,6 +49,5 @@ scripts/check_milestone_completion_status.py
 Until M0-M4 are fully complete under this standard, the next step remains:
 
 ```text
-m0_manual_verification
 m1_manual_synthetic_slice_review
 ```

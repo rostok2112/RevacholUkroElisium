@@ -3,6 +3,9 @@
 Strict M0-M4 completion recovery is in progress.
 
 Completed in the latest session:
+- Recorded owner chat attestation for M0 and marked `M0 - Repo and contracts` fully complete
+  under the strict completion standard.
+- The next strict step is `m1_manual_synthetic_slice_review`.
 - Added the M0 chat-attestation manual verification gate:
   `docs/m0-manual-verification.md`,
   `tests/fixtures/m0_manual_verification_report.synthetic.json`, and
@@ -11,8 +14,8 @@ Completed in the latest session:
   `tests/fixtures/roadmap_governance_review.synthetic.json`, and
   `scripts/check_roadmap_governance_review.py` to record that `tasks/milestones.md` is the current
   roadmap source but may be amended when criteria are insufficient.
-- M0 remains pending until the owner supplies the approval text; the checker now has a verified
-  state ready for that attestation.
+- M0 is now verified and complete; the checker retains the pending/verified state split for future
+  auditability.
 - Added `docs/milestone-completion-standard.md`.
 - Added `docs/m0-closeout.md` and `docs/m1-closeout.md`.
 - Added `tests/fixtures/m0_closeout.synthetic.json`,
@@ -22,9 +25,9 @@ Completed in the latest session:
   `scripts/check_milestone_completion_status.py`.
 - Updated M2, M3, and M4 closeout status to distinguish automated/implementation completion from
   strict manual verification completion.
-- Current strict status: M0-M4 are automated-complete where implemented, but not fully complete
-  until required manual/local verification evidence is recorded.
-- The next safe step is `m0_manual_verification`. M5 planning remains blocked.
+- Current strict status: M0 is fully complete. M1-M4 are automated-complete where implemented, but
+  not fully complete until required manual/local verification evidence is recorded.
+- The next safe step is `m1_manual_synthetic_slice_review`. M5 planning remains blocked.
 
 ---
 

@@ -3,14 +3,14 @@
   "roadmap_source": "tasks/milestones.md",
   "strict_completion_standard": "docs/milestone-completion-standard.md",
   "m5_planning_allowed": false,
-  "recommended_next_step": "m0_manual_verification",
+  "recommended_next_step": "m1_manual_synthetic_slice_review",
   "milestones": [
     {
       "roadmap_milestone": "M0",
       "automated_complete": true,
       "manual_verification_required": true,
-      "manual_verification_complete": false,
-      "fully_complete": false,
+      "manual_verification_complete": true,
+      "fully_complete": true,
       "blocking_manual_step": "owner_confirms_repo_contracts_and_safety_policy"
     },
     {

@@ -27,7 +27,7 @@ FIXTURE_PATH = ROOT / "tests/fixtures/roadmap_governance_review.synthetic.json"
 DOC_PATH = ROOT / "docs/roadmap-governance-review.md"
 TASKS_PATH = ROOT / "tasks/milestones.md"
 SCHEMA_VERSION = "roadmap-governance-review.v1"
-RECOMMENDED_NEXT_STEP = "m0_manual_verification"
+RECOMMENDED_NEXT_STEP = "m1_manual_synthetic_slice_review"
 MILESTONES = (
     ("M0", "Repo and contracts"),
     ("M1", "Synthetic vertical slice"),

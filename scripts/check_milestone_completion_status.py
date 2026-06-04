@@ -48,12 +48,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.quiet:
         print("Milestone completion status check passed.")
     else:
+        payload_or_errors = load_fixture(FIXTURE_PATH)
+        payload = payload_or_errors if isinstance(payload_or_errors, dict) else {}
         print(
             json.dumps(
                 {
                     "ok": True,
                     "schema_version": "milestone-completion-status-check.v1",
-                    "recommended_next_step": RECOMMENDED_NEXT_STEP,
+                    "recommended_next_step": _expected_next_step(payload),
                 },
                 indent=2,
                 sort_keys=True,
