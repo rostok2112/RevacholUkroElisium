@@ -618,6 +618,14 @@ def main() -> int:
             ],
         ),
         (
+            "M3 debug console",
+            [
+                sys.executable,
+                "scripts/check_m3_debug_console.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

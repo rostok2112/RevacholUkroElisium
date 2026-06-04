@@ -559,3 +559,17 @@ tests/test_m3_line_id_match.py
 The matcher reads one redacted current-line event and one ignored private M2 line-index artifact,
 uses exact `line_id` membership only, and emits only redacted aggregate status. The next bounded
 step is `m3_debug_console`.
+
+## M3 Debug Console
+
+The debug console guardrail is:
+
+```text
+packages/bepinex-plugin/src/DebugCommandHandler.cs
+tests/fixtures/m3_debug_console.synthetic.json
+scripts/check_m3_debug_console.py
+```
+
+Allowed commands are only `bridge_status`, `synthetic_send`, `current_line_event_status`, and
+`matcher_status`. Results are redacted and do not dump raw text, payloads, IDs, private paths,
+provider payloads, or runtime evidence. The next bounded step is `m3_closeout`.

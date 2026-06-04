@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- M3 debug console is implemented. Implement `m3_closeout` next as the sixth and final M3 commit.
+- Keep raw text dumps, payload dumps, ID dumps, provider execution, companion contract changes,
+  game-file reads, BepInEx log reads, UI text reading, Unity scanning, hooks, OCR, committed
+  generated outputs, screenshots, game text, private paths, `bin`, and `obj` blocked.
+- Treat `packages/bepinex-plugin/src/DebugCommandHandler.cs`,
+  `tests/fixtures/m3_debug_console.synthetic.json`, and `scripts/check_m3_debug_console.py` as the
+  implementation guardrail for the third original M3 criterion.
 - M3 line-ID matching is implemented. Implement `m3_debug_console` next.
 - Keep fuzzy matching, line ID emission, record ID emission, source text emission, provider
   execution, companion contract changes, game-file reads, BepInEx log reads, UI text reading,

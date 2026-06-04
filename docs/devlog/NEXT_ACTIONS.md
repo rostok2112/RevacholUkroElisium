@@ -1,5 +1,23 @@
 # Next Actions
 
+After M3 debug console:
+
+1. Treat `packages/bepinex-plugin/src/DebugCommandHandler.cs`,
+   `tests/fixtures/m3_debug_console.synthetic.json`, and `scripts/check_m3_debug_console.py` as
+   the guardrail for the third original M3 criterion.
+2. Allowed commands are only `bridge_status`, `synthetic_send`, `current_line_event_status`, and
+   `matcher_status`; all outputs remain redacted.
+3. Keep raw text dumps, payload dumps, ID dumps, provider calls, companion HTTP contract changes,
+   game-file reads, BepInEx log reads, UI text reading, Unity scanning, hooks/Harmony, OCR,
+   committed generated outputs, screenshots, private paths, `bin`, and `obj` blocked.
+4. Add one M3 closeout review gate next. This is commit 6 and the hard stop for M3.
+
+Recommended next safe step:
+
+- Implement `m3_closeout`.
+
+---
+
 After M3 line-ID matching:
 
 1. Treat `scripts/run_m3_line_id_match.py`,

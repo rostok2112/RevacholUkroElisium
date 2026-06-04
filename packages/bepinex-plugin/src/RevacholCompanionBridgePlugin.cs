@@ -21,6 +21,7 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         public const bool DefaultMetadataProbeLogOnStart = false;
         public const bool DefaultCurrentLineEventEnabled = false;
         public const bool DefaultEmitSyntheticCurrentLineEventOnStart = false;
+        public const bool DefaultDebugConsoleEnabled = false;
 
         private ConfigEntry<bool>? _enabled;
         private ConfigEntry<string>? _companionServerUrl;
@@ -30,6 +31,7 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         private ConfigEntry<bool>? _metadataProbeLogOnStart;
         private ConfigEntry<bool>? _currentLineEventEnabled;
         private ConfigEntry<bool>? _emitSyntheticCurrentLineEventOnStart;
+        private ConfigEntry<bool>? _debugConsoleEnabled;
         private CompanionHttpClient? _client;
 
         public override void Load()
@@ -126,6 +128,25 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
             _ = eventJson.Length;
         }
 
+        public string RunDebugCommand(string commandName)
+        {
+            if (_debugConsoleEnabled == null || !_debugConsoleEnabled.Value)
+            {
+                return DebugCommandHandler.BuildDisabledResult(commandName);
+            }
+
+            return DebugCommandHandler.BuildResult(
+                commandName,
+                bridgeEnabled: _enabled != null && _enabled.Value,
+                companionLocalhost: _client != null && _client.IsLocalhost,
+                syntheticSendConfigured: _sendSyntheticEventOnStart != null
+                    && _sendSyntheticEventOnStart.Value,
+                currentLineEventEnabled: _currentLineEventEnabled != null
+                    && _currentLineEventEnabled.Value,
+                matcherAvailable: true
+            );
+        }
+
         private void BindConfig()
         {
             _enabled = Config.Bind(
@@ -175,6 +196,12 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 "EmitSyntheticCurrentLineEventOnStart",
                 DefaultEmitSyntheticCurrentLineEventOnStart,
                 "Emit the built-in redacted synthetic current-line metadata event after startup checks."
+            );
+            _debugConsoleEnabled = Config.Bind(
+                "DebugConsole",
+                "DebugConsoleEnabled",
+                DefaultDebugConsoleEnabled,
+                "Enable the disabled-by-default redacted bridge debug command surface."
             );
         }
 

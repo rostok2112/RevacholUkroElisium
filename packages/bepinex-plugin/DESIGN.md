@@ -52,6 +52,17 @@ tests/test_m3_line_id_match.py
 The matcher uses exact `line_id` membership only against an ignored private M2 line-index artifact.
 The next bounded step is `m3_debug_console`.
 
+M3 debug console is guarded by:
+
+```text
+packages/bepinex-plugin/src/DebugCommandHandler.cs
+tests/fixtures/m3_debug_console.synthetic.json
+scripts/check_m3_debug_console.py
+```
+
+Allowed commands are only `bridge_status`, `synthetic_send`, `current_line_event_status`, and
+`matcher_status`. The next bounded step is `m3_closeout`.
+
 ## Milestone 4A boundary
 
 The bridge is currently a synthetic/manual communication skeleton only. It exists to prove a safe

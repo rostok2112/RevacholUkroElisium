@@ -1,5 +1,21 @@
 # Session Summary
 
+M3 debug console is implemented.
+
+Completed in the latest session:
+- Added `packages/bepinex-plugin/src/DebugCommandHandler.cs`.
+- Added disabled-by-default `DebugConsoleEnabled` config and `RunDebugCommand` in
+  `packages/bepinex-plugin/src/RevacholCompanionBridgePlugin.cs`.
+- Added `tests/fixtures/m3_debug_console.synthetic.json`.
+- Added `scripts/check_m3_debug_console.py` and wired it into `scripts/check_all.py`.
+- Allowed commands are only `bridge_status`, `synthetic_send`, `current_line_event_status`, and
+  `matcher_status`.
+- Debug command results stay redacted and do not dump raw text, payloads, IDs, private paths, logs,
+  screenshots, provider payloads, or runtime evidence.
+- Original M3 criteria are now implemented; the next safe step is `m3_closeout`.
+
+---
+
 M3 line-ID matching is implemented.
 
 Completed in the latest session:

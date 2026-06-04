@@ -1,5 +1,11 @@
 # Known Risks
 
+- M3 debug console (`packages/bepinex-plugin/src/DebugCommandHandler.cs`,
+  `tests/fixtures/m3_debug_console.synthetic.json`, and `scripts/check_m3_debug_console.py`) is a
+  redacted command surface only. Do not expand it into raw text dumps, payload dumps, ID dumps,
+  provider calls, companion HTTP contract changes, game-file reads, BepInEx log reads, UI text
+  reading, Unity scanning, hooks/Harmony, OCR, or committed runtime artifacts.
+- The next approved M3 step is `m3_closeout`; it is commit 6 and the hard stop for M3.
 - M3 line-ID matching (`scripts/run_m3_line_id_match.py`,
   `tests/fixtures/m3_line_id_matching.synthetic.json`, and `tests/test_m3_line_id_match.py`) reads
   an ignored private line-index artifact. It must never emit line IDs, record IDs, source text,
