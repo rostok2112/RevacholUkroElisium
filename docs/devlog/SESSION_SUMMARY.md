@@ -1,5 +1,27 @@
 # Session Summary
 
+Original M2 context-graph contract is defined.
+
+Completed in the latest session:
+- Added `docs/m2-context-graph-contract.md`,
+  `tests/fixtures/m2_context_graph_scope.synthetic.json`, and
+  `scripts/check_m2_context_graph_contract.py`.
+- The contract approves only the next `m2_context_graph_implementation` slice for one explicit
+  private DB artifact and one explicit private line-index artifact.
+- Future private context-graph output is restricted to
+  `workspace/local-private/extraction-indexing/import/context-graph/`.
+- Relation-to-retrieval-bucket mapping is limited to the context graph mappings
+  `previous_visible -> visible_history`, `nearby_branch -> nearby_tree`, and
+  `player_option -> player_options`.
+- Source text duplication in graph output, arbitrary future-branch traversal, game scanning,
+  runtime reads, companion changes, provider execution, committed extracted text, private paths,
+  payloads, private DB artifacts, line indexes, graphs, and reports remain blocked.
+- Original M2 still needs the context-graph implementation before all three original criteria are
+  implemented.
+- The only approved next step is `m2_context_graph_implementation`.
+
+---
+
 Original M2 line-index implementation is added.
 
 Completed in the latest session:

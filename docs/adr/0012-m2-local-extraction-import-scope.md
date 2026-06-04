@@ -725,6 +725,35 @@ The next allowed step is:
 m2_context_graph_contract
 ```
 
+## Context-Graph Contract
+
+The static approval boundary for the third original M2 criterion is:
+
+```text
+docs/m2-context-graph-contract.md
+tests/fixtures/m2_context_graph_scope.synthetic.json
+scripts/check_m2_context_graph_contract.py
+```
+
+It approves only the next `m2_context_graph_implementation` slice. That implementation may read one
+explicit private imported DB artifact under `workspace/local-private/extraction-indexing/import/db/`
+and one explicit private line-index artifact under
+`workspace/local-private/extraction-indexing/import/line-index/`, then write one ignored private
+context-graph artifact under `workspace/local-private/extraction-indexing/import/context-graph/`.
+
+The contract limits relation-to-retrieval-bucket mapping to the graph implementation boundary:
+`previous_visible -> visible_history`, `nearby_branch -> nearby_tree`, and
+`player_option -> player_options`. It does not permit source text duplication in graph output,
+arbitrary future-branch traversal, game scanning, runtime reads, provider execution, companion
+contract changes, committed extracted text, private paths, payloads, private DB artifacts, line
+indexes, graphs, or reports.
+
+The next allowed step is:
+
+```text
+m2_context_graph_implementation
+```
+
 ## Line Index Contract
 
 The static approval boundary for the second original M2 criterion is:

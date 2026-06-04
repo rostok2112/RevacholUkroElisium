@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- The M2 context-graph contract is defined. Implement `m2_context_graph_implementation` next as the
+  third original M2 criterion slice.
+- Keep generated graphs, line indexes, private DB artifacts, extracted text, private paths,
+  payloads, reports, source-text duplication in graph output, arbitrary future-branch traversal,
+  game scanning, runtime reads, companion changes, providers, and committed private artifacts
+  blocked.
 - The M2 line-index implementation is added. Define `m2_context_graph_contract` next to scope the
   third original M2 criterion.
 - Keep generated line indexes, private DB artifacts, extracted text, private paths, payloads,

@@ -541,6 +541,14 @@ def main() -> int:
             ],
         ),
         (
+            "M2 context-graph contract",
+            [
+                sys.executable,
+                "scripts/check_m2_context_graph_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

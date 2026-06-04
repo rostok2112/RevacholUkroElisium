@@ -1,5 +1,14 @@
 # Known Risks
 
+- A future `m2_context_graph_implementation` may read one ignored private DB artifact and one
+  ignored private line-index artifact, then write a private context graph under
+  `workspace/local-private/extraction-indexing/import/context-graph/`. That graph may contain
+  private ids and must never be committed, pasted into chat, copied into docs, review Markdown,
+  reports, or generated public artifacts.
+- The M2 context-graph contract allows relation-to-retrieval-bucket mapping only inside the private
+  graph implementation. Do not expand it into arbitrary future-branch traversal, runtime capture,
+  provider execution, companion contract changes, or public summaries containing ids, relation
+  values, source text, paths, filenames, logs, hashes, or payloads.
 - `scripts/run_m2_line_index.py` can write a private line-index artifact containing private ids and
   source text under `workspace/local-private/extraction-indexing/import/line-index/`. That output
   must never be committed, pasted into chat, copied into docs, review Markdown, reports, or public

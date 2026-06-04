@@ -1,5 +1,25 @@
 # Next Actions
 
+After the original M2 context-graph contract:
+
+1. Treat `docs/m2-context-graph-contract.md`,
+   `tests/fixtures/m2_context_graph_scope.synthetic.json`, and
+   `scripts/check_m2_context_graph_contract.py` as the static approval boundary for the third
+   original M2 criterion.
+2. Implement only `m2_context_graph_implementation` next: one explicit private imported DB artifact
+   plus one explicit private line-index artifact to one ignored private context-graph artifact under
+   `workspace/local-private/extraction-indexing/import/context-graph/`.
+3. Keep generated graphs, line indexes, private DB artifacts, extracted text, private paths,
+   payloads, reports, game scanning, runtime reads, companion changes, providers, source-text
+   duplication in graph output, arbitrary future-branch traversal, and committed private artifacts
+   blocked.
+
+Recommended next safe step:
+
+- Implement `m2_context_graph_implementation`.
+
+---
+
 After the original M2 line-index implementation:
 
 1. Treat `scripts/run_m2_line_index.py` as the second original M2 implementation slice: one
