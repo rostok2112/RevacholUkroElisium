@@ -282,6 +282,14 @@ def main() -> int:
             ],
         ),
         (
+            "roadmap governance review",
+            [
+                sys.executable,
+                "scripts/check_roadmap_governance_review.py",
+                "--quiet",
+            ],
+        ),
+        (
             "M0 manual verification review smoke",
             [
                 sys.executable,

@@ -9,6 +9,8 @@
   policy match intended project governance.
 - Accepted evidence form: owner chat attestation matching `docs/m0-manual-verification.md`, reviewed
   through `scripts/review_m0_manual_verification.py`.
+- Roadmap governance is now explicit: `tasks/milestones.md` is the current roadmap source, but
+  milestone criteria may be amended when existing criteria are insufficient.
 - Manual evidence must stay redacted and must not commit private paths, real extracted text,
   generated DBs/indexes/context graphs, logs, screenshots, provider payloads, `bin`, or `obj`.
 

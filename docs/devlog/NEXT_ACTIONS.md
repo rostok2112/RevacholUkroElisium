@@ -7,7 +7,8 @@ After strict M0-M4 completion recovery:
    `scripts/check_milestone_completion_status.py` as the active roadmap completion guardrail.
 2. M0-M4 are not fully complete under the strict definition until required manual/local
    verification evidence is recorded.
-3. Start with M0 manual verification, then proceed sequentially through M1, M2, M3, and M4.
+3. Treat the roadmap as amendable through documented review, not frozen; then complete M0 manual
+   verification and proceed sequentially through M1, M2, M3, and M4.
 4. Keep private/generated reports and artifacts out of git.
 
 Recommended next safe step:

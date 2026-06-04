@@ -1,6 +1,10 @@
 # Milestone Completion Standard
 
-The canonical roadmap is `tasks/milestones.md`.
+The current roadmap source is `tasks/milestones.md`.
+
+The roadmap is not immutable. Milestone criteria may be amended, split, or clarified during
+development when existing criteria are obviously insufficient or unsafe. Any amendment must update
+`tasks/milestones.md`, relevant docs, and the applicable fixture/checker evidence.
 
 A roadmap milestone is fully complete only when:
 
@@ -32,6 +36,8 @@ The aggregate guardrail is:
 ```text
 tests/fixtures/m0_closeout.synthetic.json
 scripts/check_m0_closeout.py
+tests/fixtures/roadmap_governance_review.synthetic.json
+scripts/check_roadmap_governance_review.py
 tests/fixtures/m0_manual_verification_report.synthetic.json
 scripts/review_m0_manual_verification.py
 tests/fixtures/m1_closeout.synthetic.json

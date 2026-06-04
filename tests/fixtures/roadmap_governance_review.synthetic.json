@@ -1,0 +1,65 @@
+{
+  "schema_version": "roadmap-governance-review.v1",
+  "roadmap_source": "tasks/milestones.md",
+  "roadmap_is_current_canonical_source": true,
+  "roadmap_is_immutable": false,
+  "roadmap_may_be_amended_during_development": true,
+  "amendment_requires_tasks_milestones_update": true,
+  "amendment_requires_docs_update": true,
+  "amendment_requires_checker_or_fixture_update": true,
+  "strict_completion_required_after_amendment": true,
+  "private_artifact_commit_allowed": false,
+  "real_game_text_commit_allowed": false,
+  "generated_artifact_commit_allowed": false,
+  "milestones_reviewed": [
+    {
+      "roadmap_milestone": "M0",
+      "title": "Repo and contracts",
+      "criteria_are_high_level": true,
+      "criteria_may_expand_if_insufficient": true
+    },
+    {
+      "roadmap_milestone": "M1",
+      "title": "Synthetic vertical slice",
+      "criteria_are_high_level": true,
+      "criteria_may_expand_if_insufficient": true
+    },
+    {
+      "roadmap_milestone": "M2",
+      "title": "Local extraction import",
+      "criteria_are_high_level": true,
+      "criteria_may_expand_if_insufficient": true
+    },
+    {
+      "roadmap_milestone": "M3",
+      "title": "BepInEx bridge",
+      "criteria_are_high_level": true,
+      "criteria_may_expand_if_insufficient": true
+    },
+    {
+      "roadmap_milestone": "M4",
+      "title": "Real overlay",
+      "criteria_are_high_level": true,
+      "criteria_may_expand_if_insufficient": true
+    },
+    {
+      "roadmap_milestone": "M5",
+      "title": "Maximum quality pipeline",
+      "criteria_are_high_level": true,
+      "criteria_may_expand_if_insufficient": true
+    },
+    {
+      "roadmap_milestone": "M6",
+      "title": "Voice/audio context",
+      "criteria_are_high_level": true,
+      "criteria_may_expand_if_insufficient": true
+    },
+    {
+      "roadmap_milestone": "M7",
+      "title": "Review studio",
+      "criteria_are_high_level": true,
+      "criteria_may_expand_if_insufficient": true
+    }
+  ],
+  "recommended_next_step": "m0_manual_verification"
+}

@@ -1,8 +1,8 @@
 # M0 Manual Verification
 
 M0 can be fully complete only after the owner confirms, in chat or equivalent redacted evidence,
-that the repository mission, canonical roadmap, data-safety rules, schema approach, and generated
-artifact policy match the intended project governance.
+that the repository mission, current roadmap source, roadmap amendment policy, data-safety rules,
+schema approach, and generated artifact policy match the intended project governance.
 
 The manual evidence contract is:
 
@@ -29,7 +29,8 @@ M0 manual verification approved.
 
 I confirm that:
 - AGENTS.md matches the intended project mission and safety policy.
-- tasks/milestones.md is the intended canonical roadmap.
+- tasks/milestones.md is the current roadmap source, and milestone criteria may be amended during
+  development when they are obviously insufficient or need clarification.
 - The repo policy correctly forbids committing copyrighted game text, extracted DBs, screenshots,
   logs, provider payloads, private paths, game files, bin, obj, and generated private artifacts.
 - The JSON schema and safety-check approach is acceptable for M0.

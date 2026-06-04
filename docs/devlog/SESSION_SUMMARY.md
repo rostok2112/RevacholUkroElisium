@@ -7,6 +7,10 @@ Completed in the latest session:
   `docs/m0-manual-verification.md`,
   `tests/fixtures/m0_manual_verification_report.synthetic.json`, and
   `scripts/review_m0_manual_verification.py`.
+- Added `docs/roadmap-governance-review.md`,
+  `tests/fixtures/roadmap_governance_review.synthetic.json`, and
+  `scripts/check_roadmap_governance_review.py` to record that `tasks/milestones.md` is the current
+  roadmap source but may be amended when criteria are insufficient.
 - M0 remains pending until the owner supplies the approval text; the checker now has a verified
   state ready for that attestation.
 - Added `docs/milestone-completion-standard.md`.
