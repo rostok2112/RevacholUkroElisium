@@ -1,5 +1,22 @@
 # Next Actions
 
+After M4 Genius card shell:
+
+1. Treat `scripts/run_m4_overlay_shell.py` and `tests/test_m4_overlay_shell.py` as the compact and
+   Genius shell guardrail.
+2. Add only page-local hotkeys next.
+3. Hotkeys must affect only the loaded browser page: compact visibility, Genius card open/close,
+   and debug view only when explicitly enabled.
+4. Keep native always-on-top packaging, Electron/Tauri setup, global keyboard hooks, clipboard
+   writes, provider execution, companion HTTP changes, OCR, Unity scanning, hooks/Harmony,
+   screenshots, private paths, and committed generated shell artifacts blocked.
+
+Recommended next safe step:
+
+- Implement `m4_overlay_hotkeys`.
+
+---
+
 After M4 compact translation shell:
 
 1. Treat `scripts/run_m4_overlay_shell.py` and `tests/test_m4_overlay_shell.py` as the compact

@@ -6,11 +6,15 @@ import unittest
 
 from scripts.run_m4_overlay_shell import (
     DEFAULT_COMPACT_SOURCE,
+    DEFAULT_DEEP_SOURCE,
     M4OverlayShellError,
     build_compact_overlay_shell_html,
+    build_genius_card_html,
+    build_overlay_shell_html,
     build_redacted_summary,
     ensure_safe_output_path,
     load_compact_view_model,
+    load_deep_view_model,
     main,
     run_self_test,
     write_html,
@@ -31,6 +35,28 @@ class M4OverlayShellTests(unittest.TestCase):
         self.assertIn(view_model["compact"]["concise_meaning_uk"], html)
         self.assertNotIn(view_model["compact"]["original_english"], html)
         self.assertNotIn(view_model["source"]["line_id"], html)
+
+    def test_combined_shell_renders_genius_card_without_source_text(self) -> None:
+        compact = load_compact_view_model(DEFAULT_COMPACT_SOURCE)
+        deep = load_deep_view_model(DEFAULT_DEEP_SOURCE)
+        html = build_overlay_shell_html(compact, deep)
+
+        self.assertIn("m4-compact-overlay", html)
+        self.assertIn("m4-genius-card", html)
+        self.assertIn("<details", html)
+        self.assertIn(deep["deep"]["literary_rendering_uk"], html)
+        self.assertIn(deep["deep"]["explanation_uk"], html)
+        self.assertNotIn(compact["compact"]["original_english"], html)
+        self.assertNotIn(deep["deep"]["original_english"], html)
+        self.assertNotIn(deep["source"]["line_id"], html)
+
+    def test_genius_card_uses_existing_deep_sections(self) -> None:
+        deep = load_deep_view_model(DEFAULT_DEEP_SOURCE)
+        html = build_genius_card_html(deep)
+
+        self.assertIn("m4-genius-card", html)
+        self.assertIn(deep["deep"]["literary_rendering_uk"], html)
+        self.assertIn(deep["deep"]["character_voice_note_uk"], html)
 
     def test_rejects_non_compact_source(self) -> None:
         deep_path = ROOT / "tests/fixtures/overlay_prototype.deep.viewmodel.synthetic.json"
@@ -68,10 +94,12 @@ class M4OverlayShellTests(unittest.TestCase):
 
     def test_redacted_summary_contains_no_paths_or_text(self) -> None:
         view_model = load_compact_view_model(DEFAULT_COMPACT_SOURCE)
-        summary = build_redacted_summary(view_model, output_path=None)
+        deep = load_deep_view_model(DEFAULT_DEEP_SOURCE)
+        summary = build_redacted_summary(view_model, deep, output_path=None)
 
-        self.assertEqual("m4-compact-overlay-shell-summary.v1", summary["schema_version"])
+        self.assertEqual("m4-overlay-shell-summary.v1", summary["schema_version"])
         self.assertTrue(summary["compact_translation_rendered"])
+        self.assertTrue(summary["genius_card_rendered"])
         self.assertFalse(summary["original_text_included"])
         self.assertFalse(summary["private_paths_included"])
         self.assertNotIn("output_path", summary)

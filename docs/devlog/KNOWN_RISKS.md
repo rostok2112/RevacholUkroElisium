@@ -1,5 +1,10 @@
 # Known Risks
 
+- M4 Genius card shell (`scripts/run_m4_overlay_shell.py`) reuses the existing deep view model. It
+  must not drift into a second annotation schema, raw source-text duplication, line-id display,
+  provider payload display, private path display, screenshot capture, clipboard writes, global
+  keyboard hooks, or companion HTTP changes.
+- The next approved M4 step is `m4_overlay_hotkeys`.
 - M4 compact translation shell (`scripts/run_m4_overlay_shell.py`) is a local browser HTML helper,
   not native always-on-top packaging. It intentionally avoids duplicating original/source text in
   player-facing compact shell HTML. Future changes must not turn compact rendering into raw text,

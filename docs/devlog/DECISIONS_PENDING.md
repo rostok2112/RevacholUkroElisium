@@ -1,5 +1,8 @@
 # Decisions Pending
 
+- M4 Genius card shell is implemented. Implement `m4_overlay_hotkeys` next by adding page-local
+  browser hotkeys to `scripts/run_m4_overlay_shell.py`; do not add global keyboard hooks or
+  clipboard writes.
 - M4 compact translation shell is implemented. Implement `m4_genius_card_shell` next by extending
   `scripts/run_m4_overlay_shell.py` to render a collapsed/expandable Genius card from the existing
   validated deep view model.

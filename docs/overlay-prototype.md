@@ -443,6 +443,10 @@ renders only player-facing compact translation metadata from the validated compa
 writes generated HTML only under `workspace/local-private/overlay/`. The next bounded M4 step is
 `m4_genius_card_shell`.
 
+The same helper now renders the M4 Genius card from the validated deep view model using native
+browser `<details>/<summary>` interaction. It keeps source/original text and line ids out of
+player-facing shell HTML. The next bounded M4 step is `m4_overlay_hotkeys`.
+
 ## Shell Readiness Decision
 
 ADR 0007 records the current shell-readiness decision:

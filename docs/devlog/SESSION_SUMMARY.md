@@ -1,5 +1,23 @@
 # Session Summary
 
+M4 Genius card shell is implemented.
+
+Completed in the latest session:
+- Extended `scripts/run_m4_overlay_shell.py` to render an expandable Genius card from the existing
+  validated deep overlay view model.
+- Kept the compact translation shell and Genius card in one local browser shell helper rather than
+  creating a second overlay path.
+- The Genius card uses native browser `<details>/<summary>` interaction and player-facing deep
+  sections only.
+- Source/original text, line ids, debug internals, provider payloads, private paths, screenshots,
+  global keyboard hooks, clipboard writes, native always-on-top behavior, provider calls, and
+  companion HTTP changes remain excluded.
+- Original M4 compact translation and Genius card are implemented at the local browser shell level;
+  hotkeys remain incomplete.
+- The next bounded M4 step is `m4_overlay_hotkeys`.
+
+---
+
 M4 compact translation shell is implemented.
 
 Completed in the latest session:

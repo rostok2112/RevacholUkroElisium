@@ -77,3 +77,12 @@ is:
 ```text
 m4_genius_card_shell
 ```
+
+The Genius card rendering is implemented in the same helper. It consumes the existing deep overlay
+view model and renders an expandable local browser card with `<details>/<summary>`. It does not
+emit source/original text, line ids, provider payloads, private paths, screenshots, or debug
+internals in player-facing shell HTML. The next bounded M4 step is:
+
+```text
+m4_overlay_hotkeys
+```
