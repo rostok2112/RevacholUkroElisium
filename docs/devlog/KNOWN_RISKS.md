@@ -1,5 +1,11 @@
 # Known Risks
 
+- M3 closeout (`docs/m3-closeout.md`, `tests/fixtures/m3_closeout.synthetic.json`, and
+  `scripts/check_m3_closeout.py`) marks original M3 complete only under the redacted/local
+  implementation boundaries. It does not approve raw text capture/dumps, provider calls, companion
+  HTTP contract changes, game-file reads, BepInEx log reads, UI text reading, Unity scanning,
+  hooks/Harmony, OCR, screenshots, private paths, `bin`, or `obj`.
+- The next approved roadmap step is `m4_real_overlay_scope_recovery`.
 - M3 debug console (`packages/bepinex-plugin/src/DebugCommandHandler.cs`,
   `tests/fixtures/m3_debug_console.synthetic.json`, and `scripts/check_m3_debug_console.py`) is a
   redacted command surface only. Do not expand it into raw text dumps, payload dumps, ID dumps,

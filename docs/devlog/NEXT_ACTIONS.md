@@ -1,5 +1,22 @@
 # Next Actions
 
+After M3 closeout:
+
+1. Treat `docs/m3-closeout.md`, `tests/fixtures/m3_closeout.synthetic.json`, and
+   `scripts/check_m3_closeout.py` as the M3 completion guardrail.
+2. M3 is closed: current-line event, line-ID matching, and debug console are implemented under the
+   redacted/local boundaries documented in the closeout.
+3. Start original `M4 - Real overlay` with scope recovery before implementation, because earlier
+   overlay/prototype work exists and must be mapped before building new behavior.
+4. Keep raw game text, extracted DBs, private indexes, logs, screenshots, provider payloads,
+   private paths, `bin`, and `obj` out of git.
+
+Recommended next safe step:
+
+- Implement `m4_real_overlay_scope_recovery`.
+
+---
+
 After M3 debug console:
 
 1. Treat `packages/bepinex-plugin/src/DebugCommandHandler.cs`,

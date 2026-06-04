@@ -626,6 +626,14 @@ def main() -> int:
             ],
         ),
         (
+            "M3 closeout",
+            [
+                sys.executable,
+                "scripts/check_m3_closeout.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

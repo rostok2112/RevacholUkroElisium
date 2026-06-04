@@ -1,5 +1,12 @@
 # Decisions Pending
 
+- M3 closeout is complete. Start original M4 with `m4_real_overlay_scope_recovery`, using
+  `docs/m3-closeout.md`, `tests/fixtures/m3_closeout.synthetic.json`, and
+  `scripts/check_m3_closeout.py` as the M3 completion boundary.
+- Keep raw game text, extracted DBs, private indexes, logs, screenshots, provider payloads,
+  private paths, raw text capture/dumps, payload dumps, ID dumps, provider execution, companion
+  contract changes, game-file reads, BepInEx log reads, UI text reading, Unity scanning,
+  hooks/Harmony, OCR, `bin`, and `obj` blocked.
 - M3 debug console is implemented. Implement `m3_closeout` next as the sixth and final M3 commit.
 - Keep raw text dumps, payload dumps, ID dumps, provider execution, companion contract changes,
   game-file reads, BepInEx log reads, UI text reading, Unity scanning, hooks, OCR, committed

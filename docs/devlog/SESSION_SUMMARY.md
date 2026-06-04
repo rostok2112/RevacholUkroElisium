@@ -1,5 +1,20 @@
 # Session Summary
 
+M3 closeout is complete.
+
+Completed in the latest session:
+- Added `docs/m3-closeout.md`.
+- Added `tests/fixtures/m3_closeout.synthetic.json`.
+- Added `scripts/check_m3_closeout.py` and wired it into `scripts/check_all.py`.
+- Confirmed original M3 criteria are complete: current-line event, line-ID matching, and debug
+  console.
+- Kept raw text capture/dumps, payload dumps, ID dumps, provider execution, companion HTTP contract
+  changes, game-file reads, BepInEx log reads, UI text reading, Unity scanning, hooks/Harmony, OCR,
+  screenshots, private paths, `bin`, and `obj` blocked.
+- The next roadmap step is `m4_real_overlay_scope_recovery`.
+
+---
+
 M3 debug console is implemented.
 
 Completed in the latest session:

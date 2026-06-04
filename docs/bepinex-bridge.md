@@ -573,3 +573,16 @@ scripts/check_m3_debug_console.py
 Allowed commands are only `bridge_status`, `synthetic_send`, `current_line_event_status`, and
 `matcher_status`. Results are redacted and do not dump raw text, payloads, IDs, private paths,
 provider payloads, or runtime evidence. The next bounded step is `m3_closeout`.
+
+## M3 Closeout
+
+M3 closeout is tracked in:
+
+```text
+docs/m3-closeout.md
+tests/fixtures/m3_closeout.synthetic.json
+scripts/check_m3_closeout.py
+```
+
+Original M3 is closed under the documented redacted/local boundaries. The next roadmap step is
+`m4_real_overlay_scope_recovery`.
