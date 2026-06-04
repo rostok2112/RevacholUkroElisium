@@ -774,6 +774,32 @@ The next allowed step after a passing review is:
 m2_context_graph_implementation
 ```
 
+## Context-Graph Implementation
+
+The approved third original-M2 implementation slice is:
+
+```text
+scripts/run_m2_context_graph.py
+```
+
+It reads one explicit private imported DB artifact under
+`workspace/local-private/extraction-indexing/import/db/`, one explicit private line-index artifact
+under `workspace/local-private/extraction-indexing/import/line-index/`, and one redacted
+line-index review under `workspace/local-private/extraction-indexing/import/line-index-review/`.
+It writes one ignored private `m2-context-graph.v1` artifact under
+`workspace/local-private/extraction-indexing/import/context-graph/`.
+
+The helper maps only the approved relation buckets, keeps spoiler budget `none`, and does not
+duplicate source text into graph nodes. Public stdout and returned summaries include only aggregate
+redacted status. Private ids, relation values, source text, private paths, filenames, logs,
+payloads, and runtime evidence remain out of public output and tracked files.
+
+The next allowed step is:
+
+```text
+m2_closeout_review_gate
+```
+
 ## Line Index Contract
 
 The static approval boundary for the second original M2 criterion is:

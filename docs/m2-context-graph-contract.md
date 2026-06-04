@@ -178,3 +178,37 @@ The next allowed step is:
 ```text
 m2_line_index_review_gate
 ```
+
+## Implementation Result
+
+The approved implementation is:
+
+```text
+scripts/run_m2_context_graph.py
+```
+
+It requires:
+
+```text
+--db workspace/local-private/extraction-indexing/import/db/<selected>.json
+--line-index workspace/local-private/extraction-indexing/import/line-index/<index>.json
+--line-index-review workspace/local-private/extraction-indexing/import/line-index-review/<review>.json
+--output workspace/local-private/extraction-indexing/import/context-graph/<graph>.json
+```
+
+It writes a private `m2-context-graph.v1` artifact only under the ignored context-graph root.
+Public stdout remains redacted aggregate status. The helper does not scan game installs, read
+runtime logs, call providers, change companion contracts, duplicate source text into graph nodes,
+or commit generated private artifacts.
+
+Validate the implementation smoke with:
+
+```powershell
+python scripts/run_m2_context_graph.py --self-test --quiet
+```
+
+After a successful private context-graph build, the next safe step is:
+
+```text
+m2_closeout_review_gate
+```

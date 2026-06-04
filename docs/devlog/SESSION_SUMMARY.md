@@ -1,5 +1,24 @@
 # Session Summary
 
+Original M2 context-graph implementation is added.
+
+Completed in the latest session:
+- Added `scripts/run_m2_context_graph.py` and `tests/test_m2_context_graph.py`.
+- The helper requires one explicit private DB artifact, one explicit private line-index artifact,
+  and one redacted line-index review under ignored workspace roots.
+- It writes one ignored private `m2-context-graph.v1` artifact under
+  `workspace/local-private/extraction-indexing/import/context-graph/`.
+- Graph nodes do not duplicate `source_text`; source text remains in the private line index.
+- Relation-to-retrieval-bucket mapping is limited to the approved context graph mappings.
+- Public stdout and summaries remain aggregate/redacted; private ids are preserved only inside the
+  ignored private context-graph artifact.
+- Wired `python scripts/run_m2_context_graph.py --self-test --quiet` into `scripts/check_all.py`.
+- Original M2 now has implementation paths for import, line index, and context graph, but generated
+  private artifacts remain local/ignored and uncommitted.
+- The next safe step is `m2_closeout_review_gate`.
+
+---
+
 Original M2 line-index review gate is implemented.
 
 Decision:

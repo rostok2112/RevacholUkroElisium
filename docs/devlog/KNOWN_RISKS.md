@@ -1,5 +1,13 @@
 # Known Risks
 
+- `scripts/run_m2_context_graph.py` can write a private context-graph artifact containing private
+  ids under `workspace/local-private/extraction-indexing/import/context-graph/`. That output must
+  never be committed, pasted into chat, copied into docs, review Markdown, reports, or public
+  generated artifacts.
+- The context-graph implementation reads one private DB artifact, one private line-index artifact,
+  and one redacted line-index review artifact only. Do not change it to discover directories, read
+  game files, consume raw exports, duplicate source text into graph nodes, or emit ids/relation
+  values in public summaries.
 - `scripts/review_m2_line_index.py` reviews only redacted line-index summary JSON. It must not be
   changed to reopen private line-index artifacts or private DB artifacts unless a later contract
   explicitly scopes that behavior.

@@ -1,5 +1,23 @@
 # Next Actions
 
+After the original M2 context-graph implementation:
+
+1. Treat `scripts/run_m2_context_graph.py` as the third original M2 implementation slice: one
+   explicit private DB artifact plus one explicit private line-index artifact plus one redacted
+   line-index review to one ignored private context-graph artifact under
+   `workspace/local-private/extraction-indexing/import/context-graph/`.
+2. Keep generated graphs, line indexes, private DB artifacts, extracted text, private paths,
+   payloads, reports, game scanning, runtime reads, companion changes, providers, and committed
+   private artifacts blocked.
+3. Add only a redacted closeout review gate next to decide whether original M2 can be marked
+   complete at the implementation-path level without committing private artifacts.
+
+Recommended next safe step:
+
+- Implement `m2_closeout_review_gate`.
+
+---
+
 After the original M2 line-index review gate:
 
 1. Treat `scripts/review_m2_line_index.py` and
