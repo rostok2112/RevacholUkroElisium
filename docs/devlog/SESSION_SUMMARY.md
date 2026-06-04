@@ -1,5 +1,22 @@
 # Session Summary
 
+M4 closeout is complete.
+
+Completed in the latest session:
+- Added `docs/m4-closeout.md`.
+- Added `tests/fixtures/m4_closeout.synthetic.json`.
+- Added `scripts/check_m4_closeout.py` and wired it into `scripts/check_all.py`.
+- Closed original `M4 - Real overlay` at the local browser shell level.
+- Confirmed all three original M4 criteria are complete: compact translation, Genius card, and
+  page-local hotkeys.
+- Kept native always-on-top packaging, Electron/Tauri setup, global keyboard hooks, game input
+  hooks, clipboard writes, OCR, Unity scanning, hooks/Harmony, provider execution, companion HTTP
+  contract changes, game-file reads, BepInEx log reads, screenshots, private paths, raw provider
+  payloads, generated shell artifacts, `bin`, and `obj` blocked.
+- The next roadmap step is `m5_maximum_quality_pipeline_planning`.
+
+---
+
 M4 page-local hotkeys are implemented.
 
 Completed in the latest session:

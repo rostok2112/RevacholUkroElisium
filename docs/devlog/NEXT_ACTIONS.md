@@ -1,5 +1,24 @@
 # Next Actions
 
+After M4 closeout:
+
+1. Treat `docs/m4-closeout.md`, `tests/fixtures/m4_closeout.synthetic.json`, and
+   `scripts/check_m4_closeout.py` as the M4 completion guardrail.
+2. M4 is closed at the local browser shell level: compact translation, Genius card, and page-local
+   hotkeys are implemented.
+3. Start original `M5 - Maximum quality pipeline` with planning/scope recovery before
+   implementation.
+4. Keep native always-on-top packaging, Electron/Tauri setup, global keyboard hooks, clipboard
+   writes, provider execution, companion HTTP changes, OCR, Unity scanning, hooks/Harmony,
+   screenshots, private paths, generated shell artifacts, raw provider payloads, `bin`, and `obj`
+   blocked unless a later milestone scopes them.
+
+Recommended next safe step:
+
+- Define `m5_maximum_quality_pipeline_planning`.
+
+---
+
 After M4 page-local hotkeys:
 
 1. Treat `scripts/run_m4_overlay_shell.py` and `tests/test_m4_overlay_shell.py` as the implementation

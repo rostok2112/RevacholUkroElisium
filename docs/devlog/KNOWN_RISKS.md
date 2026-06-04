@@ -1,5 +1,12 @@
 # Known Risks
 
+- M4 closeout (`docs/m4-closeout.md`, `tests/fixtures/m4_closeout.synthetic.json`, and
+  `scripts/check_m4_closeout.py`) marks original M4 complete only at the local browser shell level.
+  It does not approve native always-on-top packaging, Electron/Tauri setup, global keyboard hooks,
+  game input hooks, clipboard writes, provider execution, companion HTTP changes, OCR, Unity
+  scanning, hooks/Harmony, screenshots, private paths, raw provider payloads, or committed generated
+  shell artifacts.
+- The next approved roadmap step is `m5_maximum_quality_pipeline_planning`.
 - M4 page-local hotkeys (`scripts/run_m4_overlay_shell.py`) are browser-page event listeners only.
   They must not become global keyboard hooks, game input hooks, clipboard writes, native shell
   behavior, provider calls, companion HTTP changes, screenshot capture, or private path logging.

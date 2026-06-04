@@ -659,6 +659,14 @@ def main() -> int:
             ],
         ),
         (
+            "M4 closeout",
+            [
+                sys.executable,
+                "scripts/check_m4_closeout.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

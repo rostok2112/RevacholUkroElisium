@@ -452,6 +452,10 @@ open/close. The debug toggle is disabled unless `--enable-debug-hotkey` is expli
 These hotkeys are not global keyboard hooks and do not write to the clipboard. The next bounded M4
 step is `m4_closeout`.
 
+M4 closeout is tracked by `docs/m4-closeout.md`,
+`tests/fixtures/m4_closeout.synthetic.json`, and `scripts/check_m4_closeout.py`. After closeout the
+next roadmap step is `m5_maximum_quality_pipeline_planning`.
+
 ## Shell Readiness Decision
 
 ADR 0007 records the current shell-readiness decision:

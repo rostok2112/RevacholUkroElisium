@@ -99,3 +99,13 @@ or native shell behavior. The next bounded M4 step is:
 ```text
 m4_closeout
 ```
+
+M4 closeout is tracked as:
+
+```text
+docs/m4-closeout.md
+tests/fixtures/m4_closeout.synthetic.json
+scripts/check_m4_closeout.py
+```
+
+The closeout points to `m5_maximum_quality_pipeline_planning`.

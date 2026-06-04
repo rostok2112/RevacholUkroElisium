@@ -1,5 +1,11 @@
 # Decisions Pending
 
+- M4 closeout is complete. Start original M5 with `m5_maximum_quality_pipeline_planning`, using
+  `docs/m4-closeout.md`, `tests/fixtures/m4_closeout.synthetic.json`, and
+  `scripts/check_m4_closeout.py` as the M4 completion boundary.
+- M4 completion does not approve native always-on-top packaging, Electron/Tauri setup, global
+  keyboard hooks, game input hooks, clipboard writes, provider execution, companion HTTP changes,
+  screenshots, private paths, raw provider payloads, or committed generated shell artifacts.
 - M4 page-local hotkeys are implemented. Implement `m4_closeout` next and mark original M4 complete
   only if compact translation, Genius card, and page-local hotkeys all pass the closeout guardrail.
 - M4 Genius card shell is implemented. Implement `m4_overlay_hotkeys` next by adding page-local

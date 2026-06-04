@@ -78,3 +78,13 @@ The first implementation step after the contract is:
 ```text
 m4_compact_translation_shell
 ```
+
+M4 closeout is tracked as:
+
+```text
+docs/m4-closeout.md
+tests/fixtures/m4_closeout.synthetic.json
+scripts/check_m4_closeout.py
+```
+
+After closeout, the next roadmap step is `m5_maximum_quality_pipeline_planning`.
