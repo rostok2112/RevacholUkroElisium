@@ -698,6 +698,33 @@ The next allowed step is:
 m2_line_index_implementation
 ```
 
+## Line Index Implementation
+
+The approved second original-M2 implementation slice is:
+
+```text
+scripts/run_m2_line_index.py
+```
+
+It reads one explicit private imported DB artifact under
+`workspace/local-private/extraction-indexing/import/db/` plus one redacted local-import review under
+`workspace/local-private/extraction-indexing/import/db-review/`, then writes one ignored private
+`m2-line-index.v1` artifact under
+`workspace/local-private/extraction-indexing/import/line-index/`.
+
+Public stdout and returned summaries include only aggregate redacted status. Private ids, source
+text, tags, metadata, private paths, filenames, logs, payloads, and runtime evidence remain out of
+public output and tracked files.
+
+The implementation does not build a context graph, map retrieval buckets, scan game installs, read
+runtime logs, call providers, change companion contracts, or commit generated private artifacts.
+
+The next allowed step is:
+
+```text
+m2_context_graph_contract
+```
+
 ## Line Index Contract
 
 The static approval boundary for the second original M2 criterion is:

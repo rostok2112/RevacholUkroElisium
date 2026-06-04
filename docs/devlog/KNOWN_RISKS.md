@@ -1,5 +1,11 @@
 # Known Risks
 
+- `scripts/run_m2_line_index.py` can write a private line-index artifact containing private ids and
+  source text under `workspace/local-private/extraction-indexing/import/line-index/`. That output
+  must never be committed, pasted into chat, copied into docs, review Markdown, reports, or public
+  generated artifacts.
+- The line-index implementation reads one private imported DB artifact and one redacted review
+  artifact only. Do not change it to discover directories, read game files, or consume raw exports.
 - `scripts/review_m2_local_import.py` reviews only redacted import-summary JSON. It must not be
   changed to reopen private DB artifacts or selected exports unless a later contract explicitly
   scopes that behavior.

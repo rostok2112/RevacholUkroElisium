@@ -1,5 +1,22 @@
 # Next Actions
 
+After the original M2 line-index implementation:
+
+1. Treat `scripts/run_m2_line_index.py` as the second original M2 implementation slice: one
+   explicit private imported DB artifact plus one redacted local-import review to one ignored
+   private line-index artifact under
+   `workspace/local-private/extraction-indexing/import/line-index/`.
+2. Keep generated line indexes, private DB artifacts, extracted text, private paths, payloads,
+   reports, and graphs out of tracked files, chat, review Markdown, and commits.
+3. Keep context-graph construction, retrieval-bucket mapping, game scanning, runtime reads,
+   companion changes, providers, and committed private artifacts blocked.
+
+Recommended next safe step:
+
+- Define `m2_context_graph_contract`.
+
+---
+
 After the original M2 local import review gate:
 
 1. Treat `scripts/review_m2_local_import.py` and

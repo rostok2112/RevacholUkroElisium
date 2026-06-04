@@ -112,3 +112,35 @@ The next allowed step is:
 ```text
 m2_local_import_review_gate
 ```
+
+## Implementation Result
+
+The approved implementation is:
+
+```text
+scripts/run_m2_line_index.py
+```
+
+It requires:
+
+```text
+--input workspace/local-private/extraction-indexing/import/db/<selected>.json
+--import-review workspace/local-private/extraction-indexing/import/db-review/<review>.json
+--output workspace/local-private/extraction-indexing/import/line-index/<index>.json
+```
+
+It writes a private `m2-line-index.v1` artifact only under the ignored line-index root. Public
+stdout remains redacted aggregate status. The helper does not build a context graph, map retrieval
+buckets, scan game installs, read runtime logs, call providers, or change companion contracts.
+
+Validate the implementation smoke with:
+
+```powershell
+python scripts/run_m2_line_index.py --self-test --quiet
+```
+
+After a successful private line-index build, the next M2 step is:
+
+```text
+m2_context_graph_contract
+```

@@ -1,5 +1,21 @@
 # Session Summary
 
+Original M2 line-index implementation is added.
+
+Completed in the latest session:
+- Added `scripts/run_m2_line_index.py` and `tests/test_m2_line_index.py`.
+- The helper requires one explicit private imported DB artifact and one redacted local-import review
+  under ignored workspace roots.
+- It writes one ignored private `m2-line-index.v1` artifact under
+  `workspace/local-private/extraction-indexing/import/line-index/`.
+- Public stdout and summaries remain aggregate/redacted; private ids and source text are preserved
+  only inside the ignored private line-index artifact.
+- Wired `python scripts/run_m2_line_index.py --self-test --quiet` into `scripts/check_all.py`.
+- Original M2 still needs context-graph work.
+- The only approved next step is `m2_context_graph_contract`.
+
+---
+
 Original M2 local import review gate is implemented.
 
 Completed in the latest session:

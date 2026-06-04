@@ -532,6 +532,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 line-index implementation smoke",
+            [
+                sys.executable,
+                "scripts/run_m2_line_index.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,
