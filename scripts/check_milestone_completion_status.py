@@ -35,6 +35,7 @@ SCHEMA_VERSION = "milestone-completion-status.v1"
 RECOMMENDED_NEXT_STEP = "m0_manual_verification"
 M1_RECOMMENDED_NEXT_STEP = "m1_manual_synthetic_slice_review"
 M2_RECOMMENDED_NEXT_STEP = "m2_manual_private_export_verification"
+M3_RECOMMENDED_NEXT_STEP = "m3_manual_runtime_verification"
 MILESTONES = ("M0", "M1", "M2", "M3", "M4")
 
 
@@ -173,6 +174,13 @@ def _expected_next_step(payload: dict[str, Any]) -> str:
             and second.get("roadmap_milestone") == "M1"
             and second.get("fully_complete") is True
         ):
+            third = milestones[2] if len(milestones) > 2 else None
+            if (
+                isinstance(third, dict)
+                and third.get("roadmap_milestone") == "M2"
+                and third.get("fully_complete") is True
+            ):
+                return M3_RECOMMENDED_NEXT_STEP
             return M2_RECOMMENDED_NEXT_STEP
         return M1_RECOMMENDED_NEXT_STEP
     return RECOMMENDED_NEXT_STEP
@@ -186,6 +194,7 @@ def _allowed_values(payload: dict[str, Any]) -> set[str]:
         RECOMMENDED_NEXT_STEP,
         M1_RECOMMENDED_NEXT_STEP,
         M2_RECOMMENDED_NEXT_STEP,
+        M3_RECOMMENDED_NEXT_STEP,
         *MILESTONES,
     }
     milestones = payload.get("milestones")

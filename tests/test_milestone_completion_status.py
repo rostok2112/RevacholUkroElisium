@@ -59,6 +59,15 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
 
         self.assertEqual([], _matrix_errors_for(mutated))
 
+    def test_accepts_m2_complete_and_advances_to_m3_manual_review(self) -> None:
+        fixture = load_json(FIXTURE_PATH)
+        mutated = copy.deepcopy(fixture)
+        mutated["recommended_next_step"] = "m3_manual_runtime_verification"
+        mutated["milestones"][2]["manual_verification_complete"] = True
+        mutated["milestones"][2]["fully_complete"] = True
+
+        self.assertEqual([], _matrix_errors_for(mutated))
+
     def test_rejects_m5_planning_approval(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         mutated = copy.deepcopy(fixture)

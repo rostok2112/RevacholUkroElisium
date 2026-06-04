@@ -7,6 +7,8 @@
   `manual_verification_complete=true` and `fully_complete=true`.
 - M0 and M1 manual verification are approved and recorded as redacted status. The next decision is
   `m2_manual_private_export_verification`.
+- Accepted M2 evidence form: owner chat attestation after running one explicit private export
+  through local import, line index, context graph, and closeout review.
 - Accepted M1 evidence form: owner chat attestation reviewed through
   `scripts/review_m1_manual_synthetic_slice.py`.
 - Accepted evidence form: owner chat attestation matching `docs/m0-manual-verification.md`, reviewed

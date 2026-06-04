@@ -627,6 +627,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 manual private-export verification smoke",
+            [
+                sys.executable,
+                "scripts/review_m2_manual_private_export_verification.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "M3 BepInEx bridge scope",
             [
                 sys.executable,

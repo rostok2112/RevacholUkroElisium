@@ -3,6 +3,11 @@
 Strict M0-M4 completion recovery is in progress.
 
 Completed in the latest session:
+- Added the M2 chat-attestation manual private-export verification gate:
+  `tests/fixtures/m2_manual_private_export_verification_report.synthetic.json` and
+  `scripts/review_m2_manual_private_export_verification.py`.
+- M2 remains pending until the owner runs/reviews one private export through import, line index,
+  context graph, and closeout review, then supplies approval text.
 - Recorded owner chat attestation for M1 and marked `M1 - Synthetic vertical slice` fully complete
   under the strict completion standard.
 - The next strict step is `m2_manual_private_export_verification`.

@@ -44,6 +44,8 @@ tests/fixtures/m1_closeout.synthetic.json
 scripts/check_m1_closeout.py
 tests/fixtures/m1_manual_synthetic_slice_review_report.synthetic.json
 scripts/review_m1_manual_synthetic_slice.py
+tests/fixtures/m2_manual_private_export_verification_report.synthetic.json
+scripts/review_m2_manual_private_export_verification.py
 tests/fixtures/milestone_completion_status.synthetic.json
 scripts/check_milestone_completion_status.py
 ```

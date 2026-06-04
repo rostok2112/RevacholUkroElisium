@@ -13,7 +13,8 @@ After strict M0-M4 completion recovery:
 
 Recommended next safe step:
 
-- Complete `m2_manual_private_export_verification`.
+- User runs one explicit private export through M2 import, line index, context graph, and closeout
+  review, then replies with the M2 approval or rejection text.
 
 ---
 

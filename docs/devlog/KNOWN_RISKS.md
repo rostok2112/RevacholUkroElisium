@@ -7,6 +7,9 @@
   `fully_complete=false`.
 - M0 and M1 are now fully complete under the strict standard. The remaining blocker is M2 manual
   private-export verification.
+- The M2 manual gate may use chat attestation as evidence, but only redacted boolean/status fields
+  may be committed. Do not commit private export paths, generated DBs, line indexes, context graphs,
+  review files, logs, source text, ids, or payloads.
 - The M1 manual gate may use chat attestation as evidence, but only redacted boolean/status fields
   may be committed. Do not commit generated synthetic review artifacts from `workspace/`.
 - The M0 manual gate may use chat attestation as evidence, but only redacted boolean/status fields

@@ -67,6 +67,8 @@ The closeout gate is implemented by:
 ```text
 scripts/review_m2_closeout.py
 tests/fixtures/m2_closeout_review_decision.synthetic.json
+tests/fixtures/m2_manual_private_export_verification_report.synthetic.json
+scripts/review_m2_manual_private_export_verification.py
 docs/milestone-completion-standard.md
 ```
 
@@ -76,8 +78,8 @@ Validate it with:
 python scripts/review_m2_closeout.py --self-test --quiet
 ```
 
-After a passing closeout review, the next top-level roadmap step is:
+After a passing closeout review and owner chat attestation, the next strict completion step is:
 
 ```text
-m3_bepinex_bridge_planning
+m3_manual_runtime_verification
 ```
