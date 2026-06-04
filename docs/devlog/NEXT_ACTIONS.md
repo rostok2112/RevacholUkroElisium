@@ -13,8 +13,7 @@ After strict M0-M4 completion recovery:
 
 Recommended next safe step:
 
-- Owner replies with the M1 approval or rejection text. If approved, record the redacted
-  attestation and advance to `m2_manual_private_export_verification`.
+- Complete `m2_manual_private_export_verification`.
 
 ---
 

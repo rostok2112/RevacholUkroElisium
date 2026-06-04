@@ -28,10 +28,12 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         fixture = load_json(FIXTURE_PATH)
 
         self.assertFalse(fixture["m5_planning_allowed"])
-        self.assertEqual("m1_manual_synthetic_slice_review", fixture["recommended_next_step"])
+        self.assertEqual("m2_manual_private_export_verification", fixture["recommended_next_step"])
         self.assertTrue(fixture["milestones"][0]["manual_verification_complete"])
         self.assertTrue(fixture["milestones"][0]["fully_complete"])
-        for entry in fixture["milestones"][1:]:
+        self.assertTrue(fixture["milestones"][1]["manual_verification_complete"])
+        self.assertTrue(fixture["milestones"][1]["fully_complete"])
+        for entry in fixture["milestones"][2:]:
             self.assertTrue(entry["automated_complete"])
             self.assertTrue(entry["manual_verification_required"])
             self.assertFalse(entry["manual_verification_complete"])
@@ -40,7 +42,7 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
     def test_rejects_fully_complete_without_manual_verification(self) -> None:
         fixture = load_json(FIXTURE_PATH)
         mutated = copy.deepcopy(fixture)
-        mutated["milestones"][1]["fully_complete"] = True
+        mutated["milestones"][2]["fully_complete"] = True
 
         self.assertNotEqual([], _matrix_errors_for(mutated))
 

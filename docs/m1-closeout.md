@@ -44,15 +44,16 @@ Manual verification required:
 user_reviews_synthetic_slice_and_overlay_mock
 ```
 
-M1 is not fully complete until that redacted manual confirmation is recorded.
+M1 is fully complete because the redacted synthetic slice review confirmation is recorded in tracked
+status fields.
 
-The next strict completion step is:
+The previous strict completion step was:
 
 ```text
 m1_manual_synthetic_slice_review
 ```
 
-After a passing chat-attestation review, the next strict completion step becomes:
+The next strict completion step is:
 
 ```text
 m2_manual_private_export_verification

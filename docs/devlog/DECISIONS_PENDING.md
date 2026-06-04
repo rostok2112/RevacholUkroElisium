@@ -5,8 +5,8 @@
   `scripts/check_milestone_completion_status.py` as the current completion boundary.
 - M5 planning is blocked until M0, M1, M2, M3, and M4 all have
   `manual_verification_complete=true` and `fully_complete=true`.
-- M0 manual verification is approved and recorded as redacted status. The next decision is
-  `m1_manual_synthetic_slice_review`.
+- M0 and M1 manual verification are approved and recorded as redacted status. The next decision is
+  `m2_manual_private_export_verification`.
 - Accepted M1 evidence form: owner chat attestation reviewed through
   `scripts/review_m1_manual_synthetic_slice.py`.
 - Accepted evidence form: owner chat attestation matching `docs/m0-manual-verification.md`, reviewed
