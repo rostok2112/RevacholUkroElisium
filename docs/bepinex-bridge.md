@@ -545,3 +545,17 @@ scripts/check_m3_current_line_event_implementation.py
 
 The implementation remains disabled by default and redacted. The next bounded step is
 `m3_line_id_matching`.
+
+## M3 Line-ID Matching
+
+The line-ID matching guardrail is:
+
+```text
+scripts/run_m3_line_id_match.py
+tests/fixtures/m3_line_id_matching.synthetic.json
+tests/test_m3_line_id_match.py
+```
+
+The matcher reads one redacted current-line event and one ignored private M2 line-index artifact,
+uses exact `line_id` membership only, and emits only redacted aggregate status. The next bounded
+step is `m3_debug_console`.

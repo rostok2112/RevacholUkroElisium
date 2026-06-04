@@ -1,5 +1,26 @@
 # Next Actions
 
+After M3 line-ID matching:
+
+1. Treat `scripts/run_m3_line_id_match.py`,
+   `tests/fixtures/m3_line_id_matching.synthetic.json`, and `tests/test_m3_line_id_match.py` as the
+   guardrail for the second original M3 criterion.
+2. Matching is exact ID membership only: one redacted current-line event JSON under
+   `workspace/local-private/bepinex/current-line/` against one ignored private M2 line-index
+   artifact under `workspace/local-private/extraction-indexing/import/line-index/`.
+3. Keep fuzzy matching, raw text emission, ID emission, provider calls, companion HTTP contract
+   changes, game-file reads, BepInEx log reads, UI text reading, Unity scanning, hooks/Harmony,
+   OCR, debug console work, committed generated outputs, screenshots, private paths, `bin`, and
+   `obj` blocked.
+4. Implement only the minimal debug console next. Keep the M3 hard stop at six total atomic
+   commits.
+
+Recommended next safe step:
+
+- Implement `m3_debug_console`.
+
+---
+
 After M3 current-line event implementation:
 
 1. Treat `packages/bepinex-plugin/src/CurrentLineEventFactory.cs`,

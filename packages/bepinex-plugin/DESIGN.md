@@ -41,6 +41,17 @@ scripts/check_m3_current_line_event_implementation.py
 It is disabled by default and emits redacted bridge-owned metadata only. The next bounded step is
 `m3_line_id_matching`.
 
+M3 line-ID matching is guarded by:
+
+```text
+scripts/run_m3_line_id_match.py
+tests/fixtures/m3_line_id_matching.synthetic.json
+tests/test_m3_line_id_match.py
+```
+
+The matcher uses exact `line_id` membership only against an ignored private M2 line-index artifact.
+The next bounded step is `m3_debug_console`.
+
 ## Milestone 4A boundary
 
 The bridge is currently a synthetic/manual communication skeleton only. It exists to prove a safe

@@ -1,5 +1,10 @@
 # Known Risks
 
+- M3 line-ID matching (`scripts/run_m3_line_id_match.py`,
+  `tests/fixtures/m3_line_id_matching.synthetic.json`, and `tests/test_m3_line_id_match.py`) reads
+  an ignored private line-index artifact. It must never emit line IDs, record IDs, source text,
+  private paths, hashes, logs, payloads, or runtime evidence.
+- The next approved M3 step is `m3_debug_console`; it is commit 5 of the six-commit M3 cap.
 - M3 current-line event implementation (`packages/bepinex-plugin/src/CurrentLineEventFactory.cs`,
   `tests/fixtures/m3_current_line_event_implementation.synthetic.json`, and
   `scripts/check_m3_current_line_event_implementation.py`) is disabled by default and redacted.

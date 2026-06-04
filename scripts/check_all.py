@@ -609,6 +609,15 @@ def main() -> int:
             ],
         ),
         (
+            "M3 line-ID match smoke",
+            [
+                sys.executable,
+                "scripts/run_m3_line_id_match.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

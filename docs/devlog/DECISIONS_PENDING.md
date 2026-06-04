@@ -1,5 +1,13 @@
 # Decisions Pending
 
+- M3 line-ID matching is implemented. Implement `m3_debug_console` next.
+- Keep fuzzy matching, line ID emission, record ID emission, source text emission, provider
+  execution, companion contract changes, game-file reads, BepInEx log reads, UI text reading,
+  Unity scanning, hooks, OCR, committed generated outputs, screenshots, game text, private paths,
+  `bin`, and `obj` blocked.
+- Treat `scripts/run_m3_line_id_match.py`,
+  `tests/fixtures/m3_line_id_matching.synthetic.json`, and `tests/test_m3_line_id_match.py` as the
+  implementation guardrail for the second original M3 criterion.
 - M3 current-line event implementation is added. Implement `m3_line_id_matching` next.
 - Keep debug console work, raw text capture, UI text reading, Unity scanning, hooks, OCR, provider
   execution, companion contract changes, game-file reads, BepInEx log reads, committed runtime

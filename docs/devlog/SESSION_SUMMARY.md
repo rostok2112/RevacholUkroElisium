@@ -1,5 +1,20 @@
 # Session Summary
 
+M3 line-ID matching is implemented.
+
+Completed in the latest session:
+- Added `scripts/run_m3_line_id_match.py`.
+- Added `tests/fixtures/m3_line_id_matching.synthetic.json`.
+- Added `tests/test_m3_line_id_match.py` and wired the self-test into `scripts/check_all.py`.
+- Matching is exact `line_id` membership only against one ignored private M2 line-index artifact.
+- Summaries are redacted and do not emit line IDs, record IDs, source text, private paths, hashes,
+  logs, payloads, or runtime evidence.
+- Original M3 current-line event and line-ID matching criteria are implemented; debug console
+  remains incomplete.
+- The next safe step is `m3_debug_console`.
+
+---
+
 M3 current-line event implementation is added.
 
 Completed in the latest session:
