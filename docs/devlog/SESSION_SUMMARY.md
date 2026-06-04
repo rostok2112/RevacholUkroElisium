@@ -1,5 +1,20 @@
 # Session Summary
 
+Original M2 closeout review gate is implemented.
+
+Completed in the latest session:
+- Added `docs/m2-closeout-review-gate.md`.
+- Added `scripts/review_m2_closeout.py` and
+  `tests/fixtures/m2_closeout_review_decision.synthetic.json`.
+- The reviewer consumes only redacted local-import, line-index, and context-graph review JSON.
+- The reviewer never reopens the selected export, private DB artifact, private line-index artifact,
+  or private context-graph artifact.
+- A passing closeout marks original M2 complete at the private implementation-path level without
+  committing generated private artifacts.
+- The next safe step is `m3_bepinex_bridge_planning`.
+
+---
+
 Original M2 context-graph review gate is implemented.
 
 Decision:

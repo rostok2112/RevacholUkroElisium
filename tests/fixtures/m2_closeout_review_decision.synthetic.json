@@ -1,0 +1,19 @@
+{
+  "schema_version": "m2-closeout-review-decision.v1",
+  "roadmap_milestone": "M2",
+  "m2_closeout_review_evidence_required": true,
+  "local_import_review_required": true,
+  "line_index_review_required": true,
+  "context_graph_review_required": true,
+  "m2_completion_allowed_next": "review_required",
+  "private_artifact_reopen_allowed_during_review": false,
+  "selected_export_reopen_allowed_during_review": false,
+  "generated_review_commit_allowed": false,
+  "generated_private_db_commit_allowed": false,
+  "generated_line_index_commit_allowed": false,
+  "generated_context_graph_commit_allowed": false,
+  "private_paths_commit_allowed": false,
+  "provider_execution_allowed": false,
+  "companion_contract_change_allowed": false,
+  "recommended_next_step": "m3_bepinex_bridge_planning"
+}

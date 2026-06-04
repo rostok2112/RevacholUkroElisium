@@ -576,6 +576,15 @@ def main() -> int:
             ],
         ),
         (
+            "M2 closeout review smoke",
+            [
+                sys.executable,
+                "scripts/review_m2_closeout.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

@@ -257,3 +257,11 @@ After a passing context-graph review, the next safe step is:
 ```text
 m2_closeout_review_gate
 ```
+
+The closeout gate is tracked in:
+
+```text
+docs/m2-closeout-review-gate.md
+scripts/review_m2_closeout.py
+tests/fixtures/m2_closeout_review_decision.synthetic.json
+```

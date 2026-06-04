@@ -1,5 +1,12 @@
 # Known Risks
 
+- `scripts/review_m2_closeout.py` reviews only redacted review JSON from the M2 import, line-index,
+  and context-graph review roots. It must not be changed to reopen private artifacts, selected
+  exports, game files, logs, screenshots, provider payloads, or runtime evidence unless a later
+  contract explicitly scopes that behavior.
+- M2 closeout means the three original criteria have implementation paths and redacted review
+  evidence. It does not permit committing generated private DB artifacts, line indexes, context
+  graphs, extracted text, private paths, payloads, reports, or runtime artifacts.
 - `scripts/review_m2_context_graph.py` reviews only redacted context-graph summary JSON. It must
   not be changed to reopen private context-graph artifacts, private DB artifacts, private line-index
   artifacts, or selected exports unless a later contract explicitly scopes that behavior.

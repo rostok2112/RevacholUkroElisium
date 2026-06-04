@@ -1,8 +1,13 @@
 # Decisions Pending
 
-- The M2 context-graph review gate is implemented because it is needed before M2 closeout. Implement
-  `m2_closeout_review_gate` next to verify the three original M2 implementation paths and decide
-  whether original M2 can be closed at the local/private implementation-path level.
+- The M2 closeout review gate is implemented. Original M2 can be considered complete only after a
+  passing redacted closeout review over local-import, line-index, and context-graph review evidence.
+  The next roadmap step is `m3_bepinex_bridge_planning`.
+- Keep selected-export reopening, private artifact reopening, generated private artifacts,
+  extracted text, private paths, payloads, reports, game scanning, runtime reads, companion changes,
+  providers, and committed private artifacts blocked.
+- The M2 context-graph review gate is implemented because it is needed before M2 closeout. It
+  remains the prerequisite evidence for `m2_closeout_review_gate`.
 - Keep private context-graph artifact reopening during review, ids, relation values, source text,
   paths, payloads, reports, game scanning, runtime reads, companion changes, providers, and
   committed private artifacts blocked.

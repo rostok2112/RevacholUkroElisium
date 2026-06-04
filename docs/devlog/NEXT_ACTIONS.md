@@ -1,5 +1,23 @@
 # Next Actions
 
+After the original M2 closeout review gate:
+
+1. Treat `scripts/review_m2_closeout.py`,
+   `docs/m2-closeout-review-gate.md`, and
+   `tests/fixtures/m2_closeout_review_decision.synthetic.json` as the redacted closeout boundary
+   for original M2.
+2. The reviewer reads only ignored redacted review JSON from the local-import, line-index, and
+   context-graph review roots. It never reopens the selected export, private DB, private
+   line-index, or private context-graph artifact.
+3. A passing closeout marks original M2 complete at the private implementation-path level without
+   committing private artifacts.
+
+Recommended next safe step:
+
+- Plan `m3_bepinex_bridge_planning`.
+
+---
+
 After the original M2 context-graph implementation:
 
 1. Treat `scripts/run_m2_context_graph.py` as the third original M2 implementation slice: one

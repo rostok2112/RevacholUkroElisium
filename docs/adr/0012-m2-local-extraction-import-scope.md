@@ -827,6 +827,36 @@ The next allowed step after a passing context-graph review is:
 m2_closeout_review_gate
 ```
 
+## M2 Closeout Review Gate
+
+The redacted closeout boundary for original M2 is:
+
+```text
+docs/m2-closeout-review-gate.md
+scripts/review_m2_closeout.py
+tests/fixtures/m2_closeout_review_decision.synthetic.json
+```
+
+It reads only ignored redacted review JSON from:
+
+```text
+workspace/local-private/extraction-indexing/import/db-review/
+workspace/local-private/extraction-indexing/import/line-index-review/
+workspace/local-private/extraction-indexing/import/context-graph-review/
+```
+
+It never reopens the selected export, private DB artifact, private line-index artifact, or private
+context-graph artifact. A passing closeout review marks original M2 complete at the private
+implementation-path level only. It does not approve committing generated private artifacts,
+extracted text, private paths, payloads, reports, game scanning, runtime reads, provider execution,
+or companion contract changes.
+
+The next top-level roadmap step after a passing closeout review is:
+
+```text
+m3_bepinex_bridge_planning
+```
+
 ## Line Index Contract
 
 The static approval boundary for the second original M2 criterion is:
