@@ -1,5 +1,22 @@
 # Next Actions
 
+After M3 BepInEx bridge scope recovery:
+
+1. Treat `docs/m3-bepinex-bridge-scope.md`,
+   `tests/fixtures/m3_bepinex_bridge_scope.synthetic.json`, and
+   `scripts/check_m3_bepinex_bridge_scope.py` as the M3 baseline guardrail.
+2. Reuse the existing BepInEx bridge skeleton, optional build helper, runtime smoke workflow,
+   metadata probe workflow, bridge-to-overlay synthetic smoke, and local bridge workflow wrapper.
+3. Keep original M3 criteria incomplete until separately implemented: emit current line event,
+   match line IDs, and debug console.
+4. Keep the M3 hard stop at six total atomic commits. The next step is contract-only.
+
+Recommended next safe step:
+
+- Define `m3_current_line_event_contract`.
+
+---
+
 After the original M2 closeout review gate:
 
 1. Treat `scripts/review_m2_closeout.py`,
@@ -14,7 +31,7 @@ After the original M2 closeout review gate:
 
 Recommended next safe step:
 
-- Plan `m3_bepinex_bridge_planning`.
+- Implement `m3_bepinex_bridge_scope_recovery`.
 
 ---
 

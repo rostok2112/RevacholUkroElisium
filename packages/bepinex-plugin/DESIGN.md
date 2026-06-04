@@ -1,5 +1,26 @@
 # BepInEx Plugin Design
 
+## M3 baseline reuse
+
+M3 scope recovery is tracked in:
+
+```text
+docs/m3-bepinex-bridge-scope.md
+tests/fixtures/m3_bepinex_bridge_scope.synthetic.json
+scripts/check_m3_bepinex_bridge_scope.py
+```
+
+The existing skeleton, optional build helper, runtime smoke workflow, metadata probe workflow, and
+local workflow wrapper are reused as baseline. They do not complete original M3 yet.
+
+Original M3 still requires:
+
+- emit current line event;
+- match line IDs;
+- debug console.
+
+The next allowed M3 step is `m3_current_line_event_contract`.
+
 ## Milestone 4A boundary
 
 The bridge is currently a synthetic/manual communication skeleton only. It exists to prove a safe

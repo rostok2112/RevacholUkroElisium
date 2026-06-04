@@ -1,5 +1,33 @@
 # BepInEx Bridge Skeleton
 
+## M3 Baseline Reuse
+
+M3 scope recovery is tracked in:
+
+```text
+docs/m3-bepinex-bridge-scope.md
+tests/fixtures/m3_bepinex_bridge_scope.synthetic.json
+scripts/check_m3_bepinex_bridge_scope.py
+```
+
+The existing bridge skeleton, build helper, runtime smoke workflow, metadata probe workflow,
+bridge-to-overlay synthetic smoke, and local workflow wrapper are reused as the M3 baseline. They
+must not be recreated.
+
+The original M3 criteria remain incomplete until separately implemented:
+
+```text
+Emit current line event.
+Match line IDs.
+Debug console.
+```
+
+The next allowed M3 step is:
+
+```text
+m3_current_line_event_contract
+```
+
 Milestone 4A adds a safe C# BepInEx bridge skeleton under `packages/bepinex-plugin/`.
 
 This is not production mod behavior. It does not detect real dialogue, scan Unity objects, extract

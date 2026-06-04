@@ -2,6 +2,20 @@
 
 Milestone 4A C# BepInEx bridge skeleton for Revachol Ukrainian Companion.
 
+## M3 baseline reuse
+
+M3 scope recovery is tracked in:
+
+```text
+docs/m3-bepinex-bridge-scope.md
+tests/fixtures/m3_bepinex_bridge_scope.synthetic.json
+scripts/check_m3_bepinex_bridge_scope.py
+```
+
+The existing package is reused as M3 baseline and should not be recreated. It still does not
+complete original M3. The remaining M3 criteria are current-line event emission, line-ID matching,
+and a debug console. The next allowed M3 step is `m3_current_line_event_contract`.
+
 ## Current status
 
 This package is static-reviewable skeleton code. It is not wired into a real game install by the

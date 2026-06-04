@@ -1,5 +1,12 @@
 # Known Risks
 
+- M3 scope recovery (`docs/m3-bepinex-bridge-scope.md`,
+  `tests/fixtures/m3_bepinex_bridge_scope.synthetic.json`, and
+  `scripts/check_m3_bepinex_bridge_scope.py`) reuses former bridge/workflow work only as a
+  baseline. Do not treat the existing synthetic event, metadata probe, or local workflow wrapper as
+  real current-line capture, line-ID matching, or debug console completion.
+- The M3 hard stop is six atomic commits. Avoid adding unbounded contract/review chains inside M3.
+  The next approved step is `m3_current_line_event_contract`.
 - `scripts/review_m2_closeout.py` reviews only redacted review JSON from the M2 import, line-index,
   and context-graph review roots. It must not be changed to reopen private artifacts, selected
   exports, game files, logs, screenshots, provider payloads, or runtime evidence unless a later

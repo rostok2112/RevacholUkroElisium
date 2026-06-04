@@ -1,5 +1,20 @@
 # Session Summary
 
+M3 BepInEx bridge scope recovery is defined.
+
+Completed in the latest session:
+- Added `docs/m3-bepinex-bridge-scope.md`.
+- Added `tests/fixtures/m3_bepinex_bridge_scope.synthetic.json`.
+- Added `scripts/check_m3_bepinex_bridge_scope.py` and wired it into `scripts/check_all.py`.
+- Recorded that former bridge/workflow work is reused as baseline rather than recreated.
+- Kept original M3 criteria incomplete: emit current line event, match line IDs, and debug console.
+- Kept current-line implementation, line-ID matching implementation, debug console implementation,
+  real text capture, UI text reading, Unity scanning, hooks, OCR, provider execution, and companion
+  contract changes blocked for this scope step.
+- The next safe step is `m3_current_line_event_contract`.
+
+---
+
 Original M2 closeout review gate is implemented.
 
 Completed in the latest session:

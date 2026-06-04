@@ -585,6 +585,14 @@ def main() -> int:
             ],
         ),
         (
+            "M3 BepInEx bridge scope",
+            [
+                sys.executable,
+                "scripts/check_m3_bepinex_bridge_scope.py",
+                "--quiet",
+            ],
+        ),
+        (
             "BepInEx bridge safety smoke",
             [
                 sys.executable,

@@ -1,5 +1,14 @@
 # Decisions Pending
 
+- M3 BepInEx bridge scope recovery is defined. Define `m3_current_line_event_contract` next.
+- Keep current-line event implementation, line-ID matching implementation, debug console
+  implementation, real text capture, UI text reading, Unity scanning, hooks, OCR, provider
+  execution, companion contract changes, committed runtime artifacts, raw logs, screenshots, game
+  text, private paths, `bin`, and `obj` blocked.
+- Reuse existing bridge skeleton/build/smoke/probe/workflow files documented in
+  `docs/m3-bepinex-bridge-scope.md`,
+  `tests/fixtures/m3_bepinex_bridge_scope.synthetic.json`, and
+  `scripts/check_m3_bepinex_bridge_scope.py`; do not recreate that baseline.
 - The M2 closeout review gate is implemented. Original M2 can be considered complete only after a
   passing redacted closeout review over local-import, line-index, and context-graph review evidence.
   The next roadmap step is `m3_bepinex_bridge_planning`.
