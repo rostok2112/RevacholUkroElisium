@@ -1,5 +1,7 @@
 # Decisions Pending
 
+- M4 page-local hotkeys are implemented. Implement `m4_closeout` next and mark original M4 complete
+  only if compact translation, Genius card, and page-local hotkeys all pass the closeout guardrail.
 - M4 Genius card shell is implemented. Implement `m4_overlay_hotkeys` next by adding page-local
   browser hotkeys to `scripts/run_m4_overlay_shell.py`; do not add global keyboard hooks or
   clipboard writes.

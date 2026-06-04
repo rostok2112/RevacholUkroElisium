@@ -447,6 +447,11 @@ The same helper now renders the M4 Genius card from the validated deep view mode
 browser `<details>/<summary>` interaction. It keeps source/original text and line ids out of
 player-facing shell HTML. The next bounded M4 step is `m4_overlay_hotkeys`.
 
+The helper now also implements page-local browser hotkeys for compact visibility and Genius card
+open/close. The debug toggle is disabled unless `--enable-debug-hotkey` is explicitly supplied.
+These hotkeys are not global keyboard hooks and do not write to the clipboard. The next bounded M4
+step is `m4_closeout`.
+
 ## Shell Readiness Decision
 
 ADR 0007 records the current shell-readiness decision:

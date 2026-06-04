@@ -1,5 +1,21 @@
 # Session Summary
 
+M4 page-local hotkeys are implemented.
+
+Completed in the latest session:
+- Extended `scripts/run_m4_overlay_shell.py` with page-local browser hotkeys.
+- Ctrl+Space toggles compact shell visibility inside the loaded page.
+- Ctrl+Shift+Space opens or closes the Genius card inside the loaded page.
+- Ctrl+Alt+D toggles a debug placeholder only when `--enable-debug-hotkey` is explicitly set.
+- The helper still does not add global keyboard hooks, game input hooks, clipboard writes, native
+  always-on-top behavior, provider calls, companion HTTP changes, screenshots, private paths, or
+  committed generated shell artifacts.
+- Original M4 criteria are now implemented at the local browser shell level: compact translation,
+  Genius card, and hotkeys.
+- The next bounded M4 step is `m4_closeout`.
+
+---
+
 M4 Genius card shell is implemented.
 
 Completed in the latest session:

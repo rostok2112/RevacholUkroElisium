@@ -1,5 +1,22 @@
 # Next Actions
 
+After M4 page-local hotkeys:
+
+1. Treat `scripts/run_m4_overlay_shell.py` and `tests/test_m4_overlay_shell.py` as the implementation
+   guardrail for all three original M4 criteria.
+2. Add only M4 closeout next.
+3. Close M4 only if compact translation, Genius card, and page-local hotkeys are all present and
+   reviewed.
+4. Keep native always-on-top packaging, Electron/Tauri setup, global keyboard hooks, clipboard
+   writes, provider execution, companion HTTP changes, OCR, Unity scanning, hooks/Harmony,
+   screenshots, private paths, and committed generated shell artifacts blocked.
+
+Recommended next safe step:
+
+- Implement `m4_closeout`.
+
+---
+
 After M4 Genius card shell:
 
 1. Treat `scripts/run_m4_overlay_shell.py` and `tests/test_m4_overlay_shell.py` as the compact and

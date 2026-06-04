@@ -11,6 +11,7 @@ from scripts.run_m4_overlay_shell import (
     build_compact_overlay_shell_html,
     build_genius_card_html,
     build_overlay_shell_html,
+    build_page_local_hotkey_script,
     build_redacted_summary,
     ensure_safe_output_path,
     load_compact_view_model,
@@ -43,12 +44,18 @@ class M4OverlayShellTests(unittest.TestCase):
 
         self.assertIn("m4-compact-overlay", html)
         self.assertIn("m4-genius-card", html)
+        self.assertIn('data-hotkeys="page-local"', html)
+        self.assertIn("document.addEventListener('keydown'", html)
+        self.assertIn("event.code === 'Space'", html)
+        self.assertIn("event.code === 'KeyD'", html)
         self.assertIn("<details", html)
         self.assertIn(deep["deep"]["literary_rendering_uk"], html)
         self.assertIn(deep["deep"]["explanation_uk"], html)
         self.assertNotIn(compact["compact"]["original_english"], html)
         self.assertNotIn(deep["deep"]["original_english"], html)
         self.assertNotIn(deep["source"]["line_id"], html)
+        self.assertNotIn("clipboard", html.lower())
+        self.assertNotIn("global", html.lower())
 
     def test_genius_card_uses_existing_deep_sections(self) -> None:
         deep = load_deep_view_model(DEFAULT_DEEP_SOURCE)
@@ -57,6 +64,16 @@ class M4OverlayShellTests(unittest.TestCase):
         self.assertIn("m4-genius-card", html)
         self.assertIn(deep["deep"]["literary_rendering_uk"], html)
         self.assertIn(deep["deep"]["character_voice_note_uk"], html)
+
+    def test_page_local_hotkey_script_has_no_global_or_clipboard_side_effects(self) -> None:
+        script = build_page_local_hotkey_script()
+
+        self.assertIn("document.addEventListener('keydown'", script)
+        self.assertIn("genius.open", script)
+        self.assertIn("overlay.hidden", script)
+        self.assertNotIn("navigator.clipboard", script)
+        self.assertNotIn("window.external", script)
+        self.assertNotIn("fetch(", script)
 
     def test_rejects_non_compact_source(self) -> None:
         deep_path = ROOT / "tests/fixtures/overlay_prototype.deep.viewmodel.synthetic.json"
@@ -100,7 +117,11 @@ class M4OverlayShellTests(unittest.TestCase):
         self.assertEqual("m4-overlay-shell-summary.v1", summary["schema_version"])
         self.assertTrue(summary["compact_translation_rendered"])
         self.assertTrue(summary["genius_card_rendered"])
+        self.assertTrue(summary["page_local_hotkeys_rendered"])
+        self.assertFalse(summary["debug_hotkey_enabled"])
         self.assertFalse(summary["original_text_included"])
+        self.assertFalse(summary["global_keyboard_hooks_enabled"])
+        self.assertFalse(summary["clipboard_writes_enabled"])
         self.assertFalse(summary["private_paths_included"])
         self.assertNotIn("output_path", summary)
         self.assertNotIn(view_model["compact"]["concise_meaning_uk"], str(summary))

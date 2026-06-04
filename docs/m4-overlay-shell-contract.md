@@ -86,3 +86,16 @@ internals in player-facing shell HTML. The next bounded M4 step is:
 ```text
 m4_overlay_hotkeys
 ```
+
+Page-local hotkeys are implemented in `scripts/run_m4_overlay_shell.py`:
+
+- Ctrl+Space toggles the compact shell inside the loaded browser page.
+- Ctrl+Shift+Space opens or closes the Genius card inside the loaded browser page.
+- Ctrl+Alt+D toggles the debug placeholder only when `--enable-debug-hotkey` is explicitly set.
+
+These are page-local event listeners, not global keyboard hooks, game input hooks, clipboard writes,
+or native shell behavior. The next bounded M4 step is:
+
+```text
+m4_closeout
+```

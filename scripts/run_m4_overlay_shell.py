@@ -41,7 +41,6 @@ FORBIDDEN_HTML_MARKERS = (
     "steamapps",
     "LogOutput.log",
     "Player.log",
-    "<script",
     "javascript:",
 )
 
@@ -60,9 +59,18 @@ def main(argv: list[str] | None = None) -> int:
         else:
             source = load_compact_view_model(args.source)
             deep_source = load_deep_view_model(args.deep_source)
-            html = build_overlay_shell_html(source, deep_source)
+            html = build_overlay_shell_html(
+                source,
+                deep_source,
+                debug_hotkey_enabled=args.enable_debug_hotkey,
+            )
             output_path = write_html(html, args.output) if args.output else None
-            summary = build_redacted_summary(source, deep_source, output_path=output_path)
+            summary = build_redacted_summary(
+                source,
+                deep_source,
+                output_path=output_path,
+                debug_hotkey_enabled=args.enable_debug_hotkey,
+            )
     except (M4OverlayShellError, OSError, ValueError) as exc:
         parser.error(str(exc))
 
@@ -71,7 +79,8 @@ def main(argv: list[str] | None = None) -> int:
             "M4 compact overlay shell: "
             f"{summary['render_status']} compact_translation_rendered="
             f"{str(summary['compact_translation_rendered']).lower()} genius_card_rendered="
-            f"{str(summary['genius_card_rendered']).lower()}."
+            f"{str(summary['genius_card_rendered']).lower()} hotkeys_rendered="
+            f"{str(summary['page_local_hotkeys_rendered']).lower()}."
         )
     else:
         print(json.dumps(summary, indent=2, sort_keys=True))
@@ -102,6 +111,11 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         help="Optional HTML output path under workspace/local-private/overlay/.",
     )
+    parser.add_argument(
+        "--enable-debug-hotkey",
+        action="store_true",
+        help="Enable the page-local debug panel toggle. Default: disabled.",
+    )
     parser.add_argument("--self-test", action="store_true", help="Render the committed fixture.")
     parser.add_argument("--quiet", action="store_true", help="Print one redacted status line.")
     return parser
@@ -122,6 +136,8 @@ def run_self_test(*, output: Path | None = None) -> dict[str, Any]:
     deep_original = deep_source["deep"].get("original_english")
     if isinstance(deep_original, str) and deep_original and deep_original in html:
         raise M4OverlayShellError("Self-test failed: deep original/source text leaked.")
+    if 'data-hotkeys="page-local"' not in html:
+        raise M4OverlayShellError("Self-test failed: page-local hotkey marker missing.")
     output_path = write_html(html, output) if output else None
     return build_redacted_summary(source, deep_source, output_path=output_path)
 
@@ -145,6 +161,8 @@ def load_deep_view_model(path: Path) -> dict[str, Any]:
 def build_overlay_shell_html(
     compact_view_model: dict[str, Any],
     deep_view_model: dict[str, Any],
+    *,
+    debug_hotkey_enabled: bool = False,
 ) -> str:
     assert_valid_overlay_view_model(compact_view_model, expected_mode="compact")
     assert_valid_overlay_view_model(deep_view_model, expected_mode="deep")
@@ -178,8 +196,8 @@ def build_overlay_shell_html(
             "    .genius p, .genius li { font-size: 13px; line-height: 1.35; }",
             "  </style>",
             "</head>",
-            "<body>",
-            '  <main class="m4-compact-overlay" id="m4-compact-overlay" data-schema-version="m4-overlay-shell.v1">',
+            f'<body data-debug-hotkey-enabled="{str(debug_hotkey_enabled).lower()}">',
+            '  <main class="m4-compact-overlay" id="m4-compact-overlay" data-schema-version="m4-overlay-shell.v1" data-hotkeys="page-local">',
             f'    <p class="eyebrow">{_text(speaker or labels.get("concise_meaning", "Коротко українською"))}</p>',
             f'    <p class="translation">{_text(translation)}</p>',
             f'    <p class="meta">{_text(confidence)}</p>',
@@ -189,7 +207,9 @@ def build_overlay_shell_html(
             _render_compact_actions(compact.get("actions")),
             "    </nav>",
             build_genius_card_html(deep_view_model),
+            '    <section id="m4-debug-panel" hidden aria-live="polite">Debug panel disabled by default.</section>',
             "  </main>",
+            build_page_local_hotkey_script(),
             "</body>",
             "</html>",
         ]
@@ -277,6 +297,38 @@ def build_genius_card_html(view_model: dict[str, Any]) -> str:
     return html
 
 
+def build_page_local_hotkey_script() -> str:
+    return "\n".join(
+        [
+            "  <script>",
+            "    (() => {",
+            "      const overlay = document.getElementById('m4-compact-overlay');",
+            "      const genius = document.getElementById('m4-genius-card');",
+            "      const debugPanel = document.getElementById('m4-debug-panel');",
+            "      const debugEnabled = document.body.dataset.debugHotkeyEnabled === 'true';",
+            "      document.addEventListener('keydown', (event) => {",
+            "        if (!event.ctrlKey) return;",
+            "        if (event.code === 'Space' && event.shiftKey) {",
+            "          event.preventDefault();",
+            "          if (genius) genius.open = !genius.open;",
+            "          return;",
+            "        }",
+            "        if (event.code === 'Space' && !event.shiftKey && !event.altKey) {",
+            "          event.preventDefault();",
+            "          if (overlay) overlay.hidden = !overlay.hidden;",
+            "          return;",
+            "        }",
+            "        if (event.code === 'KeyD' && event.altKey && debugEnabled) {",
+            "          event.preventDefault();",
+            "          if (debugPanel) debugPanel.hidden = !debugPanel.hidden;",
+            "        }",
+            "      });",
+            "    })();",
+            "  </script>",
+        ]
+    )
+
+
 def write_html(html: str, output: Path) -> Path:
     safe_output = ensure_safe_output_path(output)
     safe_output.parent.mkdir(parents=True, exist_ok=True)
@@ -306,6 +358,7 @@ def build_redacted_summary(
     deep_view_model: dict[str, Any] | None = None,
     *,
     output_path: Path | None,
+    debug_hotkey_enabled: bool = False,
 ) -> dict[str, Any]:
     compact = view_model["compact"]
     deep = deep_view_model.get("deep", {}) if isinstance(deep_view_model, dict) else {}
@@ -318,6 +371,8 @@ def build_redacted_summary(
         "genius_card_rendered": bool(
             deep.get("literary_rendering_uk") and deep.get("explanation_uk")
         ),
+        "page_local_hotkeys_rendered": True,
+        "debug_hotkey_enabled": debug_hotkey_enabled,
         "original_text_included": False,
         "debug_internals_included": False,
         "raw_provider_payloads_included": False,
@@ -328,7 +383,7 @@ def build_redacted_summary(
         "global_keyboard_hooks_enabled": False,
         "clipboard_writes_enabled": False,
         "native_always_on_top_enabled": False,
-        "recommended_next_step": "m4_overlay_hotkeys",
+        "recommended_next_step": "m4_closeout",
     }
 
 

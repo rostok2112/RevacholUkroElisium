@@ -1,5 +1,9 @@
 # Known Risks
 
+- M4 page-local hotkeys (`scripts/run_m4_overlay_shell.py`) are browser-page event listeners only.
+  They must not become global keyboard hooks, game input hooks, clipboard writes, native shell
+  behavior, provider calls, companion HTTP changes, screenshot capture, or private path logging.
+- The next approved M4 step is `m4_closeout`.
 - M4 Genius card shell (`scripts/run_m4_overlay_shell.py`) reuses the existing deep view model. It
   must not drift into a second annotation schema, raw source-text duplication, line-id display,
   provider payload display, private path display, screenshot capture, clipboard writes, global
