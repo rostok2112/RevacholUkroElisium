@@ -1,5 +1,17 @@
 # Decisions Pending
 
+- Runtime targeted hook candidate research review gate is tracked by
+  `scripts/review_runtime_targeted_hook_candidate_research_report.py` and
+  `tests/fixtures/runtime_targeted_hook_candidate_research_review_decision.synthetic.json`.
+- Next runtime-first decision boundary: `runtime_targeted_hook_candidate_decision_contract`.
+- The decision contract may decide only how to proceed from redacted aggregate candidate evidence.
+  Hook implementation, real text capture, Unity UI inspection, log parsing, screenshots,
+  game-file reads, provider calls, companion HTTP contract changes, decompiled identifiers, method
+  signatures, class names, raw logs, private paths, payload dumps, and committed runtime evidence
+  remain blocked.
+
+---
+
 - Runtime targeted hook candidate research local report gate is tracked by
   `tests/fixtures/runtime_targeted_hook_candidate_research_report.synthetic.json` and
   `scripts/check_runtime_targeted_hook_candidate_research_report.py`.

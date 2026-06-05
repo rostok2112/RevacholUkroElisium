@@ -162,6 +162,15 @@ def main() -> int:
             ],
         ),
         (
+            "runtime targeted hook candidate research review",
+            [
+                sys.executable,
+                "scripts/review_runtime_targeted_hook_candidate_research_report.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "local overlay prototype smoke",
             [
                 sys.executable,

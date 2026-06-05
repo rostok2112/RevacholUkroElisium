@@ -58,3 +58,24 @@ The active next step after the local report gate is:
 ```text
 runtime_targeted_hook_candidate_research_review_gate
 ```
+
+## Review Gate
+
+The review gate is tracked by:
+
+```text
+scripts/review_runtime_targeted_hook_candidate_research_report.py
+tests/fixtures/runtime_targeted_hook_candidate_research_review_decision.synthetic.json
+```
+
+It reads only the redacted report JSON under the ignored hook research workspace and emits only
+redacted review status, aggregate counts, blocker categories, and a safe next-step value. A passing
+review allows only:
+
+```text
+runtime_targeted_hook_candidate_decision_contract
+```
+
+Hook implementation, real text capture, UI inspection, log parsing, provider execution, companion
+contract changes, candidate identifiers, method/class names, signatures, source text, private
+paths, raw logs, screenshots, payload dumps, and real runtime evidence remain blocked.

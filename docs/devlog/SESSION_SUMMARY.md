@@ -1,5 +1,20 @@
 # Session Summary
 
+Runtime targeted hook candidate research review gate is now implemented.
+
+Completed in the latest session:
+- Added `scripts/review_runtime_targeted_hook_candidate_research_report.py`.
+- Added `tests/fixtures/runtime_targeted_hook_candidate_research_review_decision.synthetic.json`.
+- Added focused review tests and `check_all.py` registration.
+- The reviewer reads only redacted local/private report summaries under ignored workspace roots.
+- A passing review authorizes only `runtime_targeted_hook_candidate_decision_contract`.
+- Hook implementation, real text capture, Unity UI inspection, log parsing, screenshots,
+  game-file reads, provider calls, companion HTTP contract changes, candidate identifiers, method
+  names, signatures, class names, raw logs, private paths, payload dumps, and committed runtime
+  evidence remain blocked.
+
+---
+
 Runtime targeted hook candidate research local report gate is now implemented.
 
 Completed in the latest session:

@@ -1,5 +1,16 @@
 # Known Risks
 
+- Runtime targeted hook candidate research review is now validated by
+  `scripts/review_runtime_targeted_hook_candidate_research_report.py` and
+  `tests/fixtures/runtime_targeted_hook_candidate_research_review_decision.synthetic.json`.
+- The next step is `runtime_targeted_hook_candidate_decision_contract`, which may define only how
+  to make a redacted candidate decision. It must not implement hooks or capture text.
+- The main leak risk remains candidate identifiers, decompiled method names, signatures, class
+  names, source text, payload dumps, provider data, private paths, and real runtime evidence
+  entering tracked files. The review gate keeps those out of review output.
+
+---
+
 - Runtime targeted hook candidate research local reports are now validated by
   `tests/fixtures/runtime_targeted_hook_candidate_research_report.synthetic.json` and
   `scripts/check_runtime_targeted_hook_candidate_research_report.py`.

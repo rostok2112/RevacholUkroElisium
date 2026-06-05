@@ -195,6 +195,29 @@ The next step is:
 runtime_targeted_hook_candidate_research_review_gate
 ```
 
+## Targeted Hook Candidate Research Review Gate
+
+The redacted report review gate is tracked by:
+
+```text
+scripts/review_runtime_targeted_hook_candidate_research_report.py
+tests/fixtures/runtime_targeted_hook_candidate_research_review_decision.synthetic.json
+```
+
+The reviewer reads only the redacted local/private report JSON under the ignored hook research
+workspace. It does not read raw notes, raw logs, screenshots, source text, candidate identifiers,
+method names, signatures, class names, provider data, private paths, or real runtime evidence.
+
+A passing review allows only a later static decision contract:
+
+```text
+runtime_targeted_hook_candidate_decision_contract
+```
+
+Hook implementation, real text capture, Unity UI inspection, OCR, screenshots, game-file reads,
+BepInEx log parsing, provider calls, companion HTTP contract changes, and committed runtime
+artifacts remain blocked.
+
 Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
 
 ```json

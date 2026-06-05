@@ -1,5 +1,28 @@
 # Next Actions
 
+After runtime targeted hook candidate research review gate:
+
+1. Treat `scripts/review_runtime_targeted_hook_candidate_research_report.py` and
+   `tests/fixtures/runtime_targeted_hook_candidate_research_review_decision.synthetic.json` as the
+   redacted review boundary.
+2. The reviewer may inspect only the existing redacted report JSON under
+   `workspace/local-private/runtime-capture/hook-research/`.
+3. A ready review allows only a later static decision contract. It must not implement hooks,
+   inspect game UI, parse logs, capture text, call providers, or change companion contracts.
+4. Keep candidate identifiers, decompiled method names, signatures, class names, raw logs,
+   screenshots, source text, payload dumps, private paths, provider data, and real runtime evidence
+   out of tracked files.
+
+Recommended next safe step:
+
+- Define `runtime_targeted_hook_candidate_decision_contract`.
+
+Traceability:
+
+- This step implements the prior handoff `runtime_targeted_hook_candidate_research_review_gate`.
+
+---
+
 After runtime targeted hook candidate research local report:
 
 1. Treat `tests/fixtures/runtime_targeted_hook_candidate_research_report.synthetic.json` and
