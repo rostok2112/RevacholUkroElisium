@@ -1,5 +1,22 @@
 # Next Actions
 
+After runtime current-line capture spike:
+
+1. Treat `SendSyntheticRuntimeCurrentLineEventOnStart`,
+   `scripts/check_runtime_current_line_capture_spike_report.py`, and
+   `scripts/review_runtime_current_line_capture_spike.py` as the capture-spike boundary.
+2. The spike verifies only synthetic/manual runtime transport through a local installed plugin and
+   translation-memory lookup. It does not implement real capture.
+3. Keep hooks, Unity UI scanning, OCR, screenshots, game-file reads, BepInEx log commits, provider
+   calls, raw payloads, private paths, and runtime text out of git.
+4. M2 private-export verification remains blocked until a real export source exists.
+
+Recommended next safe step:
+
+- Define `runtime_current_line_capture_strategy_decision`.
+
+---
+
 After runtime current-line transport:
 
 1. Treat `POST /runtime/current-line`, `GET /state/latest-runtime-current-line`,
@@ -15,7 +32,7 @@ After runtime current-line transport:
 
 Recommended next safe step:
 
-- Run `runtime_current_line_capture_spike`.
+- Implemented by the runtime current-line capture spike slice above.
 
 ---
 

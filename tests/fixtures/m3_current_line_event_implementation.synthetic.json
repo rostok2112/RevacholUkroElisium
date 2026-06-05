@@ -14,6 +14,7 @@
   "default_current_line_event_enabled": false,
   "default_emit_synthetic_current_line_event_on_start": false,
   "default_runtime_current_line_transport_enabled": false,
+  "default_synthetic_runtime_current_line_send_on_start": false,
   "raw_text_included_allowed": false,
   "ui_text_reading_allowed": false,
   "unity_scanning_allowed": false,

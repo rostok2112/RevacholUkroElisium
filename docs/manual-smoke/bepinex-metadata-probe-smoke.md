@@ -199,6 +199,44 @@ python scripts/run_bepinex_metadata_probe_local_smoke.py `
   --disable-synthetic-send
 ```
 
+## Runtime Current-Line Capture Spike Prep
+
+The runtime-first capture spike uses only the invented runtime event transport. Before manually
+launching the game, temporarily enable both runtime transport switches:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --enable-runtime-current-line-transport `
+  --enable-synthetic-runtime-send
+```
+
+Expected safe runtime markers are:
+
+```text
+Synthetic runtime current-line event sent:
+Synthetic runtime current-line event was not accepted:
+```
+
+After the smoke, restore both runtime switches:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --disable-runtime-current-line-transport `
+  --disable-synthetic-runtime-send
+```
+
+Validate and review only redacted capture-spike evidence:
+
+```powershell
+python scripts/check_runtime_current_line_capture_spike_report.py --quiet
+python scripts/review_runtime_current_line_capture_spike.py --self-test --quiet
+```
+
+This still does not approve real text capture, hooks, Unity scanning, screenshots, OCR, game-file
+reads, BepInEx log commits, provider calls, or raw companion payloads.
+
 The helper may copy the built bridge DLL only to `BepInEx/plugins/`, edit only the bridge config
 under `BepInEx/config/`, and read only `BepInEx/LogOutput.log`. It must not print raw log lines,
 store raw logs, recursively scan drives, parse dialogue, read arbitrary game files, inspect

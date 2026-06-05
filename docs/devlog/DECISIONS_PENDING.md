@@ -1,5 +1,15 @@
 # Decisions Pending
 
+- Runtime current-line capture strategy is now the active decision. The spike can verify
+  synthetic/manual runtime event transport through the installed plugin, but it does not decide or
+  implement real capture.
+- Decide the next capture strategy from redacted local evidence only. Candidate strategies must keep
+  OCR, screenshots, broad Unity scanning, hooks, game-file reads, provider execution, private paths,
+  raw logs, and runtime text out of tracked files unless a later contract explicitly scopes them.
+- Next runtime-first decision: `runtime_current_line_capture_strategy_decision`.
+
+---
+
 - Runtime-first transport is active. `POST /runtime/current-line` accepts one local/private
   runtime event, stores it in memory, and checks translation memory before any provider work.
 - Provider execution remains blocked. A cache miss reports `provider_call_required=true`; it does

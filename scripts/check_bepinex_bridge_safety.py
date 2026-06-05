@@ -18,6 +18,10 @@ try:
         REPORT_ROOT as METADATA_PROBE_REPORT_ROOT,
         collect_metadata_probe_report_errors,
     )
+    from scripts.check_runtime_current_line_capture_spike_report import (
+        FIXTURE_PATH as CAPTURE_SPIKE_FIXTURE_PATH,
+        collect_capture_spike_report_errors,
+    )
 except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
     from schema_validator import collect_errors, load_json
     from check_bepinex_runtime_smoke_report import (
@@ -29,6 +33,10 @@ except ModuleNotFoundError:  # pragma: no cover - script execution from scripts/
         FIXTURE_PATH as METADATA_PROBE_FIXTURE_PATH,
         REPORT_ROOT as METADATA_PROBE_REPORT_ROOT,
         collect_metadata_probe_report_errors,
+    )
+    from check_runtime_current_line_capture_spike_report import (
+        FIXTURE_PATH as CAPTURE_SPIKE_FIXTURE_PATH,
+        collect_capture_spike_report_errors,
     )
 
 
@@ -63,6 +71,8 @@ METADATA_PROBE_REVIEWER = ROOT / "scripts/review_bepinex_metadata_probe_report.p
 METADATA_PROBE_LOCAL_SMOKE_HELPER = ROOT / "scripts/run_bepinex_metadata_probe_local_smoke.py"
 BRIDGE_TO_OVERLAY_SMOKE_HELPER = ROOT / "scripts/run_bridge_to_overlay_synthetic_smoke.py"
 LOCAL_BRIDGE_WORKFLOW_HELPER = ROOT / "scripts/run_local_bridge_workflow.py"
+CAPTURE_SPIKE_CHECKER = ROOT / "scripts/check_runtime_current_line_capture_spike_report.py"
+CAPTURE_SPIKE_REVIEWER = ROOT / "scripts/review_runtime_current_line_capture_spike.py"
 METADATA_EXTENSION_GATE_FIXTURE = (
     ROOT / "tests/fixtures/bepinex_bridge.metadata_extension_gate.synthetic.json"
 )
@@ -210,6 +220,7 @@ def collect_bepinex_bridge_safety_errors() -> list[str]:
     errors.extend(_check_fixture())
     errors.extend(_check_log_contract())
     errors.extend(_check_runtime_report_contract())
+    errors.extend(_check_capture_spike_report_contract())
     errors.extend(_check_metadata_probe_contract())
     errors.extend(_check_metadata_extension_gate_contract())
     errors.extend(_check_metadata_only_extension_scope_contract())
@@ -257,6 +268,9 @@ def _check_required_files() -> list[str]:
         METADATA_PROBE_LOCAL_SMOKE_HELPER,
         BRIDGE_TO_OVERLAY_SMOKE_HELPER,
         LOCAL_BRIDGE_WORKFLOW_HELPER,
+        CAPTURE_SPIKE_FIXTURE_PATH,
+        CAPTURE_SPIKE_CHECKER,
+        CAPTURE_SPIKE_REVIEWER,
         METADATA_EXTENSION_GATE_FIXTURE,
         METADATA_ONLY_EXTENSION_SCOPE_FIXTURE,
         POST_BRIDGE_TO_OVERLAY_NEXT_STEP_FIXTURE,
@@ -324,6 +338,10 @@ def _check_runtime_report_contract() -> list[str]:
     if "workspace/" not in gitignore_text:
         errors.append(f"Runtime report root {report_root} must stay under ignored workspace/.")
     return errors
+
+
+def _check_capture_spike_report_contract() -> list[str]:
+    return collect_capture_spike_report_errors(CAPTURE_SPIKE_FIXTURE_PATH)
 
 
 def _check_metadata_probe_contract() -> list[str]:
@@ -401,6 +419,10 @@ def _check_local_metadata_probe_smoke_helper() -> list[str]:
         "--disable-probe",
         "--enable-synthetic-send",
         "--disable-synthetic-send",
+        "--enable-runtime-current-line-transport",
+        "--disable-runtime-current-line-transport",
+        "--enable-synthetic-runtime-send",
+        "--disable-synthetic-runtime-send",
         "--check-log",
         "--write-report",
         "libraryfolders.vdf",
@@ -413,10 +435,15 @@ def _check_local_metadata_probe_smoke_helper() -> list[str]:
         "MetadataProbeEnabled",
         "MetadataProbeLogOnStart",
         "SendSyntheticEventOnStart",
+        "RuntimeCurrentLineTransportEnabled",
+        "SendSyntheticRuntimeCurrentLineEventOnStart",
         "Companion health check passed",
         "Synthetic provider event sent:",
         "Synthetic provider event was not accepted:",
+        "Synthetic runtime current-line event sent:",
+        "Synthetic runtime current-line event was not accepted:",
         "synthetic_provider_event_sent_observed",
+        "synthetic_runtime_event_sent_observed",
         "build_bepinex_bridge_report",
         "default_metadata_probe_report_template",
         "collect_metadata_probe_report_errors",
@@ -461,7 +488,14 @@ def _check_local_metadata_probe_smoke_helper() -> list[str]:
         doc_text = _read_text(doc_path).replace("\\", "/")
         if helper_ref not in doc_text:
             errors.append(f"{doc_path.relative_to(ROOT)} must point to {helper_ref}.")
-        for marker in ("--enable-synthetic-send", "--disable-synthetic-send"):
+        for marker in (
+            "--enable-synthetic-send",
+            "--disable-synthetic-send",
+            "--enable-runtime-current-line-transport",
+            "--disable-runtime-current-line-transport",
+            "--enable-synthetic-runtime-send",
+            "--disable-synthetic-runtime-send",
+        ):
             if marker not in doc_text:
                 errors.append(
                     f"{doc_path.relative_to(ROOT)} must document local helper flag {marker}."

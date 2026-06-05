@@ -263,6 +263,24 @@ python scripts/run_bepinex_metadata_probe_local_smoke.py `
   --disable-synthetic-send
 ```
 
+For the runtime current-line capture spike, enable only the synthetic runtime transport switches:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --enable-runtime-current-line-transport `
+  --enable-synthetic-runtime-send
+```
+
+Disable them after the smoke:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --disable-runtime-current-line-transport `
+  --disable-synthetic-runtime-send
+```
+
 The helper never launches the game, recursively scans drives, prints raw logs, stores raw logs,
 parses dialogue, reads arbitrary game files, calls providers, or changes the companion HTTP
 contract. It can summarize bridge-owned companion health and synthetic-send markers as redacted

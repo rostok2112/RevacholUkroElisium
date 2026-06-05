@@ -38,6 +38,7 @@ M2_RECOMMENDED_NEXT_STEP = "m2_manual_private_export_verification"
 M3_RECOMMENDED_NEXT_STEP = "m3_manual_runtime_verification"
 RUNTIME_RECOMMENDED_NEXT_STEP = "runtime_current_line_capture_contract"
 RUNTIME_TRANSPORT_RECOMMENDED_NEXT_STEP = "runtime_current_line_capture_spike"
+RUNTIME_CAPTURE_SPIKE_RECOMMENDED_NEXT_STEP = "runtime_current_line_capture_strategy_decision"
 MILESTONES = ("M0", "M1", "M2", "M3", "M4")
 
 
@@ -168,10 +169,22 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
             errors.append(
                 "Runtime-first status must record runtime_current_line_transport_done=true."
             )
+        if payload.get("runtime_current_line_capture_spike_done") is not True:
+            errors.append(
+                "Runtime-first status must record runtime_current_line_capture_spike_done=true."
+            )
     return errors
 
 
 def _expected_next_step(payload: dict[str, Any]) -> str:
+    if (
+        payload.get("runtime_first_path_active") is True
+        and payload.get("runtime_translation_memory_done") is True
+        and payload.get("runtime_current_line_transport_done") is True
+        and payload.get("runtime_current_line_capture_spike_done") is True
+        and payload.get("m2_private_export_source_available") is False
+    ):
+        return RUNTIME_CAPTURE_SPIKE_RECOMMENDED_NEXT_STEP
     if (
         payload.get("runtime_first_path_active") is True
         and payload.get("runtime_translation_memory_done") is True
@@ -223,6 +236,7 @@ def _allowed_values(payload: dict[str, Any]) -> set[str]:
         M3_RECOMMENDED_NEXT_STEP,
         RUNTIME_RECOMMENDED_NEXT_STEP,
         RUNTIME_TRANSPORT_RECOMMENDED_NEXT_STEP,
+        RUNTIME_CAPTURE_SPIKE_RECOMMENDED_NEXT_STEP,
         *MILESTONES,
     }
     milestones = payload.get("milestones")

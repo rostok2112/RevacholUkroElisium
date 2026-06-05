@@ -6,8 +6,9 @@
   "m2_private_export_source_available": false,
   "runtime_translation_memory_done": true,
   "runtime_current_line_transport_done": true,
+  "runtime_current_line_capture_spike_done": true,
   "m5_planning_allowed": false,
-  "recommended_next_step": "runtime_current_line_capture_spike",
+  "recommended_next_step": "runtime_current_line_capture_strategy_decision",
   "milestones": [
     {
       "roadmap_milestone": "M0",

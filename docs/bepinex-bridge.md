@@ -277,6 +277,29 @@ python scripts/run_bepinex_metadata_probe_local_smoke.py `
   --disable-synthetic-send
 ```
 
+For the runtime current-line capture spike, enable only the synthetic runtime transport flags:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --enable-runtime-current-line-transport `
+  --enable-synthetic-runtime-send
+```
+
+Then disable them after the smoke:
+
+```powershell
+python scripts/run_bepinex_metadata_probe_local_smoke.py `
+  --auto-discover `
+  --disable-runtime-current-line-transport `
+  --disable-synthetic-runtime-send
+```
+
+Expected safe runtime markers are `Synthetic runtime current-line event sent:` and
+`Synthetic runtime current-line event was not accepted:`. Redacted capture-spike reports are
+validated with `scripts/check_runtime_current_line_capture_spike_report.py` and reviewed with
+`scripts/review_runtime_current_line_capture_spike.py`.
+
 If the redacted helper output says the synthetic provider event was observed, optional local
 confirmation can use:
 
@@ -288,10 +311,11 @@ python scripts/run_companion_client.py latest-provider-annotation
 Do not commit or paste companion response payloads from a real local run.
 
 The helper is local-test preparation only. It may discover Steam library paths, build/install the
-bridge, toggle bridge config flags including `SendSyntheticEventOnStart`, and summarize allowlisted
-metadata plus synthetic bridge markers. It never launches the game, recursively scans drives, prints
-or stores raw logs, parses dialogue, reads arbitrary game files, calls providers, or changes the
-companion HTTP contract.
+bridge, toggle bridge config flags including `SendSyntheticEventOnStart`,
+`RuntimeCurrentLineTransportEnabled`, and `SendSyntheticRuntimeCurrentLineEventOnStart`, and
+summarize allowlisted metadata plus synthetic bridge markers. It never launches the game,
+recursively scans drives, prints or stores raw logs, parses dialogue, reads arbitrary game files,
+calls providers, or adds capture hooks.
 
 The manual metadata probe smoke checklist is:
 

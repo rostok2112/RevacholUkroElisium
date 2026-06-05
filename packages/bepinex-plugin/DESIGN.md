@@ -256,12 +256,16 @@ The local preparation helper is `scripts/run_bepinex_metadata_probe_local_smoke.
 bounded Steam autodiscovery, build/install the existing bridge DLL, toggle
 `MetadataProbeEnabled`, `MetadataProbeLogOnStart`, and the existing `SendSyntheticEventOnStart`
 bridge config key, and read only `BepInEx/LogOutput.log` after the user manually launches and
-closes the game. It never launches the game, recursively scans drives, stores or prints raw logs,
-parses dialogue, reads arbitrary game files, calls providers, scans Unity objects, or changes the
-companion HTTP contract.
+closes the game. For the runtime capture spike it may also toggle
+`RuntimeCurrentLineTransportEnabled` and `SendSyntheticRuntimeCurrentLineEventOnStart`. It never
+launches the game, recursively scans drives, stores or prints raw logs, parses dialogue, reads
+arbitrary game files, calls providers, scans Unity objects, or adds capture hooks.
 
 For companion-connected synthetic smoke, the helper may summarize only bridge-owned companion
-health and synthetic-send markers as redacted booleans. The companion server/client stay the
-existing localhost tools (`scripts/run_companion_server.py` and `scripts/run_companion_client.py`);
-there are no new endpoints, provider calls, or C# behavior changes. The local config toggle flags
-are `--enable-synthetic-send` before the manual run and `--disable-synthetic-send` during cleanup.
+health and synthetic-send markers as redacted booleans. Runtime capture-spike smoke may summarize
+only synthetic runtime transport markers and translation-memory status as redacted booleans. The
+companion server/client stay localhost-only tools (`scripts/run_companion_server.py` and
+`scripts/run_companion_client.py`). Provider calls and real capture remain blocked. The local
+config toggle flags are `--enable-synthetic-send`, `--disable-synthetic-send`,
+`--enable-runtime-current-line-transport`, `--disable-runtime-current-line-transport`,
+`--enable-synthetic-runtime-send`, and `--disable-synthetic-runtime-send`.

@@ -43,6 +43,7 @@ class M3CurrentLineEventImplementationTests(unittest.TestCase):
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["recommended_next_step"])
         self.assertEqual(RECOMMENDED_NEXT_STEP, fixture["required_next_step"])
         self.assertIs(fixture["default_runtime_current_line_transport_enabled"], False)
+        self.assertIs(fixture["default_synthetic_runtime_current_line_send_on_start"], False)
         for field in REQUIRED_TRUE_FIELDS:
             with self.subTest(field=field):
                 self.assertIs(fixture[field], True)
@@ -64,6 +65,7 @@ class M3CurrentLineEventImplementationTests(unittest.TestCase):
             ("default_current_line_event_enabled", True),
             ("default_emit_synthetic_current_line_event_on_start", True),
             ("default_runtime_current_line_transport_enabled", True),
+            ("default_synthetic_runtime_current_line_send_on_start", True),
             ("m3_commit_cap", 6),
             ("m3_commits_used", 6),
             ("recommended_next_step", "m3_debug_console"),
@@ -82,8 +84,10 @@ class M3CurrentLineEventImplementationTests(unittest.TestCase):
         self.assertIn("DefaultCurrentLineEventEnabled = false", plugin)
         self.assertIn("DefaultEmitSyntheticCurrentLineEventOnStart = false", plugin)
         self.assertIn("DefaultRuntimeCurrentLineTransportEnabled = false", plugin)
+        self.assertIn("DefaultSendSyntheticRuntimeCurrentLineEventOnStart = false", plugin)
         self.assertIn("EmitSyntheticCurrentLineEventNow", plugin)
         self.assertIn("SendSyntheticRuntimeCurrentLineEventNowAsync", plugin)
+        self.assertIn("SendSyntheticRuntimeCurrentLineEventOnStart", plugin)
         self.assertIn("m3-current-line-event.v1", event_source)
         self.assertIn("runtime-current-line-event.v1", event_source)
         self.assertIn('\\"raw_text_included\\":false', event_source)

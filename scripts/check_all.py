@@ -120,6 +120,23 @@ def main() -> int:
             ],
         ),
         (
+            "runtime current-line capture spike report",
+            [
+                sys.executable,
+                "scripts/check_runtime_current_line_capture_spike_report.py",
+                "--quiet",
+            ],
+        ),
+        (
+            "runtime current-line capture spike review smoke",
+            [
+                sys.executable,
+                "scripts/review_runtime_current_line_capture_spike.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "local overlay prototype smoke",
             [
                 sys.executable,

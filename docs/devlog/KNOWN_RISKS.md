@@ -1,5 +1,15 @@
 # Known Risks
 
+- Runtime current-line capture spike tooling can enable a synthetic runtime event at startup when
+  the user explicitly toggles local BepInEx config. This is still not a real game-text capture path.
+- Capture strategy is still undecided. Hooks, broad Unity scanning, OCR, screenshots, game-file
+  reads, BepInEx log commits, provider calls, and raw companion payloads remain blocked.
+- Redacted capture-spike reports must stay under ignored workspace roots and may contain only
+  booleans, counts, status, and blocker categories.
+- The next safe step is `runtime_current_line_capture_strategy_decision`.
+
+---
+
 - Runtime current-line transport now accepts private runtime text through
   `POST /runtime/current-line` and keeps the latest event in companion memory. This is local-only
   transport, not capture: no hooks, Unity scanning, OCR, game-file reads, BepInEx log reads,
@@ -8,7 +18,8 @@
   it before a local capture spike should be done only for synthetic/manual localhost tests.
 - `scripts/run_runtime_current_line_smoke.py` is redacted public evidence only. Generated/private
   runtime reports must stay under ignored workspace roots.
-- The next safe step is `runtime_current_line_capture_spike`.
+- The runtime capture spike is now implemented; the next safe step is
+  `runtime_current_line_capture_strategy_decision`.
 
 ---
 

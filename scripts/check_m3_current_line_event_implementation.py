@@ -171,6 +171,8 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
         errors.append("M3 synthetic current-line startup event must remain disabled by default.")
     if payload.get("default_runtime_current_line_transport_enabled") not in (None, False):
         errors.append("Runtime current-line transport must remain disabled by default.")
+    if payload.get("default_synthetic_runtime_current_line_send_on_start") not in (None, False):
+        errors.append("Synthetic runtime current-line send must remain disabled by default.")
     for field in REQUIRED_TRUE_FIELDS:
         if payload.get(field) is not True:
             errors.append(f"M3 current-line implementation fixture must set {field}=true.")
@@ -190,9 +192,11 @@ def _source_errors() -> list[str]:
         "DefaultCurrentLineEventEnabled = false",
         "DefaultEmitSyntheticCurrentLineEventOnStart = false",
         "DefaultRuntimeCurrentLineTransportEnabled = false",
+        "DefaultSendSyntheticRuntimeCurrentLineEventOnStart = false",
         "CurrentLineEventEnabled",
         "EmitSyntheticCurrentLineEventOnStart",
         "RuntimeCurrentLineTransportEnabled",
+        "SendSyntheticRuntimeCurrentLineEventOnStart",
         "EmitSyntheticCurrentLineEventNow",
         "SendSyntheticRuntimeCurrentLineEventNowAsync",
         "CurrentLineEventFactory.BuildSyntheticCurrentLineEventJson",

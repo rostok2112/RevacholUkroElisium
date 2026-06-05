@@ -22,6 +22,7 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         public const bool DefaultCurrentLineEventEnabled = false;
         public const bool DefaultEmitSyntheticCurrentLineEventOnStart = false;
         public const bool DefaultRuntimeCurrentLineTransportEnabled = false;
+        public const bool DefaultSendSyntheticRuntimeCurrentLineEventOnStart = false;
         public const bool DefaultDebugConsoleEnabled = false;
 
         private ConfigEntry<bool>? _enabled;
@@ -33,6 +34,7 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
         private ConfigEntry<bool>? _currentLineEventEnabled;
         private ConfigEntry<bool>? _emitSyntheticCurrentLineEventOnStart;
         private ConfigEntry<bool>? _runtimeCurrentLineTransportEnabled;
+        private ConfigEntry<bool>? _sendSyntheticRuntimeCurrentLineEventOnStart;
         private ConfigEntry<bool>? _debugConsoleEnabled;
         private CompanionHttpClient? _client;
 
@@ -248,6 +250,12 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 DefaultRuntimeCurrentLineTransportEnabled,
                 "Enable the disabled-by-default runtime current-line transport to localhost."
             );
+            _sendSyntheticRuntimeCurrentLineEventOnStart = Config.Bind(
+                "CurrentLineEvent",
+                "SendSyntheticRuntimeCurrentLineEventOnStart",
+                DefaultSendSyntheticRuntimeCurrentLineEventOnStart,
+                "Send one built-in synthetic runtime current-line event after startup checks."
+            );
             _debugConsoleEnabled = Config.Bind(
                 "DebugConsole",
                 "DebugConsoleEnabled",
@@ -296,6 +304,14 @@ namespace Revachol.UkrainianCompanion.BepInExBridge
                 )
                 {
                     EmitSyntheticCurrentLineEventNow();
+                }
+
+                if (
+                    _sendSyntheticRuntimeCurrentLineEventOnStart != null
+                    && _sendSyntheticRuntimeCurrentLineEventOnStart.Value
+                )
+                {
+                    await SendSyntheticRuntimeCurrentLineEventNowAsync();
                 }
 
                 LogMetadataProbeSnapshot(companionHealthChecked, companionAvailable);

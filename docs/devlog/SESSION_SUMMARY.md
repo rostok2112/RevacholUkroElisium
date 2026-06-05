@@ -1,5 +1,24 @@
 # Session Summary
 
+Runtime current-line capture spike tooling is now implemented.
+
+Completed in the latest session:
+- Added `SendSyntheticRuntimeCurrentLineEventOnStart = false` to the BepInEx bridge and wired it to
+  the existing disabled-by-default runtime current-line transport.
+- Extended `scripts/run_bepinex_metadata_probe_local_smoke.py` with safe config toggles for
+  `RuntimeCurrentLineTransportEnabled` and `SendSyntheticRuntimeCurrentLineEventOnStart`.
+- Added redacted capture-spike report/review guardrails:
+  `tests/fixtures/runtime_current_line_capture_spike_report.synthetic.json`,
+  `scripts/check_runtime_current_line_capture_spike_report.py`, and
+  `scripts/review_runtime_current_line_capture_spike.py`.
+- The spike verifies synthetic/manual runtime transport through the installed plugin. It still does
+  not approve real text capture, hooks, Unity scanning, OCR, screenshots, game-file reads, provider
+  calls, or committed runtime logs.
+- M2 private-export verification remains blocked because no export source exists.
+- The next safe step is `runtime_current_line_capture_strategy_decision`.
+
+---
+
 Runtime-first current-line transport is now implemented.
 
 Completed in the latest session:

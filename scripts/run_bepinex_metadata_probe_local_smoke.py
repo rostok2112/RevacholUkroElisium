@@ -63,6 +63,8 @@ COMPANION_HEALTH_AVAILABLE_MARKER = "Companion health check passed"
 COMPANION_HEALTH_UNAVAILABLE_MARKER = "Companion health check failed"
 SYNTHETIC_PROVIDER_EVENT_SENT_MARKER = "Synthetic provider event sent:"
 SYNTHETIC_PROVIDER_EVENT_REJECTED_MARKER = "Synthetic provider event was not accepted:"
+SYNTHETIC_RUNTIME_EVENT_SENT_MARKER = "Synthetic runtime current-line event sent:"
+SYNTHETIC_RUNTIME_EVENT_REJECTED_MARKER = "Synthetic runtime current-line event was not accepted:"
 TRUE_FALSE_MARKERS = (
     "real_text_captured=false",
     "current_line_capture_enabled=false",
@@ -180,6 +182,10 @@ class LogCheck:
     synthetic_provider_event_id_observed: bool
     synthetic_provider_line_id_observed: bool
     synthetic_provider_status_observed: bool
+    synthetic_runtime_event_sent_observed: bool
+    synthetic_runtime_event_rejected_observed: bool
+    synthetic_runtime_line_id_observed: bool
+    synthetic_runtime_status_observed: bool
     forbidden_marker_categories: tuple[str, ...]
 
     def redacted_summary(self) -> dict[str, object]:
@@ -209,6 +215,12 @@ class LogCheck:
             "synthetic_provider_event_id_observed": (self.synthetic_provider_event_id_observed),
             "synthetic_provider_line_id_observed": (self.synthetic_provider_line_id_observed),
             "synthetic_provider_status_observed": self.synthetic_provider_status_observed,
+            "synthetic_runtime_event_sent_observed": self.synthetic_runtime_event_sent_observed,
+            "synthetic_runtime_event_rejected_observed": (
+                self.synthetic_runtime_event_rejected_observed
+            ),
+            "synthetic_runtime_line_id_observed": self.synthetic_runtime_line_id_observed,
+            "synthetic_runtime_status_observed": self.synthetic_runtime_status_observed,
             "forbidden_marker_detected": self.forbidden_marker_detected,
             "forbidden_marker_categories": list(self.forbidden_marker_categories),
             "raw_log_included": False,
@@ -240,6 +252,10 @@ def main(argv: list[str] | None = None) -> int:
                 args.disable_probe,
                 args.enable_synthetic_send,
                 args.disable_synthetic_send,
+                args.enable_runtime_current_line_transport,
+                args.disable_runtime_current_line_transport,
+                args.enable_synthetic_runtime_send,
+                args.disable_synthetic_runtime_send,
                 args.check_log,
                 args.write_report,
                 args.print_discovery,
@@ -273,6 +289,30 @@ def main(argv: list[str] | None = None) -> int:
         if args.disable_synthetic_send:
             result["actions"] = _merge_action(
                 result["actions"], set_synthetic_send_config_action(discovery, enabled=False)
+            )
+
+        if args.enable_runtime_current_line_transport:
+            result["actions"] = _merge_action(
+                result["actions"],
+                set_runtime_current_line_transport_config_action(discovery, enabled=True),
+            )
+
+        if args.disable_runtime_current_line_transport:
+            result["actions"] = _merge_action(
+                result["actions"],
+                set_runtime_current_line_transport_config_action(discovery, enabled=False),
+            )
+
+        if args.enable_synthetic_runtime_send:
+            result["actions"] = _merge_action(
+                result["actions"],
+                set_synthetic_runtime_send_config_action(discovery, enabled=True),
+            )
+
+        if args.disable_synthetic_runtime_send:
+            result["actions"] = _merge_action(
+                result["actions"],
+                set_synthetic_runtime_send_config_action(discovery, enabled=False),
             )
 
         log_check: LogCheck | None = None
@@ -341,6 +381,26 @@ def build_parser() -> argparse.ArgumentParser:
         "--disable-synthetic-send",
         action="store_true",
         help="Disable the existing SendSyntheticEventOnStart config key.",
+    )
+    parser.add_argument(
+        "--enable-runtime-current-line-transport",
+        action="store_true",
+        help="Enable RuntimeCurrentLineTransportEnabled for localhost synthetic runtime tests.",
+    )
+    parser.add_argument(
+        "--disable-runtime-current-line-transport",
+        action="store_true",
+        help="Disable RuntimeCurrentLineTransportEnabled.",
+    )
+    parser.add_argument(
+        "--enable-synthetic-runtime-send",
+        action="store_true",
+        help="Enable SendSyntheticRuntimeCurrentLineEventOnStart for one invented runtime event.",
+    )
+    parser.add_argument(
+        "--disable-synthetic-runtime-send",
+        action="store_true",
+        help="Disable SendSyntheticRuntimeCurrentLineEventOnStart.",
     )
     parser.add_argument("--check-log", action="store_true", help="Read only BepInEx/LogOutput.log.")
     parser.add_argument("--write-report", action="store_true", help="Write redacted report.json.")
@@ -758,6 +818,41 @@ def set_synthetic_send_config_action(
     }
 
 
+def set_runtime_current_line_transport_config_action(
+    discovery: LocalDiscovery, *, enabled: bool
+) -> dict[str, object]:
+    if discovery.game.game_dir is None:
+        raise LocalSmokeError("Game directory was not found. Pass --game-dir <path>.")
+    config_dir = discovery.bepinex.config_dir or (discovery.game.game_dir / "BepInEx" / "config")
+    set_bridge_config_values(
+        config_dir,
+        section="CurrentLineEvent",
+        values={"RuntimeCurrentLineTransportEnabled": enabled},
+    )
+    return {
+        "runtime_current_line_transport_enabled": enabled,
+        "config_file": PLUGIN_CONFIG_FILENAME,
+    }
+
+
+def set_synthetic_runtime_send_config_action(
+    discovery: LocalDiscovery, *, enabled: bool
+) -> dict[str, object]:
+    if discovery.game.game_dir is None:
+        raise LocalSmokeError("Game directory was not found. Pass --game-dir <path>.")
+    config_dir = discovery.bepinex.config_dir or (discovery.game.game_dir / "BepInEx" / "config")
+    set_bridge_config_values(
+        config_dir,
+        section="CurrentLineEvent",
+        values={"SendSyntheticRuntimeCurrentLineEventOnStart": enabled},
+    )
+    return {
+        "synthetic_runtime_current_line_send_on_start": enabled,
+        "send_synthetic_runtime_current_line_event_on_start": enabled,
+        "config_file": PLUGIN_CONFIG_FILENAME,
+    }
+
+
 def set_probe_config(config_dir: Path, *, enabled: bool) -> Path:
     return set_bridge_config_values(
         config_dir,
@@ -849,6 +944,10 @@ def check_metadata_probe_log(log_file: Path) -> LogCheck:
             synthetic_provider_event_id_observed=False,
             synthetic_provider_line_id_observed=False,
             synthetic_provider_status_observed=False,
+            synthetic_runtime_event_sent_observed=False,
+            synthetic_runtime_event_rejected_observed=False,
+            synthetic_runtime_line_id_observed=False,
+            synthetic_runtime_status_observed=False,
             forbidden_marker_categories=(),
         )
 
@@ -869,6 +968,10 @@ def check_metadata_probe_log(log_file: Path) -> LogCheck:
     synthetic_provider_event_observed = (
         SYNTHETIC_PROVIDER_EVENT_SENT_MARKER in text
         or SYNTHETIC_PROVIDER_EVENT_REJECTED_MARKER in text
+    )
+    synthetic_runtime_event_observed = (
+        SYNTHETIC_RUNTIME_EVENT_SENT_MARKER in text
+        or SYNTHETIC_RUNTIME_EVENT_REJECTED_MARKER in text
     )
     return LogCheck(
         log_found=True,
@@ -910,6 +1013,14 @@ def check_metadata_probe_log(log_file: Path) -> LogCheck:
         ),
         synthetic_provider_status_observed=(
             synthetic_provider_event_observed and re.search(r"status=\d+", text) is not None
+        ),
+        synthetic_runtime_event_sent_observed=SYNTHETIC_RUNTIME_EVENT_SENT_MARKER in text,
+        synthetic_runtime_event_rejected_observed=SYNTHETIC_RUNTIME_EVENT_REJECTED_MARKER in text,
+        synthetic_runtime_line_id_observed=(
+            synthetic_runtime_event_observed and "line_id=synthetic.bepinex.4a.001" in text
+        ),
+        synthetic_runtime_status_observed=(
+            synthetic_runtime_event_observed and re.search(r"status=\d+", text) is not None
         ),
         forbidden_marker_categories=forbidden_categories,
     )

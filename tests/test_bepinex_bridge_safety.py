@@ -407,7 +407,12 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
             "Companion health check passed",
             "Synthetic provider event sent:",
             "Synthetic provider event was not accepted:",
+            "RuntimeCurrentLineTransportEnabled",
+            "SendSyntheticRuntimeCurrentLineEventOnStart",
+            "Synthetic runtime current-line event sent:",
+            "Synthetic runtime current-line event was not accepted:",
             "synthetic_provider_event_sent_observed",
+            "synthetic_runtime_event_sent_observed",
             "no_game_launch_performed",
             "raw_log_included",
             "private_paths_redacted",
@@ -428,6 +433,14 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         ):
             with self.subTest(marker=marker):
                 self.assertNotIn(marker, helper)
+        for marker in (
+            "--enable-runtime-current-line-transport",
+            "--disable-runtime-current-line-transport",
+            "--enable-synthetic-runtime-send",
+            "--disable-synthetic-runtime-send",
+        ):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, helper)
 
     def test_bridge_to_overlay_smoke_helper_is_registered_and_documented(self) -> None:
         helper_ref = "scripts/run_bridge_to_overlay_synthetic_smoke.py"
@@ -562,7 +575,10 @@ class BepInExBridgeSafetyTests(unittest.TestCase):
         self.assertIn("DefaultSendSyntheticEventOnStart = false", plugin_source)
         self.assertIn("DefaultMetadataProbeEnabled = false", plugin_source)
         self.assertIn("DefaultMetadataProbeLogOnStart = false", plugin_source)
+        self.assertIn("DefaultRuntimeCurrentLineTransportEnabled = false", plugin_source)
+        self.assertIn("DefaultSendSyntheticRuntimeCurrentLineEventOnStart = false", plugin_source)
         self.assertIn("SendSyntheticEventOnStart", plugin_source)
+        self.assertIn("SendSyntheticRuntimeCurrentLineEventOnStart", plugin_source)
         self.assertIn("MetadataProbeEnabled", plugin_source)
         self.assertIn("MetadataProbeLogOnStart", plugin_source)
 

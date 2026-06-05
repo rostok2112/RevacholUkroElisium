@@ -68,11 +68,14 @@ scripts/run_bepinex_metadata_probe_local_smoke.py
 
 It may discover the user-owned Steam install, copy the built bridge DLL to `BepInEx/plugins/`, set
 the two metadata probe config flags, optionally toggle the existing `SendSyntheticEventOnStart`
-flag for companion-connected synthetic smoke, read only `BepInEx/LogOutput.log` after the user
-manually runs the game, and write a redacted metadata probe report under the ignored workspace. Use
-`--enable-synthetic-send` and `--disable-synthetic-send` only for the invented synthetic event
-path. It must not launch the game, recursively scan drives, parse dialogue, store raw logs, read
-arbitrary game files, or change the companion HTTP contract.
+flag for companion-connected synthetic smoke, and toggle the runtime-first synthetic transport flags
+for the capture spike. It may read only `BepInEx/LogOutput.log` after the user manually runs the
+game and write a redacted metadata probe report under the ignored workspace. Use
+`--enable-synthetic-send`, `--disable-synthetic-send`,
+`--enable-runtime-current-line-transport`, `--disable-runtime-current-line-transport`,
+`--enable-synthetic-runtime-send`, and `--disable-synthetic-runtime-send` only for invented
+synthetic paths. It must not launch the game, recursively scan drives, parse dialogue, store raw
+logs, read arbitrary game files, call providers, or add capture hooks.
 
 ## Forbidden 4M Behavior
 

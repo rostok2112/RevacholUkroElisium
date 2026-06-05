@@ -61,5 +61,5 @@ status. It does not execute providers. Runtime capture hooks remain a later loca
 The next runtime-first step is:
 
 ```text
-runtime_current_line_capture_spike
+runtime_current_line_capture_strategy_decision
 ```
