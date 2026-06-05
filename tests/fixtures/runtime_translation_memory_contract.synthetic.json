@@ -30,5 +30,5 @@
   "hash_or_key_public_output_allowed": false,
   "raw_provider_payload_public_output_allowed": false,
   "private_paths_public_output_allowed": false,
-  "recommended_next_step": "runtime_private_hook_descriptor_local_validation"
+  "recommended_next_step": "runtime_private_hook_descriptor_local_validation_review_gate"
 }

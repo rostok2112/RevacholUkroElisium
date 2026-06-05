@@ -1,5 +1,23 @@
 # Session Summary
 
+Runtime private hook descriptor local validation is now implemented.
+
+Completed in the latest session:
+- Added `scripts/run_runtime_private_hook_descriptor_local_validation.py`.
+- Added `tests/fixtures/runtime_private_hook_descriptor_local_validation_summary.synthetic.json`.
+- Added focused tests and `check_all.py` registration.
+- The helper validates one explicit private descriptor under
+  `workspace/local-private/runtime-capture/hook-descriptors/`.
+- Validation summaries are redacted and may expose only booleans, counts, compatibility labels,
+  blocker categories, and safe next-step values.
+- The next safe step is `runtime_private_hook_descriptor_local_validation_review_gate`.
+- Hook implementation, real text capture, Unity UI inspection, log parsing, screenshots,
+  game-file reads, provider calls, companion HTTP contract changes, descriptor values, candidate
+  identifiers, method names, signatures, class names, raw logs, private paths, payload dumps, and
+  committed runtime evidence remain blocked.
+
+---
+
 Runtime private hook descriptor contract is now defined.
 
 Completed in the latest session:

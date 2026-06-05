@@ -1,5 +1,29 @@
 # Next Actions
 
+After runtime private hook descriptor local validation:
+
+1. Treat `scripts/run_runtime_private_hook_descriptor_local_validation.py` and
+   `tests/fixtures/runtime_private_hook_descriptor_local_validation_summary.synthetic.json` as the
+   local validation boundary.
+2. The helper may read only one explicit descriptor JSON under
+   `workspace/local-private/runtime-capture/hook-descriptors/`.
+3. The next step may review only the redacted validation summary under the ignored validation root.
+   It must not reopen the descriptor, implement hooks, inspect game UI, parse logs, capture text,
+   call providers, or change companion contracts.
+4. Keep descriptor values, candidate identifiers, decompiled method names, signatures, class names,
+   raw logs, screenshots, source text, payload dumps, private paths, provider data, and real runtime
+   evidence out of tracked files.
+
+Recommended next safe step:
+
+- Implement `runtime_private_hook_descriptor_local_validation_review_gate`.
+
+Traceability:
+
+- This step implements the prior handoff `runtime_private_hook_descriptor_local_validation`.
+
+---
+
 After runtime private hook descriptor contract:
 
 1. Treat `docs/runtime-private-hook-descriptor-contract.md`,

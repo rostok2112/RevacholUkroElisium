@@ -53,6 +53,9 @@ RUNTIME_TARGETED_HOOK_DECISION_RECOMMENDED_NEXT_STEP = "runtime_private_hook_des
 RUNTIME_PRIVATE_HOOK_DESCRIPTOR_RECOMMENDED_NEXT_STEP = (
     "runtime_private_hook_descriptor_local_validation"
 )
+RUNTIME_PRIVATE_HOOK_DESCRIPTOR_LOCAL_VALIDATION_RECOMMENDED_NEXT_STEP = (
+    "runtime_private_hook_descriptor_local_validation_review_gate"
+)
 MILESTONES = ("M0", "M1", "M2", "M3", "M4")
 
 
@@ -217,10 +220,30 @@ def _shape_errors(payload: dict[str, Any]) -> list[str]:
                 "Runtime-first status must record "
                 "runtime_private_hook_descriptor_contract_done=true."
             )
+        if payload.get("runtime_private_hook_descriptor_local_validation_done") is not True:
+            errors.append(
+                "Runtime-first status must record "
+                "runtime_private_hook_descriptor_local_validation_done=true."
+            )
     return errors
 
 
 def _expected_next_step(payload: dict[str, Any]) -> str:
+    if (
+        payload.get("runtime_first_path_active") is True
+        and payload.get("runtime_translation_memory_done") is True
+        and payload.get("runtime_current_line_transport_done") is True
+        and payload.get("runtime_current_line_capture_spike_done") is True
+        and payload.get("runtime_current_line_capture_strategy_decision_done") is True
+        and payload.get("runtime_targeted_hook_candidate_research_contract_done") is True
+        and payload.get("runtime_targeted_hook_candidate_research_local_report_done") is True
+        and payload.get("runtime_targeted_hook_candidate_research_review_gate_done") is True
+        and payload.get("runtime_targeted_hook_candidate_decision_contract_done") is True
+        and payload.get("runtime_private_hook_descriptor_contract_done") is True
+        and payload.get("runtime_private_hook_descriptor_local_validation_done") is True
+        and payload.get("m2_private_export_source_available") is False
+    ):
+        return RUNTIME_PRIVATE_HOOK_DESCRIPTOR_LOCAL_VALIDATION_RECOMMENDED_NEXT_STEP
     if (
         payload.get("runtime_first_path_active") is True
         and payload.get("runtime_translation_memory_done") is True
@@ -356,6 +379,7 @@ def _allowed_values(payload: dict[str, Any]) -> set[str]:
         RUNTIME_TARGETED_HOOK_REVIEW_RECOMMENDED_NEXT_STEP,
         RUNTIME_TARGETED_HOOK_DECISION_RECOMMENDED_NEXT_STEP,
         RUNTIME_PRIVATE_HOOK_DESCRIPTOR_RECOMMENDED_NEXT_STEP,
+        RUNTIME_PRIVATE_HOOK_DESCRIPTOR_LOCAL_VALIDATION_RECOMMENDED_NEXT_STEP,
         *MILESTONES,
     }
     milestones = payload.get("milestones")

@@ -85,3 +85,12 @@ The next step after the descriptor contract is:
 ```text
 runtime_private_hook_descriptor_local_validation
 ```
+
+The local validation helper is now tracked by:
+
+```text
+scripts/run_runtime_private_hook_descriptor_local_validation.py
+tests/fixtures/runtime_private_hook_descriptor_local_validation_summary.synthetic.json
+```
+
+Its next step is `runtime_private_hook_descriptor_local_validation_review_gate`.

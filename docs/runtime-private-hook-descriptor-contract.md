@@ -44,6 +44,31 @@ helper may emit only redacted booleans, counts, compatibility labels, and blocke
 The later helper must not print, hash, normalize, compare, or commit descriptor values. It must not
 approve hook implementation or real text capture.
 
+## Local Validation Implementation
+
+The local validation helper is now:
+
+```text
+scripts/run_runtime_private_hook_descriptor_local_validation.py
+```
+
+It validates one explicit private descriptor under the ignored descriptor root and may write a
+redacted validation summary only under:
+
+```text
+workspace/local-private/runtime-capture/hook-descriptors/validation/
+```
+
+Tracked evidence is limited to:
+
+```text
+tests/fixtures/runtime_private_hook_descriptor_local_validation_summary.synthetic.json
+```
+
+The next safe step is `runtime_private_hook_descriptor_local_validation_review_gate`, which may
+review only the redacted summary. It must not reopen descriptor files or approve hook
+implementation.
+
 ## Forbidden Tracked Evidence
 
 Tracked docs, fixtures, tests, and reports must not include descriptor contents, candidate

@@ -61,7 +61,7 @@ Runtime translation memory is tracked by
 spike tooling now exist, and targeted hook research is contract-scoped by
 `docs/runtime-targeted-hook-candidate-research-contract.md`. The next runtime-first step is the
 redacted report review gate, decision contract, and private descriptor contract, which now advance
-only to `runtime_private_hook_descriptor_local_validation`.
+only to `runtime_private_hook_descriptor_local_validation_review_gate`.
 
 ### 4. Overlay
 

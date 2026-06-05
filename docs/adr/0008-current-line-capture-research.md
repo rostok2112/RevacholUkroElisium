@@ -285,6 +285,30 @@ Descriptor values, candidate identifiers, method names, signatures, class names,
 identifiers, raw logs, screenshots, source text, payload dumps, private paths, provider data, and
 real runtime evidence remain forbidden in tracked files.
 
+## Runtime Private Hook Descriptor Local Validation
+
+The local validation helper is tracked by:
+
+```text
+scripts/run_runtime_private_hook_descriptor_local_validation.py
+tests/fixtures/runtime_private_hook_descriptor_local_validation_summary.synthetic.json
+```
+
+It may read one explicit private descriptor under the ignored descriptor root and emit only a
+redacted summary. The summary contains booleans, counts, compatibility labels, blocker categories,
+and safe next-step values. It does not expose descriptor values, candidate identifiers, method
+names, signatures, class names, private paths, payloads, logs, screenshots, provider data, or real
+runtime evidence.
+
+The next step is:
+
+```text
+runtime_private_hook_descriptor_local_validation_review_gate
+```
+
+The review gate may review only the redacted validation summary. Hook implementation, real capture,
+UI inspection, log parsing, provider calls, and companion behavior changes remain blocked.
+
 Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
 
 ```json

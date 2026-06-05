@@ -1,5 +1,16 @@
 # Known Risks
 
+- Runtime private hook descriptor local validation now reads one explicit private descriptor under
+  `workspace/local-private/runtime-capture/hook-descriptors/` and emits redacted summaries through
+  `scripts/run_runtime_private_hook_descriptor_local_validation.py`.
+- The next step is `runtime_private_hook_descriptor_local_validation_review_gate`, which may review
+  only the redacted validation summary and must not reopen descriptors or approve hook code.
+- The main leak risk remains descriptor values, candidate identifiers, decompiled method names,
+  signatures, class names, source text, payload dumps, provider data, private paths, and real
+  runtime evidence entering tracked files.
+
+---
+
 - Runtime private hook descriptors are now contract-scoped by
   `docs/runtime-private-hook-descriptor-contract.md`,
   `tests/fixtures/runtime_private_hook_descriptor_contract.synthetic.json`, and

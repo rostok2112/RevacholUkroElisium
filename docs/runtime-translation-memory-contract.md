@@ -67,5 +67,5 @@ docs/runtime-targeted-hook-candidate-research-contract.md
 The next runtime-first step is:
 
 ```text
-runtime_private_hook_descriptor_local_validation
+runtime_private_hook_descriptor_local_validation_review_gate
 ```
