@@ -1,12 +1,24 @@
 # Decisions Pending
 
+- Runtime current-line capture strategy is decided by
+  `docs/runtime-current-line-capture-strategy-decision.md`,
+  `tests/fixtures/runtime_current_line_capture_strategy_decision.synthetic.json`, and
+  `scripts/check_runtime_current_line_capture_strategy_decision.py`.
+- Selected strategy: `targeted_hook_research_first`.
+- Next runtime-first decision boundary: `runtime_targeted_hook_candidate_research_contract`.
+- Hook implementation, real text capture, broad Unity scanning, OCR, screenshots, game-file reads,
+  BepInEx log parsing, provider calls, companion HTTP contract changes, decompiled identifiers,
+  method signatures, class names, raw logs, private paths, and payload dumps remain blocked.
+
+---
+
 - Runtime current-line capture strategy is now the active decision. The spike can verify
   synthetic/manual runtime event transport through the installed plugin, but it does not decide or
   implement real capture.
 - Decide the next capture strategy from redacted local evidence only. Candidate strategies must keep
   OCR, screenshots, broad Unity scanning, hooks, game-file reads, provider execution, private paths,
   raw logs, and runtime text out of tracked files unless a later contract explicitly scopes them.
-- Next runtime-first decision: `runtime_current_line_capture_strategy_decision`.
+- This decision is now closed by `runtime-current-line-capture-strategy-decision.v1`.
 
 ---
 

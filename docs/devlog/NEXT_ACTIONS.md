@@ -1,5 +1,23 @@
 # Next Actions
 
+After runtime current-line capture strategy decision:
+
+1. Treat `docs/runtime-current-line-capture-strategy-decision.md`,
+   `tests/fixtures/runtime_current_line_capture_strategy_decision.synthetic.json`, and
+   `scripts/check_runtime_current_line_capture_strategy_decision.py` as the current runtime
+   strategy guardrail.
+2. Selected strategy is `targeted_hook_research_first`.
+3. The next step may define only a local/private candidate-research contract. It must not implement
+   hooks or capture real text.
+4. Keep decompiled identifiers, method signatures, class names, raw logs, screenshots, game text,
+   private paths, payload dumps, provider payloads, and real runtime evidence out of tracked files.
+
+Recommended next safe step:
+
+- Define `runtime_targeted_hook_candidate_research_contract`.
+
+---
+
 After runtime current-line capture spike:
 
 1. Treat `SendSyntheticRuntimeCurrentLineEventOnStart`,
@@ -13,7 +31,7 @@ After runtime current-line capture spike:
 
 Recommended next safe step:
 
-- Define `runtime_current_line_capture_strategy_decision`.
+- Implemented by the runtime current-line capture strategy decision above.
 
 ---
 

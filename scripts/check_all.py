@@ -137,6 +137,14 @@ def main() -> int:
             ],
         ),
         (
+            "runtime current-line capture strategy decision",
+            [
+                sys.executable,
+                "scripts/check_runtime_current_line_capture_strategy_decision.py",
+                "--quiet",
+            ],
+        ),
+        (
             "local overlay prototype smoke",
             [
                 sys.executable,

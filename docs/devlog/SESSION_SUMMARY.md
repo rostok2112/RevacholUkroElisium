@@ -1,5 +1,19 @@
 # Session Summary
 
+Runtime current-line capture strategy is now decided.
+
+Completed in the latest session:
+- Added `docs/runtime-current-line-capture-strategy-decision.md`.
+- Added `tests/fixtures/runtime_current_line_capture_strategy_decision.synthetic.json`.
+- Added `scripts/check_runtime_current_line_capture_strategy_decision.py`.
+- Selected strategy: `targeted_hook_research_first`.
+- The next safe step is `runtime_targeted_hook_candidate_research_contract`.
+- This decision does not implement hooks, real text capture, broad Unity scanning, OCR,
+  screenshots, game-file reads, BepInEx log parsing, provider calls, or companion HTTP contract
+  changes.
+
+---
+
 Runtime current-line capture spike tooling is now implemented.
 
 Completed in the latest session:

@@ -7,8 +7,9 @@
   "runtime_translation_memory_done": true,
   "runtime_current_line_transport_done": true,
   "runtime_current_line_capture_spike_done": true,
+  "runtime_current_line_capture_strategy_decision_done": true,
   "m5_planning_allowed": false,
-  "recommended_next_step": "runtime_current_line_capture_strategy_decision",
+  "recommended_next_step": "runtime_targeted_hook_candidate_research_contract",
   "milestones": [
     {
       "roadmap_milestone": "M0",

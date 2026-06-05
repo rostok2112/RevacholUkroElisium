@@ -1,12 +1,23 @@
 # Known Risks
 
+- Runtime current-line capture strategy is now selected as `targeted_hook_research_first` and
+  tracked by `docs/runtime-current-line-capture-strategy-decision.md`,
+  `tests/fixtures/runtime_current_line_capture_strategy_decision.synthetic.json`, and
+  `scripts/check_runtime_current_line_capture_strategy_decision.py`.
+- This increases implementation risk if the next step jumps straight to hooks. The only approved
+  next step is `runtime_targeted_hook_candidate_research_contract`, which must remain contract-only.
+- Decompiled identifiers, method signatures, class names, raw logs, screenshots, game text, private
+  paths, payload dumps, provider payloads, and real runtime evidence must stay out of tracked files.
+
+---
+
 - Runtime current-line capture spike tooling can enable a synthetic runtime event at startup when
   the user explicitly toggles local BepInEx config. This is still not a real game-text capture path.
 - Capture strategy is still undecided. Hooks, broad Unity scanning, OCR, screenshots, game-file
   reads, BepInEx log commits, provider calls, and raw companion payloads remain blocked.
 - Redacted capture-spike reports must stay under ignored workspace roots and may contain only
   booleans, counts, status, and blocker categories.
-- The next safe step is `runtime_current_line_capture_strategy_decision`.
+- The next safe step is `runtime_targeted_hook_candidate_research_contract`.
 
 ---
 
@@ -18,8 +29,8 @@
   it before a local capture spike should be done only for synthetic/manual localhost tests.
 - `scripts/run_runtime_current_line_smoke.py` is redacted public evidence only. Generated/private
   runtime reports must stay under ignored workspace roots.
-- The runtime capture spike is now implemented; the next safe step is
-  `runtime_current_line_capture_strategy_decision`.
+- The runtime capture spike is now implemented; the strategy decision now points to
+  `runtime_targeted_hook_candidate_research_contract`.
 
 ---
 

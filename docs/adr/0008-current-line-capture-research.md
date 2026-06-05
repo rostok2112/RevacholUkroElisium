@@ -129,6 +129,33 @@ Stay conservative:
 - Any future real text capture must be explicit opt-in, private, ignored, and covered by a later
   safety review.
 
+## Runtime-First Strategy Decision
+
+The current runtime-first follow-up decision is now tracked in:
+
+```text
+docs/runtime-current-line-capture-strategy-decision.md
+tests/fixtures/runtime_current_line_capture_strategy_decision.synthetic.json
+scripts/check_runtime_current_line_capture_strategy_decision.py
+```
+
+The selected strategy is:
+
+```text
+targeted_hook_research_first
+```
+
+The next step is:
+
+```text
+runtime_targeted_hook_candidate_research_contract
+```
+
+This does not change the ADR boundary: hook implementation, real text capture, OCR, screenshots,
+broad Unity scanning, game-file reads, BepInEx log parsing, provider calls, companion contract
+changes, decompiled identifiers, method signatures, class names, raw logs, private paths, payload
+dumps, and committed runtime evidence remain blocked.
+
 Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
 
 ```json

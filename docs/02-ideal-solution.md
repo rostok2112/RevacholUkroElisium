@@ -59,7 +59,7 @@ Runtime translation memory is tracked by
 `scripts/check_runtime_translation_memory_contract.py`, and
 `scripts/run_runtime_translation_memory.py`. Runtime current-line transport and synthetic capture
 spike tooling now exist; the next runtime-first step is
-`runtime_current_line_capture_strategy_decision`.
+`runtime_targeted_hook_candidate_research_contract`.
 
 ### 4. Overlay
 

@@ -1,0 +1,32 @@
+{
+  "schema_version": "runtime-current-line-capture-strategy-decision.v1",
+  "decision_status": "strategy_selected",
+  "selected_strategy": "targeted_hook_research_first",
+  "runtime_first_path_active": true,
+  "manual_synthetic_transport_proven": true,
+  "runtime_translation_memory_done": true,
+  "runtime_current_line_transport_done": true,
+  "runtime_current_line_capture_spike_done": true,
+  "m2_private_export_source_available": false,
+  "implementation_allowed_next": false,
+  "hook_implementation_allowed_next": false,
+  "real_text_capture_allowed_next": false,
+  "targeted_hook_candidate_research_contract_allowed_next": "contract_only",
+  "broad_unity_scanning_allowed_next": false,
+  "ocr_allowed_next": false,
+  "screenshots_allowed_next": false,
+  "save_file_reads_allowed_next": false,
+  "game_file_reads_allowed_next": false,
+  "bepinex_log_parsing_allowed_next": false,
+  "provider_execution_allowed_next": false,
+  "companion_contract_change_allowed_next": false,
+  "decompiled_identifiers_in_tracked_docs_allowed": false,
+  "raw_logs_allowed": false,
+  "payload_dumps_allowed": false,
+  "private_paths_allowed": false,
+  "committed_runtime_evidence_allowed": false,
+  "allowed_private_research_roots": [
+    "workspace/local-private/runtime-capture/hook-research/"
+  ],
+  "recommended_next_step": "runtime_targeted_hook_candidate_research_contract"
+}
