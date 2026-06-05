@@ -1,5 +1,23 @@
 # Session Summary
 
+Runtime private hook descriptor contract is now defined.
+
+Completed in the latest session:
+- Added `docs/runtime-private-hook-descriptor-contract.md`.
+- Added `tests/fixtures/runtime_private_hook_descriptor_contract.synthetic.json`.
+- Added `scripts/check_runtime_private_hook_descriptor_contract.py`.
+- Added focused tests and `check_all.py` registration.
+- The contract requires prior `docs/runtime-targeted-hook-candidate-decision-contract.md`.
+- Private descriptor files may exist only under
+  `workspace/local-private/runtime-capture/hook-descriptors/`.
+- The next safe step is `runtime_private_hook_descriptor_local_validation`.
+- Hook implementation, real text capture, Unity UI inspection, log parsing, screenshots,
+  game-file reads, provider calls, companion HTTP contract changes, descriptor values, candidate
+  identifiers, method names, signatures, class names, raw logs, private paths, payload dumps, and
+  committed runtime evidence remain blocked.
+
+---
+
 Runtime targeted hook candidate decision contract is now defined.
 
 Completed in the latest session:

@@ -1,5 +1,20 @@
 # Decisions Pending
 
+- Runtime private hook descriptor contract is tracked by
+  `docs/runtime-private-hook-descriptor-contract.md`,
+  `tests/fixtures/runtime_private_hook_descriptor_contract.synthetic.json`, and
+  `scripts/check_runtime_private_hook_descriptor_contract.py`.
+- Private descriptors may exist only under
+  `workspace/local-private/runtime-capture/hook-descriptors/`.
+- Next runtime-first boundary: `runtime_private_hook_descriptor_local_validation`.
+- Local validation may inspect one explicit private descriptor under the ignored root and emit only
+  redacted booleans, counts, compatibility labels, and blocker categories. Hook implementation,
+  real text capture, Unity UI inspection, log parsing, screenshots, game-file reads, provider
+  calls, companion HTTP contract changes, decompiled identifiers, method signatures, class names,
+  raw logs, private paths, payload dumps, and committed runtime evidence remain blocked.
+
+---
+
 - Runtime targeted hook candidate decision contract is tracked by
   `docs/runtime-targeted-hook-candidate-decision-contract.md`,
   `tests/fixtures/runtime_targeted_hook_candidate_decision_contract.synthetic.json`, and

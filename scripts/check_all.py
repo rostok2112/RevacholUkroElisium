@@ -179,6 +179,14 @@ def main() -> int:
             ],
         ),
         (
+            "runtime private hook descriptor contract",
+            [
+                sys.executable,
+                "scripts/check_runtime_private_hook_descriptor_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "local overlay prototype smoke",
             [
                 sys.executable,

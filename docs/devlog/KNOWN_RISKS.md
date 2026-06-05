@@ -1,5 +1,19 @@
 # Known Risks
 
+- Runtime private hook descriptors are now contract-scoped by
+  `docs/runtime-private-hook-descriptor-contract.md`,
+  `tests/fixtures/runtime_private_hook_descriptor_contract.synthetic.json`, and
+  `scripts/check_runtime_private_hook_descriptor_contract.py`.
+- Private descriptors may exist only under
+  `workspace/local-private/runtime-capture/hook-descriptors/`.
+- The next step is `runtime_private_hook_descriptor_local_validation`, which may validate one
+  explicit private descriptor and emit only redacted aggregate status.
+- The main leak risk remains descriptor values, candidate identifiers, decompiled method names,
+  signatures, class names, source text, payload dumps, provider data, private paths, and real
+  runtime evidence entering tracked files.
+
+---
+
 - Runtime targeted hook candidate decision is now contract-scoped by
   `docs/runtime-targeted-hook-candidate-decision-contract.md`,
   `tests/fixtures/runtime_targeted_hook_candidate_decision_contract.synthetic.json`, and

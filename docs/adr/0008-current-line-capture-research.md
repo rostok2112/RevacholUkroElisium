@@ -251,6 +251,40 @@ method names, signatures, class names, decompiled identifiers, raw logs, screens
 payload dumps, private paths, provider data, and real runtime evidence remain forbidden in tracked
 files. Hook implementation and real text capture remain blocked.
 
+## Runtime Private Hook Descriptor Contract
+
+The private descriptor contract is tracked by:
+
+```text
+docs/runtime-private-hook-descriptor-contract.md
+tests/fixtures/runtime_private_hook_descriptor_contract.synthetic.json
+scripts/check_runtime_private_hook_descriptor_contract.py
+```
+
+It requires the prior decision contract:
+
+```text
+docs/runtime-targeted-hook-candidate-decision-contract.md
+```
+
+Private descriptor files may exist only under:
+
+```text
+workspace/local-private/runtime-capture/hook-descriptors/
+```
+
+The next step is:
+
+```text
+runtime_private_hook_descriptor_local_validation
+```
+
+The descriptor contract does not read descriptors, implement hooks, capture text, inspect UI, parse
+logs, call providers, change companion HTTP contracts, or alter BepInEx runtime behavior.
+Descriptor values, candidate identifiers, method names, signatures, class names, decompiled
+identifiers, raw logs, screenshots, source text, payload dumps, private paths, provider data, and
+real runtime evidence remain forbidden in tracked files.
+
 Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
 
 ```json

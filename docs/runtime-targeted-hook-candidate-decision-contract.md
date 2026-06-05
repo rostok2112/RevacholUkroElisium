@@ -63,3 +63,25 @@ The private descriptor boundary, when separately approved, must keep descriptor 
 ```text
 workspace/local-private/runtime-capture/hook-descriptors/
 ```
+
+## Private Descriptor Contract
+
+The private descriptor boundary is now tracked by:
+
+```text
+docs/runtime-private-hook-descriptor-contract.md
+tests/fixtures/runtime_private_hook_descriptor_contract.synthetic.json
+scripts/check_runtime_private_hook_descriptor_contract.py
+```
+
+It keeps the selected strategy:
+
+```text
+targeted_hook_research_first
+```
+
+The next step after the descriptor contract is:
+
+```text
+runtime_private_hook_descriptor_local_validation
+```

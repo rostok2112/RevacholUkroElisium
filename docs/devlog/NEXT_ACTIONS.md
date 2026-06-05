@@ -1,5 +1,28 @@
 # Next Actions
 
+After runtime private hook descriptor contract:
+
+1. Treat `docs/runtime-private-hook-descriptor-contract.md`,
+   `tests/fixtures/runtime_private_hook_descriptor_contract.synthetic.json`, and
+   `scripts/check_runtime_private_hook_descriptor_contract.py` as the private descriptor boundary.
+2. Descriptor files may exist only under
+   `workspace/local-private/runtime-capture/hook-descriptors/`.
+3. The next step may validate only one explicit private descriptor under that ignored root. It must
+   emit only redacted booleans, counts, compatibility labels, and blocker categories.
+4. Keep descriptor values, candidate identifiers, decompiled method names, signatures, class names,
+   raw logs, screenshots, source text, payload dumps, private paths, provider data, and real runtime
+   evidence out of tracked files.
+
+Recommended next safe step:
+
+- Implement `runtime_private_hook_descriptor_local_validation`.
+
+Traceability:
+
+- This step implements the prior handoff `runtime_private_hook_descriptor_contract`.
+
+---
+
 After runtime targeted hook candidate decision contract:
 
 1. Treat `docs/runtime-targeted-hook-candidate-decision-contract.md`,
