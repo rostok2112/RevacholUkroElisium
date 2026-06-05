@@ -89,7 +89,7 @@ def run_smoke(*, root: Path = ROOT) -> dict[str, Any]:
             "ocr_used": False,
             "unity_scanning_used": False,
             "hooks_used": False,
-            "recommended_next_step": "runtime_private_hook_descriptor_local_validation_review_gate",
+            "recommended_next_step": "runtime_private_hook_implementation_contract",
         }
         rendered = json.dumps(summary, sort_keys=True)
         for forbidden in (

@@ -94,3 +94,13 @@ tests/fixtures/runtime_private_hook_descriptor_local_validation_summary.syntheti
 ```
 
 Its next step is `runtime_private_hook_descriptor_local_validation_review_gate`.
+
+The validation review gate is now tracked by:
+
+```text
+scripts/review_runtime_private_hook_descriptor_local_validation.py
+tests/fixtures/runtime_private_hook_descriptor_local_validation_review_decision.synthetic.json
+```
+
+It advances only to `runtime_private_hook_implementation_contract`; it still does not approve hook
+code or real text capture.

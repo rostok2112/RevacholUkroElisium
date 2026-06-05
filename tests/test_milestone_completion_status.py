@@ -29,7 +29,7 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
 
         self.assertFalse(fixture["m5_planning_allowed"])
         self.assertEqual(
-            "runtime_private_hook_descriptor_local_validation_review_gate",
+            "runtime_private_hook_implementation_contract",
             fixture["recommended_next_step"],
         )
         self.assertTrue(fixture["runtime_first_path_active"])
@@ -44,6 +44,9 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         self.assertTrue(fixture["runtime_targeted_hook_candidate_decision_contract_done"])
         self.assertTrue(fixture["runtime_private_hook_descriptor_contract_done"])
         self.assertTrue(fixture["runtime_private_hook_descriptor_local_validation_done"])
+        self.assertTrue(
+            fixture["runtime_private_hook_descriptor_local_validation_review_gate_done"]
+        )
         self.assertTrue(fixture["milestones"][0]["manual_verification_complete"])
         self.assertTrue(fixture["milestones"][0]["fully_complete"])
         self.assertTrue(fixture["milestones"][1]["manual_verification_complete"])
@@ -80,6 +83,7 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         mutated["runtime_targeted_hook_candidate_decision_contract_done"] = False
         mutated["runtime_private_hook_descriptor_contract_done"] = False
         mutated["runtime_private_hook_descriptor_local_validation_done"] = False
+        mutated["runtime_private_hook_descriptor_local_validation_review_gate_done"] = False
         mutated["m2_private_export_source_available"] = True
         mutated["milestones"][1]["manual_verification_complete"] = True
         mutated["milestones"][1]["fully_complete"] = True
@@ -101,6 +105,7 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         mutated["runtime_targeted_hook_candidate_decision_contract_done"] = False
         mutated["runtime_private_hook_descriptor_contract_done"] = False
         mutated["runtime_private_hook_descriptor_local_validation_done"] = False
+        mutated["runtime_private_hook_descriptor_local_validation_review_gate_done"] = False
         mutated["m2_private_export_source_available"] = True
         mutated["milestones"][2]["manual_verification_complete"] = True
         mutated["milestones"][2]["fully_complete"] = True
@@ -174,6 +179,13 @@ class MilestoneCompletionStatusTests(unittest.TestCase):
         fixture = load_json(FIXTURE_PATH)
         mutated = copy.deepcopy(fixture)
         mutated["runtime_private_hook_descriptor_local_validation_done"] = False
+
+        self.assertNotEqual([], _matrix_errors_for(mutated))
+
+    def test_runtime_first_requires_private_hook_descriptor_validation_review_marker(self) -> None:
+        fixture = load_json(FIXTURE_PATH)
+        mutated = copy.deepcopy(fixture)
+        mutated["runtime_private_hook_descriptor_local_validation_review_gate_done"] = False
 
         self.assertNotEqual([], _matrix_errors_for(mutated))
 

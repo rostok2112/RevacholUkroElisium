@@ -64,8 +64,9 @@ The targeted hook research boundary is now contract-scoped by:
 docs/runtime-targeted-hook-candidate-research-contract.md
 ```
 
-The next runtime-first step is:
+The active runtime-first handoff has advanced through descriptor validation review. The next
+runtime-first step is:
 
 ```text
-runtime_private_hook_descriptor_local_validation_review_gate
+runtime_private_hook_implementation_contract
 ```

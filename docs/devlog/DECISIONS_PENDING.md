@@ -1,5 +1,18 @@
 # Decisions Pending
 
+- Runtime private hook descriptor validation review is implemented by
+  `scripts/review_runtime_private_hook_descriptor_local_validation.py`.
+- Review decision evidence is tracked only as redacted synthetic evidence in
+  `tests/fixtures/runtime_private_hook_descriptor_local_validation_review_decision.synthetic.json`.
+- Next runtime-first boundary: `runtime_private_hook_implementation_contract`.
+- The implementation contract may define only the later hook implementation boundary. Hook code,
+  real text capture, Unity UI inspection, log parsing, screenshots, game-file reads, provider calls,
+  companion HTTP contract changes, descriptor values, decompiled identifiers, method signatures,
+  class names, raw logs, private paths, payload dumps, hashes, and committed runtime evidence remain
+  blocked.
+
+---
+
 - Runtime private hook descriptor local validation is implemented by
   `scripts/run_runtime_private_hook_descriptor_local_validation.py`.
 - Validation summaries are tracked only as redacted synthetic evidence in

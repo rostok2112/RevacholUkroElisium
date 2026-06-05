@@ -309,6 +309,32 @@ runtime_private_hook_descriptor_local_validation_review_gate
 The review gate may review only the redacted validation summary. Hook implementation, real capture,
 UI inspection, log parsing, provider calls, and companion behavior changes remain blocked.
 
+## Runtime Private Hook Descriptor Validation Review Gate
+
+The redacted validation review gate is tracked by:
+
+```text
+scripts/review_runtime_private_hook_descriptor_local_validation.py
+tests/fixtures/runtime_private_hook_descriptor_local_validation_review_decision.synthetic.json
+```
+
+It may read only validation summaries under:
+
+```text
+workspace/local-private/runtime-capture/hook-descriptors/validation/
+```
+
+It must never reopen private descriptor files. A passing review allows only a later static
+implementation contract:
+
+```text
+runtime_private_hook_implementation_contract
+```
+
+Hook implementation, real text capture, UI inspection, log parsing, provider calls, companion
+behavior changes, descriptor values, candidate identifiers, method names, signatures, class names,
+private paths, payload dumps, hashes, logs, screenshots, and real runtime evidence remain blocked.
+
 Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
 
 ```json

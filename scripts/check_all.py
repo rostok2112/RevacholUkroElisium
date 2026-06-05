@@ -196,6 +196,15 @@ def main() -> int:
             ],
         ),
         (
+            "runtime private hook descriptor validation review smoke",
+            [
+                sys.executable,
+                "scripts/review_runtime_private_hook_descriptor_local_validation.py",
+                "--self-test",
+                "--quiet",
+            ],
+        ),
+        (
             "local overlay prototype smoke",
             [
                 sys.executable,

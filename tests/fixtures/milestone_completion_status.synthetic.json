@@ -14,8 +14,9 @@
   "runtime_targeted_hook_candidate_decision_contract_done": true,
   "runtime_private_hook_descriptor_contract_done": true,
   "runtime_private_hook_descriptor_local_validation_done": true,
+  "runtime_private_hook_descriptor_local_validation_review_gate_done": true,
   "m5_planning_allowed": false,
-  "recommended_next_step": "runtime_private_hook_descriptor_local_validation_review_gate",
+  "recommended_next_step": "runtime_private_hook_implementation_contract",
   "milestones": [
     {
       "roadmap_milestone": "M0",

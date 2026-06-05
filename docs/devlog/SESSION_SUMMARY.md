@@ -1,5 +1,25 @@
 # Session Summary
 
+Runtime private hook descriptor validation review gate is now implemented.
+
+Completed in the latest session:
+- Added `scripts/review_runtime_private_hook_descriptor_local_validation.py`.
+- Added
+  `tests/fixtures/runtime_private_hook_descriptor_local_validation_review_decision.synthetic.json`.
+- Added focused review tests and `check_all.py` registration.
+- The reviewer reads only redacted validation summaries under
+  `workspace/local-private/runtime-capture/hook-descriptors/validation/`.
+- Review outputs may be written only under the ignored
+  `workspace/local-private/runtime-capture/hook-descriptors/validation-review/` root.
+- The self-test deletes the private descriptor before review to prove the reviewer never reopens it.
+- The next safe step is `runtime_private_hook_implementation_contract`.
+- Hook implementation, real text capture, Unity UI inspection, log parsing, screenshots,
+  game-file reads, provider calls, companion HTTP contract changes, descriptor values, candidate
+  identifiers, method names, signatures, class names, raw logs, private paths, payload dumps, and
+  committed runtime evidence remain blocked.
+
+---
+
 Runtime private hook descriptor local validation is now implemented.
 
 Completed in the latest session:

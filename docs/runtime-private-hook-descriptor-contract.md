@@ -69,6 +69,35 @@ The next safe step is `runtime_private_hook_descriptor_local_validation_review_g
 review only the redacted summary. It must not reopen descriptor files or approve hook
 implementation.
 
+## Local Validation Review Gate
+
+The redacted validation review helper is now:
+
+```text
+scripts/review_runtime_private_hook_descriptor_local_validation.py
+```
+
+It may read only summary JSON under:
+
+```text
+workspace/local-private/runtime-capture/hook-descriptors/validation/
+```
+
+It may write generated review output only under the ignored root:
+
+```text
+workspace/local-private/runtime-capture/hook-descriptors/validation-review/
+```
+
+Tracked decision evidence is limited to:
+
+```text
+tests/fixtures/runtime_private_hook_descriptor_local_validation_review_decision.synthetic.json
+```
+
+The review gate never reopens private descriptors and does not approve hook implementation or real
+text capture. Its only safe next step is `runtime_private_hook_implementation_contract`.
+
 ## Forbidden Tracked Evidence
 
 Tracked docs, fixtures, tests, and reports must not include descriptor contents, candidate
