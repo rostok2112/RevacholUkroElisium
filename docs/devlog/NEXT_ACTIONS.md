@@ -1,5 +1,28 @@
 # Next Actions
 
+After runtime targeted hook candidate research local report:
+
+1. Treat `tests/fixtures/runtime_targeted_hook_candidate_research_report.synthetic.json` and
+   `scripts/check_runtime_targeted_hook_candidate_research_report.py` as the redacted local report
+   boundary.
+2. Reports may exist only under `workspace/local-private/runtime-capture/hook-research/` and may
+   contain only aggregate booleans, counts, status labels, and blocker categories.
+3. The next step may review the redacted report only. It must not implement hooks, inspect game UI,
+   parse logs, capture text, call providers, or change companion contracts.
+4. Keep candidate identifiers, decompiled method names, signatures, class names, raw logs,
+   screenshots, source text, payload dumps, private paths, provider data, and real runtime evidence
+   out of tracked files.
+
+Recommended next safe step:
+
+- Implement `runtime_targeted_hook_candidate_research_review_gate`.
+
+Traceability:
+
+- This step implements the prior handoff `runtime_targeted_hook_candidate_research_local_report`.
+
+---
+
 After runtime targeted hook candidate research contract:
 
 1. Treat `docs/runtime-targeted-hook-candidate-research-contract.md`,
@@ -15,7 +38,7 @@ After runtime targeted hook candidate research contract:
 
 Recommended next safe step:
 
-- Implement `runtime_targeted_hook_candidate_research_local_report`.
+- Implemented by the runtime targeted hook candidate research local report gate above.
 
 ---
 

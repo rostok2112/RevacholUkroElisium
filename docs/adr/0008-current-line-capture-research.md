@@ -176,6 +176,25 @@ runtime_targeted_hook_candidate_research_local_report
 The report step still must not implement hooks, capture real text, inspect game UI, parse logs,
 commit candidate identifiers, emit private paths, call providers, or change companion contracts.
 
+## Targeted Hook Candidate Research Local Report
+
+The local report gate is tracked by:
+
+```text
+tests/fixtures/runtime_targeted_hook_candidate_research_report.synthetic.json
+scripts/check_runtime_targeted_hook_candidate_research_report.py
+```
+
+It validates only redacted local/private report summaries under the ignored hook research workspace.
+It does not perform research, inspect game UI, parse logs, capture text, call providers, or change
+bridge/companion behavior.
+
+The next step is:
+
+```text
+runtime_targeted_hook_candidate_research_review_gate
+```
+
 Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
 
 ```json

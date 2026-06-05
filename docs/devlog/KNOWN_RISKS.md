@@ -1,11 +1,24 @@
 # Known Risks
 
+- Runtime targeted hook candidate research local reports are now validated by
+  `tests/fixtures/runtime_targeted_hook_candidate_research_report.synthetic.json` and
+  `scripts/check_runtime_targeted_hook_candidate_research_report.py`.
+- The next step is `runtime_targeted_hook_candidate_research_review_gate`, which may review only
+  redacted report summaries. It must not read local notes, raw logs, screenshots, private paths, or
+  runtime evidence.
+- This closes the prior handoff `runtime_targeted_hook_candidate_research_local_report`.
+- The main leak risk remains candidate identifiers, decompiled method names, signatures, class
+  names, source text, payload dumps, provider data, and real runtime evidence entering tracked
+  files. The report checker rejects these markers.
+
+---
+
 - Runtime targeted hook candidate research is now contract-scoped by
   `docs/runtime-targeted-hook-candidate-research-contract.md`,
   `tests/fixtures/runtime_targeted_hook_candidate_research_contract.synthetic.json`, and
   `scripts/check_runtime_targeted_hook_candidate_research_contract.py`.
-- The next step is `runtime_targeted_hook_candidate_research_local_report`, which may summarize
-  local/private research only with redacted booleans, counts, statuses, and blocker categories.
+- The local report gate above summarizes local/private research only with redacted booleans, counts,
+  statuses, and blocker categories.
 - The risk remains that targeted research could leak candidate identifiers, decompiled method names,
   signatures, class names, raw logs, screenshots, source text, payload dumps, private paths,
   provider data, or real runtime evidence. These stay forbidden in tracked files.

@@ -1,5 +1,20 @@
 # Session Summary
 
+Runtime targeted hook candidate research local report gate is now implemented.
+
+Completed in the latest session:
+- Added `tests/fixtures/runtime_targeted_hook_candidate_research_report.synthetic.json`.
+- Added `scripts/check_runtime_targeted_hook_candidate_research_report.py`.
+- Added a self-test and `check_all.py` registration for redacted local/private hook research
+  reports.
+- The helper validates only booleans, counts, status labels, and blocker categories under ignored
+  workspace roots.
+- The next safe step is `runtime_targeted_hook_candidate_research_review_gate`.
+- This gate does not perform hook research, implement hooks, inspect game UI, parse logs, capture
+  text, call providers, change companion HTTP contracts, or alter BepInEx runtime behavior.
+
+---
+
 Runtime targeted hook candidate research is now contract-scoped.
 
 Completed in the latest session:

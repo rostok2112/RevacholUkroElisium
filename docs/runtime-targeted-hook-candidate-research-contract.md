@@ -14,11 +14,11 @@ recommended_next_step: runtime_targeted_hook_candidate_research_local_report
 This is a contract only. It does not implement hooks, capture real text, inspect game UI, parse
 logs, call providers, change companion HTTP contracts, or alter BepInEx runtime behavior.
 
-## Allowed Future Research Boundary
+## Local Report Boundary
 
-A later local report helper may summarize whether the user performed targeted hook candidate
-research locally. Tracked evidence may contain only redacted booleans, counts, status labels, and
-blocker categories.
+The local report helper may summarize whether the user performed targeted hook candidate research
+locally. Tracked evidence may contain only redacted booleans, counts, status labels, and blocker
+categories.
 
 Any local notes, raw observations, or private reports must stay ignored under:
 
@@ -43,10 +43,18 @@ Machine-readable evidence is tracked by:
 ```text
 tests/fixtures/runtime_targeted_hook_candidate_research_contract.synthetic.json
 scripts/check_runtime_targeted_hook_candidate_research_contract.py
+tests/fixtures/runtime_targeted_hook_candidate_research_report.synthetic.json
+scripts/check_runtime_targeted_hook_candidate_research_report.py
 ```
 
 This contract follows the strategy decision in:
 
 ```text
 docs/runtime-current-line-capture-strategy-decision.md
+```
+
+The active next step after the local report gate is:
+
+```text
+runtime_targeted_hook_candidate_research_review_gate
 ```

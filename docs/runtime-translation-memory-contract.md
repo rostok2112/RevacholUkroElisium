@@ -67,5 +67,5 @@ docs/runtime-targeted-hook-candidate-research-contract.md
 The next runtime-first step is:
 
 ```text
-runtime_targeted_hook_candidate_research_local_report
+runtime_targeted_hook_candidate_research_review_gate
 ```
