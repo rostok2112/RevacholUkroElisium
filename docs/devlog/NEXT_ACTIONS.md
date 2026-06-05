@@ -1,5 +1,24 @@
 # Next Actions
 
+After runtime targeted hook candidate research contract:
+
+1. Treat `docs/runtime-targeted-hook-candidate-research-contract.md`,
+   `tests/fixtures/runtime_targeted_hook_candidate_research_contract.synthetic.json`, and
+   `scripts/check_runtime_targeted_hook_candidate_research_contract.py` as the current targeted
+   hook research boundary.
+2. Selected strategy remains `targeted_hook_research_first`.
+3. The next step may create only a local/private redacted research report helper. It must not
+   implement hooks, inspect game UI, capture real text, parse logs, or change companion contracts.
+4. Keep candidate identifiers, decompiled method names, signatures, class names, raw logs,
+   screenshots, source text, payload dumps, private paths, provider data, and real runtime evidence
+   out of tracked files.
+
+Recommended next safe step:
+
+- Implement `runtime_targeted_hook_candidate_research_local_report`.
+
+---
+
 After runtime current-line capture strategy decision:
 
 1. Treat `docs/runtime-current-line-capture-strategy-decision.md`,
@@ -14,7 +33,7 @@ After runtime current-line capture strategy decision:
 
 Recommended next safe step:
 
-- Define `runtime_targeted_hook_candidate_research_contract`.
+- Implemented by the runtime targeted hook candidate research contract above.
 
 ---
 

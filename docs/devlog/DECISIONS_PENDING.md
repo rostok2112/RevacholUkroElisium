@@ -1,11 +1,24 @@
 # Decisions Pending
 
+- Runtime targeted hook candidate research is contract-scoped by
+  `docs/runtime-targeted-hook-candidate-research-contract.md`,
+  `tests/fixtures/runtime_targeted_hook_candidate_research_contract.synthetic.json`, and
+  `scripts/check_runtime_targeted_hook_candidate_research_contract.py`.
+- Selected strategy remains `targeted_hook_research_first`.
+- Next runtime-first decision boundary: `runtime_targeted_hook_candidate_research_local_report`.
+- Hook implementation, real text capture, Unity UI inspection, OCR, screenshots, game-file reads,
+  BepInEx log parsing, provider calls, companion HTTP contract changes, decompiled identifiers,
+  method signatures, class names, raw logs, private paths, payload dumps, and committed runtime
+  evidence remain blocked.
+
+---
+
 - Runtime current-line capture strategy is decided by
   `docs/runtime-current-line-capture-strategy-decision.md`,
   `tests/fixtures/runtime_current_line_capture_strategy_decision.synthetic.json`, and
   `scripts/check_runtime_current_line_capture_strategy_decision.py`.
 - Selected strategy: `targeted_hook_research_first`.
-- Next runtime-first decision boundary: `runtime_targeted_hook_candidate_research_contract`.
+- This decision is now followed by `runtime_targeted_hook_candidate_research_contract`.
 - Hook implementation, real text capture, broad Unity scanning, OCR, screenshots, game-file reads,
   BepInEx log parsing, provider calls, companion HTTP contract changes, decompiled identifiers,
   method signatures, class names, raw logs, private paths, and payload dumps remain blocked.

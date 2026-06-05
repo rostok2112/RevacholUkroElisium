@@ -1,11 +1,23 @@
 # Known Risks
 
+- Runtime targeted hook candidate research is now contract-scoped by
+  `docs/runtime-targeted-hook-candidate-research-contract.md`,
+  `tests/fixtures/runtime_targeted_hook_candidate_research_contract.synthetic.json`, and
+  `scripts/check_runtime_targeted_hook_candidate_research_contract.py`.
+- The next step is `runtime_targeted_hook_candidate_research_local_report`, which may summarize
+  local/private research only with redacted booleans, counts, statuses, and blocker categories.
+- The risk remains that targeted research could leak candidate identifiers, decompiled method names,
+  signatures, class names, raw logs, screenshots, source text, payload dumps, private paths,
+  provider data, or real runtime evidence. These stay forbidden in tracked files.
+
+---
+
 - Runtime current-line capture strategy is now selected as `targeted_hook_research_first` and
   tracked by `docs/runtime-current-line-capture-strategy-decision.md`,
   `tests/fixtures/runtime_current_line_capture_strategy_decision.synthetic.json`, and
   `scripts/check_runtime_current_line_capture_strategy_decision.py`.
-- This increases implementation risk if the next step jumps straight to hooks. The only approved
-  next step is `runtime_targeted_hook_candidate_research_contract`, which must remain contract-only.
+- This increases implementation risk if the next step jumps straight to hooks. The contract above
+  keeps hook implementation blocked and advances only to a redacted local report step.
 - Decompiled identifiers, method signatures, class names, raw logs, screenshots, game text, private
   paths, payload dumps, provider payloads, and real runtime evidence must stay out of tracked files.
 

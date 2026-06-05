@@ -145,6 +145,14 @@ def main() -> int:
             ],
         ),
         (
+            "runtime targeted hook candidate research contract",
+            [
+                sys.executable,
+                "scripts/check_runtime_targeted_hook_candidate_research_contract.py",
+                "--quiet",
+            ],
+        ),
+        (
             "local overlay prototype smoke",
             [
                 sys.executable,

@@ -23,7 +23,7 @@ DECISIONS_PENDING_PATH = ROOT / "docs/devlog/DECISIONS_PENDING.md"
 GITIGNORE_PATH = ROOT / ".gitignore"
 
 SCHEMA_VERSION = "runtime-translation-memory-contract.v1"
-RECOMMENDED_NEXT_STEP = "runtime_targeted_hook_candidate_research_contract"
+RECOMMENDED_NEXT_STEP = "runtime_targeted_hook_candidate_research_local_report"
 EVENT_ROOT = "workspace/local-private/runtime-events/"
 ANNOTATION_ROOT = "workspace/local-private/runtime-annotations/"
 CACHE_ROOT = "workspace/local-private/runtime-cache/translation-memory/"

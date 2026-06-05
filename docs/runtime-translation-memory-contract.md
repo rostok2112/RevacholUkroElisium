@@ -58,8 +58,14 @@ POST /runtime/current-line
 The endpoint stores the latest runtime event in memory and returns redacted translation-memory
 status. It does not execute providers. Runtime capture hooks remain a later local spike.
 
+The targeted hook research boundary is now contract-scoped by:
+
+```text
+docs/runtime-targeted-hook-candidate-research-contract.md
+```
+
 The next runtime-first step is:
 
 ```text
-runtime_targeted_hook_candidate_research_contract
+runtime_targeted_hook_candidate_research_local_report
 ```

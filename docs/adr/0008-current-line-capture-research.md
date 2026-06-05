@@ -156,6 +156,26 @@ broad Unity scanning, game-file reads, BepInEx log parsing, provider calls, comp
 changes, decompiled identifiers, method signatures, class names, raw logs, private paths, payload
 dumps, and committed runtime evidence remain blocked.
 
+## Targeted Hook Candidate Research Contract
+
+The selected strategy is now bounded by:
+
+```text
+docs/runtime-targeted-hook-candidate-research-contract.md
+tests/fixtures/runtime_targeted_hook_candidate_research_contract.synthetic.json
+scripts/check_runtime_targeted_hook_candidate_research_contract.py
+```
+
+The contract keeps `targeted_hook_research_first` as the selected strategy and allows only a later
+local/private redacted report step:
+
+```text
+runtime_targeted_hook_candidate_research_local_report
+```
+
+The report step still must not implement hooks, capture real text, inspect game UI, parse logs,
+commit candidate identifiers, emit private paths, call providers, or change companion contracts.
+
 Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
 
 ```json

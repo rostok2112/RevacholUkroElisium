@@ -45,8 +45,16 @@ tests/fixtures/runtime_current_line_capture_strategy_decision.synthetic.json
 scripts/check_runtime_current_line_capture_strategy_decision.py
 ```
 
-The active next step is:
+The strategy decision is followed by the contract in:
 
 ```text
-runtime_targeted_hook_candidate_research_contract
+docs/runtime-targeted-hook-candidate-research-contract.md
+tests/fixtures/runtime_targeted_hook_candidate_research_contract.synthetic.json
+scripts/check_runtime_targeted_hook_candidate_research_contract.py
+```
+
+The active next step after that contract is:
+
+```text
+runtime_targeted_hook_candidate_research_local_report
 ```

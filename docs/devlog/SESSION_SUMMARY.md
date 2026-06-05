@@ -1,5 +1,19 @@
 # Session Summary
 
+Runtime targeted hook candidate research is now contract-scoped.
+
+Completed in the latest session:
+- Added `docs/runtime-targeted-hook-candidate-research-contract.md`.
+- Added `tests/fixtures/runtime_targeted_hook_candidate_research_contract.synthetic.json`.
+- Added `scripts/check_runtime_targeted_hook_candidate_research_contract.py`.
+- Kept selected strategy as `targeted_hook_research_first`.
+- The next safe step is `runtime_targeted_hook_candidate_research_local_report`.
+- This contract does not implement hooks, real text capture, Unity UI inspection, OCR,
+  screenshots, game-file reads, BepInEx log parsing, provider calls, companion HTTP contract
+  changes, candidate identifier commits, or private runtime evidence commits.
+
+---
+
 Runtime current-line capture strategy is now decided.
 
 Completed in the latest session:
