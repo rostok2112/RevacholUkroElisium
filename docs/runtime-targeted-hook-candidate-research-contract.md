@@ -79,3 +79,31 @@ runtime_targeted_hook_candidate_decision_contract
 Hook implementation, real text capture, UI inspection, log parsing, provider execution, companion
 contract changes, candidate identifiers, method/class names, signatures, source text, private
 paths, raw logs, screenshots, payload dumps, and real runtime evidence remain blocked.
+
+## Decision Contract
+
+The next decision boundary is tracked by:
+
+```text
+docs/runtime-targeted-hook-candidate-decision-contract.md
+tests/fixtures/runtime_targeted_hook_candidate_decision_contract.synthetic.json
+scripts/check_runtime_targeted_hook_candidate_decision_contract.py
+```
+
+It requires prior redacted review evidence from:
+
+```text
+scripts/review_runtime_targeted_hook_candidate_research_report.py
+```
+
+The selected strategy remains:
+
+```text
+targeted_hook_research_first
+```
+
+The next step after the decision contract is:
+
+```text
+runtime_private_hook_descriptor_contract
+```

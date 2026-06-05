@@ -218,6 +218,39 @@ Hook implementation, real text capture, Unity UI inspection, OCR, screenshots, g
 BepInEx log parsing, provider calls, companion HTTP contract changes, and committed runtime
 artifacts remain blocked.
 
+## Targeted Hook Candidate Decision Contract
+
+The static decision contract is tracked by:
+
+```text
+docs/runtime-targeted-hook-candidate-decision-contract.md
+tests/fixtures/runtime_targeted_hook_candidate_decision_contract.synthetic.json
+scripts/check_runtime_targeted_hook_candidate_decision_contract.py
+```
+
+It requires prior redacted review evidence from:
+
+```text
+scripts/review_runtime_targeted_hook_candidate_research_report.py
+```
+
+The selected strategy remains:
+
+```text
+targeted_hook_research_first
+```
+
+The next step is:
+
+```text
+runtime_private_hook_descriptor_contract
+```
+
+The decision contract allows only a later private descriptor contract. Candidate identifiers,
+method names, signatures, class names, decompiled identifiers, raw logs, screenshots, source text,
+payload dumps, private paths, provider data, and real runtime evidence remain forbidden in tracked
+files. Hook implementation and real text capture remain blocked.
+
 Allowed future local experiment outputs are limited to redacted metadata and booleans such as:
 
 ```json

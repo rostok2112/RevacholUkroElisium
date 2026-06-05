@@ -363,7 +363,7 @@ def _base_summary(mode: str) -> dict[str, Any]:
         "provider_execution_performed": False,
         "companion_contract_changed": False,
         "cache_root_allowed": PRIVATE_CACHE_ROOT,
-        "recommended_next_step": "runtime_targeted_hook_candidate_decision_contract",
+        "recommended_next_step": "runtime_private_hook_descriptor_contract",
     }
 
 

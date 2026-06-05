@@ -1,5 +1,19 @@
 # Decisions Pending
 
+- Runtime targeted hook candidate decision contract is tracked by
+  `docs/runtime-targeted-hook-candidate-decision-contract.md`,
+  `tests/fixtures/runtime_targeted_hook_candidate_decision_contract.synthetic.json`, and
+  `scripts/check_runtime_targeted_hook_candidate_decision_contract.py`.
+- It requires prior redacted review evidence from
+  `scripts/review_runtime_targeted_hook_candidate_research_report.py`.
+- Next runtime-first boundary: `runtime_private_hook_descriptor_contract`.
+- The descriptor contract may define only private ignored descriptor handling. Hook implementation,
+  real text capture, Unity UI inspection, log parsing, screenshots, game-file reads, provider
+  calls, companion HTTP contract changes, decompiled identifiers, method signatures, class names,
+  raw logs, private paths, payload dumps, and committed runtime evidence remain blocked.
+
+---
+
 - Runtime targeted hook candidate research review gate is tracked by
   `scripts/review_runtime_targeted_hook_candidate_research_report.py` and
   `tests/fixtures/runtime_targeted_hook_candidate_research_review_decision.synthetic.json`.

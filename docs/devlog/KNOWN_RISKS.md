@@ -1,5 +1,19 @@
 # Known Risks
 
+- Runtime targeted hook candidate decision is now contract-scoped by
+  `docs/runtime-targeted-hook-candidate-decision-contract.md`,
+  `tests/fixtures/runtime_targeted_hook_candidate_decision_contract.synthetic.json`, and
+  `scripts/check_runtime_targeted_hook_candidate_decision_contract.py`.
+- The contract requires prior redacted review evidence from
+  `scripts/review_runtime_targeted_hook_candidate_research_report.py`.
+- The next step is `runtime_private_hook_descriptor_contract`, which may define only a private
+  descriptor boundary. It must not implement hooks or capture text.
+- The main leak risk remains candidate identifiers, decompiled method names, signatures, class
+  names, source text, payload dumps, provider data, private paths, and real runtime evidence
+  entering tracked files.
+
+---
+
 - Runtime targeted hook candidate research review is now validated by
   `scripts/review_runtime_targeted_hook_candidate_research_report.py` and
   `tests/fixtures/runtime_targeted_hook_candidate_research_review_decision.synthetic.json`.

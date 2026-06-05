@@ -60,8 +60,8 @@ Runtime translation memory is tracked by
 `scripts/run_runtime_translation_memory.py`. Runtime current-line transport and synthetic capture
 spike tooling now exist, and targeted hook research is contract-scoped by
 `docs/runtime-targeted-hook-candidate-research-contract.md`. The next runtime-first step is the
-redacted report review gate, which now advances only to
-`runtime_targeted_hook_candidate_decision_contract`.
+redacted report review gate and decision contract, which now advance only to
+`runtime_private_hook_descriptor_contract`.
 
 ### 4. Overlay
 

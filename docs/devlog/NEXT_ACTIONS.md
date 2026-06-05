@@ -1,5 +1,29 @@
 # Next Actions
 
+After runtime targeted hook candidate decision contract:
+
+1. Treat `docs/runtime-targeted-hook-candidate-decision-contract.md`,
+   `tests/fixtures/runtime_targeted_hook_candidate_decision_contract.synthetic.json`, and
+   `scripts/check_runtime_targeted_hook_candidate_decision_contract.py` as the redacted decision
+   boundary.
+2. The contract requires prior redacted review evidence from
+   `scripts/review_runtime_targeted_hook_candidate_research_report.py`.
+3. The next step may define only a private hook descriptor contract. It must not implement hooks,
+   inspect game UI, parse logs, capture text, call providers, or change companion contracts.
+4. Keep candidate identifiers, decompiled method names, signatures, class names, raw logs,
+   screenshots, source text, payload dumps, private paths, provider data, and real runtime evidence
+   out of tracked files.
+
+Recommended next safe step:
+
+- Define `runtime_private_hook_descriptor_contract`.
+
+Traceability:
+
+- This step implements the prior handoff `runtime_targeted_hook_candidate_decision_contract`.
+
+---
+
 After runtime targeted hook candidate research review gate:
 
 1. Treat `scripts/review_runtime_targeted_hook_candidate_research_report.py` and

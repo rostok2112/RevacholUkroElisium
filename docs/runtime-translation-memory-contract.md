@@ -67,5 +67,5 @@ docs/runtime-targeted-hook-candidate-research-contract.md
 The next runtime-first step is:
 
 ```text
-runtime_targeted_hook_candidate_decision_contract
+runtime_private_hook_descriptor_contract
 ```
